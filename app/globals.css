@@ -2,12 +2,12 @@
 @import "tw-animate-css";
 
 :root {
-  --bg: #0e1115;
-  --panel: #171b21;
+  --bg: #100908;
+  --panel: #21130f;
   --gold: #f6c75a;
   --cream: #f5f0e6;
-  --muted: #a6a6aa;
-  --red: #df5146;
+  --muted: #b9a69a;
+  --red: #e45036;
   --line: #ffffff14;
   color-scheme: dark;
 }
@@ -99,7 +99,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #0e1115ed;
+  background: #100908ed;
   backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--line);
 }
@@ -220,7 +220,7 @@ img {
   width: 100%;
   height: 17px;
   fill: none;
-  stroke: #df5146;
+  stroke: #e45036;
   stroke-width: 3;
   stroke-linecap: round;
 }
@@ -341,10 +341,10 @@ img {
   inset: 0;
   background: linear-gradient(
     0deg,
-    #0e1115 0,
+    #100908 0,
     transparent 17%,
     transparent 85%,
-    #0e111538
+    #10090838
   );
 }
 .orbit {
@@ -464,7 +464,7 @@ img {
   height: 43px;
   display: grid;
   place-items: center;
-  background: #14181e;
+  background: #1b0e0c;
   color: #92959b;
   transition: all 0.2s;
 }
@@ -589,7 +589,7 @@ h2 em {
   gap: 23px;
 }
 .dish-card {
-  background: #15191f;
+  background: #1d100d;
   border: 1px solid #ffffff0c;
   border-radius: 12px;
   overflow: hidden;
@@ -737,7 +737,7 @@ h2 em {
 }
 .story-section {
   border-block: 1px solid var(--line);
-  background: #12161c;
+  background: #160c0a;
 }
 .story-layout {
   display: grid;
@@ -766,7 +766,7 @@ h2 em {
   border-radius: 50%;
   width: 116px;
   height: 116px;
-  background: #171b21ed;
+  background: #21130fed;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -805,7 +805,7 @@ h2 em {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 1px solid var(--line);
-  background: #15191f;
+  background: #1d100d;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -829,7 +829,7 @@ h2 em {
 .visit-visual {
   position: relative;
   overflow: hidden;
-  background: #1a2026;
+  background: #231510;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -950,7 +950,7 @@ h2 em {
   width: 100%;
   color: var(--cream);
   border: 1px solid #ffffff14;
-  background: #15191f;
+  background: #1d100d;
   border-radius: 5px;
   padding: 13px 14px;
   font-size: 11px;
@@ -972,7 +972,7 @@ h2 em {
   font-size: 12px;
   line-height: 1.7;
   padding: 12px;
-  border: 1px solid #df514650;
+  border: 1px solid #e4503650;
   border-radius: 5px;
   color: #ffaba2;
 }
@@ -1787,7 +1787,7 @@ h2 em {
   object-fit: cover;
 }
 .family-hero-art .character-shade {
-  background: linear-gradient(0deg, #0e111530, transparent 20%);
+  background: linear-gradient(0deg, #10090830, transparent 20%);
 }
 .hero-visual .speech-bubble {
   top: 42px;
@@ -2000,3 +2000,274 @@ h2 em {
     font-size: 9px;
   }
 }
+
+@font-face {
+  font-family: "Ronny Display";
+  src: url("/fonts/lilita-one-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Night-market identity: warm bulbs, cherry-red truck and a poster-sized wordmark. */
+.night-hero {
+  isolation: isolate;
+  position: relative;
+  min-height: 860px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #180807;
+  overflow: hidden;
+  border-bottom: 1px solid #f6c75a3b;
+}
+.night-scene,
+.night-scene::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.night-scene img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.night-scene::after {
+  content: "";
+  z-index: 0;
+  background: linear-gradient(180deg, #130605c9 0%, #1306053b 30%, transparent 43%, #10090838 62%, #100908f5 100%);
+}
+.night-heading {
+  position: relative;
+  text-align: center;
+  padding-top: 54px;
+  z-index: 1;
+}
+.night-kicker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #ffe6a2;
+}
+.night-kicker > span {
+  width: 32px;
+  height: 1px;
+  background: #f6c75a88;
+}
+.night-heading h1 {
+  font-family: "Ronny Display", Georgia, serif;
+  font-size: clamp(100px, 15vw, 212px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -7px;
+  margin: 12px 0 18px;
+  padding-right: 15px;
+  color: #1a0908;
+  -webkit-text-stroke: 9px #fff4df;
+  paint-order: stroke fill;
+  text-shadow: 0 7px 0 #a12d20, 0 12px 35px #0009;
+}
+.night-specialties {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin: 0;
+  font-size: clamp(12px, 1.5vw, 19px);
+  font-weight: 700;
+  color: #fff4df;
+  text-shadow: 0 2px 10px #000;
+}
+.night-specialties span {
+  color: #f6c75a;
+  font-size: 12px;
+}
+.night-lights {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 130px;
+  pointer-events: none;
+  opacity: .85;
+}
+.night-lights svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.night-lights path {
+  stroke: #645030;
+  stroke-width: 2;
+  fill: none;
+}
+.night-lights ellipse {
+  fill: #fff4bc;
+  filter: drop-shadow(0 0 6px #ffa12c) drop-shadow(0 0 16px #ff6a1a);
+}
+.night-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  padding-top: 320px;
+  padding-bottom: 64px;
+}
+.night-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gold);
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+.night-welcome h2 {
+  margin-top: 14px;
+  font-size: clamp(36px, 4vw, 56px);
+  letter-spacing: -2px;
+  line-height: 1.04;
+  text-shadow: 0 2px 12px #000;
+}
+.night-welcome h2 br {
+  display: none;
+}
+.night-welcome h2 em {
+  margin-left: 10px;
+}
+.night-welcome p {
+  margin: 14px 0 0;
+  color: #d6bfae;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.night-invitation {
+  min-width: 240px;
+  display: grid;
+  gap: 20px;
+}
+.night-invitation .button {
+  justify-content: space-between;
+  background: #f7ce64;
+  box-shadow: 0 0 35px #d9901a26;
+  border-radius: 5px;
+  font-weight: 800;
+}
+.night-location {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 12px;
+  color: #fff0d9;
+}
+.night-location > svg:first-child {
+  color: var(--gold);
+}
+.night-location > svg:last-child {
+  margin-left: auto;
+}
+.night-location small {
+  display: block;
+  margin-top: 5px;
+  color: #c6a99a;
+  font-size: 10px;
+}
+.night-scroll {
+  position: absolute;
+  bottom: 18px;
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 32px;
+  border: 1px solid #f6c75a40;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+}
+.family-memory {
+  margin: 26px 0;
+}
+.family-memory img {
+  width: 100%;
+  max-height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #f6c75a30;
+}
+.family-memory figcaption {
+  margin-top: 10px;
+  color: #b99a85;
+  font-size: 11px;
+  font-style: italic;
+}
+.flavor-strip {
+  background: #8c231a;
+  border-color: #f6c75a55;
+}
+.flavor-strip > div {
+  color: #fff0db;
+}
+.dish-card {
+  box-shadow: 0 12px 30px #0002;
+  border-color: #c7773426;
+}
+.filter-group button.selected {
+  background: #b63224;
+  border-color: #eea75b;
+  color: #fff1d5;
+}
+.friday-banner {
+  background: linear-gradient(110deg, #6d1a15, #26100c);
+  border-color: #f6c75a4d;
+}
+@media (min-width: 1600px) {
+  .night-hero { min-height: 950px; }
+  .night-scene img { object-position: center 62%; }
+}
+@media (max-width: 900px) {
+  .night-hero { min-height: 820px; }
+  .night-heading h1 { letter-spacing: -5px; -webkit-text-stroke-width: 7px; }
+  .night-bottom { gap: 26px; padding-bottom: 65px; }
+  .night-welcome h2 br { display: block; }
+  .night-welcome h2 em { margin-left: 0; }
+  .night-welcome p { max-width: 290px; }
+  .night-scene img { object-position: 42% center; }
+}
+@media (max-width: 600px) {
+  .night-hero { min-height: 850px; }
+  .night-heading { padding-top: 42px; }
+  .night-kicker { font-size: 7px; letter-spacing: 1.5px; gap: 8px; }
+  .night-kicker > span { width: 16px; }
+  .night-heading h1 { font-size: clamp(88px, 25vw, 145px); letter-spacing: -7px; padding-right: 8px; margin: 18px 0; -webkit-text-stroke-width: 5px; }
+  .night-specialties { font-size: 10px; gap: 8px; }
+  .night-specialties span { font-size: 7px; }
+  .night-scene { bottom: 235px; }
+  .night-scene img { position: absolute; top: 145px; left: -9%; width: 150%; max-width: none; height: auto; }
+  .night-scene::after { background: linear-gradient(180deg, #130605c9 0%, #13060520 32%, transparent 45%, #10090800 65%, #100908 100%); }
+  .night-bottom { display: grid; gap: 22px; padding-top: 340px; padding-bottom: 60px; }
+  .night-welcome h2 { font-size: 36px; }
+  .night-welcome h2 br { display: none; }
+  .night-welcome h2 em { margin-left: 6px; }
+  .night-label { font-size: 8px; letter-spacing: 1.4px; }
+  .night-welcome p { font-size: 12px; max-width: 100%; }
+  .night-invitation { min-width: 0; gap: 16px; }
+  .night-invitation .button { min-height: 50px; }
+  .night-location { font-size: 11px; }
+  .night-location small { font-size: 10px; }
+  .night-scroll { display: none; }
+  .night-lights { height: 90px; }
+  .family-memory img { max-height: none; }
+}
+.visit-copy .visit-hours {
+  margin-top: 25px;
+  color: var(--gold);
+  font-size: 13px;
+  line-height: 1.9;
+}
+.visit-hours svg { display: inline-block; vertical-align: -3px; margin-right: 5px; }
+.visit-hours strong { font-size: 21px; }
