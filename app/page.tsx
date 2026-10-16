@@ -265,15 +265,15 @@ export default function Home() {
             </svg>
           </div>
           <div className="night-heading shell">
-            <p className="night-kicker"><span /> ANTOJOS SOBRE RUEDAS · ECATEPEC <span /></p>
+            <p className="night-kicker"><span /> FOOD TRUCK · ANTOJOS · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
             <p className="night-specialties">Waffles <span>✦</span> Malteadas <span>✦</span> Crepas <span>✦</span> Snacks</p>
           </div>
           <div className="night-bottom shell">
             <div className="night-welcome">
-              <span className="night-label"><PawPrint size={15} /> BIENVENIDO A LA FAMILIA</span>
-              <h2>Mucho sabor.<br /><em>Buenas patas.</em></h2>
-              <p>Un chihuahua, un carrito rojo y antojos preparados con corazón.</p>
+              <span className="night-label"><PawPrint size={15} /> LOS ANTOJOS DEL TRUCK</span>
+              <h2>Mucho sabor.<br /><em>Sobre ruedas.</em></h2>
+              <p>Waffles, malteadas, crepas y snacks desde nuestro carrito rojo, con Ronny al frente.</p>
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Se me antojó <ArrowUpRight size={21} /></a>

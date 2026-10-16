@@ -11,3 +11,5 @@
 - Si faltan permisos, reportar el código HTTP y el mensaje exacto sin credenciales. No presentar un build local o una captura como preview navegable.
 
 - Personalidad de Ronny: enojón, valiente, leal, protector y defensor de su familia; divertido y fan de las gusgerías. Mantener estos rasgos en textos y personajes. Incluir atuendos de temporada en el mismo estilo plano.
+
+- Prioridad de la página: el food truck, la comida y Ronny. La portada y el menú deben ocupar el primer plano; personajes, outfits e historia familiar son secciones complementarias después del menú.
