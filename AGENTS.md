@@ -1,8 +1,8 @@
 # Ronny’s Food Truck
 
 - Usar el checkout existente; cada tarea cloud ya está aislada. No crear worktrees salvo petición explícita.
-- Mantener a Ronny junto al carrito rojo y la familia, la paleta oscura con rojo y dorado, los tres atuendos y los filtros adaptables del menú.
-- Ronny usa el estilo de caricatura plana de la referencia del propietario: café uniforme, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo. Mantener esa identidad en portada, icono y atuendos; no convertirlo a 3D ni agregar franja blanca o pelaje realista.
+- Mantener a Ronny junto al carrito rojo y la familia, la paleta oscura con rojo y dorado, los personajes distribuidos y los filtros adaptables del menú.
+- Ronny usa el estilo de caricatura plana de la referencia del propietario: café uniforme, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo. Mantener esa identidad en portada, icono y atuendos; no convertirlo a 3D ni cambiar las marcas faciales respecto a la referencia de cada campaña.
 - No inventar teléfonos, direcciones, horarios ni credenciales.
 - Nunca enviar correos reales durante pruebas. Mantener el contacto desactivado en previews.
 - Usar Node 22 y npm: `npm ci --legacy-peer-deps`, `npm run typecheck`, `npm audit`, `npm run build`.
@@ -13,3 +13,7 @@
 - Personalidad de Ronny: enojón, valiente, leal, protector y defensor de su familia; divertido y fan de las gusgerías. Mantener estos rasgos en textos y personajes. Incluir atuendos de temporada en el mismo estilo plano.
 
 - Prioridad de la página: el food truck, la comida y Ronny. La portada y el menú deben ocupar el primer plano; personajes, outfits e historia familiar son secciones complementarias después del menú.
+
+- Durante la campaña actual de Halloween, el personaje principal de la portada es Ronny con sombrero de hechicero y capa; debe verse al abrir la página, sin usar el selector. No hay selector de looks: distribuir personajes visibles por las secciones. Mantener food truck y comida en primer plano.
+
+- No incluir «Elige mi look» ni botones para cambiar personajes. Los Ronnys se ven directamente en portada, menú, promoción, historia, ubicación y contacto.

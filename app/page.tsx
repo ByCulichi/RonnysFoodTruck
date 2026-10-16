@@ -5,68 +5,25 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  ChefHat,
-  Coffee,
   Heart,
   MapPin,
   Menu,
   PawPrint,
   Sparkles,
-  Shield,
-  Flame,
-  WandSparkles,
+  Ghost,
   Star,
   UtensilsCrossed,
   X,
 } from "lucide-react";
 import { sendContactEmail } from "./actions";
 
-const outfits = [
-  {
-    name: "El chef",
-    label: "Chef de los antojos",
-    description: "Valiente ante cualquier antojo. Su debilidad: las gusgerías.",
-    icon: ChefHat,
-    position: 0,
-  },
-  {
-    name: "El malteadero",
-    label: "Maestro de malteadas",
-    description: "Divertido, travieso y siempre listo para una malteada.",
-    icon: Coffee,
-    position: 1,
-  },
-  {
-    name: "El anfitrión",
-    label: "Tu nuevo mejor amigo",
-    description: "Leal a los suyos: aquí siempre eres de la familia.",
-    icon: Heart,
-    position: 2,
-  },
-  {
-    name: "El enojón",
-    label: "Mucho genio, más corazón",
-    description: "Se enoja si le tocan sus gusgerías… pero termina compartiendo.",
-    icon: Flame,
-    position: 0,
-    sheet: "/ronny-personalities.png",
-  },
-  {
-    name: "El guardián",
-    label: "Pequeño, valiente y protector",
-    description: "Leal y defensor de su familia. Grande de corazón, aunque sea chiquito.",
-    icon: Shield,
-    position: 1,
-    sheet: "/ronny-personalities.png",
-  },
-  {
-    name: "El hechicero",
-    label: "Hechizos y gusgerías",
-    description: "Su truco favorito: hacer desaparecer un antojo. ¡Ronny también se disfraza!",
-    icon: WandSparkles,
-    position: 2,
-    sheet: "/ronny-personalities.png",
-  },
+const ronnyCharacters = [
+  { name: "Ronny chef con su waffle", position: 0 },
+  { name: "Ronny malteadero con una malteada", position: 1 },
+  { name: "Ronny anfitrión saludando", position: 2 },
+  { name: "Ronny enojón cuidando sus gusgerías", position: 0, sheet: "/ronny-personalities.png" },
+  { name: "Ronny guardián con capa y escudo", position: 1, sheet: "/ronny-personalities.png" },
+  { name: "Ronny hechicero de Halloween con sombrero y capa", position: 2, sheet: "/ronny-personalities.png" },
 ];
 const dishes = [
   {
@@ -154,10 +111,9 @@ function Mascot({
   return (
     <div className={`mascot-crop ${className}`}>
       <img
-        key={outfits[outfit].sheet ?? "classic"}
-        src={outfits[outfit].sheet ?? "/ronny-flat-outfits.png"}
-        alt={`Ronny, el chihuahua de la casa, con su atuendo de ${outfits[outfit].name.toLowerCase()}`}
-        style={{ transform: `translateX(-${(outfits[outfit].position * 100) / 3}%)` }}
+        src={ronnyCharacters[outfit].sheet ?? "/ronny-flat-outfits.png"}
+        alt={ronnyCharacters[outfit].name}
+        style={{ transform: `translateX(-${(ronnyCharacters[outfit].position * 100) / 3}%)` }}
         width={1536}
         height={1024}
       />
@@ -166,7 +122,6 @@ function Mascot({
 }
 
 export default function Home() {
-  const [outfit, setOutfit] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [filter, setFilter] = useState("Todo");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -175,7 +130,6 @@ export default function Home() {
     message: string;
   } | null>(null);
   const [sending, setSending] = useState(false);
-  const OutfitIcon = outfits[outfit].icon;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -196,7 +150,7 @@ export default function Home() {
   }
 
   return (
-    <div className="ronny-site">
+    <div className="ronny-site halloween-season">
       <a className="skip-link" href="#contenido">
         Saltar al contenido
       </a>
@@ -205,7 +159,7 @@ export default function Home() {
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
             <img src="/ronny-flat-logo.png" alt="" width={50} height={50} />
             <span>
-              RONNY’S<span className="brand-sub">FOOD TRUCK · ECATEPEC</span>
+              RONNY’S<span className="brand-sub">FOOD TRUCK · HALLOWEEN</span>
             </span>
             <span className="brand-dot">®</span>
           </a>
@@ -246,11 +200,11 @@ export default function Home() {
       </header>
 
       <main id="contenido">
-        <section className="night-hero" id="inicio" aria-labelledby="night-title">
+        <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
             <img
-              src="/ronny-night-truck.png"
-              alt="Ronny en caricatura plana, café y con pañuelo rojo, sosteniendo una malteada y un hot dog junto al carrito rojo y su familia"
+              src="/ronny-halloween-truck.png"
+              alt="Ronny vestido de hechicero con sombrero morado y capa, sosteniendo un antojo con queso junto al food truck rojo decorado con calabazas, telarañas y murciélagos de Halloween"
               width={1536}
               height={1024}
               fetchPriority="high"
@@ -265,18 +219,18 @@ export default function Home() {
             </svg>
           </div>
           <div className="night-heading shell">
-            <p className="night-kicker"><span /> FOOD TRUCK · ANTOJOS · ECATEPEC <span /></p>
+            <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
             <p className="night-specialties">Waffles <span>✦</span> Malteadas <span>✦</span> Crepas <span>✦</span> Snacks</p>
           </div>
           <div className="night-bottom shell">
             <div className="night-welcome">
-              <span className="night-label"><PawPrint size={15} /> LOS ANTOJOS DEL TRUCK</span>
-              <h2>Mucho sabor.<br /><em>Sobre ruedas.</em></h2>
-              <p>Waffles, malteadas, crepas y snacks desde nuestro carrito rojo, con Ronny al frente.</p>
+              <span className="night-label"><Ghost size={15} /> RONNY YA SE PUSO EL DISFRAZ</span>
+              <h2>Mucho sabor.<br /><em>Un toque de Halloween.</em></h2>
+              <p>Waffles, malteadas, crepas y snacks. Nuestro carrito rojo te espera con Ronny vestido para Halloween.</p>
             </div>
             <div className="night-invitation">
-              <a className="button button-gold" href="#menu">Se me antojó <ArrowUpRight size={21} /></a>
+              <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
               <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>Las Vegas, Ecatepec<small>Viernes, sábado y domingo · 7 p. m.–12 a. m.</small></span><ArrowRight size={18} /></a>
             </div>
           </div>
@@ -303,11 +257,10 @@ export default function Home() {
                 <em>la colita.</em>
               </h2>
             </div>
-            <p>
-              Elige tu favorito. Ronny ya se puso el delantal.
-              <br />
-              Todos los precios están en pesos mexicanos.
-            </p>
+            <div className="menu-ronny-note">
+              <Mascot outfit={0} className="menu-chef" />
+              <p>Ronny ya se puso el delantal.<br />Tú elige el antojo.<small>Precios en pesos mexicanos.</small></p>
+            </div>
           </div>
           <div className="menu-toolbar">
             <div
@@ -369,9 +322,7 @@ export default function Home() {
               ))}
           </div>
           <div className="friday-banner">
-            <div className="friday-icon">
-              <Coffee size={30} />
-            </div>
+            <Mascot outfit={1} className="promo-ronny" />
             <div>
               <span>LOS VIERNES SABEN MEJOR</span>
               <h3>Una para ti. Otra para tu cómplice.</h3>
@@ -386,7 +337,7 @@ export default function Home() {
         <section className="story-section" id="historia">
           <div className="shell story-layout">
             <div className="story-art">
-              <Mascot outfit={outfit} />
+              <Mascot outfit={3} />
               <div className="story-stamp">
                 <PawPrint size={24} />
                 <span>
@@ -395,36 +346,7 @@ export default function Home() {
                   DE CORAZÓN
                 </span>
               </div>
-              <div className="story-outfits">
-                <div className="outfit-status">
-                  <OutfitIcon size={18} />
-                  <strong>{outfits[outfit].label}</strong>
-                </div>
-                <div className="outfit-controls">
-                  <span>ELIGE MI LOOK</span>
-                  <div role="group" aria-label="Atuendos de Ronny">
-                    {outfits.map((item, index) => (
-                      <button
-                        key={item.name}
-                        className={
-                          outfit === index
-                            ? "outfit-button active"
-                            : "outfit-button"
-                        }
-                        aria-pressed={outfit === index}
-                        aria-label={item.name}
-                        title={item.name}
-                        onClick={() => setOutfit(index)}
-                      >
-                        <item.icon size={19} /><span>{item.name.replace("El ", "")}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <p className="outfit-caption" aria-live="polite">
-                  {outfits[outfit].description}
-                </p>
-              </div>
+              <p className="story-character-note">Tiene su genio.<br /><strong>Y un corazón enorme.</strong></p>
             </div>
             <div className="story-copy">
               <div className="eyebrow">
@@ -502,9 +424,7 @@ export default function Home() {
               <div className="map-grid" />
               <div className="map-ring ring-one" />
               <div className="map-ring ring-two" />
-              <div className="map-marker">
-                <PawPrint size={33} />
-              </div>
+              <Mascot outfit={4} className="visit-guardian" />
               <span className="map-location">
                 LAS VEGAS<span>ECATEPEC, ESTADO DE MÉXICO</span>
               </span>
@@ -529,6 +449,7 @@ export default function Home() {
               Una pregunta, un saludo o ese antojo que no te deja en paz.
               Cuéntanos.
             </p>
+            <Mascot outfit={2} className="contact-host" />
             <span className="contact-signoff">
               Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />
             </span>
