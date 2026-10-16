@@ -2,6 +2,10 @@
 
 Rediseño importado desde [ByCulichi/RonnysPage, PR #2](https://github.com/ByCulichi/RonnysPage/pull/2), commit `d990872dfc0fecb37fe31077c45422a54bd7d394` (incluido en el historial). Conserva a Ronny, el carrito rojo y la familia, los tres atuendos seleccionables, los filtros del menú y el diseño adaptable oscuro, rojo y dorado.
 
+## Identidad nocturna
+
+La portada toma como referencia el cartel compartido por el propietario: Ronny con pañuelo rojo, carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. La nueva ilustración está en `public/ronny-night-truck.png`; las ilustraciones originales se conservan. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+
 ## Desarrollo y validación
 
 Requiere Node.js 22 y npm. npm y `package-lock.json` son la fuente de dependencias; no uses el antiguo lockfile de pnpm.

@@ -5,7 +5,6 @@ import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Check,
   ChefHat,
   Coffee,
   Heart,
@@ -219,90 +218,41 @@ export default function Home() {
       </header>
 
       <main id="contenido">
-        <section className="hero shell" id="inicio">
-          <div className="hero-copy">
-            <div className="eyebrow">
-              <span className="small-line" /> UN CHIHUAHUA. UN CARRITO. UNA
-              FAMILIA.
+        <section className="night-hero" id="inicio" aria-labelledby="night-title">
+          <div className="night-scene">
+            <img
+              src="/ronny-night-truck.png"
+              alt="Ronny, el chihuahua con su pañuelo rojo y una malteada, frente al carrito rojo iluminado y la familia que prepara los antojos"
+              width={1536}
+              height={1024}
+              fetchPriority="high"
+            />
+          </div>
+          <div className="night-lights" aria-hidden="true">
+            <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
+              <path d="M-20 0 Q360 180 720 35 Q1080 180 1460 0" />
+              {[45, 140, 240, 340, 440, 540, 640, 800, 900, 1000, 1100, 1200, 1300, 1395].map((x, i) => (
+                <ellipse key={x} cx={x} cy={[20, 47, 65, 78, 78, 68, 51, 51, 68, 78, 78, 65, 47, 20][i]} rx="5" ry="8" />
+              ))}
+            </svg>
+          </div>
+          <div className="night-heading shell">
+            <p className="night-kicker"><span /> ANTOJOS SOBRE RUEDAS · ECATEPEC <span /></p>
+            <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
+            <p className="night-specialties">Waffles <span>✦</span> Malteadas <span>✦</span> Crepas <span>✦</span> Snacks</p>
+          </div>
+          <div className="night-bottom shell">
+            <div className="night-welcome">
+              <span className="night-label"><PawPrint size={15} /> BIENVENIDO A LA FAMILIA</span>
+              <h2>Mucho sabor.<br /><em>Buenas patas.</em></h2>
+              <p>Un chihuahua, un carrito rojo y antojos preparados con corazón.</p>
             </div>
-            <h1>
-              Mucho sabor.
-              <br />
-              En familia y con
-              <br />
-              <span className="hero-heart">
-                travesura
-                <svg viewBox="0 0 390 20" aria-hidden="true">
-                  <path d="M3 12 Q175 -2 385 9 M55 18 Q200 7 345 16" />
-                </svg>
-              </span>
-              <span className="gold-dot">.</span>
-            </h1>
-            <p className="hero-description">
-              Soy Ronny, y este es nuestro pequeño mundo.
-              <br />
-              Un carrito, una familia y muchos antojos,
-              <br className="desktop-break" /> preparados con corazón en
-              Ecatepec.
-            </p>
-            <div className="hero-actions">
-              <a className="button button-gold" href="#menu">
-                Descubre el menú <ArrowUpRight size={20} />
-              </a>
-              <a className="text-link" href="#historia">
-                Conoce a Ronny <ArrowRight size={18} />
-              </a>
-            </div>
-            <div className="hero-note">
-              <span className="paw-circle">
-                <PawPrint size={19} />
-              </span>
-              <div>
-                <strong>El sabor lo preparamos juntos.</strong>
-                <span>Desde Las Vegas, Ecatepec, para tu antojo.</span>
-              </div>
+            <div className="night-invitation">
+              <a className="button button-gold" href="#menu">Se me antojó <ArrowUpRight size={21} /></a>
+              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>Las Vegas, Ecatepec<small>Viernes, sábado y domingo · 7 p. m.–12 a. m.</small></span><ArrowRight size={18} /></a>
             </div>
           </div>
-          <div className="hero-visual">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <span className="floating-spark spark-one" aria-hidden="true">
-              ✦
-            </span>
-            <span className="floating-spark spark-two" aria-hidden="true">
-              ✧
-            </span>
-            <div className="speech-bubble" key={`speech-${outfit}`}>
-              ¡Hola, soy Ronny! <span>Tu antojo está en buenas patas.</span>
-            </div>
-            <div className="hero-character family-hero-art">
-              <img
-                src="/ronny-family-truck.png"
-                alt="Ronny vestido de chef frente al carrito rojo, junto a una familia ilustrada preparando crepas y malteadas"
-                width={1536}
-                height={1024}
-                fetchPriority="high"
-              />
-              <div className="character-shade" />
-            </div>
-            <div className="character-tag">
-              <span>
-                <Heart size={20} />
-              </span>
-              <div>
-                <small>LA RECETA DE LA CASA</small>
-                <strong>Hecho en familia</strong>
-              </div>
-              <Check size={16} />
-            </div>
-            <div className="family-pill">
-              <PawPrint size={14} /> Ronny <span>·</span> El carrito{" "}
-              <span>·</span> Nuestra familia
-            </div>
-          </div>
-          <a className="scroll-cue" href="#menu">
-            <ArrowDown size={14} /> SIGUE EL ANTOJO
-          </a>
+          <a className="night-scroll" href="#menu" aria-label="Descubrir el menú"><ArrowDown size={17} /></a>
         </section>
 
         <div className="flavor-strip" aria-label="Las especialidades de Ronny">
@@ -472,6 +422,10 @@ export default function Home() {
                 Ronny es nuestro chihuahua, nuestro compañero y la inspiración
                 detrás de cada antojo.
               </p>
+              <figure className="family-memory">
+                <img src="/ronny-family-truck.png" alt="Ronny y nuestra familia preparando postres en el carrito rojo" width={1536} height={1024} loading="lazy" />
+                <figcaption>El ingrediente de siempre: nuestra familia.</figcaption>
+              </figure>
               <p className="story-signature">
                 Aquí no solo hacemos postres.
                 <br />
@@ -511,10 +465,8 @@ export default function Home() {
               >
                 Ver la zona en Maps <ArrowUpRight size={18} />
               </a>
-              <small>
-                ¿Nos visitas? Escríbenos para confirmar el punto exacto y
-                horario.
-              </small>
+              <p className="visit-hours"><Star size={16} fill="currentColor" /> Viernes, sábado y domingo<br /><strong>7 p. m.–12 a. m.</strong></p>
+              <small>Escríbenos para confirmar el punto exacto antes de visitarnos.</small>
             </div>
             <div className="visit-visual">
               <div className="map-grid" />
