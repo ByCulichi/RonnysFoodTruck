@@ -19,6 +19,7 @@ Requiere Node.js 22 y npm. npm y `package-lock.json` son la fuente de dependenci
 ```sh
 npm ci --legacy-peer-deps
 npm run typecheck
+npm run test:reviews
 npm audit
 npm run build
 npm run dev
@@ -56,3 +57,13 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
 
 Los datos de la captura proporcionada por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
+
+## Google Maps y opiniones
+
+La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado busca la dirección confirmada; la resolución del enlace corto a una ubicación exacta no se pudo verificar por la restricción de red del entorno. No se inventan coordenadas.
+
+Las reseñas se consultan desde el servidor mediante Places API (New), sin exponer claves al navegador. En Vercel, configurar `GOOGLE_PLACES_API_KEY` (secreto, con Places API habilitada) y `GOOGLE_PLACE_ID` (identificador de la ficha oficial). El componente refresca los datos cada cinco minutos y muestra autor y enlace a Google. Solo se muestran hasta cinco reseñas devueltas por Google, sin presentarlas como todas las opiniones. No se guardan datos de Google en caché.
+
+Sin conexión válida, el sitio ofrece abrir la ficha oficial y no inventa reseñas, estrellas ni cantidades. No se ha validado el acceso real a Places: faltan clave e identificador. Las pruebas de presentación con datos simulados no equivalen a una conexión real.
+
+Instagram, Facebook, TikTok, seguidores y previews de publicaciones quedan pendientes por indicación del propietario hasta recibir los enlaces oficiales y la conexión que permita consultar sus datos. El footer muestra únicamente los canales confirmados (Google y WhatsApp), sin perfiles ni cifras ficticios.

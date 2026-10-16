@@ -23,14 +23,12 @@ import {
 } from "lucide-react";
 import { sendContactEmail } from "./actions";
 import { business } from "@/lib/business";
+import { GoogleReviews } from "@/components/google-reviews";
 
 const ronnyCharacters = [
-  { name: "Ronny chef con su waffle", position: 0 },
-  { name: "Ronny malteadero con una malteada", position: 1 },
-  { name: "Ronny anfitrión saludando", position: 2 },
-  { name: "Ronny enojón cuidando sus gusgerías", position: 0, sheet: "/ronny-personalities.png" },
-  { name: "Ronny guardián con capa y escudo", position: 1, sheet: "/ronny-personalities.png" },
-  { name: "Ronny hechicero de Halloween con sombrero y capa", position: 2, sheet: "/ronny-personalities.png" },
+  { name: "Ronny preparando dos malteadas con su capa de Halloween", image: "/ronny-promo-cutout.png" },
+  { name: "Ronny enojón con sudadera y capa de Halloween cuidando sus gusgerías", image: "/ronny-story-cutout.png" },
+  { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/ronny-host-cutout.png" },
 ];
 const dishes = [
   {
@@ -111,22 +109,10 @@ const navLinks = [
   ["encuentranos", "Encuéntranos"],
 ];
 
-function Mascot({
-  outfit = 0,
-  className = "",
-}: {
-  outfit?: number;
-  className?: string;
-}) {
+function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className?: string }) {
   return (
-    <div className={`mascot-crop ${className}`}>
-      <img
-        src={ronnyCharacters[outfit].sheet ?? "/ronny-flat-outfits.png"}
-        alt={ronnyCharacters[outfit].name}
-        style={{ transform: `translateX(-${(ronnyCharacters[outfit].position * 100) / 3}%)` }}
-        width={1536}
-        height={1024}
-      />
+    <div className={`ronny-cutout ${className}`}>
+      <img src={ronnyCharacters[character].image} alt={ronnyCharacters[character].name} width={1024} height={1536} loading="lazy" />
     </div>
   );
 }
@@ -368,7 +354,7 @@ export default function Home() {
             </div>
           )}
           <div className="friday-banner">
-            <Mascot outfit={1} className="promo-ronny" />
+            <Mascot character={0} className="promo-ronny" />
             <div>
               <span>LOS VIERNES SABEN MEJOR</span>
               <h3>Una para ti. Otra para tu cómplice.</h3>
@@ -383,7 +369,7 @@ export default function Home() {
         <section className="story-section" id="historia">
           <div className="shell story-layout">
             <div className="story-art">
-              <Mascot outfit={3} />
+              <Mascot character={1} />
               <div className="story-stamp">
                 <PawPrint size={24} />
                 <span>
@@ -470,20 +456,14 @@ export default function Home() {
                 <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
               </div>
             </div>
-            <div className="visit-visual">
-              <div className="map-grid" />
-              <div className="map-ring ring-one" />
-              <div className="map-ring ring-two" />
-              <Mascot outfit={4} className="visit-guardian" />
-              <span className="map-location">
-                NEW YORK<span>ECATEPEC · C. P. 55330</span>
-              </span>
-              <span className="map-caption">
-                EL ANTOJO TIENE UN PUNTO DE ENCUENTRO.
-              </span>
+            <div className="visit-map">
+              <iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+              <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer">Abrir en Google Maps <ArrowUpRight size={16} /></a>
             </div>
           </div>
         </section>
+
+        <GoogleReviews mapsUrl={business.mapsUrl} />
 
         <section className="contact-section shell" id="contacto">
           <div className="contact-copy">
@@ -503,7 +483,7 @@ export default function Home() {
               <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Escríbenos por WhatsApp</a>
               <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
             </div>
-            <Mascot outfit={2} className="contact-host" />
+            <Mascot character={2} className="contact-host" />
             <span className="contact-signoff">
               Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />
             </span>
@@ -570,17 +550,29 @@ export default function Home() {
           </form>
         </section>
       </main>
-      <footer className="site-footer shell">
-        <a href="#inicio" className="footer-wordmark">
-          RONNY’S<span>®</span>
-        </a>
-        <p>Pequeños antojos. Grandes momentos.</p>
-        <div>
-          <span>© {new Date().getFullYear()} Ronny’s Food Truck</span>
-          <a href="#inicio">
-            Hecho con <Heart size={12} /> y muchas patitas.
+      <footer className="site-footer shell footer-expanded">
+        <div className="footer-top">
+          <div>
+            <a href="#inicio" className="footer-wordmark">RONNY’S<span>®</span></a>
+            <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
+          </div>
+          <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
+        </div>
+        <div className="footer-channels">
+          <a className="footer-channel" href={business.mapsUrl} target="_blank" rel="noopener noreferrer">
+            <span className="channel-logo google-channel"><img src="/brands/google.svg" alt="Google" width={27} height={27} /></span>
+            <div><strong>Ronny’s en Google</strong><span>Ficha del negocio, fotos y opiniones de visitantes.</span><small>Ver ficha oficial <ArrowUpRight size={13} /></small></div>
+          </a>
+          <a className="footer-channel" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <span className="channel-logo whatsapp-channel"><img src="/brands/whatsapp.svg" alt="WhatsApp" width={27} height={27} /></span>
+            <div><strong>Hablemos por WhatsApp</strong><span>{business.phone} · Pregunta por tu próximo antojo.</span><small>Abrir conversación <ArrowUpRight size={13} /></small></div>
           </a>
         </div>
+        <div className="footer-details">
+          <span><MapPin size={15} /> {business.address}</span>
+          <span><Clock size={15} /> {business.hours}</span>
+        </div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>
       </footer>
     </div>
   );
