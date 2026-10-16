@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ronny Food Truck - Dulzura y Diversión en Ecatepec",
   description:
-    "Food truck de postres y antojitos en Las Vegas, Ecatepec. Malteadas, crepas, marquesitas y papas preparadas. ¡Ven a probar la diversión sobre ruedas!",
+    "Food truck de postres y antojitos en New York, Ecatepec de Morelos. Malteadas, crepas, marquesitas y papas preparadas. ¡Ven a probar la diversión sobre ruedas!",
   generator: "v0.app",
 };
 

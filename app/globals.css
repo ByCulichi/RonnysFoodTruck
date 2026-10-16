@@ -2325,10 +2325,6 @@ h2 em {
 }
 
 /* Ronny accompanies each section directly; there is no costume selector. */
-.menu-ronny-note { display: flex; align-items: center; gap: 18px; }
-.menu-ronny-note .menu-chef { width: 105px; height: 190px; flex: 0 0 105px; background: #160c0a; border-radius: 18px; }
-.menu-ronny-note p { color: var(--muted); font-size: 13px; line-height: 1.8; max-width: 210px; }
-.menu-ronny-note small { display: block; font-size: 10px; color: #c49d72; margin-top: 8px; }
 .friday-banner { position: relative; min-height: 195px; padding-left: 175px; }
 .friday-banner .promo-ronny { position: absolute; left: 24px; bottom: 0; width: 125px; height: 220px; background: transparent; border-radius: 18px 18px 0 0; }
 .story-art { height: 580px; }
@@ -2339,15 +2335,10 @@ h2 em {
 .visit-visual .visit-guardian { position: absolute; bottom: 58px; left: calc(50% - 90px); width: 180px; height: 320px; background: #160c0a; border-radius: 20px; mask-image: linear-gradient(#000 85%, transparent); }
 .contact-copy .contact-host { width: 140px; height: 245px; margin: 24px 0 18px; background: #160c0a; border-radius: 20px; mask-image: linear-gradient(#000 85%, transparent); }
 @media (max-width: 900px) {
-  .menu-ronny-note { gap: 10px; }
-  .menu-ronny-note .menu-chef { width: 85px; height: 160px; flex-basis: 85px; }
   .friday-banner { padding-left: 145px; }
   .friday-banner .promo-ronny { left: 10px; width: 115px; height: 200px; }
 }
 @media (max-width: 600px) {
-  .menu-ronny-note { margin-top: 20px; }
-  .menu-ronny-note .menu-chef { width: 95px; height: 175px; flex-basis: 95px; }
-  .menu-ronny-note p { font-size: 12px; }
   .friday-banner { min-height: 240px; align-items: flex-start; padding: 25px 18px 25px 140px; gap: 12px; }
   .friday-banner .promo-ronny { width: 115px; height: 200px; bottom: 15px; }
   .friday-banner > strong { font-size: 22px; }
@@ -2363,3 +2354,102 @@ h2 em {
   .friday-banner > strong > span { display: block; font-size: 28px; white-space: nowrap; }
   .friday-banner h3 { font-size: 20px; }
 }
+
+/* A transparent Halloween milkshake maker reaches into the menu invitation. */
+.menu-ronny-note {
+  position: relative;
+  display: grid;
+  grid-template-columns: 215px 185px;
+  align-items: center;
+  min-height: 250px;
+  flex: 0 0 400px;
+  gap: 0;
+  background: none;
+  border: 0;
+}
+.menu-milkshake-art { position: relative; width: 215px; height: 250px; }
+.menu-milkshake-art > img {
+  position: absolute;
+  width: 285px;
+  max-width: none;
+  height: 250px;
+  object-fit: contain;
+  left: -42px;
+  bottom: -8px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  filter: drop-shadow(0 9px 12px #0004);
+}
+.milkshake-spark { position: absolute; right: 0; top: 45px; color: var(--gold); }
+.menu-milkshake-copy { position: relative; z-index: 1; }
+.menu-milkshake-copy p { margin: 0 0 15px; color: #c5afa5; font-size: 13px; line-height: 1.8; }
+.menu-milkshake-copy strong { color: #ffe4b1; font-weight: 600; }
+.menu-milkshake-copy small { display: block; color: #b79371; font-size: 10px; margin-top: 16px; }
+.ronny-drinks-link { display: inline-flex; align-items: center; gap: 8px; border: 0; border-bottom: 1px solid #f6c75a70; background: transparent; color: var(--gold); padding: 3px 0 6px; font-size: 12px; }
+.ronny-drinks-link:hover { color: #fff3d8; border-color: currentColor; }
+@media (max-width: 1000px) {
+  .menu-section .section-heading { align-items: flex-start; flex-wrap: wrap; }
+  .menu-ronny-note { flex-basis: 380px; grid-template-columns: 200px 180px; }
+}
+@media (max-width: 600px) {
+  .menu-ronny-note { width: 100%; max-width: 380px; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); min-height: 230px; margin-top: 18px; }
+  .menu-milkshake-art { width: 100%; height: 230px; }
+  .menu-milkshake-art > img { width: 250px; height: 230px; left: -40px; bottom: 0; }
+  .menu-milkshake-copy p { font-size: 12px; }
+  .menu-milkshake-copy small { font-size: 9px; }
+  .milkshake-spark { top: 35px; right: 10px; width: 16px; }
+}
+
+/* Food first: searchable categories and a larger milkshake feature. */
+.menu-search-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 30px; }
+.menu-search { display: flex; align-items: center; gap: 12px; flex: 1; max-width: 550px; padding: 13px 16px; border: 1px solid #d8a56340; border-radius: 10px; color: var(--gold); background: #1b0f16; }
+.menu-search:focus-within { border-color: var(--gold); }
+.menu-search input { min-width: 0; width: 100%; background: transparent; border: 0; color: var(--cream); outline: none; font-size: 13px; }
+.menu-search input::placeholder { color: #a99694; }
+.menu-currency { font-size: 11px; color: #b79b83; }
+.menu-toolbar { flex-wrap: wrap; gap: 18px; margin-top: 20px; }
+.filter-group { display: grid; grid-template-columns: repeat(4, auto); gap: 8px; }
+.filter-group button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 14px; border-radius: 10px; }
+.filter-group button > span { font-size: 10px; line-height: 18px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 5px; background: #ffffff12; }
+.dish-card-featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; background: linear-gradient(130deg, #351636, #251310); border-color: #b882b25c; }
+.dish-card-featured .dish-image { height: 100%; min-height: 310px; }
+.dish-card-featured .dish-info { display: flex; flex-direction: column; justify-content: center; padding: 30px; }
+.dish-card-featured .dish-category { color: #e3b4e8; }
+.dish-card-featured .dish-title { flex-wrap: wrap; gap: 12px; }
+.dish-card-featured .dish-title h3 { font-size: 34px; }
+.dish-card-featured .dish-detail { margin-top: 20px; }
+.menu-empty { text-align: center; padding: 50px 20px; color: var(--muted); border-block: 1px solid var(--line); }
+.menu-empty > svg { margin-inline: auto; color: var(--gold); }
+.menu-empty h3 { color: var(--cream); font-size: 24px; }
+.menu-empty p { font-size: 13px; margin-bottom: 24px; }
+.visit-copy > p > svg { display: inline-block; vertical-align: -3px; color: var(--gold); }
+.visit-copy .visit-hours { display: flex; gap: 12px; align-items: flex-start; margin-block: 25px; }
+.visit-hours > svg { margin-top: 5px; flex-shrink: 0; }
+.visit-hours strong { display: block; }
+.visit-hours small { display: block; margin-top: 3px; color: #b9a69a; font-size: 11px; }
+.business-contact-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+.business-contact-links a { display: inline-flex; align-items: center; gap: 8px; color: #f5d9a3; font-size: 13px; border-bottom: 1px solid #f6c75a40; padding-block: 6px; }
+.business-contact-links a:hover { color: #fff; border-color: currentColor; }
+.contact-direct { margin-top: 20px; }
+@media (max-width: 1100px) {
+  .dish-card-featured { grid-column: 1 / -1; }
+  .menu-currency { max-width: 200px; line-height: 1.6; }
+}
+@media (max-width: 600px) {
+  .menu-search-row { display: block; }
+  .menu-search { width: 100%; padding-inline: 12px; }
+  .menu-search input { font-size: 12px; }
+  .menu-currency { display: block; max-width: none; margin-top: 10px; font-size: 10px; }
+  .filter-group { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .filter-group button { font-size: 12px; min-height: 44px; }
+  .menu-toolbar .menu-aside { display: flex; font-size: 10px; }
+  .dish-card-featured { display: block; grid-column: auto; }
+  .dish-card-featured .dish-image { min-height: 0; height: 250px; }
+  .dish-card-featured .dish-info { padding: 22px; }
+  .dish-card-featured .dish-title h3 { font-size: 31px; }
+  .business-contact-links { gap: 10px 18px; }
+  .business-contact-links a { font-size: 12px; }
+}
+.visit-visual .map-location { position: absolute; bottom: 40px; left: 0; width: 100%; font-size: 12px; }
+.visit-visual .map-location > span { margin-top: 6px; }

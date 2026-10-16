@@ -17,3 +17,7 @@
 - Durante la campaña actual de Halloween, el personaje principal de la portada es Ronny con sombrero de hechicero y capa; debe verse al abrir la página, sin usar el selector. No hay selector de looks: distribuir personajes visibles por las secciones. Mantener food truck y comida en primer plano.
 
 - No incluir «Elige mi look» ni botones para cambiar personajes. Los Ronnys se ven directamente en portada, menú, promoción, historia, ubicación y contacto.
+
+- El Ronny junto al menú prepara una malteada con outfit de Halloween y fondo transparente, sin recuadro, borde ni tarjeta; su pose se integra visualmente con el contenido.
+
+- Datos confirmados del negocio: `lib/business.ts`. Dirección New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes a domingo 19:00–00:00, lunes a jueves cerrado. No agregar número de inmueble o coordenadas sin que el propietario los proporcione.

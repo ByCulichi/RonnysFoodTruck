@@ -13,9 +13,16 @@ import {
   Ghost,
   Star,
   UtensilsCrossed,
+  Search,
+  CakeSlice,
+  Coffee,
+  Phone,
+  MessageCircle,
+  Clock,
   X,
 } from "lucide-react";
 import { sendContactEmail } from "./actions";
+import { business } from "@/lib/business";
 
 const ronnyCharacters = [
   { name: "Ronny chef con su waffle", position: 0 },
@@ -94,6 +101,9 @@ const dishes = [
     group: "Bebidas",
   },
 ];
+const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
+const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "El menú"],
@@ -124,6 +134,11 @@ function Mascot({
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [filter, setFilter] = useState("Todo");
+  const [searchQuery, setSearchQuery] = useState("");
+  const visibleDishes = dishes.filter((dish) =>
+    (filter === "Todo" || dish.group === filter) &&
+    normalizeSearch(`${dish.name} ${dish.description} ${dish.details}`).includes(normalizeSearch(searchQuery.trim()))
+  ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<{
     success: boolean;
@@ -231,7 +246,7 @@ export default function Home() {
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
-              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>Las Vegas, Ecatepec<small>Viernes, sábado y domingo · 7 p. m.–12 a. m.</small></span><ArrowRight size={18} /></a>
+              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>New York, Ecatepec<small>{business.hours}</small></span><ArrowRight size={18} /></a>
             </div>
           </div>
           <a className="night-scroll" href="#menu" aria-label="Descubrir el menú"><ArrowDown size={17} /></a>
@@ -258,9 +273,31 @@ export default function Home() {
               </h2>
             </div>
             <div className="menu-ronny-note">
-              <Mascot outfit={0} className="menu-chef" />
-              <p>Ronny ya se puso el delantal.<br />Tú elige el antojo.<small>Precios en pesos mexicanos.</small></p>
+              <div className="menu-milkshake-art">
+                <img
+                  src="/ronny-halloween-milkshake.png"
+                  alt="Ronny con sombrero morado, sudadera y delantal de Halloween preparando una malteada de fresa con crema batida"
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
+                />
+                <Sparkles className="milkshake-spark" size={20} aria-hidden="true" />
+              </div>
+              <div className="menu-milkshake-copy">
+                <p>Ronny está preparando<br /><strong>una malteada de miedo.</strong></p>
+                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); }}>
+                  Ver bebidas <ArrowDown size={15} />
+                </button>
+                <small>Precios en pesos mexicanos.</small>
+              </div>
             </div>
+          </div>
+          <div className="menu-search-row">
+            <label className="menu-search">
+              <Search size={18} aria-hidden="true" />
+              <input type="search" aria-label="Buscar en el menú" placeholder="¿Qué se te antoja? Busca tu favorito…" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
+            </label>
+            <span className="menu-currency">Preparado con corazón · Precios en MXN</span>
           </div>
           <div className="menu-toolbar">
             <div
@@ -268,27 +305,28 @@ export default function Home() {
               role="group"
               aria-label="Filtrar menú"
             >
-              {["Todo", "Dulces", "Salados", "Bebidas"].map((item) => (
-                <button
+              {(["Todo", "Dulces", "Salados", "Bebidas"] as const).map((item) => {
+                const Icon = categoryIcons[item];
+                return <button
                   key={item}
+                  aria-label={item}
                   aria-pressed={filter === item}
                   className={filter === item ? "selected" : ""}
                   onClick={() => setFilter(item)}
                 >
+                  <Icon size={16} aria-hidden="true" />
                   {item}
-                  {item === "Todo" && <span>{dishes.length}</span>}
-                </button>
-              ))}
+                  <span aria-hidden="true">{item === "Todo" ? dishes.length : dishes.filter((dish) => dish.group === item).length}</span>
+                </button>;
+              })}
             </div>
-            <span className="menu-aside">
-              <Sparkles size={15} /> EL ANTOJO NO SE JUZGA
+            <span className="menu-aside" aria-live="polite">
+              <Sparkles size={15} /> {visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}
             </span>
           </div>
           <div className="dish-grid">
-            {dishes
-              .filter((dish) => filter === "Todo" || dish.group === filter)
-              .map((dish, index) => (
-                <article className="dish-card" key={dish.name}>
+            {visibleDishes.map((dish, index) => (
+                <article className={`dish-card ${dish.name === "Malteadas" ? "dish-card-featured" : ""}`} key={dish.name}>
                   <div className="dish-image">
                     <img
                       src={`/${dish.image}`}
@@ -298,11 +336,11 @@ export default function Home() {
                       loading="lazy"
                     />
                     <span className="dish-number">
-                      0{dishes.indexOf(dish) + 1}
+                      0{index + 1}
                     </span>
-                    {index === 0 && (
+                    {dish.name === "Malteadas" && (
                       <span className="dish-favorite">
-                        <Star size={12} fill="currentColor" /> RONNY RECOMIENDA
+                        <Star size={12} fill="currentColor" /> EL ANTOJO DE RONNY
                       </span>
                     )}
                   </div>
@@ -321,6 +359,14 @@ export default function Home() {
                 </article>
               ))}
           </div>
+          {visibleDishes.length === 0 && (
+            <div className="menu-empty" role="status">
+              <Search size={28} />
+              <h3>No encontramos ese antojo.</h3>
+              <p>Prueba otro nombre o vuelve a explorar el menú completo.</p>
+              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); }}>Ver todo el menú</button>
+            </div>
+          )}
           <div className="friday-banner">
             <Mascot outfit={1} className="promo-ronny" />
             <div>
@@ -405,20 +451,24 @@ export default function Home() {
                 <em>parada feliz.</em>
               </h2>
               <p>
-                Estamos en Las Vegas, Ecatepec.
-                <br />
-                Ven por un antojo. Quédate por la buena vibra.
+                <MapPin size={18} aria-hidden="true" /> {business.address}
               </p>
               <a
                 className="button button-gold"
-                href="https://www.google.com/maps/search/?api=1&query=Las+Vegas+Ecatepec+Mexico"
+                href={business.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Ver la zona en Maps <ArrowUpRight size={18} />
+                Cómo llegar <ArrowUpRight size={18} />
               </a>
-              <p className="visit-hours"><Star size={16} fill="currentColor" /> Viernes, sábado y domingo<br /><strong>7 p. m.–12 a. m.</strong></p>
-              <small>Escríbenos para confirmar el punto exacto antes de visitarnos.</small>
+              <div className="visit-hours">
+                <Clock size={18} aria-hidden="true" />
+                <div><span>Viernes, sábado y domingo</span><strong>7 p. m.–12 a. m.</strong><small>{business.closedDays}</small></div>
+              </div>
+              <div className="business-contact-links">
+                <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp</a>
+                <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
+              </div>
             </div>
             <div className="visit-visual">
               <div className="map-grid" />
@@ -426,7 +476,7 @@ export default function Home() {
               <div className="map-ring ring-two" />
               <Mascot outfit={4} className="visit-guardian" />
               <span className="map-location">
-                LAS VEGAS<span>ECATEPEC, ESTADO DE MÉXICO</span>
+                NEW YORK<span>ECATEPEC · C. P. 55330</span>
               </span>
               <span className="map-caption">
                 EL ANTOJO TIENE UN PUNTO DE ENCUENTRO.
@@ -449,6 +499,10 @@ export default function Home() {
               Una pregunta, un saludo o ese antojo que no te deja en paz.
               Cuéntanos.
             </p>
+            <div className="business-contact-links contact-direct">
+              <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Escríbenos por WhatsApp</a>
+              <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
+            </div>
             <Mascot outfit={2} className="contact-host" />
             <span className="contact-signoff">
               Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />

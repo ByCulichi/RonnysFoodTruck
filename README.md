@@ -50,3 +50,9 @@ En Vercel, configurar únicamente para producción cuando se haya aprobado su ac
 ## Próximos cambios
 
 Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un PR completo con resumen, pruebas y pendientes. No fusionar automáticamente. Mantener intactas las ilustraciones `public/ronny-family-truck.png` y `public/ronny-outfits.png` salvo petición explícita.
+
+## Menú y datos de contacto
+
+El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
+
+Los datos de la captura proporcionada por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
