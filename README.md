@@ -4,7 +4,7 @@ Rediseño importado desde [ByCulichi/RonnysPage, PR #2](https://github.com/ByCul
 
 ## Identidad nocturna
 
-La portada toma como referencia el cartel compartido por el propietario: Ronny con pañuelo rojo, carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. La nueva ilustración está en `public/ronny-night-truck.png`; las ilustraciones originales se conservan. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. La nueva ilustración está en `public/ronny-night-truck.png`; las ilustraciones originales se conservan como archivos. La página utiliza el mismo Ronny plano en la portada, el icono (`public/ronny-flat-logo.png`) y los tres atuendos (`public/ronny-flat-outfits.png`). El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
 
 ## Desarrollo y validación
 

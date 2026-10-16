@@ -127,7 +127,7 @@ function Mascot({
   return (
     <div className={`mascot-crop ${className}`}>
       <img
-        src="/ronny-outfits.png"
+        src="/ronny-flat-outfits.png"
         alt={`Ronny, el chihuahua de la casa, con su atuendo de ${outfits[outfit].name.toLowerCase()}`}
         style={{ transform: `translateX(-${(outfit * 100) / 3}%)` }}
         width={1536}
@@ -175,7 +175,7 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/ronny-logo.png" alt="" width={50} height={50} />
+            <img src="/ronny-flat-logo.png" alt="" width={50} height={50} />
             <span>
               RONNY’S<span className="brand-sub">FOOD TRUCK · ECATEPEC</span>
             </span>
@@ -222,7 +222,7 @@ export default function Home() {
           <div className="night-scene">
             <img
               src="/ronny-night-truck.png"
-              alt="Ronny, el chihuahua con su pañuelo rojo y una malteada, frente al carrito rojo iluminado y la familia que prepara los antojos"
+              alt="Ronny en caricatura plana, café y con pañuelo rojo, sosteniendo una malteada y un hot dog junto al carrito rojo y su familia"
               width={1536}
               height={1024}
               fetchPriority="high"
@@ -423,7 +423,7 @@ export default function Home() {
                 detrás de cada antojo.
               </p>
               <figure className="family-memory">
-                <img src="/ronny-family-truck.png" alt="Ronny y nuestra familia preparando postres en el carrito rojo" width={1536} height={1024} loading="lazy" />
+                <img src="/ronny-night-truck.png" alt="Ronny en caricatura plana y nuestra familia en el carrito rojo" width={1536} height={1024} loading="lazy" />
                 <figcaption>El ingrediente de siempre: nuestra familia.</figcaption>
               </figure>
               <p className="story-signature">
