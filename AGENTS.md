@@ -9,3 +9,5 @@
 - Para cambios posteriores a la importación inicial: trabajar en una rama y entregar un PR completo con resumen, validaciones y pendientes. No fusionarlo automáticamente.
 - Solo desplegar previews salvo autorización explícita de producción. No cambiar dominios de producción sin consultar.
 - Si faltan permisos, reportar el código HTTP y el mensaje exacto sin credenciales. No presentar un build local o una captura como preview navegable.
+
+- Personalidad de Ronny: enojón, valiente, leal, protector y defensor de su familia; divertido y fan de las gusgerías. Mantener estos rasgos en textos y personajes. Incluir atuendos de temporada en el mismo estilo plano.

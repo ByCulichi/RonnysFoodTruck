@@ -12,6 +12,9 @@ import {
   Menu,
   PawPrint,
   Sparkles,
+  Shield,
+  Flame,
+  WandSparkles,
   Star,
   UtensilsCrossed,
   X,
@@ -22,23 +25,47 @@ const outfits = [
   {
     name: "El chef",
     label: "Chef de los antojos",
-    description: "Una crepa, un poquito de magia y mucho corazón.",
+    description: "Valiente ante cualquier antojo. Su debilidad: las gusgerías.",
     icon: ChefHat,
     position: 0,
   },
   {
     name: "El malteadero",
     label: "Maestro de malteadas",
-    description: "La felicidad también se sirve con crema batida.",
+    description: "Divertido, travieso y siempre listo para una malteada.",
     icon: Coffee,
     position: 1,
   },
   {
     name: "El anfitrión",
     label: "Tu nuevo mejor amigo",
-    description: "Pasa, ponte cómodo. Aquí siempre eres de la familia.",
+    description: "Leal a los suyos: aquí siempre eres de la familia.",
     icon: Heart,
     position: 2,
+  },
+  {
+    name: "El enojón",
+    label: "Mucho genio, más corazón",
+    description: "Se enoja si le tocan sus gusgerías… pero termina compartiendo.",
+    icon: Flame,
+    position: 0,
+    sheet: "/ronny-personalities.png",
+  },
+  {
+    name: "El guardián",
+    label: "Pequeño, valiente y protector",
+    description: "Leal y defensor de su familia. Grande de corazón, aunque sea chiquito.",
+    icon: Shield,
+    position: 1,
+    sheet: "/ronny-personalities.png",
+  },
+  {
+    name: "El hechicero",
+    label: "Hechizos y gusgerías",
+    description: "Su truco favorito: hacer desaparecer un antojo. ¡Ronny también se disfraza!",
+    icon: WandSparkles,
+    position: 2,
+    sheet: "/ronny-personalities.png",
   },
 ];
 const dishes = [
@@ -127,9 +154,10 @@ function Mascot({
   return (
     <div className={`mascot-crop ${className}`}>
       <img
-        src="/ronny-flat-outfits.png"
+        key={outfits[outfit].sheet ?? "classic"}
+        src={outfits[outfit].sheet ?? "/ronny-flat-outfits.png"}
         alt={`Ronny, el chihuahua de la casa, con su atuendo de ${outfits[outfit].name.toLowerCase()}`}
-        style={{ transform: `translateX(-${(outfit * 100) / 3}%)` }}
+        style={{ transform: `translateX(-${(outfits[outfit].position * 100) / 3}%)` }}
         width={1536}
         height={1024}
       />
@@ -388,7 +416,7 @@ export default function Home() {
                         title={item.name}
                         onClick={() => setOutfit(index)}
                       >
-                        <item.icon size={21} />
+                        <item.icon size={19} /><span>{item.name.replace("El ", "")}</span>
                       </button>
                     ))}
                   </div>
@@ -420,7 +448,9 @@ export default function Home() {
               <p>
                 Y el nombre… bueno, ese lo puso el más pequeño de la familia.
                 Ronny es nuestro chihuahua, nuestro compañero y la inspiración
-                detrás de cada antojo.
+                detrás de cada antojo. Tiene su genio, es valiente, leal y
+                protector de los suyos. También es divertido y tiene una debilidad:
+                las gusgerías. Pequeñito, pero siempre listo para defender a su familia.
               </p>
               <figure className="family-memory">
                 <img src="/ronny-night-truck.png" alt="Ronny en caricatura plana y nuestra familia en el carrito rojo" width={1536} height={1024} loading="lazy" />
