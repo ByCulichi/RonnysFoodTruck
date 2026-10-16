@@ -1,911 +1,630 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Star, MapPin, Menu, X } from "lucide-react"
-import Image from "next/image"
-import { sendContactEmail } from "./actions"
+import { useState } from "react";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ChefHat,
+  Coffee,
+  Heart,
+  MapPin,
+  Menu,
+  PawPrint,
+  Sparkles,
+  Star,
+  UtensilsCrossed,
+  X,
+} from "lucide-react";
+import { sendContactEmail } from "./actions";
 
-const PawPrint = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 50 50" fill="currentColor" className={`w-12 h-12 text-yellow-400/60 ${className}`}>
-    <ellipse cx="15" cy="15" rx="4" ry="6" transform="rotate(-20 15 15)" />
-    <ellipse cx="26" cy="13" rx="4" ry="6" transform="rotate(-10 26 13)" />
-    <ellipse cx="11" cy="24" rx="3.5" ry="5" transform="rotate(-30 11 24)" />
-    <ellipse cx="30" cy="22" rx="3.5" ry="5" transform="rotate(10 30 22)" />
-    <ellipse cx="20" cy="30" rx="6" ry="8" />
-  </svg>
-)
+const outfits = [
+  {
+    name: "El chef",
+    label: "Chef de los antojos",
+    description: "Una crepa, un poquito de magia y mucho corazón.",
+    icon: ChefHat,
+    position: 0,
+  },
+  {
+    name: "El malteadero",
+    label: "Maestro de malteadas",
+    description: "La felicidad también se sirve con crema batida.",
+    icon: Coffee,
+    position: 1,
+  },
+  {
+    name: "El anfitrión",
+    label: "Tu nuevo mejor amigo",
+    description: "Pasa, ponte cómodo. Aquí siempre eres de la familia.",
+    icon: Heart,
+    position: 2,
+  },
+];
+const dishes = [
+  {
+    name: "Crepas",
+    category: "UN CLÁSICO IRRESISTIBLE",
+    image: "crepe-with-nutella-and-strawberries.jpg",
+    price: 45,
+    description: "Nutella, cajeta, zarzamora con queso o fresa con queso.",
+    details: "Con fruta $55 · Con fruta y helado $65",
+    group: "Dulces",
+  },
+  {
+    name: "Waffles",
+    category: "CRUJIENTES POR FUERA",
+    image: "belgian-waffle-with-berries-and-syrup.jpg",
+    price: 55,
+    description:
+      "Cajeta, Nutella, fresa, maple o lechera. Tú eliges el final feliz.",
+    details: "Con fruta $65 · Con fruta y helado $75",
+    group: "Dulces",
+  },
+  {
+    name: "Malteadas",
+    category: "UN SORBITO DE FELICIDAD",
+    image: "strawberry-milkshake-retro.jpg",
+    price: 55,
+    description:
+      "Fresa, vainilla, chocolate o galleta. Cremosas de principio a fin.",
+    details: "Viernes de malteadas: 2 por $100",
+    group: "Bebidas",
+  },
+  {
+    name: "Snacks",
+    category: "PARA EL ANTOJO SALADO",
+    image: "loaded-fries-mexican-style.jpg",
+    price: 25,
+    description: "Papas locas $25 · Francesas $40 · Nachos $45 · Maruchan $30.",
+    details: "Salchipapas y salchipulpos $55",
+    group: "Salados",
+  },
+  {
+    name: "Hotcakes",
+    category: "ESPONJOSITOS Y FELICES",
+    image: "stack-of-pancakes-with-butter-and-syrup.jpg",
+    price: 50,
+    description:
+      "Nutella, fresa, cajeta, maple o lechera. Una torre de dulzura.",
+    details: "Con fruta $60",
+    group: "Dulces",
+  },
+  {
+    name: "Con crema",
+    category: "FRESCOS Y CONSENTIDOS",
+    image: "strawberries-with-cream-dessert.jpg",
+    price: 50,
+    description: "Plátanos o duraznos $50. Fresas con crema $60.",
+    details: "¿Otro antojo? Flan napolitano $42",
+    group: "Dulces",
+  },
+  {
+    name: "Cafecito",
+    category: "EL COMPAÑERO PERFECTO",
+    image: "coffee-cup-and-milkshake.jpg",
+    price: 22,
+    description:
+      "Un americano para acompañar tu postre o un capuchino bien cremoso.",
+    details: "Americano $22 · Capuchino $35",
+    group: "Bebidas",
+  },
+];
+const navLinks = [
+  ["inicio", "Inicio"],
+  ["menu", "El menú"],
+  ["historia", "Nuestro Ronny"],
+  ["encuentranos", "Encuéntranos"],
+];
 
-export default function RonnyLandingPage() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<{ type: "success" | "error"; message: string } | null>(null)
+function Mascot({
+  outfit = 0,
+  className = "",
+}: {
+  outfit?: number;
+  className?: string;
+}) {
+  return (
+    <div className={`mascot-crop ${className}`}>
+      <img
+        src="/ronny-outfits.png"
+        alt={`Ronny, el chihuahua de la casa, con su atuendo de ${outfits[outfit].name.toLowerCase()}`}
+        style={{ transform: `translateX(-${(outfit * 100) / 3}%)` }}
+        width={1536}
+        height={1024}
+      />
+    </div>
+  );
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus(null)
+export default function Home() {
+  const [outfit, setOutfit] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [filter, setFilter] = useState("Todo");
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+  const [sending, setSending] = useState(false);
+  const OutfitIcon = outfits[outfit].icon;
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSending(true);
+    setStatus(null);
     try {
-      const result = await sendContactEmail(formData)
-
-      if (result.success) {
-        setSubmitStatus({ type: "success", message: result.message })
-        setFormData({ name: "", email: "", message: "" })
-      } else {
-        setSubmitStatus({ type: "error", message: result.message })
-      }
-    } catch (error) {
-      setSubmitStatus({
-        type: "error",
-        message: "Hubo un error al enviar tu mensaje. Por favor intenta de nuevo.",
-      })
+      const result = await sendContactEmail(form);
+      setStatus(result);
+      if (result.success) setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus({
+        success: false,
+        message: "No pudimos enviar tu mensaje. Inténtalo de nuevo más tarde.",
+      });
     } finally {
-      setIsSubmitting(false)
+      setSending(false);
     }
   }
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    setMobileMenuOpen(false)
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" })
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-950 via-red-900 to-red-800">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-red-950/98 backdrop-blur-sm border-b-2 border-yellow-400">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/ronny-logo.png"
-              alt="Ronny Chihuahua Logo"
-              width={70}
-              height={70}
-              className="drop-shadow-[0_0_20px_rgba(255,215,0,0.8)] transition-all duration-300 hover:drop-shadow-[0_0_35px_rgba(255,215,0,1)] hover:scale-110"
-            />
-            <Image
-              src="/ronnys-logo-design.png"
-              alt="Ronny's Logo"
-              width={160}
-              height={50}
-              className="drop-shadow-[0_0_20px_rgba(239,68,68,0.8)] transition-all duration-300 hover:drop-shadow-[0_0_40px_rgba(239,68,68,1)] hover:scale-110"
-              style={{ background: "transparent" }}
-            />
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6">
-            <a
-              href="#inicio"
-              className="text-yellow-400 hover:text-yellow-300 font-black transition-all tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1.5px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Inicio
-            </a>
-            <a
-              href="#historia"
-              className="text-yellow-400 hover:text-yellow-300 font-black transition-all tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1.5px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Historia
-            </a>
-            <a
-              href="#menu"
-              className="text-yellow-400 hover:text-yellow-300 font-black transition-all tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1.5px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Menú
-            </a>
-            <a
-              href="#encuentranos"
-              className="text-yellow-400 hover:text-yellow-300 font-black transition-all tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1.5px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Ubicación
-            </a>
-            <a
-              href="#contacto"
-              className="text-yellow-400 hover:text-yellow-300 font-black transition-all tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1.5px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              Contacto
-            </a>
+    <div className="ronny-site">
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+      <header className="site-header">
+        <div className="shell header-inner">
+          <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
+            <img src="/ronny-logo.png" alt="" width={50} height={50} />
+            <span>
+              RONNY’S<span className="brand-sub">FOOD TRUCK · ECATEPEC</span>
+            </span>
+            <span className="brand-dot">®</span>
+          </a>
+          <nav className="desktop-nav" aria-label="Navegación principal">
+            {navLinks.map(([id, label]) => (
+              <a href={`#${id}`} key={id}>
+                {label}
+              </a>
+            ))}
           </nav>
-
-          {/* Mobile Menu Button */}
+          <a className="header-cta" href="#contacto">
+            ¿Se te antojó? <ArrowUpRight size={16} />
+          </a>
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-yellow-400 hover:text-yellow-300 transition-colors"
-            aria-label="Toggle menu"
+            className="mobile-toggle"
+            aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            {mobileOpen ? <X /> : <Menu />}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <nav className="md:hidden bg-red-950 border-t border-yellow-400">
-            <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-              <a
-                href="#inicio"
-                onClick={(e) => handleNavClick(e, "#inicio")}
-                className="text-yellow-400 hover:text-yellow-300 font-black transition-all text-lg tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Inicio
+        {mobileOpen && (
+          <nav
+            id="mobile-nav"
+            className="mobile-nav"
+            aria-label="Navegación móvil"
+          >
+            {[...navLinks, ["contacto", "Contacto"]].map(([id, label]) => (
+              <a href={`#${id}`} key={id} onClick={() => setMobileOpen(false)}>
+                {label}
+                <ArrowUpRight size={18} />
               </a>
-              <a
-                href="#historia"
-                onClick={(e) => handleNavClick(e, "#historia")}
-                className="text-yellow-400 hover:text-yellow-300 font-black transition-all text-lg tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Historia
-              </a>
-              <a
-                href="#menu"
-                onClick={(e) => handleNavClick(e, "#menu")}
-                className="text-yellow-400 hover:text-yellow-300 font-black transition-all text-lg tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Menú
-              </a>
-              <a
-                href="#encuentranos"
-                onClick={(e) => handleNavClick(e, "#encuentranos")}
-                className="text-yellow-400 hover:text-yellow-300 font-black transition-all text-lg tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Ubicación
-              </a>
-              <a
-                href="#contacto"
-                onClick={(e) => handleNavClick(e, "#contacto")}
-                className="text-yellow-400 hover:text-yellow-300 font-black transition-all text-lg tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Contacto
-              </a>
-            </div>
+            ))}
           </nav>
         )}
       </header>
 
-      <section
-        id="inicio"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-red-950/50 via-red-900/30 to-red-950/50 pt-24 pb-12"
-      >
-        <PawPrint className="absolute top-32 left-10 animate-bounce" style={{ animationDuration: "3s" }} />
-        <PawPrint
-          className="absolute top-32 right-10 animate-bounce"
-          style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}
-        />
-
-        <div className="container mx-auto px-4 z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 flex flex-col items-center">
-              <h1
-                className="text-3xl md:text-5xl lg:text-6xl font-black text-yellow-400 mb-4 tracking-tighter text-balance"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "2px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Bienvenido a
-              </h1>
-              <div className="mb-6">
-                <Image
-                  src="/ronnys-logo-design.png"
-                  alt="Ronny's Logo"
-                  width={600}
-                  height={180}
-                  className="drop-shadow-[0_0_40px_rgba(239,68,68,1)] transition-all duration-300 hover:drop-shadow-[0_0_60px_rgba(239,68,68,1)] hover:scale-110"
-                  style={{ background: "transparent" }}
-                />
-              </div>
-              <p
-                className="text-2xl md:text-3xl text-yellow-400 mb-8 font-black text-balance tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Donde la Dulzura se Encuentra con la Diversión
-              </p>
+      <main id="contenido">
+        <section className="hero shell" id="inicio">
+          <div className="hero-copy">
+            <div className="eyebrow">
+              <span className="small-line" /> UN CHIHUAHUA. UN CARRITO. UNA
+              FAMILIA.
             </div>
-
-            <div className="mb-8 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.5)] border-4 border-red-600">
+            <h1>
+              Mucho sabor.
+              <br />
+              En familia y con
+              <br />
+              <span className="hero-heart">
+                travesura
+                <svg viewBox="0 0 390 20" aria-hidden="true">
+                  <path d="M3 12 Q175 -2 385 9 M55 18 Q200 7 345 16" />
+                </svg>
+              </span>
+              <span className="gold-dot">.</span>
+            </h1>
+            <p className="hero-description">
+              Soy Ronny, y este es nuestro pequeño mundo.
+              <br />
+              Un carrito, una familia y muchos antojos,
+              <br className="desktop-break" /> preparados con corazón en
+              Ecatepec.
+            </p>
+            <div className="hero-actions">
+              <a className="button button-gold" href="#menu">
+                Descubre el menú <ArrowUpRight size={20} />
+              </a>
+              <a className="text-link" href="#historia">
+                Conoce a Ronny <ArrowRight size={18} />
+              </a>
+            </div>
+            <div className="hero-note">
+              <span className="paw-circle">
+                <PawPrint size={19} />
+              </span>
+              <div>
+                <strong>El sabor lo preparamos juntos.</strong>
+                <span>Desde Las Vegas, Ecatepec, para tu antojo.</span>
+              </div>
+            </div>
+          </div>
+          <div className="hero-visual">
+            <div className="orbit orbit-one" />
+            <div className="orbit orbit-two" />
+            <span className="floating-spark spark-one" aria-hidden="true">
+              ✦
+            </span>
+            <span className="floating-spark spark-two" aria-hidden="true">
+              ✧
+            </span>
+            <div className="speech-bubble" key={`speech-${outfit}`}>
+              ¡Hola, soy Ronny! <span>Tu antojo está en buenas patas.</span>
+            </div>
+            <div className="hero-character family-hero-art">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-EPTjeYQLTEStsr4Q0KUkK0w4hEUn8W.png"
-                alt="Ronny's Food Truck"
-                className="w-full h-auto"
+                src="/ronny-family-truck.png"
+                alt="Ronny vestido de chef frente al carrito rojo, junto a una familia ilustrada preparando crepas y malteadas"
+                width={1536}
+                height={1024}
+                fetchPriority="high"
               />
+              <div className="character-shade" />
             </div>
+            <div className="character-tag">
+              <span>
+                <Heart size={20} />
+              </span>
+              <div>
+                <small>LA RECETA DE LA CASA</small>
+                <strong>Hecho en familia</strong>
+              </div>
+              <Check size={16} />
+            </div>
+            <div className="family-pill">
+              <PawPrint size={14} /> Ronny <span>·</span> El carrito{" "}
+              <span>·</span> Nuestra familia
+            </div>
+          </div>
+          <a className="scroll-cue" href="#menu">
+            <ArrowDown size={14} /> SIGUE EL ANTOJO
+          </a>
+        </section>
 
-            <div className="text-center">
-              <Button
-                size="lg"
-                className="bg-red-600 hover:bg-red-700 text-white font-black text-lg px-8 py-6 rounded-full shadow-[0_0_30px_rgba(239,68,68,0.5)] hover:shadow-[0_0_40px_rgba(239,68,68,0.7)] transition-all duration-300 transform hover:scale-105 tracking-tight"
-                style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}
-                onClick={() => document.getElementById("menu")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                Ver Menú
-              </Button>
-            </div>
+        <div className="flavor-strip" aria-label="Las especialidades de Ronny">
+          <div>
+            CREPAS <span>✦</span> MALTEADAS <span>✦</span> WAFFLES{" "}
+            <span>✦</span> BUENA VIBRA <span>✦</span> SNACKS <span>✦</span>{" "}
+            MUCHO CORAZÓN <PawPrint size={24} />
           </div>
         </div>
-      </section>
 
-      <section id="historia" className="py-20 bg-gradient-to-b from-red-950/50 via-red-900/40 to-red-950/50 relative">
-        <PawPrint className="absolute top-10 left-10 animate-bounce" style={{ animationDuration: "3s" }} />
-        <PawPrint
-          className="absolute top-10 right-10 animate-bounce"
-          style={{ animationDuration: "3.3s", animationDelay: "0.4s" }}
-        />
-
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2
-              className="text-4xl md:text-5xl font-black text-yellow-400 mb-12 text-center tracking-tighter"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "2px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              TODO EMPEZÓ
-            </h2>
-            <div className="space-y-6">
-              <Card className="bg-[#2a2d39]/80 border-yellow-400 border-2 rounded-3xl p-8 md:p-10 shadow-[0_0_30px_rgba(250,204,21,0.2)] transition-all duration-300 hover:shadow-[0_0_40px_rgba(250,204,21,0.4)] hover:scale-[1.02]">
-                <p className="text-lg md:text-xl text-neutral-100 leading-relaxed text-pretty">
-                  Todo empezó por mi fanatismo al cocinar y juegos de comidita. Lo que comenzó como diversión se
-                  convirtió en pasión, y esa pasión se transformó en Ronny's, nuestro food truck sobre ruedas.
-                </p>
-              </Card>
-              <Card className="bg-[#2a2d39]/80 border-yellow-400 border-2 rounded-3xl p-8 md:p-10 shadow-[0_0_30px_rgba(250,204,21,0.2)] transition-all duration-300 hover:shadow-[0_0_40px_rgba(250,204,21,0.4)] hover:scale-[1.02]">
-                <p className="text-lg md:text-xl text-neutral-100 leading-relaxed text-pretty">
-                  El nombre viene de Ronny, nuestro pequeño chihuahua — la mascota de la familia y ahora la cara de este
-                  dulce sueño sobre ruedas.
-                </p>
-              </Card>
+        <section className="menu-section shell section-space" id="menu">
+          <div className="section-heading">
+            <div>
+              <div className="eyebrow">
+                <UtensilsCrossed size={15} /> EL MENÚ DE LA CASA
+              </div>
+              <h2>
+                Antojos que mueven
+                <br />
+                <em>la colita.</em>
+              </h2>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="menu" className="py-20 bg-gradient-to-b from-red-950/50 via-red-900/40 to-red-950/50 relative">
-        <PawPrint
-          className="absolute top-10 left-10 animate-bounce"
-          style={{ animationDuration: "3s", animationDelay: "0.2s" }}
-        />
-        <PawPrint
-          className="absolute top-10 right-10 animate-bounce"
-          style={{ animationDuration: "3.5s", animationDelay: "0.7s" }}
-        />
-
-        <div className="container mx-auto px-4">
-          {/* Retro menu header with checkered border and RONNY'S logo */}
-          <div className="max-w-7xl mx-auto mb-12">
-            <div className="bg-[#f5f0e8] rounded-3xl overflow-hidden border-4 border-black shadow-2xl">
-              {/* Checkered border top */}
-              <div className="h-8 flex">
-                {[...Array(40)].map((_, i) => (
-                  <div key={i} className={`flex-1 ${i % 2 === 0 ? "bg-red-600" : "bg-white"}`} />
-                ))}
-              </div>
-
-              {/* Menu header with logo */}
-              <div className="px-8 py-6 flex items-center justify-between flex-wrap gap-4">
-                <h2
-                  className="text-5xl md:text-6xl font-black text-black"
-                  style={{ fontFamily: "Brush Script MT, cursive" }}
-                >
-                  Menú
-                </h2>
-                <div className="flex items-center gap-2">
-                  <span className="text-black text-2xl">★</span>
-                  <h3
-                    className="text-4xl md:text-5xl font-black text-red-600 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    RONNY'S
-                  </h3>
-                  <span className="text-red-600 text-2xl">★</span>
-                  <span className="text-black text-2xl">★</span>
-                </div>
-              </div>
-
-              {/* Checkered border bottom */}
-              <div className="h-8 flex">
-                {[...Array(40)].map((_, i) => (
-                  <div key={i} className={`flex-1 ${i % 2 === 0 ? "bg-red-600" : "bg-white"}`} />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-red-600 to-red-700 border-4 border-yellow-400 rounded-2xl p-4 mb-12 max-w-3xl mx-auto shadow-[0_0_30px_rgba(250,204,21,0.3)]">
-            <p
-              className="text-center text-yellow-400 font-black text-xl md:text-2xl tracking-tight"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "1px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              ⭐ ¡2 x $100 MXN en malteadas cada viernes! ⭐
+            <p>
+              Elige tu favorito. Ronny ya se puso el delantal.
+              <br />
+              Todos los precios están en pesos mexicanos.
             </p>
           </div>
-
-          <div className="max-w-7xl mx-auto space-y-8">
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/crepe-with-nutella-and-strawberries.jpg"
-                    alt="Crepas"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Crepas
-                  </h3>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-red-600 font-bold text-lg mb-1 leading-relaxed">Sencillos - $45</p>
-                      <p className="text-black text-sm leading-relaxed">
-                        Nutella • Cajeta • Zarzamora con queso • Fresa con queso
-                      </p>
-                    </div>
-                    <p className="text-red-600 font-bold text-lg leading-relaxed">Con fruta - $55</p>
-                    <p className="text-red-600 font-bold text-lg leading-relaxed">Con fruta y helado - $65</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/belgian-waffle-with-berries-and-syrup.jpg"
-                    alt="Waffles"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Waffles
-                  </h3>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-red-600 font-bold text-lg mb-1 leading-relaxed">Sencillos - $55</p>
-                      <p className="text-black text-sm leading-relaxed">Cajeta • Nutella • Fresa • Maple • Lechera</p>
-                    </div>
-                    <p className="text-red-600 font-bold text-lg leading-relaxed">Con fruta - $65</p>
-                    <p className="text-red-600 font-bold text-lg leading-relaxed">Con fruta y helado - $75</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/stack-of-pancakes-with-butter-and-syrup.jpg"
-                    alt="Hotcakes"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Hotcakes
-                  </h3>
-                  <div className="space-y-2">
-                    <div>
-                      <p className="text-red-600 font-bold text-lg mb-1 leading-relaxed">Sencillos - $50</p>
-                      <p className="text-black text-sm leading-relaxed">Nutella • Fresa • Cajeta • Maple • Lechera</p>
-                    </div>
-                    <p className="text-red-600 font-bold text-lg leading-relaxed">Con fruta - $60</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/loaded-fries.png"
-                    alt="Snacks"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Snacks
-                  </h3>
-                  <div className="space-y-1 text-black leading-relaxed">
-                    <p>Salchipapas ............... $55</p>
-                    <p>Papas a la francesa ............... $40</p>
-                    <p>Salchipulpos ............... $55</p>
-                    <p>Maruchan ............... $30</p>
-                    <p>Nachos ............... $45</p>
-                    <p>Papas locas ............... $25</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/coffee-cup-and-milkshake.jpg"
-                    alt="Bebidas"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Bebidas
-                  </h3>
-                  <div className="space-y-1 text-black leading-relaxed">
-                    <p>Capuchino ............... $35</p>
-                    <p>Americano ............... $22</p>
-                    <p>Malteada fresa, vainilla, chocolate y galleta ............... $55</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/strawberries-with-cream-dessert.jpg"
-                    alt="Con crema"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Con crema
-                  </h3>
-                  <div className="space-y-1 text-black leading-relaxed">
-                    <p>Fresas con crema ............... $60</p>
-                    <p>Plátanos con crema ............... $50</p>
-                    <p>Duraznos con crema ............... $50</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="bg-[#F5E6D3] border-4 border-dashed border-red-600 p-6 md:p-8 shadow-xl transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="w-full md:w-48 h-48 flex-shrink-0">
-                  <img
-                    src="/flan-napolitano-dessert.jpg"
-                    alt="Flan"
-                    className="w-full h-full object-cover rounded-lg shadow-md"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3
-                    className="text-3xl md:text-4xl font-black text-red-600 mb-4 tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontStyle: "italic" }}
-                  >
-                    Flan
-                  </h3>
-                  <p className="text-black leading-relaxed">Flan napolitano ............... $42</p>
-                </div>
-              </div>
-            </Card>
+          <div className="menu-toolbar">
+            <div
+              className="filter-group"
+              role="group"
+              aria-label="Filtrar menú"
+            >
+              {["Todo", "Dulces", "Salados", "Bebidas"].map((item) => (
+                <button
+                  key={item}
+                  aria-pressed={filter === item}
+                  className={filter === item ? "selected" : ""}
+                  onClick={() => setFilter(item)}
+                >
+                  {item}
+                  {item === "Todo" && <span>{dishes.length}</span>}
+                </button>
+              ))}
+            </div>
+            <span className="menu-aside">
+              <Sparkles size={15} /> EL ANTOJO NO SE JUZGA
+            </span>
           </div>
-        </div>
-      </section>
+          <div className="dish-grid">
+            {dishes
+              .filter((dish) => filter === "Todo" || dish.group === filter)
+              .map((dish, index) => (
+                <article className="dish-card" key={dish.name}>
+                  <div className="dish-image">
+                    <img
+                      src={`/${dish.image}`}
+                      alt={dish.name}
+                      width={600}
+                      height={400}
+                      loading="lazy"
+                    />
+                    <span className="dish-number">
+                      0{dishes.indexOf(dish) + 1}
+                    </span>
+                    {index === 0 && (
+                      <span className="dish-favorite">
+                        <Star size={12} fill="currentColor" /> RONNY RECOMIENDA
+                      </span>
+                    )}
+                  </div>
+                  <div className="dish-info">
+                    <span className="dish-category">{dish.category}</span>
+                    <div className="dish-title">
+                      <h3>{dish.name}</h3>
+                      <div>
+                        <small>desde</small>
+                        <strong>${dish.price}</strong>
+                      </div>
+                    </div>
+                    <p>{dish.description}</p>
+                    <div className="dish-detail">{dish.details}</div>
+                  </div>
+                </article>
+              ))}
+          </div>
+          <div className="friday-banner">
+            <div className="friday-icon">
+              <Coffee size={30} />
+            </div>
+            <div>
+              <span>LOS VIERNES SABEN MEJOR</span>
+              <h3>Una para ti. Otra para tu cómplice.</h3>
+            </div>
+            <strong>
+              2 malteadas <span>× $100</span>
+            </strong>
+            <Sparkles className="friday-star" size={34} />
+          </div>
+        </section>
 
-      <section
-        id="encuentranos"
-        className="py-20 bg-gradient-to-b from-red-950/50 via-red-900/40 to-red-950/50 relative"
-      >
-        <PawPrint
-          className="absolute top-10 left-10 animate-bounce"
-          style={{ animationDuration: "3s", animationDelay: "0.3s" }}
-        />
-        <PawPrint
-          className="absolute top-10 right-10 animate-bounce"
-          style={{ animationDuration: "3.3s", animationDelay: "0.6s" }}
-        />
-
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-4xl md:text-6xl font-black text-red-600 mb-8 text-center tracking-tighter"
-            style={{
-              fontFamily: "Impact, 'Arial Black', sans-serif",
-              WebkitTextStroke: "1px #000000",
-              paintOrder: "stroke fill",
-            }}
-          >
-            ENCUÉNTRANOS
-          </h2>
-
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-8 text-center">
-              <div className="flex items-center gap-3">
-                <MapPin className="w-8 h-8 text-yellow-400 flex-shrink-0" />
-                <p className="text-xl md:text-2xl text-neutral-200">
-                  <span
-                    className="text-yellow-400 font-black tracking-tight"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}
-                  >
-                    Las Vegas, Ecatepec
-                  </span>
+        <section className="story-section" id="historia">
+          <div className="shell story-layout">
+            <div className="story-art">
+              <Mascot outfit={outfit} />
+              <div className="story-stamp">
+                <PawPrint size={24} />
+                <span>
+                  CHIHUAHUA
+                  <br />
+                  DE CORAZÓN
+                </span>
+              </div>
+              <div className="story-outfits">
+                <div className="outfit-status">
+                  <OutfitIcon size={18} />
+                  <strong>{outfits[outfit].label}</strong>
+                </div>
+                <div className="outfit-controls">
+                  <span>ELIGE MI LOOK</span>
+                  <div role="group" aria-label="Atuendos de Ronny">
+                    {outfits.map((item, index) => (
+                      <button
+                        key={item.name}
+                        className={
+                          outfit === index
+                            ? "outfit-button active"
+                            : "outfit-button"
+                        }
+                        aria-pressed={outfit === index}
+                        aria-label={item.name}
+                        title={item.name}
+                        onClick={() => setOutfit(index)}
+                      >
+                        <item.icon size={21} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <p className="outfit-caption" aria-live="polite">
+                  {outfits[outfit].description}
                 </p>
               </div>
-              <p className="text-lg md:text-xl text-neutral-300">Ven a probar la diversión sobre ruedas</p>
             </div>
-
-            <h3
-              className="text-3xl md:text-4xl font-black text-yellow-400 mb-6 text-center tracking-tighter"
-              style={{
-                fontFamily: "Impact, 'Arial Black', sans-serif",
-                WebkitTextStroke: "2px #dc2626",
-                paintOrder: "stroke fill",
-              }}
-            >
-              VISÍTANOS
-            </h3>
-            <Card className="bg-neutral-900 border-yellow-400 border-4 overflow-hidden shadow-[0_0_30px_rgba(250,204,21,0.3)] p-0">
-              <div className="w-full h-[400px] md:h-[500px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15047.234567890123!2d-99.0123456789!3d19.6123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDM2JzQ0LjQiTiA5OcKwMDAnNDQuNCJX!5e0!3m2!1ses!2smx!4v1234567890123!5m2!1ses!2smx"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, display: "block" }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+            <div className="story-copy">
+              <div className="eyebrow">
+                <PawPrint size={16} /> RONNY Y LA FAMILIA
               </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gradient-to-b from-red-950/50 via-red-900/40 to-red-950 relative">
-        <PawPrint className="absolute top-10 left-10 animate-bounce" style={{ animationDuration: "3s" }} />
-        <PawPrint
-          className="absolute top-10 right-10 animate-bounce"
-          style={{ animationDuration: "3.4s", animationDelay: "0.6s" }}
-        />
-
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-4xl md:text-6xl font-black text-yellow-400 mb-12 text-center tracking-tighter"
-            style={{
-              fontFamily: "Impact, 'Arial Black', sans-serif",
-              WebkitTextStroke: "2px #dc2626",
-              paintOrder: "stroke fill",
-            }}
-          >
-            LO QUE DICEN NUESTROS CLIENTES
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="bg-gradient-to-br from-red-600 to-red-800 border-yellow-400 border-4 rounded-3xl p-6 hover:shadow-[0_0_40px_rgba(250,204,21,0.5)] transition-all duration-300 hover:scale-110">
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-neutral-100 text-lg mb-4 text-pretty">Las mejores malteadas de Ecatepec</p>
-              <p className="text-yellow-400 font-bold">— Carla M.</p>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-red-600 to-red-800 border-yellow-400 border-4 rounded-3xl p-6 hover:shadow-[0_0_40px_rgba(250,204,21,0.5)] transition-all duration-300 hover:scale-110">
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-neutral-100 text-lg mb-4 text-pretty">Ambiente increíble y servicio spectacular</p>
-              <p className="text-yellow-400 font-bold">— Luis R.</p>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-red-600 to-red-800 border-yellow-400 border-4 rounded-3xl p-6 hover:shadow-[0_0_40px_rgba(250,204,21,0.5)] transition-all duration-300 hover:scale-110">
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-neutral-100 text-lg mb-4 text-pretty">
-                Las crepas son un sueño, y el logo del perrito es lo más lindo
+              <h2>
+                Orejas grandes.
+                <br />
+                Un corazón
+                <br />
+                <em>todavía más.</em>
+              </h2>
+              <p>
+                Todo empezó jugando a cocinar. La diversión se volvió pasión, y
+                la pasión encontró su lugar sobre ruedas.
               </p>
-              <p className="text-yellow-400 font-bold">— Sofía G.</p>
-            </Card>
+              <p>
+                Detrás del carrito está nuestra familia: manos que preparan,
+                sonrisas que reciben y cariño en cada detalle.
+              </p>
+              <p>
+                Y el nombre… bueno, ese lo puso el más pequeño de la familia.
+                Ronny es nuestro chihuahua, nuestro compañero y la inspiración
+                detrás de cada antojo.
+              </p>
+              <p className="story-signature">
+                Aquí no solo hacemos postres.
+                <br />
+                <strong>Hacemos que te sientas en casa.</strong>
+              </p>
+              <a className="text-link" href="#encuentranos">
+                Ven a conocernos <ArrowUpRight size={18} />
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="contacto" className="py-20 bg-gradient-to-b from-red-950/50 via-red-900/40 to-red-950 relative">
-        <PawPrint
-          className="absolute top-10 left-10 animate-bounce"
-          style={{ animationDuration: "3s", animationDelay: "0.2s" }}
-        />
-        <PawPrint
-          className="absolute top-10 right-10 animate-bounce"
-          style={{ animationDuration: "3.3s", animationDelay: "0.5s" }}
-        />
-
-        <div className="container mx-auto px-4">
-          <h2
-            className="text-4xl md:text-6xl font-black text-yellow-400 mb-12 text-center tracking-tighter"
-            style={{
-              fontFamily: "Impact, 'Arial Black', sans-serif",
-              WebkitTextStroke: "2px #dc2626",
-              paintOrder: "stroke fill",
-            }}
-          >
-            CONTÁCTANOS
-          </h2>
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
-            <div className="flex flex-col items-center">
-              <h3
-                className="text-2xl font-black text-yellow-400 mb-6 tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
+        <section
+          className="visit-section shell section-space"
+          id="encuentranos"
+        >
+          <div className="visit-card">
+            <div className="visit-copy">
+              <div className="eyebrow">
+                <MapPin size={16} /> NOS VEMOS EN EL TRUCK
+              </div>
+              <h2>
+                Tu próxima
+                <br />
+                <em>parada feliz.</em>
+              </h2>
+              <p>
+                Estamos en Las Vegas, Ecatepec.
+                <br />
+                Ven por un antojo. Quédate por la buena vibra.
+              </p>
+              <a
+                className="button button-gold"
+                href="https://www.google.com/maps/search/?api=1&query=Las+Vegas+Ecatepec+Mexico"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Síguenos en redes
-              </h3>
-              <div className="flex gap-4 mb-8 flex-wrap justify-center">
-                <a
-                  href="https://wa.me/525512345678"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0"
-                  style={{ backgroundColor: "#25D366" }}
-                  aria-label="WhatsApp"
-                >
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                  </svg>
-                </a>
+                Ver la zona en Maps <ArrowUpRight size={18} />
+              </a>
+              <small>
+                ¿Nos visitas? Escríbenos para confirmar el punto exacto y
+                horario.
+              </small>
+            </div>
+            <div className="visit-visual">
+              <div className="map-grid" />
+              <div className="map-ring ring-one" />
+              <div className="map-ring ring-two" />
+              <div className="map-marker">
+                <PawPrint size={33} />
+              </div>
+              <span className="map-location">
+                LAS VEGAS<span>ECATEPEC, ESTADO DE MÉXICO</span>
+              </span>
+              <span className="map-caption">
+                EL ANTOJO TIENE UN PUNTO DE ENCUENTRO.
+              </span>
+            </div>
+          </div>
+        </section>
 
-                <a
-                  href="https://instagram.com/ronnyfoodtruck"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)",
-                  }}
-                  aria-label="Instagram"
-                >
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                  </svg>
-                </a>
-
-                <a
-                  href="https://tiktok.com/@ronnyfoodtruck"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0"
-                  style={{ backgroundColor: "#000000" }}
-                  aria-label="TikTok"
-                >
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
-                  </svg>
-                </a>
-
-                <a
-                  href="https://facebook.com/ronnyfoodtruck"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0"
-                  style={{ backgroundColor: "#1877F2" }}
-                  aria-label="Facebook"
-                >
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </a>
-
-                <a
-                  href="https://x.com/ronnyfoodtruck"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-full flex items-center justify-center transition-transform hover:scale-110 flex-shrink-0"
-                  style={{ backgroundColor: "#000000" }}
-                  aria-label="X (Twitter)"
-                >
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.244H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </a>
+        <section className="contact-section shell" id="contacto">
+          <div className="contact-copy">
+            <div className="eyebrow">
+              <Heart size={15} /> AQUÍ TE ESCUCHAMOS
+            </div>
+            <h2>
+              ¿Platicamos
+              <br />
+              <em>algo rico?</em>
+            </h2>
+            <p>
+              Una pregunta, un saludo o ese antojo que no te deja en paz.
+              Cuéntanos.
+            </p>
+            <span className="contact-signoff">
+              Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />
+            </span>
+          </div>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div>
+                <label htmlFor="name">Tu nombre</label>
+                <input
+                  id="name"
+                  autoComplete="name"
+                  placeholder="¿Cómo te llamas?"
+                  required
+                  maxLength={100}
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  disabled={sending}
+                />
+              </div>
+              <div>
+                <label htmlFor="email">
+                  Tu correo <span>(opcional)</span>
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="hola@ejemplo.com"
+                  maxLength={254}
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  disabled={sending}
+                />
               </div>
             </div>
-
-            <div className="flex flex-col items-center">
-              <h3
-                className="text-2xl font-black text-yellow-400 mb-6 tracking-tight"
-                style={{
-                  fontFamily: "Impact, 'Arial Black', sans-serif",
-                  WebkitTextStroke: "1.5px #dc2626",
-                  paintOrder: "stroke fill",
-                }}
-              >
-                Envíanos un mensaje
-              </h3>
-              <Card className="bg-[#2a2d39] border-red-600 border-2 p-6 w-full max-w-md">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="Tu nombre"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="bg-[#1a1d29] border-red-600 text-white placeholder:text-neutral-400"
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="Tu email (opcional)"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-[#1a1d29] border-red-600 text-white placeholder:text-neutral-400"
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      id="message"
-                      placeholder="Tu mensaje"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="bg-[#1a1d29] border-red-600 text-white placeholder:text-neutral-400 min-h-32"
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  {submitStatus && (
-                    <div
-                      className={`p-3 rounded-lg text-center ${
-                        submitStatus.type === "success"
-                          ? "bg-green-600/20 text-green-400 border border-green-600"
-                          : "bg-red-600/20 text-red-400 border border-red-600"
-                      }`}
-                    >
-                      {submitStatus.message}
-                    </div>
-                  )}
-                  <Button
-                    type="submit"
-                    className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-black text-lg py-6 tracking-tight disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "ENVIANDO..." : "ENVIAR"}
-                  </Button>
-                </form>
-              </Card>
+            <label htmlFor="message">¿Qué tienes en mente?</label>
+            <textarea
+              id="message"
+              placeholder="Hola Ronny, me gustaría saber…"
+              required
+              maxLength={3000}
+              rows={4}
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+              disabled={sending}
+            />
+            <div aria-live="polite">
+              {status && (
+                <p
+                  className={`form-status ${status.success ? "success" : "error"}`}
+                >
+                  {status.message}
+                </p>
+              )}
             </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="bg-red-950 py-8 border-t-2 border-yellow-400">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/ronny-logo.png"
-                alt="Ronny Chihuahua Logo"
-                width={70}
-                height={70}
-                className="drop-shadow-[0_0_20px_rgba(255,215,0,0.7)]"
-              />
-              <Image
-                src="/ronnys-logo-design.png"
-                alt="Ronny's Logo"
-                width={180}
-                height={60}
-                className="drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]"
-                style={{ background: "transparent" }}
-              />
-            </div>
-            <p className="text-neutral-400 text-center">© 2025 Ronny Food Truck. Todos los derechos reservados.</p>
-            <p className="text-yellow-400 text-sm">Dulzura sobre ruedas</p>
-          </div>
+            <button
+              className="button button-gold"
+              type="submit"
+              disabled={sending}
+            >
+              {sending ? "Enviando…" : "Enviar mi mensaje"}
+              <ArrowUpRight size={18} />
+            </button>
+          </form>
+        </section>
+      </main>
+      <footer className="site-footer shell">
+        <a href="#inicio" className="footer-wordmark">
+          RONNY’S<span>®</span>
+        </a>
+        <p>Pequeños antojos. Grandes momentos.</p>
+        <div>
+          <span>© {new Date().getFullYear()} Ronny’s Food Truck</span>
+          <a href="#inicio">
+            Hecho con <Heart size={12} /> y muchas patitas.
+          </a>
         </div>
       </footer>
-
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-yellow-400 hover:bg-yellow-500 text-black rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 z-40"
-        aria-label="Scroll to top"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
     </div>
-  )
+  );
 }
