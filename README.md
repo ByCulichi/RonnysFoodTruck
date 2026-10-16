@@ -1,158 +1,42 @@
-# Ronny's Food Truck - Landing Page
+# Ronny’s Food Truck
 
-A modern retro-styled landing page for Ronny's Food Truck, specializing in desserts and snacks in Ecatepec, Mexico.
+Rediseño importado desde [ByCulichi/RonnysPage, PR #2](https://github.com/ByCulichi/RonnysPage/pull/2), commit `d990872dfc0fecb37fe31077c45422a54bd7d394` (incluido en el historial). Conserva a Ronny, el carrito rojo y la familia, los tres atuendos seleccionables, los filtros del menú y el diseño adaptable oscuro, rojo y dorado.
 
-![Hero Section](https://github.com/user-attachments/assets/89cd15cb-7a45-4c30-8955-00a8f8825c32)
+## Desarrollo y validación
 
-## 🎯 About the Project
+Requiere Node.js 22 y npm. npm y `package-lock.json` son la fuente de dependencias; no uses el antiguo lockfile de pnpm.
 
-Ronny's Food Truck is a vibrant, mobile dessert and snack business located in Las Vegas, Ecatepec. This landing page showcases their delicious offerings with a retro aesthetic featuring bold colors (red, black, gold, and yellow) and smooth LED-style animations.
-
-The name comes from **Ronny**, the family's beloved chihuahua mascot, whose adorable face is the star of this sweet dream on wheels!
-
-## ✨ Key Features
-
-### Hero Section
-- Eye-catching retro design with neon-style branding
-- Prominent Ronny chihuahua logo with LED glow effects
-- Clear call-to-action button to view the menu
-- Fully responsive across all devices
-
-### About Section
-![About Section](https://github.com/user-attachments/assets/e76f5278-55ca-4313-bddf-50b1c6c8f202)
-
-"Everything started with my passion for cooking and playing food games. What began as fun turned into passion, and that passion transformed into Ronny's, our food truck on wheels."
-
-### Menu Section
-![Menu Section](https://github.com/user-attachments/assets/794ac0e7-86df-4305-b5aa-28fa40b7faed)
-
-The menu features a wide variety of desserts and snacks:
-
-- **Crepes** - Simple ($45 MXN), with fruit ($55), with fruit and ice cream ($65)
-  - Nutella, Cajeta, Blackberry with cheese, Strawberry with cheese
-- **Waffles** - Simple ($55 MXN), with fruit ($65), with fruit and ice cream ($75)
-  - Cajeta, Nutella, Strawberry, Maple, Condensed milk
-- **Pancakes** - Simple ($50 MXN), with fruit ($60)
-  - Nutella, Strawberry, Cajeta, Maple, Condensed milk
-- **Snacks** - Salchipapas ($55), French fries ($40), Salchipulpos ($55), Maruchan ($30), Nachos ($45), Loaded fries ($25)
-- **Beverages** - Cappuccino ($35), Americano ($22), Milkshakes ($55)
-  - Flavors: Strawberry, Vanilla, Chocolate, Cookie
-- **Cream Desserts** - Strawberries with cream ($60), Bananas with cream ($50), Peaches with cream ($50)
-- **Flan** - Neapolitan flan ($42)
-
-**Special Promotion:** 2 milkshakes for $100 MXN every Friday! ⭐
-
-### Location Section
-- Google Maps integration showing their location in Las Vegas, Ecatepec
-- Clear address and call-to-action to visit
-
-### Customer Reviews
-- Star ratings and testimonials from satisfied customers
-- Social proof to build trust
-
-### Contact Section
-- Contact form with email integration (using Resend)
-- Social media links (WhatsApp, Instagram, TikTok, Facebook, X/Twitter)
-
-## 🚀 Technologies
-
-- **React 19** - Modern JavaScript library for building user interfaces
-- **Next.js 15.2.4** (App Router) - React framework with server-side rendering
-- **TypeScript** - Type-safe development
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **shadcn/ui components** - Beautiful, accessible UI components
-- **Resend** - Email service for contact form
-
-## 📦 Installation
-
-```bash
-# Install dependencies
-npm install
-
-# Run in development mode
-npm run dev
-
-# Build for production
+```sh
+npm ci --legacy-peer-deps
+npm run typecheck
+npm audit
 npm run build
-
-# Start production server
-npm start
+npm run dev
 ```
 
-## 📧 Email Configuration (Resend)
+Para comprobar el resultado de producción: `npm start`. La opción `legacy-peer-deps` también está guardada en `.npmrc` por la incompatibilidad declarada de Vaul con React 19. TypeScript se comprueba además durante la compilación. No hay una configuración de ESLint instalada; `npm run lint` heredado no forma parte de las comprobaciones verificadas.
 
-The contact form uses Resend to send emails. To configure it:
+Se actualizó Next a 15.5.28 y se fijó PostCSS 8.5.30 dentro de Next mediante `overrides` para resolver las alertas de auditoría sin migrar a Next 16. Repetir auditoría antes de cada despliegue.
 
-### 1. Create a Resend Account
+## Preview en Vercel
 
-1. Go to [resend.com](https://resend.com) and create a free account
-2. Verify your email
+Importar **ByCulichi/RonnysFoodTruck** mediante la integración GitHub de Vercel, con permiso sobre este repositorio. Usar raíz del proyecto, framework Next.js y Node.js 22. `vercel.json` define instalación y compilación. Los PRs y ramas de trabajo deben generar deployments **Preview**; no reasignar dominios ni promover a producción sin autorización.
 
-### 2. Get API Key
+Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autenticación Vercel autorizada para el equipo/proyecto. Si el proyecto ya existe, vincularlo; no crear duplicados a ciegas. La URL navegable debe obtenerse de un deployment terminado y comprobarse por HTTP. Un build local o una captura no equivale a una preview publicada.
 
-1. In the Resend dashboard, go to "API Keys"
-2. Create a new API key
-3. Copy the key (starts with `re_`)
+## Contacto: pendiente de configuración
 
-### 3. Configure Environment Variable
+El formulario está **desactivado por defecto**, y también en cualquier deployment con `VERCEL_ENV=preview`. No utiliza destinatarios de ejemplo y no envía correos durante las pruebas.
 
-Add the environment variable:
+En Vercel, configurar únicamente para producción cuando se haya aprobado su activación:
 
-- **Name**: `RESEND_API_KEY`
-- **Value**: Your Resend API key (e.g., `re_123abc...`)
+- `RESEND_API_KEY`: clave de Resend, guardar como secreto.
+- `CONTACT_EMAIL_FROM`: remitente con dominio verificado en Resend.
+- `CONTACT_EMAIL_TO`: destinatario real aprobado por el propietario.
+- `CONTACT_EMAIL_ENABLED=true`: activar solo después de configurar lo anterior.
 
-### 4. Configure Destination Email
+`.env.example` documenta los nombres sin credenciales. No incluir secretos en Git, capturas o mensajes. El contacto no está listo para uso real hasta completar esta configuración. No se han agregado teléfonos, direcciones ni horarios; la zona mencionada procede del proyecto original y el sitio pide confirmar punto y horario.
 
-Edit the `app/actions.tsx` file and change:
+## Próximos cambios
 
-```typescript
-to: ["your-email@example.com"], // Change this to your real email
-```
-
-### 5. Verify Domain (Optional - For Production)
-
-To use a custom domain in production:
-
-1. In Resend, go to "Domains"
-2. Add your domain
-3. Configure DNS records according to the instructions
-4. Update the `from` field in `app/actions.tsx`:
-
-```typescript
-from: "Ronny's Food Truck <contact@yourdomain.com>",
-```
-
-**Note**: In development, you can use `onboarding@resend.dev` as the sender.
-
-## 🌐 Local Development
-
-The project will be available at `http://localhost:3000`
-
-## 🎨 Design Features
-
-- **Retro Aesthetic**: Bold red and yellow color scheme reminiscent of classic diners
-- **LED Effects**: Glowing animations on logos and decorative elements
-- **Paw Prints**: Cute chihuahua paw print decorations throughout the page
-- **Responsive Design**: Optimized for mobile, tablet, and desktop viewing
-- **Smooth Animations**: Subtle transitions and hover effects for enhanced user experience
-- **Accessibility**: Built with semantic HTML and accessible components
-
-## 📝 Future Enhancements
-
-- ✅ Backend integration for contact form (Resend)
-- Add more real images of the food truck and products
-- Implement online ordering system
-- Add customer photo gallery
-- Integrate real-time availability updates
-
-## 🐕 About Ronny
-
-Ronny is the beloved chihuahua mascot, represented as an LED logo on the food truck. He's the face of this sweet dream on wheels!
-
-## 📄 License
-
-© 2025 Ronny Food Truck. All rights reserved.
-
----
-
-**Sweetness on Wheels** 🚚✨
+Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un PR completo con resumen, pruebas y pendientes. No fusionar automáticamente. Mantener intactas las ilustraciones `public/ronny-family-truck.png` y `public/ronny-outfits.png` salvo petición explícita.
