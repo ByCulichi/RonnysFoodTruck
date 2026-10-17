@@ -16,19 +16,19 @@ export const dishes: Dish[] = [
   {
     name: "Malteadas", category: "UN SORBITO DE FELICIDAD", group: "Bebidas", kind: "Malteadas",
     description: "Fresa, vainilla, chocolate o galleta. ¿Con cuál empiezas?",
-    photos: [{ src: "malteada-fresa", alt: "Malteada de fresa de Ronny’s con crema batida" }, { src: "malteada-vainilla", alt: "Malteada clara de Ronny’s con crema batida y chocolate" }],
+    photos: [{ src: "malteadas/malteada-fresa", alt: "Malteada de fresa de Ronny’s con crema batida" }, { src: "malteadas/malteada-vainilla", alt: "Malteada clara de Ronny’s con crema batida y chocolate" }],
     options: [{ name: "Malteada", price: 55 }],
   },
   {
     name: "Crepas", category: "DOBLADITAS DE FELICIDAD", group: "Dulces", kind: "Crepas",
     description: "Nutella, cajeta, zarzamora con queso o fresa con queso.",
-    photos: [{ src: "crepa-helado", alt: "Crepa de Ronny’s con fresas, chocolate y helado" }, { src: "crepa-nutella", alt: "Crepa de Ronny’s con chocolate y helado" }, { src: "crepa-platano", alt: "Crepa de Ronny’s con plátano y lechera" }],
+    photos: [{ src: "crepas/crepa-helado", alt: "Crepa de Ronny’s con fresas, chocolate y helado" }, { src: "crepas/crepa-nutella", alt: "Crepa de Ronny’s con chocolate y helado" }, { src: "crepas/crepa-platano", alt: "Crepa de Ronny’s con plátano y lechera" }],
     options: [{ name: "Sencilla", price: 45 }, { name: "Con fruta", price: 55 }, { name: "Con fruta y helado", price: 65 }],
   },
   {
     name: "Hamburguesas", category: "AQUÍ SE VIENE CON HAMBRE", group: "Salados", kind: "Hamburguesas",
     description: "Sencilla, hawaiana, con salsa de tocino o doble. Elige tu favorita.",
-    photos: [{ src: "hamburguesa-tocino", alt: "Hamburguesa de Ronny’s con queso y salsa de tocino" }, { src: "hamburguesa-hawaiana", alt: "Hamburguesa de Ronny’s con jamón y queso" }],
+    photos: [{ src: "hamburguesas/hamburguesa-tocino", alt: "Hamburguesa de Ronny’s con queso y salsa de tocino" }, { src: "hamburguesas/hamburguesa-hawaiana", alt: "Hamburguesa de Ronny’s con jamón y queso" }],
     options: [{ name: "Sencilla", price: 75 }, { name: "Hawaiana", price: 85 }, { name: "Con salsa de tocino", price: 85 }, { name: "Doble (res, arrachera, sirloin o pollo)", price: 105 }],
   },
   {
@@ -49,25 +49,25 @@ export const dishes: Dish[] = [
   {
     name: "Waffles", category: "CRUJIENTES Y CONSENTIDOS", group: "Dulces", kind: "Waffles",
     description: "Cajeta, Nutella, fresa, maple o lechera.",
-    photos: [{ src: "waffle-fresas", alt: "Waffle de Ronny’s cubierto con fresas" }],
+    photos: [{ src: "waffles/waffle-fresas", alt: "Waffle de Ronny’s cubierto con fresas" }],
     options: [{ name: "Sencillo", price: 55 }, { name: "Con fruta", price: 65 }, { name: "Con fruta y helado", price: 75 }],
   },
   {
     name: "Hotcakes", category: "SUAVECITOS, COMO UN ABRAZO", group: "Dulces", kind: "Postres",
     description: "Nutella, fresa, cajeta, maple o lechera.",
-    photos: [{ src: "hotcakes-fresas", alt: "Hotcakes de Ronny’s con fresas y lechera" }],
+    photos: [{ src: "hotcakes/hotcakes-fresas", alt: "Hotcakes de Ronny’s con fresas y lechera" }],
     options: [{ name: "Sencillos", price: 50 }, { name: "Con fruta", price: 60 }],
   },
   {
     name: "Fruta con crema", category: "LA CUCHARADA MÁS FELIZ", group: "Dulces", kind: "Postres",
     description: "Fresas, plátanos o duraznos con crema.",
-    photos: [{ src: "fresas-crema", alt: "Fresas con crema de Ronny’s" }, { src: "platanos-crema", alt: "Plátanos con crema de Ronny’s" }, { src: "duraznos-crema", alt: "Duraznos con crema de Ronny’s" }],
+    photos: [{ src: "postres/fresas-crema", alt: "Fresas con crema de Ronny’s" }, { src: "postres/platanos-crema", alt: "Plátanos con crema de Ronny’s" }, { src: "postres/duraznos-crema", alt: "Duraznos con crema de Ronny’s" }],
     options: [{ name: "Plátanos con crema", price: 50 }, { name: "Duraznos con crema", price: 50 }, { name: "Fresas con crema", price: 60 }],
   },
   {
     name: "Salchiantojos", category: "PARA EL TEAM SALADO", group: "Salados", kind: "Snacks",
     description: "Salchipapas o salchipulpos: dos formas de consentir el antojo.",
-    photos: [{ src: "salchipulpos", alt: "Salchipulpos de Ronny’s con salsas" }],
+    photos: [{ src: "snacks/salchipulpos", alt: "Salchipulpos de Ronny’s con salsas" }],
     options: [{ name: "Salchipapas", price: 55 }, { name: "Salchipulpos", price: 60 }],
   },
   {
