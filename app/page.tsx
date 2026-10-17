@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
+  ChevronLeft,
+  ChevronRight,
+  House,
   ArrowRight,
   ArrowUpRight,
   Heart,
@@ -36,10 +39,12 @@ const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u03
 
 const navLinks = [
   ["inicio", "Inicio"],
-  ["menu", "El menú"],
+  ["menu", "Menú"],
   ["historia", "Nuestro Ronny"],
   ["encuentranos", "Encuéntranos"],
 ];
+
+const navIcons = { inicio: House, menu: UtensilsCrossed, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle };
 
 function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className?: string }) {
   return (
@@ -52,11 +57,31 @@ function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const foodPickerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting);
-      if (visible.length) setActiveSection(visible[0].target.id);
-    }, { rootMargin: "-15% 0px -55% 0px" });
+    if (!mobileOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setMobileOpen(false); mobileToggleRef.current?.focus(); }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
+  function scrollFoodTypes(direction: number) {
+    const picker = foodPickerRef.current;
+    if (picker) picker.scrollBy({ left: direction * picker.clientWidth * .7, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  }
+  useEffect(() => {
+    const updateActiveSection = () => {
+      let current = "inicio";
+      for (const [id] of navLinks) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= window.innerHeight * .3) current = id;
+      }
+      setActiveSection(current);
+    };
+    const observer = new IntersectionObserver(updateActiveSection, { rootMargin: "-15% 0px -55% 0px" });
+    updateActiveSection();
     for (const [id] of navLinks) {
       const section = document.getElementById(id);
       if (section) observer.observe(section);
@@ -86,17 +111,17 @@ export default function Home() {
             <span className="brand-dot">®</span>
           </a>
           <nav className="desktop-nav" aria-label="Navegación principal">
-            {navLinks.map(([id, label]) => (
-              <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined}>
-                {label}
-              </a>
-            ))}
+            {navLinks.map(([id, label]) => {
+              const Icon = navIcons[id as keyof typeof navIcons];
+              return <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined} onClick={() => setActiveSection(id)}><Icon size={18} aria-hidden="true" />{label}</a>;
+            })}
           </nav>
           <a className="header-cta" href="#menu" aria-label="Ver el menú de Ronny’s">
-            <span>Ver el menú</span> <ArrowUpRight size={17} />
+            <UtensilsCrossed size={18} aria-hidden="true" /><span>Ver menú</span>
           </a>
           <button
             className="mobile-toggle"
+            ref={mobileToggleRef}
             aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-nav"
@@ -111,12 +136,12 @@ export default function Home() {
             className="mobile-nav"
             aria-label="Navegación móvil"
           >
-            {[...navLinks, ["contacto", "Contacto"]].map(([id, label]) => (
-              <a href={`#${id}`} key={id} onClick={() => setMobileOpen(false)}>
-                {label}
-                <ArrowUpRight size={18} />
-              </a>
-            ))}
+            <p className="mobile-nav-heading">Tu próxima parada feliz.</p>
+            {[...navLinks, ["contacto", "Contacto"]].map(([id, label]) => {
+              const Icon = navIcons[id as keyof typeof navIcons];
+              return <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined} onClick={() => { setMobileOpen(false); setActiveSection(id); }}><span><Icon size={22} aria-hidden="true" />{label}</span><ArrowUpRight size={18} aria-hidden="true" /></a>;
+            })}
+            <a className="mobile-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} /></a>
           </nav>
         )}
       </header>
@@ -174,10 +199,11 @@ export default function Home() {
                 <UtensilsCrossed size={15} /> EL MENÚ DE LA CASA
               </div>
               <h2>
-                Antojos que mueven
+                El menú del truck.
                 <br />
-                <em>la colita.</em>
+                <em>Hecho para antojar.</em>
               </h2>
+              <p className="menu-heading-help">Elige tu antojo. Mira las fotos y encuentra todos los precios aquí.</p>
             </div>
             <div className="menu-ronny-note">
               <div className="menu-milkshake-art">
@@ -227,16 +253,17 @@ export default function Home() {
                 </button>;
               })}
             </div>
-            <span className="menu-aside" aria-live="polite">
-              <Sparkles size={15} /> {visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}
-            </span>
           </div>
-          <div className="food-type-picker" role="group" aria-label="Elegir un antojo">
-            {foodKinds.map((kind) => <button type="button" key={kind} aria-pressed={foodKind === kind} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}>
-              <FoodIcon kind={kind} />
-              <span>{kind === "Todo" ? "Todo el truck" : kind}</span>
-            </button>)}
+          <div className="food-navigation">
+            <div className="food-navigation-heading"><h3>¿Qué se te antoja?</h3><div><button type="button" aria-label="Ver categorías anteriores" onClick={() => scrollFoodTypes(-1)}><ChevronLeft size={22} /></button><button type="button" aria-label="Ver más categorías" onClick={() => scrollFoodTypes(1)}><ChevronRight size={22} /></button></div></div>
+            <div className="food-type-picker" role="group" aria-label="Elegir un antojo" ref={foodPickerRef}>
+              {foodKinds.map((kind) => <button type="button" key={kind} aria-pressed={foodKind === kind} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}>
+                <FoodIcon kind={kind} />
+                <span>{kind === "Todo" ? "Todo el truck" : kind}</span>
+              </button>)}
+            </div>
           </div>
+          <div className="menu-results"><span aria-live="polite">{visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}</span><span>Precios en pesos mexicanos</span></div>
           <div className="dish-grid">
             {visibleDishes.map((dish, index) => <MenuCard dish={dish} index={index} key={dish.name} />)}
           </div>
