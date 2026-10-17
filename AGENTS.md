@@ -32,3 +32,5 @@
 
 - El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios ni fotografías de productos. Los iconos ilustrados representan categorías sin foto disponible.
 - Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
+
+- Priorizar la lectura del cliente: tarjetas claras con texto oscuro, fotos grandes, precios y variantes visibles sin desplegables. Mantener ampliación de fotos accesible y categorías fáciles de usar en celular. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
