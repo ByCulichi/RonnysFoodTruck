@@ -11,7 +11,6 @@ import {
   PawPrint,
   Sparkles,
   Ghost,
-  Star,
   UtensilsCrossed,
   Search,
   CakeSlice,
@@ -23,80 +22,14 @@ import {
 } from "lucide-react";
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
+import { FoodIcon, type FoodKind } from "@/components/food-icon";
+import { MenuCard } from "@/components/menu-card";
+import { dishes, foodKinds } from "@/lib/menu";
 
 const ronnyCharacters = [
   { name: "Ronny preparando dos malteadas con su capa de Halloween", image: "/ronny-promo-cutout.png" },
   { name: "Ronny enojón con sudadera y capa de Halloween cuidando sus gusgerías", image: "/ronny-story-cutout.png" },
   { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/ronny-host-cutout.png" },
-];
-const dishes = [
-  {
-    name: "Crepas",
-    category: "UN CLÁSICO IRRESISTIBLE",
-    image: "crepe-with-nutella-and-strawberries.jpg",
-    price: 45,
-    description: "Nutella, cajeta, zarzamora con queso o fresa con queso.",
-    details: "Con fruta $55 · Con fruta y helado $65",
-    group: "Dulces",
-  },
-  {
-    name: "Waffles",
-    category: "CRUJIENTES POR FUERA",
-    image: "belgian-waffle-with-berries-and-syrup.jpg",
-    price: 55,
-    description:
-      "Cajeta, Nutella, fresa, maple o lechera. Tú eliges el final feliz.",
-    details: "Con fruta $65 · Con fruta y helado $75",
-    group: "Dulces",
-  },
-  {
-    name: "Malteadas",
-    category: "UN SORBITO DE FELICIDAD",
-    image: "strawberry-milkshake-retro.jpg",
-    price: 55,
-    description:
-      "Fresa, vainilla, chocolate o galleta. Cremosas de principio a fin.",
-    details: "Viernes de malteadas: 2 por $100",
-    group: "Bebidas",
-  },
-  {
-    name: "Snacks",
-    category: "PARA EL ANTOJO SALADO",
-    image: "loaded-fries-mexican-style.jpg",
-    price: 25,
-    description: "Papas locas $25 · Francesas $40 · Nachos $45 · Maruchan $30.",
-    details: "Salchipapas y salchipulpos $55",
-    group: "Salados",
-  },
-  {
-    name: "Hotcakes",
-    category: "ESPONJOSITOS Y FELICES",
-    image: "stack-of-pancakes-with-butter-and-syrup.jpg",
-    price: 50,
-    description:
-      "Nutella, fresa, cajeta, maple o lechera. Una torre de dulzura.",
-    details: "Con fruta $60",
-    group: "Dulces",
-  },
-  {
-    name: "Con crema",
-    category: "FRESCOS Y CONSENTIDOS",
-    image: "strawberries-with-cream-dessert.jpg",
-    price: 50,
-    description: "Plátanos o duraznos $50. Fresas con crema $60.",
-    details: "¿Otro antojo? Flan napolitano $42",
-    group: "Dulces",
-  },
-  {
-    name: "Cafecito",
-    category: "EL COMPAÑERO PERFECTO",
-    image: "coffee-cup-and-milkshake.jpg",
-    price: 22,
-    description:
-      "Un americano para acompañar tu postre o un capuchino bien cremoso.",
-    details: "Americano $22 · Capuchino $35",
-    group: "Bebidas",
-  },
 ];
 const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
 const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -132,9 +65,11 @@ export default function Home() {
   }, []);
   const [filter, setFilter] = useState("Todo");
   const [searchQuery, setSearchQuery] = useState("");
+  const [foodKind, setFoodKind] = useState<FoodKind>("Todo");
   const visibleDishes = dishes.filter((dish) =>
     (filter === "Todo" || dish.group === filter) &&
-    normalizeSearch(`${dish.name} ${dish.description} ${dish.details}`).includes(normalizeSearch(searchQuery.trim()))
+    (foodKind === "Todo" || dish.kind === foodKind) &&
+    normalizeSearch(`${dish.name} ${dish.description} ${dish.options.map((option) => option.name).join(" ")}`).includes(normalizeSearch(searchQuery.trim()))
   ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
   return (
     <div className="ronny-site halloween-season">
@@ -257,7 +192,7 @@ export default function Home() {
               </div>
               <div className="menu-milkshake-copy">
                 <p>Ronny está preparando<br /><strong>una malteada de miedo.</strong></p>
-                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); }}>
+                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); setFoodKind("Todo"); }}>
                   Ver bebidas <ArrowDown size={15} />
                 </button>
                 <small>Precios en pesos mexicanos.</small>
@@ -284,7 +219,7 @@ export default function Home() {
                   aria-label={item}
                   aria-pressed={filter === item}
                   className={filter === item ? "selected" : ""}
-                  onClick={() => setFilter(item)}
+                  onClick={() => { setFilter(item); setFoodKind("Todo"); }}
                 >
                   <Icon size={16} aria-hidden="true" />
                   {item}
@@ -296,49 +231,29 @@ export default function Home() {
               <Sparkles size={15} /> {visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}
             </span>
           </div>
+          <div className="food-type-picker" role="group" aria-label="Elegir un antojo">
+            {foodKinds.map((kind) => <button type="button" key={kind} aria-pressed={foodKind === kind} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}>
+              <FoodIcon kind={kind} />
+              <span>{kind === "Todo" ? "Todo el truck" : kind}</span>
+            </button>)}
+          </div>
           <div className="dish-grid">
-            {visibleDishes.map((dish, index) => (
-                <article className={`dish-card ${dish.name === "Malteadas" ? "dish-card-featured" : ""}`} key={dish.name}>
-                  <div className="dish-image">
-                    <img
-                      src={`/${dish.image}`}
-                      alt={dish.name}
-                      width={600}
-                      height={400}
-                      loading="lazy"
-                    />
-                    <span className="dish-number">
-                      0{index + 1}
-                    </span>
-                    {dish.name === "Malteadas" && (
-                      <span className="dish-favorite">
-                        <Star size={12} fill="currentColor" /> EL ANTOJO DE RONNY
-                      </span>
-                    )}
-                  </div>
-                  <div className="dish-info">
-                    <span className="dish-category">{dish.category}</span>
-                    <div className="dish-title">
-                      <h3>{dish.name}</h3>
-                      <div>
-                        <small>desde</small>
-                        <strong>${dish.price}</strong>
-                      </div>
-                    </div>
-                    <p>{dish.description}</p>
-                    <div className="dish-detail">{dish.details}</div>
-                  </div>
-                </article>
-              ))}
+            {visibleDishes.map((dish, index) => <MenuCard dish={dish} index={index} key={dish.name} />)}
           </div>
           {visibleDishes.length === 0 && (
             <div className="menu-empty" role="status">
               <Search size={28} />
               <h3>No encontramos ese antojo.</h3>
               <p>Prueba otro nombre o vuelve a explorar el menú completo.</p>
-              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); }}>Ver todo el menú</button>
+              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); setFoodKind("Todo"); }}>Ver todo el menú</button>
             </div>
           )}
+          <details className="original-menu">
+            <summary>La carta del truck <span>Ver menú original y precios</span></summary>
+            <div className="original-menu-pages">
+              {[["dulces", "Crepas, waffles, hotcakes y postres"], ["salados", "Hamburguesas, hot dogs, banderillas y snacks"], ["bebidas", "Malteadas, café y bebidas"]].map(([page, label]) => <a key={page} href={`/menu/carta-${page}.jpg`} target="_blank" rel="noopener noreferrer"><img src={`/menu/carta-${page}.jpg`} alt={`Carta original de Ronny’s: ${label}`} width={828} height={1104} loading="lazy" /><span>{label} <ArrowUpRight size={14} /></span></a>)}
+            </div>
+          </details>
           <div className="friday-banner">
             <Mascot character={0} className="promo-ronny" />
             <div>
@@ -392,9 +307,9 @@ export default function Home() {
                 protector de los suyos. También es divertido y tiene una debilidad:
                 las gusgerías. Pequeñito, pero siempre listo para defender a su familia.
               </p>
-              <figure className="family-memory owner-duo">
-                <img src="/ronny-unicorn-owner-bunny.png" alt="Ronny de color crema con disfraz de unicornio, en brazos de su ama pelirroja de piel clara con disfraz de conejito rosa" width={1024} height={1536} loading="lazy" />
-                <figcaption>De unicornio y conejito: cómplices hasta para disfrazarse.</figcaption>
+              <figure className="family-memory story-welcome">
+                <Mascot character={2} />
+                <figcaption>Su especialidad: recibirte como parte de la familia.</figcaption>
               </figure>
               <p className="story-signature">
                 Aquí no solo hacemos postres.
@@ -406,6 +321,12 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </section>
+
+        <section className="ronny-everyday shell" aria-labelledby="everyday-title">
+          <div className="everyday-intro"><div className="eyebrow"><PawPrint size={16} /> ASÍ ES NUESTRO RONNY</div><h2 id="everyday-title">Mucho carácter.<br /><em>Más momentos juntos.</em></h2><p>Su playerita roja, su gente favorita y esa lengua que siempre acaba en la nariz. El pequeño de la casa, tal como es.</p></div>
+          <figure className="everyday-character everyday-sport"><img src="/ronny-red-sports.png" alt="Ronny café descansando con su playerita deportiva roja Adidas de rayas blancas" width={1024} height={1536} loading="lazy" /><figcaption>Con su playerita favorita.<strong>Listo para acompañarte.</strong></figcaption></figure>
+          <figure className="everyday-character everyday-nose"><img src="/ronny-nose-lick.png" alt="Ronny café con chamarrita roja lamiéndose la nariz como todos los días" width={1024} height={1536} loading="lazy" /><figcaption>Ese gesto tan suyo.<strong>La nariz nunca se salva.</strong></figcaption></figure>
         </section>
 
         <section
@@ -462,7 +383,7 @@ export default function Home() {
         </div>
         <div className="footer-connect" aria-labelledby="footer-connect-title">
           <div className="footer-host">
-            <Mascot character={2} className="footer-ronny" />
+            <div className="footer-unicorn"><img src="/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></div>
             <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
           </div>
           <div className="footer-connect-copy">

@@ -2,7 +2,7 @@
 
 - Usar el checkout existente; cada tarea cloud ya está aislada. No crear worktrees salvo petición explícita.
 - Mantener a Ronny junto al carrito rojo y la familia, la paleta oscura con rojo y dorado, los personajes distribuidos y los filtros adaptables del menú.
-- Ronny usa el estilo de caricatura plana de la referencia del propietario: crema claro o marfil (su color natural), ojos grandes, orejas rosas, lengua de lado y pañuelo rojo. Mantener esa identidad en portada, icono y atuendos; no convertirlo a 3D ni cambiar las marcas faciales respecto a la referencia de cada campaña.
+- Ronny usa el estilo de caricatura plana de la referencia del propietario: café/caramelo como la última referencia del propietario, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo. Mantener esa identidad en portada, icono y atuendos; no convertirlo a 3D ni cambiar las marcas faciales respecto a la referencia de cada campaña.
 - No inventar teléfonos, direcciones, horarios ni credenciales.
 - Nunca enviar correos reales durante pruebas. Mantener el contacto desactivado en previews.
 - Usar Node 22 y npm: `npm ci --legacy-peer-deps`, `npm run typecheck`, `npm audit`, `npm run build`.
@@ -26,6 +26,9 @@
 - Ficha oficial de Google: https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. Redes sociales, seguidores y previews pendientes de los enlaces oficiales por indicación del propietario. No inventar reseñas, calificaciones, perfiles ni cantidades.
 
 - Por indicación del propietario, no usar APIs de reseñas/redes ni pedir claves o credenciales. Mantener mapa y enlaces oficiales sin integración de Places API.
-- Ronny es crema claro, no café ni caramelo. Añadir a su ama pelirroja de piel clara con disfraz de conejito y a Ronny con disfraz de unicornio en la historia, con transparencia real y sin recuadros.
+- Ronny conserva el color café/caramelo por la última corrección del propietario. Su ama pelirroja de piel clara con disfraz de conejito y Ronny de unicornio van al footer, con transparencia real y sin recuadros.
 
-- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». Conservar su Ronny anfitrión de Halloween sin marco en el footer; `#contacto` apunta allí.
+- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». Conservar el Ronny anfitrión de Halloween sin marco en la historia; el dúo unicornio/conejito ocupa el footer; `#contacto` apunta allí.
+
+- El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios ni fotografías de productos. Los iconos ilustrados representan categorías sin foto disponible.
+- Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
