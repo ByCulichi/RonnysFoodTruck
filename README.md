@@ -10,7 +10,7 @@ La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food
 
 ## Identidad nocturna
 
-La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. La nueva ilustración está en `public/ronny-night-truck.png`; las ilustraciones originales se conservan como archivos. La página utiliza el mismo Ronny plano en la portada, el icono (`public/ronny-flat-logo.png`) y seis atuendos: chef, malteadero, anfitrión (`public/ronny-flat-outfits.png`), enojón, guardián y hechicero (`public/ronny-personalities.png`). Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color crema claro, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/ronny-halloween-truck.png`, el icono `public/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
 
 ## Desarrollo y validación
 
@@ -34,19 +34,30 @@ Importar **ByCulichi/RonnysFoodTruck** mediante la integración GitHub de Vercel
 
 Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autenticación Vercel autorizada para el equipo/proyecto. Si el proyecto ya existe, vincularlo; no crear duplicados a ciegas. La URL navegable debe obtenerse de un deployment terminado y comprobarse por HTTP. Un build local o una captura no equivale a una preview publicada.
 
-## Contacto: pendiente de configuración
+## Contacto directo
 
-El formulario está **desactivado por defecto**, y también en cualquier deployment con `VERCEL_ENV=preview`. No utiliza destinatarios de ejemplo y no envía correos durante las pruebas.
+La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-En Vercel, configurar únicamente para producción cuando se haya aprobado su activación:
-
-- `RESEND_API_KEY`: clave de Resend, guardar como secreto.
-- `CONTACT_EMAIL_FROM`: remitente con dominio verificado en Resend.
-- `CONTACT_EMAIL_TO`: destinatario real aprobado por el propietario.
-- `CONTACT_EMAIL_ENABLED=true`: activar solo después de configurar lo anterior.
-
-`.env.example` documenta los nombres sin credenciales. No incluir secretos en Git, capturas o mensajes. El contacto no está listo para uso real hasta completar esta configuración. No se han agregado teléfonos, direcciones ni horarios; la zona mencionada procede del proyecto original y el sitio pide confirmar punto y horario.
+El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran «Próximamente» hasta recibir sus perfiles oficiales. Se conserva a Ronny anfitrión de Halloween, sin recuadro, junto a ese grupo. El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
 Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un PR completo con resumen, pruebas y pendientes. No fusionar automáticamente. Mantener intactas las ilustraciones `public/ronny-family-truck.png` y `public/ronny-outfits.png` salvo petición explícita.
+
+## Menú y datos de contacto
+
+El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
+
+Los datos de la captura proporcionada por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
+
+## Google Maps y opiniones
+
+La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
+
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews quedan pendientes de sus enlaces oficiales; no se inventan cifras.
+
+## Identidad de Ronny
+
+Su color natural es crema claro o marfil, como la última referencia del propietario, con orejas rosas, ojos grandes y lengua de lado. Esa identidad se mantiene en el logo y todas las ilustraciones activas. La historia añade a Ronny con disfraz de unicornio junto a su ama pelirroja, de piel clara, con disfraz de conejito, ambos en caricatura plana y con transparencia real.
+
+El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.

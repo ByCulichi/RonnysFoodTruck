@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -13,17 +13,21 @@ import {
   Ghost,
   Star,
   UtensilsCrossed,
+  Search,
+  CakeSlice,
+  Coffee,
+  Phone,
+  MessageCircle,
+  Clock,
   X,
 } from "lucide-react";
-import { sendContactEmail } from "./actions";
+import { business } from "@/lib/business";
+import { GoogleReviews } from "@/components/google-reviews";
 
 const ronnyCharacters = [
-  { name: "Ronny chef con su waffle", position: 0 },
-  { name: "Ronny malteadero con una malteada", position: 1 },
-  { name: "Ronny anfitrión saludando", position: 2 },
-  { name: "Ronny enojón cuidando sus gusgerías", position: 0, sheet: "/ronny-personalities.png" },
-  { name: "Ronny guardián con capa y escudo", position: 1, sheet: "/ronny-personalities.png" },
-  { name: "Ronny hechicero de Halloween con sombrero y capa", position: 2, sheet: "/ronny-personalities.png" },
+  { name: "Ronny preparando dos malteadas con su capa de Halloween", image: "/ronny-promo-cutout.png" },
+  { name: "Ronny enojón con sudadera y capa de Halloween cuidando sus gusgerías", image: "/ronny-story-cutout.png" },
+  { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/ronny-host-cutout.png" },
 ];
 const dishes = [
   {
@@ -94,6 +98,9 @@ const dishes = [
     group: "Bebidas",
   },
 ];
+const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
+const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "El menú"],
@@ -101,54 +108,34 @@ const navLinks = [
   ["encuentranos", "Encuéntranos"],
 ];
 
-function Mascot({
-  outfit = 0,
-  className = "",
-}: {
-  outfit?: number;
-  className?: string;
-}) {
+function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className?: string }) {
   return (
-    <div className={`mascot-crop ${className}`}>
-      <img
-        src={ronnyCharacters[outfit].sheet ?? "/ronny-flat-outfits.png"}
-        alt={ronnyCharacters[outfit].name}
-        style={{ transform: `translateX(-${(ronnyCharacters[outfit].position * 100) / 3}%)` }}
-        width={1536}
-        height={1024}
-      />
+    <div className={`ronny-cutout ${className}`}>
+      <img src={ronnyCharacters[character].image} alt={ronnyCharacters[character].name} width={1024} height={1536} loading="lazy" />
     </div>
   );
 }
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [filter, setFilter] = useState("Todo");
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
-  const [sending, setSending] = useState(false);
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSending(true);
-    setStatus(null);
-    try {
-      const result = await sendContactEmail(form);
-      setStatus(result);
-      if (result.success) setForm({ name: "", email: "", message: "" });
-    } catch {
-      setStatus({
-        success: false,
-        message: "No pudimos enviar tu mensaje. Inténtalo de nuevo más tarde.",
-      });
-    } finally {
-      setSending(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (visible.length) setActiveSection(visible[0].target.id);
+    }, { rootMargin: "-15% 0px -55% 0px" });
+    for (const [id] of navLinks) {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
     }
-  }
-
+    return () => observer.disconnect();
+  }, []);
+  const [filter, setFilter] = useState("Todo");
+  const [searchQuery, setSearchQuery] = useState("");
+  const visibleDishes = dishes.filter((dish) =>
+    (filter === "Todo" || dish.group === filter) &&
+    normalizeSearch(`${dish.name} ${dish.description} ${dish.details}`).includes(normalizeSearch(searchQuery.trim()))
+  ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
   return (
     <div className="ronny-site halloween-season">
       <a className="skip-link" href="#contenido">
@@ -157,21 +144,21 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/ronny-flat-logo.png" alt="" width={50} height={50} />
+            <img src="/ronny-flat-logo.png" alt="" width={64} height={64} />
             <span>
-              RONNY’S<span className="brand-sub">FOOD TRUCK · HALLOWEEN</span>
+              RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
             <span className="brand-dot">®</span>
           </a>
           <nav className="desktop-nav" aria-label="Navegación principal">
             {navLinks.map(([id, label]) => (
-              <a href={`#${id}`} key={id}>
+              <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined}>
                 {label}
               </a>
             ))}
           </nav>
-          <a className="header-cta" href="#contacto">
-            ¿Se te antojó? <ArrowUpRight size={16} />
+          <a className="header-cta" href="#menu" aria-label="Ver el menú de Ronny’s">
+            <span>Ver el menú</span> <ArrowUpRight size={17} />
           </a>
           <button
             className="mobile-toggle"
@@ -231,7 +218,7 @@ export default function Home() {
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
-              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>Las Vegas, Ecatepec<small>Viernes, sábado y domingo · 7 p. m.–12 a. m.</small></span><ArrowRight size={18} /></a>
+              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>New York, Ecatepec<small>{business.hours}</small></span><ArrowRight size={18} /></a>
             </div>
           </div>
           <a className="night-scroll" href="#menu" aria-label="Descubrir el menú"><ArrowDown size={17} /></a>
@@ -258,9 +245,31 @@ export default function Home() {
               </h2>
             </div>
             <div className="menu-ronny-note">
-              <Mascot outfit={0} className="menu-chef" />
-              <p>Ronny ya se puso el delantal.<br />Tú elige el antojo.<small>Precios en pesos mexicanos.</small></p>
+              <div className="menu-milkshake-art">
+                <img
+                  src="/ronny-halloween-milkshake.png"
+                  alt="Ronny con sombrero morado, sudadera y delantal de Halloween preparando una malteada de fresa con crema batida"
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
+                />
+                <Sparkles className="milkshake-spark" size={20} aria-hidden="true" />
+              </div>
+              <div className="menu-milkshake-copy">
+                <p>Ronny está preparando<br /><strong>una malteada de miedo.</strong></p>
+                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); }}>
+                  Ver bebidas <ArrowDown size={15} />
+                </button>
+                <small>Precios en pesos mexicanos.</small>
+              </div>
             </div>
+          </div>
+          <div className="menu-search-row">
+            <label className="menu-search">
+              <Search size={18} aria-hidden="true" />
+              <input type="search" aria-label="Buscar en el menú" placeholder="¿Qué se te antoja? Busca tu favorito…" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
+            </label>
+            <span className="menu-currency">Preparado con corazón · Precios en MXN</span>
           </div>
           <div className="menu-toolbar">
             <div
@@ -268,27 +277,28 @@ export default function Home() {
               role="group"
               aria-label="Filtrar menú"
             >
-              {["Todo", "Dulces", "Salados", "Bebidas"].map((item) => (
-                <button
+              {(["Todo", "Dulces", "Salados", "Bebidas"] as const).map((item) => {
+                const Icon = categoryIcons[item];
+                return <button
                   key={item}
+                  aria-label={item}
                   aria-pressed={filter === item}
                   className={filter === item ? "selected" : ""}
                   onClick={() => setFilter(item)}
                 >
+                  <Icon size={16} aria-hidden="true" />
                   {item}
-                  {item === "Todo" && <span>{dishes.length}</span>}
-                </button>
-              ))}
+                  <span aria-hidden="true">{item === "Todo" ? dishes.length : dishes.filter((dish) => dish.group === item).length}</span>
+                </button>;
+              })}
             </div>
-            <span className="menu-aside">
-              <Sparkles size={15} /> EL ANTOJO NO SE JUZGA
+            <span className="menu-aside" aria-live="polite">
+              <Sparkles size={15} /> {visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}
             </span>
           </div>
           <div className="dish-grid">
-            {dishes
-              .filter((dish) => filter === "Todo" || dish.group === filter)
-              .map((dish, index) => (
-                <article className="dish-card" key={dish.name}>
+            {visibleDishes.map((dish, index) => (
+                <article className={`dish-card ${dish.name === "Malteadas" ? "dish-card-featured" : ""}`} key={dish.name}>
                   <div className="dish-image">
                     <img
                       src={`/${dish.image}`}
@@ -298,11 +308,11 @@ export default function Home() {
                       loading="lazy"
                     />
                     <span className="dish-number">
-                      0{dishes.indexOf(dish) + 1}
+                      0{index + 1}
                     </span>
-                    {index === 0 && (
+                    {dish.name === "Malteadas" && (
                       <span className="dish-favorite">
-                        <Star size={12} fill="currentColor" /> RONNY RECOMIENDA
+                        <Star size={12} fill="currentColor" /> EL ANTOJO DE RONNY
                       </span>
                     )}
                   </div>
@@ -321,8 +331,16 @@ export default function Home() {
                 </article>
               ))}
           </div>
+          {visibleDishes.length === 0 && (
+            <div className="menu-empty" role="status">
+              <Search size={28} />
+              <h3>No encontramos ese antojo.</h3>
+              <p>Prueba otro nombre o vuelve a explorar el menú completo.</p>
+              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); }}>Ver todo el menú</button>
+            </div>
+          )}
           <div className="friday-banner">
-            <Mascot outfit={1} className="promo-ronny" />
+            <Mascot character={0} className="promo-ronny" />
             <div>
               <span>LOS VIERNES SABEN MEJOR</span>
               <h3>Una para ti. Otra para tu cómplice.</h3>
@@ -337,7 +355,7 @@ export default function Home() {
         <section className="story-section" id="historia">
           <div className="shell story-layout">
             <div className="story-art">
-              <Mascot outfit={3} />
+              <Mascot character={1} />
               <div className="story-stamp">
                 <PawPrint size={24} />
                 <span>
@@ -374,9 +392,9 @@ export default function Home() {
                 protector de los suyos. También es divertido y tiene una debilidad:
                 las gusgerías. Pequeñito, pero siempre listo para defender a su familia.
               </p>
-              <figure className="family-memory">
-                <img src="/ronny-night-truck.png" alt="Ronny en caricatura plana y nuestra familia en el carrito rojo" width={1536} height={1024} loading="lazy" />
-                <figcaption>El ingrediente de siempre: nuestra familia.</figcaption>
+              <figure className="family-memory owner-duo">
+                <img src="/ronny-unicorn-owner-bunny.png" alt="Ronny de color crema con disfraz de unicornio, en brazos de su ama pelirroja de piel clara con disfraz de conejito rosa" width={1024} height={1536} loading="lazy" />
+                <figcaption>De unicornio y conejito: cómplices hasta para disfrazarse.</figcaption>
               </figure>
               <p className="story-signature">
                 Aquí no solo hacemos postres.
@@ -405,128 +423,85 @@ export default function Home() {
                 <em>parada feliz.</em>
               </h2>
               <p>
-                Estamos en Las Vegas, Ecatepec.
-                <br />
-                Ven por un antojo. Quédate por la buena vibra.
+                <MapPin size={18} aria-hidden="true" /> {business.address}
               </p>
               <a
                 className="button button-gold"
-                href="https://www.google.com/maps/search/?api=1&query=Las+Vegas+Ecatepec+Mexico"
+                href={business.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Ver la zona en Maps <ArrowUpRight size={18} />
+                Cómo llegar <ArrowUpRight size={18} />
               </a>
-              <p className="visit-hours"><Star size={16} fill="currentColor" /> Viernes, sábado y domingo<br /><strong>7 p. m.–12 a. m.</strong></p>
-              <small>Escríbenos para confirmar el punto exacto antes de visitarnos.</small>
+              <div className="visit-hours">
+                <Clock size={18} aria-hidden="true" />
+                <div><span>Viernes, sábado y domingo</span><strong>7 p. m.–12 a. m.</strong><small>{business.closedDays}</small></div>
+              </div>
+              <div className="business-contact-links">
+                <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp</a>
+                <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
+              </div>
             </div>
-            <div className="visit-visual">
-              <div className="map-grid" />
-              <div className="map-ring ring-one" />
-              <div className="map-ring ring-two" />
-              <Mascot outfit={4} className="visit-guardian" />
-              <span className="map-location">
-                LAS VEGAS<span>ECATEPEC, ESTADO DE MÉXICO</span>
-              </span>
-              <span className="map-caption">
-                EL ANTOJO TIENE UN PUNTO DE ENCUENTRO.
-              </span>
+            <div className="visit-map">
+              <iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+              <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer">Abrir en Google Maps <ArrowUpRight size={16} /></a>
             </div>
           </div>
         </section>
 
-        <section className="contact-section shell" id="contacto">
-          <div className="contact-copy">
-            <div className="eyebrow">
-              <Heart size={15} /> AQUÍ TE ESCUCHAMOS
-            </div>
-            <h2>
-              ¿Platicamos
-              <br />
-              <em>algo rico?</em>
-            </h2>
-            <p>
-              Una pregunta, un saludo o ese antojo que no te deja en paz.
-              Cuéntanos.
-            </p>
-            <Mascot outfit={2} className="contact-host" />
-            <span className="contact-signoff">
-              Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />
-            </span>
-          </div>
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div>
-                <label htmlFor="name">Tu nombre</label>
-                <input
-                  id="name"
-                  autoComplete="name"
-                  placeholder="¿Cómo te llamas?"
-                  required
-                  maxLength={100}
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  disabled={sending}
-                />
-              </div>
-              <div>
-                <label htmlFor="email">
-                  Tu correo <span>(opcional)</span>
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="hola@ejemplo.com"
-                  maxLength={254}
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  disabled={sending}
-                />
-              </div>
-            </div>
-            <label htmlFor="message">¿Qué tienes en mente?</label>
-            <textarea
-              id="message"
-              placeholder="Hola Ronny, me gustaría saber…"
-              required
-              maxLength={3000}
-              rows={4}
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              disabled={sending}
-            />
-            <div aria-live="polite">
-              {status && (
-                <p
-                  className={`form-status ${status.success ? "success" : "error"}`}
-                >
-                  {status.message}
-                </p>
-              )}
-            </div>
-            <button
-              className="button button-gold"
-              type="submit"
-              disabled={sending}
-            >
-              {sending ? "Enviando…" : "Enviar mi mensaje"}
-              <ArrowUpRight size={18} />
-            </button>
-          </form>
-        </section>
+        <GoogleReviews mapsUrl={business.mapsUrl} />
+
       </main>
-      <footer className="site-footer shell">
-        <a href="#inicio" className="footer-wordmark">
-          RONNY’S<span>®</span>
-        </a>
-        <p>Pequeños antojos. Grandes momentos.</p>
-        <div>
-          <span>© {new Date().getFullYear()} Ronny’s Food Truck</span>
-          <a href="#inicio">
-            Hecho con <Heart size={12} /> y muchas patitas.
-          </a>
+      <footer className="site-footer shell footer-expanded" id="contacto">
+        <div className="footer-top">
+          <div>
+            <a href="#inicio" className="footer-wordmark"><img src="/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
+            <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
+          </div>
+          <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
         </div>
+        <div className="footer-connect" aria-labelledby="footer-connect-title">
+          <div className="footer-host">
+            <Mascot character={2} className="footer-ronny" />
+            <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
+          </div>
+          <div className="footer-connect-copy">
+            <div className="eyebrow">EL ANTOJO NOS CONECTA</div>
+            <h2 id="footer-connect-title">Más de <em>Ronny’s.</em></h2>
+            <p>Escríbenos, encuentra el truck y quédate cerca de tus antojos favoritos.</p>
+            <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">
+              {[
+                { network: "google", label: "Google", url: business.mapsUrl },
+                { network: "whatsapp", label: "WhatsApp", url: business.whatsappUrl },
+                { network: "instagram", label: "Instagram", url: null },
+                { network: "facebook", label: "Facebook", url: null },
+                { network: "tiktok", label: "TikTok", url: null },
+                { network: "x", label: "X", url: null },
+              ].map(({ network, label, url }) => (
+                <li key={network} className={`footer-network network-${network}`}>
+                  {url ? (
+                    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={network === "google" ? "Ronny’s en Google Maps" : "Contactar a Ronny’s por WhatsApp"}>
+                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
+                      <span>{label} <ArrowUpRight size={12} /></span>
+                    </a>
+                  ) : (
+                    <span className="network-pending" aria-label={`${label}: próximamente`}>
+                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
+                      <span>{label}</span>
+                      <small>Próximamente</small>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="footer-details">
+          <span><MapPin size={15} /> {business.address}</span>
+          <a href={`tel:${business.phoneInternational}`}><Phone size={15} /> {business.phone}</a>
+          <span><Clock size={15} /> {business.hours}</span>
+        </div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>
       </footer>
     </div>
   );
