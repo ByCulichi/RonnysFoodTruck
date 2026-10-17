@@ -2831,3 +2831,6 @@ h2 em {
 }
 
 .story-copy > p + p { margin-top: 15px; }
+
+.hero-food-emojis a > .food-icon { width: 34px; height: 34px; }
+@media (max-width: 600px) { .hero-food-emojis a > .food-icon { width: 30px; height: 30px; } }

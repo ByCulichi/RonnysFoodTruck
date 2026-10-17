@@ -37,11 +37,11 @@ const ronnyCharacters = {
   host: { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/images/ronny/ronny-host-cutout.png", width: 1024, height: 1536 },
   nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
 };
-const heroSpecialties: { emoji: string; label: string; kind: FoodKind }[] = [
-  { emoji: "🧇", label: "Waffles", kind: "Waffles" },
-  { emoji: "🥤", label: "Malteadas", kind: "Malteadas" },
-  { emoji: "🥞", label: "Crepas", kind: "Crepas" },
-  { emoji: "🍟", label: "Snacks", kind: "Snacks" },
+const heroSpecialties: { label: string; kind: FoodKind }[] = [
+  { label: "Waffles", kind: "Waffles" },
+  { label: "Malteadas", kind: "Malteadas" },
+  { label: "Crepas", kind: "Crepas" },
+  { label: "Snacks", kind: "Snacks" },
 ];
 const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
 const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -175,7 +175,7 @@ export default function Home() {
             <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
             <div className="night-specialties hero-food-emojis" role="group" aria-label="Especialidades del truck">
-              {heroSpecialties.map(({ emoji, label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}><span aria-hidden="true">{emoji}</span></a>)}
+              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}><FoodIcon kind={kind} /></a>)}
             </div>
           </div>
           <div className="night-bottom shell">

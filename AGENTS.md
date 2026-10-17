@@ -37,4 +37,4 @@
 
 - Las imágenes se organizan bajo `public/images/`: brand, hero, ronny, menu por categoría y archive para recursos anteriores. Actualizar rutas al moverlas y conservar los bytes originales.
 - Hay cinco Ronnys de apoyo, uno por función: malteadero en menú, playerita roja en promoción, anfitrión en domicilio, enojón en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
-- La portada usa cuatro emojis con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.
+- La portada usa cuatro iconos tipo emoji con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.

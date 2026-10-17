@@ -81,6 +81,6 @@ Las fotografías se pueden ampliar en un diálogo con navegación entre imágene
 
 Las imágenes están ordenadas en `public/images/`: `brand/` para logos, `hero/` para portadas, `ronny/` para personajes, `menu/` con subcarpetas de platillos y cartas, y `archive/` para recursos anteriores. El cambio de carpetas conserva el contenido de los archivos y actualiza todas sus referencias. Los personajes se mantienen dentro de su espacio de diseño, con transparencia y sin marcos.
 
-Los cinco Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los emojis de portada abren el menú filtrado y conservan sus nombres accesibles.
+Los cinco Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los iconos tipo emoji de portada abren el menú filtrado y conservan sus nombres accesibles.
 
 `business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. En celular una barra inferior ofrece acceso a menú y domicilio, respeta el área segura y deja espacio al final para no tapar contenido.
