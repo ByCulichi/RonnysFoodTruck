@@ -21,7 +21,6 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import { sendContactEmail } from "./actions";
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 
@@ -137,31 +136,6 @@ export default function Home() {
     (filter === "Todo" || dish.group === filter) &&
     normalizeSearch(`${dish.name} ${dish.description} ${dish.details}`).includes(normalizeSearch(searchQuery.trim()))
   ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
-  const [sending, setSending] = useState(false);
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSending(true);
-    setStatus(null);
-    try {
-      const result = await sendContactEmail(form);
-      setStatus(result);
-      if (result.success) setForm({ name: "", email: "", message: "" });
-    } catch {
-      setStatus({
-        success: false,
-        message: "No pudimos enviar tu mensaje. Inténtalo de nuevo más tarde.",
-      });
-    } finally {
-      setSending(false);
-    }
-  }
-
   return (
     <div className="ronny-site halloween-season">
       <a className="skip-link" href="#contenido">
@@ -477,92 +451,8 @@ export default function Home() {
 
         <GoogleReviews mapsUrl={business.mapsUrl} />
 
-        <section className="contact-section shell" id="contacto">
-          <div className="contact-copy">
-            <div className="eyebrow">
-              <Heart size={15} /> AQUÍ TE ESCUCHAMOS
-            </div>
-            <h2>
-              ¿Platicamos
-              <br />
-              <em>algo rico?</em>
-            </h2>
-            <p>
-              Una pregunta, un saludo o ese antojo que no te deja en paz.
-              Cuéntanos.
-            </p>
-            <div className="business-contact-links contact-direct">
-              <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> Escríbenos por WhatsApp</a>
-              <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
-            </div>
-            <Mascot character={2} className="contact-host" />
-            <span className="contact-signoff">
-              Con cariño, <strong>Ronny.</strong> <PawPrint size={20} />
-            </span>
-          </div>
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div>
-                <label htmlFor="name">Tu nombre</label>
-                <input
-                  id="name"
-                  autoComplete="name"
-                  placeholder="¿Cómo te llamas?"
-                  required
-                  maxLength={100}
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  disabled={sending}
-                />
-              </div>
-              <div>
-                <label htmlFor="email">
-                  Tu correo <span>(opcional)</span>
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="hola@ejemplo.com"
-                  maxLength={254}
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  disabled={sending}
-                />
-              </div>
-            </div>
-            <label htmlFor="message">¿Qué tienes en mente?</label>
-            <textarea
-              id="message"
-              placeholder="Hola Ronny, me gustaría saber…"
-              required
-              maxLength={3000}
-              rows={4}
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-              disabled={sending}
-            />
-            <div aria-live="polite">
-              {status && (
-                <p
-                  className={`form-status ${status.success ? "success" : "error"}`}
-                >
-                  {status.message}
-                </p>
-              )}
-            </div>
-            <button
-              className="button button-gold"
-              type="submit"
-              disabled={sending}
-            >
-              {sending ? "Enviando…" : "Enviar mi mensaje"}
-              <ArrowUpRight size={18} />
-            </button>
-          </form>
-        </section>
       </main>
-      <footer className="site-footer shell footer-expanded">
+      <footer className="site-footer shell footer-expanded" id="contacto">
         <div className="footer-top">
           <div>
             <a href="#inicio" className="footer-wordmark"><img src="/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
@@ -570,28 +460,45 @@ export default function Home() {
           </div>
           <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
         </div>
-        <div className="footer-channels">
-          <a className="footer-channel" href={business.mapsUrl} target="_blank" rel="noopener noreferrer">
-            <span className="channel-logo google-channel"><img src="/brands/google.svg" alt="Google" width={27} height={27} /></span>
-            <div><strong>Ronny’s en Google</strong><span>Ficha del negocio, fotos y opiniones de visitantes.</span><small>Ver ficha oficial <ArrowUpRight size={13} /></small></div>
-          </a>
-          <a className="footer-channel" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer">
-            <span className="channel-logo whatsapp-channel"><img src="/brands/whatsapp.svg" alt="WhatsApp" width={27} height={27} /></span>
-            <div><strong>Hablemos por WhatsApp</strong><span>{business.phone} · Pregunta por tu próximo antojo.</span><small>Abrir conversación <ArrowUpRight size={13} /></small></div>
-          </a>
-        </div>
-        <div className="footer-socials" aria-label="Logos de redes sociales, enlaces por confirmar">
-          <span className="footer-social-label">REDES SOCIALES</span>
-          <div className="footer-social-logos">
-            {[["instagram", "Instagram"], ["facebook", "Facebook"], ["tiktok", "TikTok"], ["x", "X"]].map(([network, label]) => (
-              <span key={network} className={`social-logo social-logo-${network}`} title={label}>
-                <img src={`/brands/${network}.svg`} alt={label} width={23} height={23} />
-              </span>
-            ))}
+        <div className="footer-connect" aria-labelledby="footer-connect-title">
+          <div className="footer-host">
+            <Mascot character={2} className="footer-ronny" />
+            <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
+          </div>
+          <div className="footer-connect-copy">
+            <div className="eyebrow">EL ANTOJO NOS CONECTA</div>
+            <h2 id="footer-connect-title">Más de <em>Ronny’s.</em></h2>
+            <p>Escríbenos, encuentra el truck y quédate cerca de tus antojos favoritos.</p>
+            <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">
+              {[
+                { network: "google", label: "Google", url: business.mapsUrl },
+                { network: "whatsapp", label: "WhatsApp", url: business.whatsappUrl },
+                { network: "instagram", label: "Instagram", url: null },
+                { network: "facebook", label: "Facebook", url: null },
+                { network: "tiktok", label: "TikTok", url: null },
+                { network: "x", label: "X", url: null },
+              ].map(({ network, label, url }) => (
+                <li key={network} className={`footer-network network-${network}`}>
+                  {url ? (
+                    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={network === "google" ? "Ronny’s en Google Maps" : "Contactar a Ronny’s por WhatsApp"}>
+                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
+                      <span>{label} <ArrowUpRight size={12} /></span>
+                    </a>
+                  ) : (
+                    <span className="network-pending" aria-label={`${label}: próximamente`}>
+                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
+                      <span>{label}</span>
+                      <small>Próximamente</small>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
         <div className="footer-details">
           <span><MapPin size={15} /> {business.address}</span>
+          <a href={`tel:${business.phoneInternational}`}><Phone size={15} /> {business.phone}</a>
           <span><Clock size={15} /> {business.hours}</span>
         </div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>

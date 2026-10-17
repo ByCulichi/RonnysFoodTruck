@@ -34,18 +34,11 @@ Importar **ByCulichi/RonnysFoodTruck** mediante la integración GitHub de Vercel
 
 Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autenticación Vercel autorizada para el equipo/proyecto. Si el proyecto ya existe, vincularlo; no crear duplicados a ciegas. La URL navegable debe obtenerse de un deployment terminado y comprobarse por HTTP. Un build local o una captura no equivale a una preview publicada.
 
-## Contacto: pendiente de configuración
+## Contacto directo
 
-El formulario está **desactivado por defecto**, y también en cualquier deployment con `VERCEL_ENV=preview`. No utiliza destinatarios de ejemplo y no envía correos durante las pruebas.
+La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-En Vercel, configurar únicamente para producción cuando se haya aprobado su activación:
-
-- `RESEND_API_KEY`: clave de Resend, guardar como secreto.
-- `CONTACT_EMAIL_FROM`: remitente con dominio verificado en Resend.
-- `CONTACT_EMAIL_TO`: destinatario real aprobado por el propietario.
-- `CONTACT_EMAIL_ENABLED=true`: activar solo después de configurar lo anterior.
-
-`.env.example` documenta los nombres sin credenciales. No incluir secretos en Git, capturas o mensajes. Esta integración queda pendiente; no se solicitan claves ni se activa durante el trabajo actual. Los datos públicos confirmados por el propietario se mantienen en `lib/business.ts`.
+El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran «Próximamente» hasta recibir sus perfiles oficiales. Se conserva a Ronny anfitrión de Halloween, sin recuadro, junto a ese grupo. El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
@@ -67,4 +60,4 @@ Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen 
 
 Su color natural es crema claro o marfil, como la última referencia del propietario, con orejas rosas, ojos grandes y lengua de lado. Esa identidad se mantiene en el logo y todas las ilustraciones activas. La historia añade a Ronny con disfraz de unicornio junto a su ama pelirroja, de piel clara, con disfraz de conejito, ambos en caricatura plana y con transparencia real.
 
-El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y muestra los logos de Instagram, Facebook, TikTok y X sin enlaces ni cifras hasta recibir los perfiles oficiales.
+El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.

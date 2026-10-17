@@ -27,3 +27,5 @@
 
 - Por indicación del propietario, no usar APIs de reseñas/redes ni pedir claves o credenciales. Mantener mapa y enlaces oficiales sin integración de Places API.
 - Ronny es crema claro, no café ni caramelo. Añadir a su ama pelirroja de piel clara con disfraz de conejito y a Ronny con disfraz de unicornio en la historia, con transparencia real y sin recuadros.
+
+- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». Conservar su Ronny anfitrión de Halloween sin marco en el footer; `#contacto` apunta allí.
