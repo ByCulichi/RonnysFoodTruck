@@ -6,11 +6,11 @@ La prioridad de la página es el food truck, la comida y Ronny. El menú aparece
 
 ## Halloween activo
 
-La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food truck rojo decorado con calabazas, telarañas y murciélagos. Es la imagen principal al cargar la página (`public/ronny-halloween-truck.png`); no requiere abrir el selector. No hay selector de looks: los personajes aparecen directamente en menú, promoción, historia, ubicación y contacto. Se conserva el acceso directo al menú ; los productos y precios se transcriben de las fotos de la carta del propietario. La fuente local Creepster incluye su licencia en `public/fonts/`.
+La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food truck rojo decorado con calabazas, telarañas y murciélagos. Es la imagen principal al cargar la página (`public/images/hero/ronny-halloween-truck.png`); no requiere abrir el selector. No hay selector de looks: los personajes aparecen directamente en menú, promoción, historia, ubicación y contacto. Se conserva el acceso directo al menú ; los productos y precios se transcriben de las fotos de la carta del propietario. La fuente local Creepster incluye su licencia en `public/fonts/`.
 
 ## Identidad nocturna
 
-La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café/caramelo, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/ronny-halloween-truck.png`, el icono `public/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café/caramelo, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/images/hero/ronny-halloween-truck.png`, el icono `public/images/brand/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
 
 ## Desarrollo y validación
 
@@ -38,15 +38,15 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran «Próximamente» hasta recibir sus perfiles oficiales. Ronny de unicornio con su ama de conejito ocupa el footer, sin recuadro; el anfitrión de Halloween está en la historia. El enlace `#contacto` lleva al footer.
+El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran «Próximamente» hasta recibir sus perfiles oficiales. Ronny de unicornio con su ama de conejito ocupa el footer, sin recuadro; el anfitrión de Halloween acompaña el acceso a domicilio. El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
-Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un PR completo con resumen, pruebas y pendientes. No fusionar automáticamente. Mantener intactas las ilustraciones `public/ronny-family-truck.png` y `public/ronny-outfits.png` salvo petición explícita.
+Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un PR completo con resumen, pruebas y pendientes. No fusionar automáticamente. Mantener intactas las ilustraciones `public/images/hero/ronny-family-truck.png` y `public/images/archive/ronny/ronny-outfits.png` salvo petición explícita.
 
 ## Menú y datos de contacto
 
-El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
+El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/images/ronny/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
 
 Los datos de la captura proporcionada por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
@@ -65,9 +65,9 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ## Carta y fotos reales
 
-`lib/menu.ts` centraliza 16 familias de antojos con sus variantes y precios, transcritos de las tres fotos de la carta de `ronnys.zip`. Las cartas originales se conservan en `public/menu/carta-{dulces,salados,bebidas}.jpg` y se pueden consultar desde el menú. Se actualizan, entre otros, papas locas a $40, francesas a $45, nachos a $50 y salchipulpos a $60; se incorporan hamburguesas desde $75, hot dogs desde $20, banderillas saladas $55 y dulces $45, alitas desde $85 y bebidas de la carta.
+`lib/menu.ts` centraliza 16 familias de antojos con sus variantes y precios, transcritos de las tres fotos de la carta de `ronnys.zip`. Las cartas originales se conservan en `public/images/menu/cartas/carta-{dulces,salados,bebidas}.jpg` y se pueden consultar desde el menú. Se actualizan, entre otros, papas locas a $40, francesas a $45, nachos a $50 y salchipulpos a $60; se incorporan hamburguesas desde $75, hot dogs desde $20, banderillas saladas $55 y dulces $45, alitas desde $85 y bebidas de la carta.
 
-Las 13 fotos de comida del ZIP se conservan sin retoque en `public/menu/` y se usan en tarjetas y selectores de fotos: tres crepas, dos malteadas, dos hamburguesas, tres frutas con crema, waffle, hotcakes y salchipulpos. Las imágenes verticales se adaptan con CSS. Los productos sin foto usan iconos ilustrados, no fotografías ficticias. El menú añade tipos de antojo ilustrados, letra local Lilita One y opciones con todos los precios visibles. La foto real del truck también se conserva como recurso. No se modifican las cartas originales ni se publican las referencias antiguas de personajes como si fueran platillos.
+Las 13 fotos de comida del ZIP se conservan sin retoque en `public/images/menu/` y se usan en tarjetas y selectores de fotos: tres crepas, dos malteadas, dos hamburguesas, tres frutas con crema, waffle, hotcakes y salchipulpos. Las imágenes verticales se adaptan con CSS. Los productos sin foto usan iconos ilustrados, no fotografías ficticias. El menú añade tipos de antojo ilustrados, letra local Lilita One y opciones con todos los precios visibles. La foto real del truck también se conserva como recurso. No se modifican las cartas originales ni se publican las referencias antiguas de personajes como si fueran platillos.
 
 
 ## Legibilidad para clientes
@@ -75,3 +75,12 @@ Las 13 fotos de comida del ZIP se conservan sin retoque en `public/menu/` y se u
 El menú se presenta en tarjetas crema con texto oscuro y acentos rojos. Las fotos ocupan dos columnas grandes en escritorio y una en celular; nombres, precios y variantes se leen directamente, sin desplegar cada tarjeta. Se conservan los productos, fotos y precios de `lib/menu.ts`.
 
 Las fotografías se pueden ampliar en un diálogo con navegación entre imágenes, cierre por botón, Escape o fondo, foco nativo y bloqueo del desplazamiento de la página mientras está abierto. Las categorías principales permanecen visibles al recorrer el menú; las categorías ilustradas se pueden desplazar con flechas. La navegación superior usa rótulos e iconos más legibles y un acceso al menú destacado en celular. Ronny se reduce en portada y encabezado para dar más presencia al truck.
+
+
+## Imágenes y distribución móvil
+
+Las imágenes están ordenadas en `public/images/`: `brand/` para logos, `hero/` para portadas, `ronny/` para personajes, `menu/` con subcarpetas de platillos y cartas, y `archive/` para recursos anteriores. El cambio de carpetas conserva el contenido de los archivos y actualiza todas sus referencias. Los personajes se mantienen dentro de su espacio de diseño, con transparencia y sin marcos.
+
+Los cinco Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los emojis de portada abren el menú filtrado y conservan sus nombres accesibles.
+
+`business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. En celular una barra inferior ofrece acceso a menú y domicilio, respeta el área segura y deja espacio al final para no tapar contenido.

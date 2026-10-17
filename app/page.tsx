@@ -20,6 +20,7 @@ import {
   Coffee,
   Phone,
   MessageCircle,
+  Bike,
   Clock,
   X,
 } from "lucide-react";
@@ -29,10 +30,18 @@ import { FoodIcon, type FoodKind } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
 import { dishes, foodKinds } from "@/lib/menu";
 
-const ronnyCharacters = [
-  { name: "Ronny preparando dos malteadas con su capa de Halloween", image: "/ronny-promo-cutout.png" },
-  { name: "Ronny enojón con sudadera y capa de Halloween cuidando sus gusgerías", image: "/ronny-story-cutout.png" },
-  { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/ronny-host-cutout.png" },
+const ronnyCharacters = {
+  milkshake: { name: "Ronny preparando una malteada con su outfit de Halloween", image: "/images/ronny/ronny-halloween-milkshake.png", width: 1536, height: 1024 },
+  sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
+  grumpy: { name: "Ronny enojón cuidando sus gusgerías", image: "/images/ronny/ronny-story-cutout.png", width: 1024, height: 1536 },
+  host: { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/images/ronny/ronny-host-cutout.png", width: 1024, height: 1536 },
+  nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
+};
+const heroSpecialties: { emoji: string; label: string; kind: FoodKind }[] = [
+  { emoji: "🧇", label: "Waffles", kind: "Waffles" },
+  { emoji: "🥤", label: "Malteadas", kind: "Malteadas" },
+  { emoji: "🥞", label: "Crepas", kind: "Crepas" },
+  { emoji: "🍟", label: "Snacks", kind: "Snacks" },
 ];
 const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
 const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -44,14 +53,11 @@ const navLinks = [
   ["encuentranos", "Encuéntranos"],
 ];
 
-const navIcons = { inicio: House, menu: UtensilsCrossed, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle };
+const navIcons = { inicio: House, menu: UtensilsCrossed, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
 
-function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className?: string }) {
-  return (
-    <div className={`ronny-cutout ${className}`}>
-      <img src={ronnyCharacters[character].image} alt={ronnyCharacters[character].name} width={1024} height={1536} loading="lazy" />
-    </div>
-  );
+function Mascot({ character, className = "" }: { character: keyof typeof ronnyCharacters; className?: string }) {
+  const art = ronnyCharacters[character];
+  return <div className={`ronny-cutout ${className}`} data-character={character}><img src={art.image} alt={art.name} width={art.width} height={art.height} loading="lazy" /></div>;
 }
 
 export default function Home() {
@@ -104,7 +110,7 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/ronny-flat-logo.png" alt="" width={64} height={64} />
+            <img src="/images/brand/ronny-flat-logo.png" alt="" width={64} height={64} />
             <span>
               RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
@@ -137,7 +143,7 @@ export default function Home() {
             aria-label="Navegación móvil"
           >
             <p className="mobile-nav-heading">Tu próxima parada feliz.</p>
-            {[...navLinks, ["contacto", "Contacto"]].map(([id, label]) => {
+            {[...navLinks, ["domicilio", "A domicilio"], ["contacto", "Contacto"]].map(([id, label]) => {
               const Icon = navIcons[id as keyof typeof navIcons];
               return <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined} onClick={() => { setMobileOpen(false); setActiveSection(id); }}><span><Icon size={22} aria-hidden="true" />{label}</span><ArrowUpRight size={18} aria-hidden="true" /></a>;
             })}
@@ -150,7 +156,7 @@ export default function Home() {
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
             <img
-              src="/ronny-halloween-truck.png"
+              src="/images/hero/ronny-halloween-truck.png"
               alt="Ronny vestido de hechicero con sombrero morado y capa, sosteniendo un antojo con queso junto al food truck rojo decorado con calabazas, telarañas y murciélagos de Halloween"
               width={1536}
               height={1024}
@@ -168,7 +174,9 @@ export default function Home() {
           <div className="night-heading shell">
             <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
-            <p className="night-specialties">Waffles <span>✦</span> Malteadas <span>✦</span> Crepas <span>✦</span> Snacks</p>
+            <div className="night-specialties hero-food-emojis" role="group" aria-label="Especialidades del truck">
+              {heroSpecialties.map(({ emoji, label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}><span aria-hidden="true">{emoji}</span></a>)}
+            </div>
           </div>
           <div className="night-bottom shell">
             <div className="night-welcome">
@@ -207,13 +215,7 @@ export default function Home() {
             </div>
             <div className="menu-ronny-note">
               <div className="menu-milkshake-art">
-                <img
-                  src="/ronny-halloween-milkshake.png"
-                  alt="Ronny con sombrero morado, sudadera y delantal de Halloween preparando una malteada de fresa con crema batida"
-                  width={1536}
-                  height={1024}
-                  loading="lazy"
-                />
+                <Mascot character="milkshake" className="menu-milkshake-ronny" />
                 <Sparkles className="milkshake-spark" size={20} aria-hidden="true" />
               </div>
               <div className="menu-milkshake-copy">
@@ -278,11 +280,11 @@ export default function Home() {
           <details className="original-menu">
             <summary>La carta del truck <span>Ver menú original y precios</span></summary>
             <div className="original-menu-pages">
-              {[["dulces", "Crepas, waffles, hotcakes y postres"], ["salados", "Hamburguesas, hot dogs, banderillas y snacks"], ["bebidas", "Malteadas, café y bebidas"]].map(([page, label]) => <a key={page} href={`/menu/carta-${page}.jpg`} target="_blank" rel="noopener noreferrer"><img src={`/menu/carta-${page}.jpg`} alt={`Carta original de Ronny’s: ${label}`} width={828} height={1104} loading="lazy" /><span>{label} <ArrowUpRight size={14} /></span></a>)}
+              {[["dulces", "Crepas, waffles, hotcakes y postres"], ["salados", "Hamburguesas, hot dogs, banderillas y snacks"], ["bebidas", "Malteadas, café y bebidas"]].map(([page, label]) => <a key={page} href={`/images/menu/cartas/carta-${page}.jpg`} target="_blank" rel="noopener noreferrer"><img src={`/images/menu/cartas/carta-${page}.jpg`} alt={`Carta original de Ronny’s: ${label}`} width={828} height={1104} loading="lazy" /><span>{label} <ArrowUpRight size={14} /></span></a>)}
             </div>
           </details>
           <div className="friday-banner">
-            <Mascot character={0} className="promo-ronny" />
+            <Mascot character="sport" className="promo-ronny" />
             <div>
               <span>LOS VIERNES SABEN MEJOR</span>
               <h3>Una para ti. Otra para tu cómplice.</h3>
@@ -294,10 +296,21 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="delivery-section shell" id="domicilio" aria-labelledby="delivery-title">
+          <div className="delivery-copy">
+            <div className="eyebrow"><Bike size={18} /> EL ANTOJO VA CONTIGO</div>
+            <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
+            <p>Consulta tu pedido a domicilio por WhatsApp. Compártenos qué se te antoja y tu ubicación para confirmar la entrega.</p>
+            <a className="button button-gold" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} /> Consultar pedido a domicilio <ArrowUpRight size={18} /></a>
+            <small>Confirma cobertura, costo de envío y disponibilidad antes de pedir.</small>
+          </div>
+          <Mascot character="host" className="delivery-host" />
+        </section>
+
         <section className="story-section" id="historia">
           <div className="shell story-layout">
             <div className="story-art">
-              <Mascot character={1} />
+              <Mascot character="grumpy" />
               <div className="story-stamp">
                 <PawPrint size={24} />
                 <span>
@@ -319,25 +332,9 @@ export default function Home() {
                 <br />
                 <em>todavía más.</em>
               </h2>
-              <p>
-                Todo empezó jugando a cocinar. La diversión se volvió pasión, y
-                la pasión encontró su lugar sobre ruedas.
-              </p>
-              <p>
-                Detrás del carrito está nuestra familia: manos que preparan,
-                sonrisas que reciben y cariño en cada detalle.
-              </p>
-              <p>
-                Y el nombre… bueno, ese lo puso el más pequeño de la familia.
-                Ronny es nuestro chihuahua, nuestro compañero y la inspiración
-                detrás de cada antojo. Tiene su genio, es valiente, leal y
-                protector de los suyos. También es divertido y tiene una debilidad:
-                las gusgerías. Pequeñito, pero siempre listo para defender a su familia.
-              </p>
-              <figure className="family-memory story-welcome">
-                <Mascot character={2} />
-                <figcaption>Su especialidad: recibirte como parte de la familia.</figcaption>
-              </figure>
+              <p>Detrás del carrito rojo está nuestra familia: manos que preparan, sonrisas que reciben y cariño en cada antojo.</p>
+              <p>Y el nombre lo pone Ronny, nuestro chihuahua. Tiene su genio: es valiente, leal y protector de los suyos. También es divertido y fan de las gusgerías.</p>
+              <p>Su playerita roja y esa lengua que siempre acaba en la nariz lo hacen inconfundible. Pequeñito, pero con un corazón enorme.</p>
               <p className="story-signature">
                 Aquí no solo hacemos postres.
                 <br />
@@ -348,12 +345,6 @@ export default function Home() {
               </a>
             </div>
           </div>
-        </section>
-
-        <section className="ronny-everyday shell" aria-labelledby="everyday-title">
-          <div className="everyday-intro"><div className="eyebrow"><PawPrint size={16} /> ASÍ ES NUESTRO RONNY</div><h2 id="everyday-title">Mucho carácter.<br /><em>Más momentos juntos.</em></h2><p>Su playerita roja, su gente favorita y esa lengua que siempre acaba en la nariz. El pequeño de la casa, tal como es.</p></div>
-          <figure className="everyday-character everyday-sport"><img src="/ronny-red-sports.png" alt="Ronny café descansando con su playerita deportiva roja Adidas de rayas blancas" width={1024} height={1536} loading="lazy" /><figcaption>Con su playerita favorita.<strong>Listo para acompañarte.</strong></figcaption></figure>
-          <figure className="everyday-character everyday-nose"><img src="/ronny-nose-lick.png" alt="Ronny café con chamarrita roja lamiéndose la nariz como todos los días" width={1024} height={1536} loading="lazy" /><figcaption>Ese gesto tan suyo.<strong>La nariz nunca se salva.</strong></figcaption></figure>
         </section>
 
         <section
@@ -389,6 +380,7 @@ export default function Home() {
                 <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp</a>
                 <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
               </div>
+              <div className="visit-companion"><p>Nos vemos en el truck.<br /><strong>Ronny ya está listo.</strong></p><Mascot character="nose" className="visit-nose" /></div>
             </div>
             <div className="visit-map">
               <iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
@@ -403,14 +395,14 @@ export default function Home() {
       <footer className="site-footer shell footer-expanded" id="contacto">
         <div className="footer-top">
           <div>
-            <a href="#inicio" className="footer-wordmark"><img src="/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
+            <a href="#inicio" className="footer-wordmark"><img src="/images/brand/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
             <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
           </div>
           <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
         </div>
         <div className="footer-connect" aria-labelledby="footer-connect-title">
           <div className="footer-host">
-            <div className="footer-unicorn"><img src="/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></div>
+            <div className="footer-unicorn"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></div>
             <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
           </div>
           <div className="footer-connect-copy">
@@ -451,6 +443,7 @@ export default function Home() {
         </div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>
       </footer>
+      <nav className="mobile-order-bar" aria-label="Accesos rápidos para pedir"><a href="#menu"><UtensilsCrossed size={19} /> Ver menú</a><a href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><Bike size={20} /> A domicilio <ArrowUpRight size={16} /></a></nav>
     </div>
   );
 }

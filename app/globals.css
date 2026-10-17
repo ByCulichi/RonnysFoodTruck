@@ -2746,3 +2746,88 @@ h2 em {
   .menu-product .dish-title h3 { flex-basis: 100%; }
   .menu-product .dish-title > .dish-price { margin-left: 0; }
 }
+
+/* Organized artwork stays inside its layout; five companions each have a role. */
+.hero-food-emojis { gap: 14px; }
+.hero-food-emojis a { display: grid; place-items: center; width: 58px; height: 58px; border: 1px solid #ffd18a70; border-radius: 50%; background: #22101bc9; text-shadow: none; transition: background .2s; }
+.hero-food-emojis a > span { font-size: 30px; line-height: 1; }
+.hero-food-emojis a:hover { background: #873b28; }
+.menu-milkshake-art > .menu-milkshake-ronny { position: static; width: 100%; height: 100%; max-width: 100%; }
+.menu-milkshake-art > .menu-milkshake-ronny img { width: 100%; height: 100%; }
+.friday-banner { display: grid; grid-template-columns: 190px minmax(0, 1fr) auto; padding: 24px; min-height: 0; gap: 26px; }
+.friday-banner .ronny-cutout.promo-ronny { position: static; width: 190px; height: 150px; left: auto; bottom: auto; max-width: 100%; }
+.friday-banner > div > span { font-size: 11px; }
+.friday-banner h3 { font-size: 25px; line-height: 1.35; }
+.friday-banner > strong { margin: 0; font-size: 16px; }
+.friday-banner > strong > span { font-size: 35px; }
+.friday-star { display: none; }
+.delivery-section { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 45px; align-items: center; padding: 36px; margin-block: 55px; background: linear-gradient(115deg, #321b17, #20101d); border: 1px solid #ffc15c40; border-radius: 22px; scroll-margin-top: 110px; }
+.delivery-copy h2 { font-size: clamp(32px, 3.5vw, 46px); margin: 18px 0; }
+.delivery-copy p { font-size: 16px; line-height: 1.8; color: #ebd4bd; max-width: 640px; margin: 0 0 22px; }
+.delivery-copy > .button { white-space: normal; text-align: left; line-height: 1.5; font-size: 16px; max-width: 100%; min-height: 52px; padding: 14px 18px; gap: 12px; }
+.delivery-copy > .button svg { flex-shrink: 0; }
+.delivery-copy small { display: block; margin-top: 15px; color: #cbb7a4; font-size: 13px; line-height: 1.8; }
+.delivery-host { width: 210px; height: 285px; justify-self: center; max-width: 100%; }
+.story-layout { grid-template-columns: 300px minmax(0, 1fr); gap: 60px; padding-block: 55px; }
+.story-art { position: static; height: auto; flex-direction: column; align-items: center; }
+.story-art > .ronny-cutout { width: 245px; height: 330px; max-width: 100%; }
+.story-stamp { position: static; width: 90px; height: 90px; margin-top: 12px; }
+.story-stamp span { font-size: 8px; }
+.story-character-note { position: static; font-size: 14px; margin: 18px 0 0; }
+.story-copy h2 { font-size: clamp(33px, 3.6vw, 48px); line-height: 1.1; }
+.story-copy > p { max-width: 650px; font-size: 16px; line-height: 1.85; color: #dac8b7; }
+.visit-companion { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 22px; }
+.visit-companion > p { font-size: 14px; line-height: 1.8; color: #d9bea6; }
+.visit-companion strong { color: var(--gold); font-weight: 500; }
+.visit-companion .visit-nose { flex-shrink: 0; width: 125px; height: 155px; }
+.visit-copy > p { font-size: 16px; }
+.mobile-order-bar { display: none; }
+@media (max-width: 900px) {
+  .friday-banner { grid-template-columns: 150px minmax(0, 1fr); gap: 18px; }
+  .friday-banner .ronny-cutout.promo-ronny { grid-row: span 2; width: 150px; height: 155px; }
+  .friday-banner > strong { grid-column: 2; }
+  .delivery-section { grid-template-columns: minmax(0, 1fr) 160px; gap: 25px; padding: 28px; }
+  .delivery-host { width: 160px; height: 240px; }
+  .story-layout { grid-template-columns: 230px minmax(0, 1fr); gap: 30px; }
+}
+@media (max-width: 600px) {
+  .ronny-site { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .hero-food-emojis { gap: 12px; }
+  .hero-food-emojis a { width: 47px; height: 47px; }
+  .hero-food-emojis a > span { font-size: 27px; }
+  .menu-ronny-note { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+  .menu-milkshake-art { width: 100%; }
+  .friday-banner { grid-template-columns: 100px minmax(0, 1fr); gap: 14px; padding: 18px; min-height: 0; }
+  .friday-banner .ronny-cutout.promo-ronny { width: 100px; height: 145px; }
+  .friday-banner > div > span { font-size: 9px; line-height: 1.6; }
+  .friday-banner h3 { font-size: 20px; }
+  .friday-banner > strong { font-size: 14px; width: auto; white-space: normal; }
+  .friday-banner > strong > span { font-size: 30px; }
+  .delivery-section { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 22px; margin-block: 35px; scroll-margin-top: 95px; }
+  .delivery-copy h2 { font-size: 34px; }
+  .delivery-copy > .button { width: 100%; padding-inline: 14px; font-size: 15px; }
+  .delivery-copy small { font-size: 12px; }
+  .delivery-host { width: 140px; height: 200px; }
+  .story-layout { grid-template-columns: minmax(0, 1fr); gap: 25px; padding-block: 40px; }
+  .story-copy { grid-row: 1; }
+  .story-copy > p { font-size: 16px; }
+  .story-art > .ronny-cutout { width: 180px; height: 235px; }
+  .story-stamp { display: none; }
+  .story-character-note { font-size: 13px; margin-top: 8px; }
+  .visit-companion .visit-nose { width: 110px; height: 135px; }
+  .mobile-order-bar { display: grid; grid-template-columns: .85fr 1.15fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 11px 16px calc(11px + env(safe-area-inset-bottom, 0px)); background: #170f19f5; backdrop-filter: blur(14px); border-top: 1px solid #ffc15c55; box-shadow: 0 -8px 25px #0004; }
+  .mobile-order-bar a { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 0; min-height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; background: #ffe9c7; color: #3b2117; }
+  .mobile-order-bar a:last-child { background: #ffc56b; }
+  .mobile-order-bar svg { flex-shrink: 0; }
+  .ronny-site:has(.menu-search input:focus) .mobile-order-bar { display: none; }
+  .food-photo-dialog { max-height: calc(100dvh - 32px); }
+}
+@media (max-width: 360px) {
+  .mobile-order-bar { padding-inline: 12px; gap: 8px; }
+  .mobile-order-bar a { font-size: 13px; gap: 5px; }
+  .friday-banner { grid-template-columns: 85px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .friday-banner .ronny-cutout.promo-ronny { width: 85px; }
+  .friday-banner h3 { font-size: 18px; }
+}
+
+.story-copy > p + p { margin-top: 15px; }
