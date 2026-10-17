@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -119,6 +119,18 @@ function Mascot({ character, className = "" }: { character: 0 | 1 | 2; className
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (visible.length) setActiveSection(visible[0].target.id);
+    }, { rootMargin: "-15% 0px -55% 0px" });
+    for (const [id] of navLinks) {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    }
+    return () => observer.disconnect();
+  }, []);
   const [filter, setFilter] = useState("Todo");
   const [searchQuery, setSearchQuery] = useState("");
   const visibleDishes = dishes.filter((dish) =>
@@ -158,21 +170,21 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/ronny-flat-logo.png" alt="" width={50} height={50} />
+            <img src="/ronny-flat-logo.png" alt="" width={64} height={64} />
             <span>
-              RONNY’S<span className="brand-sub">FOOD TRUCK · HALLOWEEN</span>
+              RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
             <span className="brand-dot">®</span>
           </a>
           <nav className="desktop-nav" aria-label="Navegación principal">
             {navLinks.map(([id, label]) => (
-              <a href={`#${id}`} key={id}>
+              <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined}>
                 {label}
               </a>
             ))}
           </nav>
-          <a className="header-cta" href="#contacto">
-            ¿Se te antojó? <ArrowUpRight size={16} />
+          <a className="header-cta" href="#menu" aria-label="Ver el menú de Ronny’s">
+            <span>Ver el menú</span> <ArrowUpRight size={17} />
           </a>
           <button
             className="mobile-toggle"
@@ -406,9 +418,9 @@ export default function Home() {
                 protector de los suyos. También es divertido y tiene una debilidad:
                 las gusgerías. Pequeñito, pero siempre listo para defender a su familia.
               </p>
-              <figure className="family-memory">
-                <img src="/ronny-night-truck.png" alt="Ronny en caricatura plana y nuestra familia en el carrito rojo" width={1536} height={1024} loading="lazy" />
-                <figcaption>El ingrediente de siempre: nuestra familia.</figcaption>
+              <figure className="family-memory owner-duo">
+                <img src="/ronny-unicorn-owner-bunny.png" alt="Ronny de color crema con disfraz de unicornio, en brazos de su ama pelirroja de piel clara con disfraz de conejito rosa" width={1024} height={1536} loading="lazy" />
+                <figcaption>De unicornio y conejito: cómplices hasta para disfrazarse.</figcaption>
               </figure>
               <p className="story-signature">
                 Aquí no solo hacemos postres.
@@ -553,7 +565,7 @@ export default function Home() {
       <footer className="site-footer shell footer-expanded">
         <div className="footer-top">
           <div>
-            <a href="#inicio" className="footer-wordmark">RONNY’S<span>®</span></a>
+            <a href="#inicio" className="footer-wordmark"><img src="/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
             <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
           </div>
           <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
@@ -567,6 +579,16 @@ export default function Home() {
             <span className="channel-logo whatsapp-channel"><img src="/brands/whatsapp.svg" alt="WhatsApp" width={27} height={27} /></span>
             <div><strong>Hablemos por WhatsApp</strong><span>{business.phone} · Pregunta por tu próximo antojo.</span><small>Abrir conversación <ArrowUpRight size={13} /></small></div>
           </a>
+        </div>
+        <div className="footer-socials" aria-label="Logos de redes sociales, enlaces por confirmar">
+          <span className="footer-social-label">REDES SOCIALES</span>
+          <div className="footer-social-logos">
+            {[["instagram", "Instagram"], ["facebook", "Facebook"], ["tiktok", "TikTok"], ["x", "X"]].map(([network, label]) => (
+              <span key={network} className={`social-logo social-logo-${network}`} title={label}>
+                <img src={`/brands/${network}.svg`} alt={label} width={23} height={23} />
+              </span>
+            ))}
+          </div>
         </div>
         <div className="footer-details">
           <span><MapPin size={15} /> {business.address}</span>

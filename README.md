@@ -10,7 +10,7 @@ La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food
 
 ## Identidad nocturna
 
-La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. La nueva ilustración está en `public/ronny-night-truck.png`; las ilustraciones originales se conservan como archivos. La página utiliza el mismo Ronny plano en la portada, el icono (`public/ronny-flat-logo.png`) y seis atuendos: chef, malteadero, anfitrión (`public/ronny-flat-outfits.png`), enojón, guardián y hechicero (`public/ronny-personalities.png`). Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color crema claro, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/ronny-halloween-truck.png`, el icono `public/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
 
 ## Desarrollo y validación
 
@@ -19,7 +19,6 @@ Requiere Node.js 22 y npm. npm y `package-lock.json` son la fuente de dependenci
 ```sh
 npm ci --legacy-peer-deps
 npm run typecheck
-npm run test:reviews
 npm audit
 npm run build
 npm run dev
@@ -46,7 +45,7 @@ En Vercel, configurar únicamente para producción cuando se haya aprobado su ac
 - `CONTACT_EMAIL_TO`: destinatario real aprobado por el propietario.
 - `CONTACT_EMAIL_ENABLED=true`: activar solo después de configurar lo anterior.
 
-`.env.example` documenta los nombres sin credenciales. No incluir secretos en Git, capturas o mensajes. El contacto no está listo para uso real hasta completar esta configuración. No se han agregado teléfonos, direcciones ni horarios; la zona mencionada procede del proyecto original y el sitio pide confirmar punto y horario.
+`.env.example` documenta los nombres sin credenciales. No incluir secretos en Git, capturas o mensajes. Esta integración queda pendiente; no se solicitan claves ni se activa durante el trabajo actual. Los datos públicos confirmados por el propietario se mantienen en `lib/business.ts`.
 
 ## Próximos cambios
 
@@ -60,10 +59,12 @@ Los datos de la captura proporcionada por el propietario están centralizados en
 
 ## Google Maps y opiniones
 
-La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado busca la dirección confirmada; la resolución del enlace corto a una ubicación exacta no se pudo verificar por la restricción de red del entorno. No se inventan coordenadas.
+La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
 
-Las reseñas se consultan desde el servidor mediante Places API (New), sin exponer claves al navegador. En Vercel, configurar `GOOGLE_PLACES_API_KEY` (secreto, con Places API habilitada) y `GOOGLE_PLACE_ID` (identificador de la ficha oficial). El componente refresca los datos cada cinco minutos y muestra autor y enlace a Google. Solo se muestran hasta cinco reseñas devueltas por Google, sin presentarlas como todas las opiniones. No se guardan datos de Google en caché.
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews quedan pendientes de sus enlaces oficiales; no se inventan cifras.
 
-Sin conexión válida, el sitio ofrece abrir la ficha oficial y no inventa reseñas, estrellas ni cantidades. No se ha validado el acceso real a Places: faltan clave e identificador. Las pruebas de presentación con datos simulados no equivalen a una conexión real.
+## Identidad de Ronny
 
-Instagram, Facebook, TikTok, seguidores y previews de publicaciones quedan pendientes por indicación del propietario hasta recibir los enlaces oficiales y la conexión que permita consultar sus datos. El footer muestra únicamente los canales confirmados (Google y WhatsApp), sin perfiles ni cifras ficticios.
+Su color natural es crema claro o marfil, como la última referencia del propietario, con orejas rosas, ojos grandes y lengua de lado. Esa identidad se mantiene en el logo y todas las ilustraciones activas. La historia añade a Ronny con disfraz de unicornio junto a su ama pelirroja, de piel clara, con disfraz de conejito, ambos en caricatura plana y con transparencia real.
+
+El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y muestra los logos de Instagram, Facebook, TikTok y X sin enlaces ni cifras hasta recibir los perfiles oficiales.
