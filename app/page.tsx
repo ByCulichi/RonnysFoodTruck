@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
-  ChevronLeft,
-  ChevronRight,
   House,
   ArrowRight,
   ArrowUpRight,
@@ -15,9 +13,6 @@ import {
   Sparkles,
   Ghost,
   UtensilsCrossed,
-  Search,
-  CakeSlice,
-  Coffee,
   Phone,
   MessageCircle,
   Bike,
@@ -28,13 +23,12 @@ import {
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
-import { MenuCard } from "@/components/menu-card";
 import { FooterSocials } from "@/components/footer-socials";
 import { RonnySeasons } from "@/components/ronny-seasons";
-import { dishes, foodKinds } from "@/lib/menu";
+import { dishes } from "@/lib/menu";
+import { InteractiveMenu } from "@/components/interactive-menu";
 
 const ronnyCharacters = {
-  milkshake: { name: "Ronny preparando una malteada con su outfit de Halloween", image: "/images/ronny/ronny-halloween-milkshake.png", width: 1536, height: 1024 },
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
   grumpy: { name: "Ronny enojón cuidando sus gusgerías", image: "/images/ronny/ronny-story-cutout.png", width: 1024, height: 1536 },
   host: { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/images/ronny/ronny-host-cutout.png", width: 1024, height: 1536 },
@@ -46,9 +40,6 @@ const heroSpecialties: { label: string; kind: FoodKind }[] = [
   { label: "Crepas", kind: "Crepas" },
   { label: "Snacks", kind: "Snacks" },
 ];
-const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
-const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "Menú"],
@@ -68,7 +59,6 @@ export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
-  const foodPickerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!mobileOpen) return;
     const handleEscape = (event: KeyboardEvent) => {
@@ -77,10 +67,6 @@ export default function Home() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [mobileOpen]);
-  function scrollFoodTypes(direction: number) {
-    const picker = foodPickerRef.current;
-    if (picker) picker.scrollBy({ left: direction * picker.clientWidth * .7, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
-  }
   useEffect(() => {
     const updateActiveSection = () => {
       let current = "inicio";
@@ -98,14 +84,12 @@ export default function Home() {
     }
     return () => observer.disconnect();
   }, []);
-  const [filter, setFilter] = useState("Todo");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [foodKind, setFoodKind] = useState<FoodKind>("Todo");
-  const visibleDishes = dishes.filter((dish) =>
-    (filter === "Todo" || dish.group === filter) &&
-    (foodKind === "Todo" || dish.kind === foodKind) &&
-    normalizeSearch(`${dish.name} ${dish.description} ${dish.options.map((option) => option.name).join(" ")}`).includes(normalizeSearch(searchQuery.trim()))
-  ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
+  const [menuSelection, setMenuSelection] = useState("Crepas");
+  const [menuEntry, setMenuEntry] = useState(0);
+  function openMenu(kind: FoodKind) {
+    setMenuSelection(dishes.find((dish) => dish.kind === kind)?.name || "Crepas");
+    setMenuEntry((entry) => entry + 1);
+  }
   return (
     <div className="ronny-site halloween-season">
       <a className="skip-link" href="#contenido">
@@ -179,7 +163,7 @@ export default function Home() {
             <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
             <div className="night-specialties hero-food-emojis" role="group" aria-label="Especialidades del truck">
-              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}><FoodIcon kind={kind} /></a>)}
+              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => openMenu(kind)}><FoodIcon kind={kind} /></a>)}
             </div>
           </div>
           <div className="night-bottom shell">
@@ -204,83 +188,8 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="menu-section shell section-space" id="menu">
-          <div className="section-heading">
-            <div>
-              <div className="eyebrow">
-                <UtensilsCrossed size={15} /> EL MENÚ DE LA CASA
-              </div>
-              <h2>
-                El menú del truck.
-                <br />
-                <em>Hecho para antojar.</em>
-              </h2>
-              <p className="menu-heading-help">Elige tu antojo. Mira las fotos y encuentra todos los precios aquí.</p>
-            </div>
-            <div className="menu-ronny-note">
-              <div className="menu-milkshake-art">
-                <Mascot character="milkshake" className="menu-milkshake-ronny" />
-                <Sparkles className="milkshake-spark" size={20} aria-hidden="true" />
-              </div>
-              <div className="menu-milkshake-copy">
-                <p>Ronny está preparando<br /><strong>una malteada de miedo.</strong></p>
-                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); setFoodKind("Todo"); }}>
-                  Ver bebidas <ArrowDown size={15} />
-                </button>
-                <small>Precios en pesos mexicanos.</small>
-              </div>
-            </div>
-          </div>
-          <div className="menu-search-row">
-            <label className="menu-search">
-              <Search size={18} aria-hidden="true" />
-              <input type="search" aria-label="Buscar en el menú" placeholder="¿Qué se te antoja? Busca tu favorito…" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
-            </label>
-            <span className="menu-currency">Preparado con corazón · Precios en MXN</span>
-          </div>
-          <div className="menu-toolbar">
-            <div
-              className="filter-group"
-              role="group"
-              aria-label="Filtrar menú"
-            >
-              {(["Todo", "Dulces", "Salados", "Bebidas"] as const).map((item) => {
-                const Icon = categoryIcons[item];
-                return <button
-                  key={item}
-                  aria-label={item}
-                  aria-pressed={filter === item}
-                  className={filter === item ? "selected" : ""}
-                  onClick={() => { setFilter(item); setFoodKind("Todo"); }}
-                >
-                  <Icon size={16} aria-hidden="true" />
-                  {item}
-                  <span aria-hidden="true">{item === "Todo" ? dishes.length : dishes.filter((dish) => dish.group === item).length}</span>
-                </button>;
-              })}
-            </div>
-          </div>
-          <div className="food-navigation">
-            <div className="food-navigation-heading"><h3>¿Qué se te antoja?</h3><div><button type="button" aria-label="Ver categorías anteriores" onClick={() => scrollFoodTypes(-1)}><ChevronLeft size={22} /></button><button type="button" aria-label="Ver más categorías" onClick={() => scrollFoodTypes(1)}><ChevronRight size={22} /></button></div></div>
-            <div className="food-type-picker" role="group" aria-label="Elegir un antojo" ref={foodPickerRef}>
-              {foodKinds.map((kind) => <button type="button" key={kind} aria-pressed={foodKind === kind} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}>
-                <FoodIcon kind={kind} />
-                <span>{kind === "Todo" ? "Todo el truck" : kind}</span>
-              </button>)}
-            </div>
-          </div>
-          <div className="menu-results"><span aria-live="polite">{visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}</span><span>Precios en pesos mexicanos</span></div>
-          <div className="dish-grid">
-            {visibleDishes.map((dish, index) => <MenuCard dish={dish} index={index} key={dish.name} />)}
-          </div>
-          {visibleDishes.length === 0 && (
-            <div className="menu-empty" role="status">
-              <Search size={28} />
-              <h3>No encontramos ese antojo.</h3>
-              <p>Prueba otro nombre o vuelve a explorar el menú completo.</p>
-              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); setFoodKind("Todo"); }}>Ver todo el menú</button>
-            </div>
-          )}
+        <section className="menu-section compact-menu-section shell section-space" id="menu" aria-labelledby="compact-menu-title">
+          <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
           <details className="original-menu">
             <summary>La carta del truck <span>Ver menú original y precios</span></summary>
             <div className="original-menu-pages">

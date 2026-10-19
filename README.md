@@ -46,7 +46,7 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 ## Menú y datos de contacto
 
-El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/images/ronny/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
+El menú compacto tiene tres categorías (Dulces, Salados y Bebidas), búsqueda global por nombre e ingredientes sin distinguir acentos y una sola ficha activa. Los productos se eligen con botones que muestran su precio inicial; la ficha conserva foto, descripción, variantes y todos sus precios visibles. Las flechas permiten recorrer los productos de la categoría sin apilar tarjetas. Ronny aparece fuera de la ficha y cambia automáticamente de atuendo al elegir categoría, según la preferencia del propietario; no hay selector manual de outfits. Los iconos de portada abren su producto y limpian una búsqueda anterior.
 
 Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
@@ -72,16 +72,16 @@ Las 13 fotos de comida del ZIP se conservan sin retoque en `public/images/menu/`
 
 ## Legibilidad para clientes
 
-El menú se presenta en tarjetas crema con texto oscuro y acentos rojos. Las fotos ocupan dos columnas grandes en escritorio y una en celular; nombres, precios y variantes se leen directamente, sin desplegar cada tarjeta. Se conservan los productos, fotos y precios de `lib/menu.ts`.
+El menú muestra una ficha crema activa con texto oscuro y acentos rojos. En escritorio la foto queda junto a las variantes; en celular va arriba. Los nombres, precios y variantes se leen directamente en la ficha, sin desplegables. Se conservan todos los productos, fotos y precios de `lib/menu.ts`.
 
-Las fotografías se pueden ampliar en un diálogo con navegación entre imágenes, cierre por botón, Escape o fondo, foco nativo y bloqueo del desplazamiento de la página mientras está abierto. Las categorías principales permanecen visibles al recorrer el menú; las categorías ilustradas se pueden desplazar con flechas. La navegación superior usa rótulos e iconos más legibles y un acceso al menú destacado en celular. Ronny se reduce en portada y encabezado para dar más presencia al truck.
+Las fotografías se pueden ampliar en un diálogo con navegación entre imágenes, cierre por botón, Escape o fondo, foco nativo y bloqueo del desplazamiento de la página mientras está abierto. Las tres categorías principales permanecen visibles al recorrer el menú; los botones eligen productos y las flechas cambian la ficha activa. La navegación superior usa rótulos e iconos más legibles y un acceso al menú destacado en celular. Ronny se reduce en portada y encabezado para dar más presencia al truck.
 
 
 ## Imágenes y distribución móvil
 
 Las imágenes están ordenadas en `public/images/`: `brand/` para logos, `hero/` para portadas, `ronny/` para personajes, `menu/` con subcarpetas de platillos y cartas, y `archive/` para recursos anteriores. El cambio de carpetas conserva el contenido de los archivos y actualiza todas sus referencias. Los personajes se mantienen dentro de su espacio de diseño, con transparencia y sin marcos.
 
-Los cinco Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los iconos tipo emoji de portada abren el menú filtrado y conservan sus nombres accesibles.
+Los Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación; el del menú cambia con su categoría. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los iconos tipo emoji de portada abren el producto correspondiente y conservan sus nombres accesibles.
 
 `business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. En celular una barra inferior ofrece acceso a menú y domicilio, respeta el área segura y deja espacio al final para no tapar contenido.
 
@@ -90,3 +90,9 @@ El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358
 ## Ronny’s por temporadas
 
 `#temporadas`, después de menú y domicilio, presenta Halloween como campaña actual y Navidad como próxima. El adelanto navideño usa `public/images/seasons/ronny-christmas.png`: Ronny café de Santa con malteada y hot dog, ilustrado a partir de la referencia del propietario y con transparencia real. No hay cambio automático de campaña, fecha de lanzamiento ni ofertas de Navidad inventadas. «Temporadas» aparece en navegación de escritorio y móvil; se conserva Halloween en portada. Las dos campañas llevan al menú existente.
+
+## Menú compacto e interacción de Ronny
+
+`components/interactive-menu.tsx` reúne la navegación por categoría, búsqueda global y ficha de producto. `components/interactive-menu.css` contiene sus estilos. Solo se monta una `MenuCard`; no se recortan precios ni se eliminan productos de `lib/menu.ts`. Se mantienen las fotografías originales y su ampliación accesible con Escape, foco contenido y retorno al botón. Las consultas de WhatsApp son borradores que el cliente envía por su cuenta.
+
+Ronny usa tres PNG individuales en `public/images/ronny/menu/`: dulces (repostero con waffle), salados (anfitrión con hot dog), bebidas (malteadero). Se generaron a partir de las ilustraciones existentes para mantener identidad café/caramelo y Halloween, con alpha real, sin fondos ni marco alrededor del personaje. En escritorio acompaña el menú a un lado; en celular se integra de forma compacta antes de los productos y nunca tapa los controles. La composición se inspira en la captura de culichi.lat proporcionada por el propietario; el entorno bloqueó la apertura de la web con `Tunnel connection failed: 403 Forbidden`, por lo que no se afirma haber probado su interacción en vivo.
