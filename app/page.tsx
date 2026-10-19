@@ -20,7 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { business } from "@/lib/business";
-import { GoogleReviews } from "@/components/google-reviews";
+import { VisitSection } from "@/components/visit-section";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
 import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
@@ -262,49 +262,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          className="visit-section shell section-space"
-          id="encuentranos"
-        >
-          <div className="visit-card">
-            <div className="visit-copy">
-              <div className="eyebrow">
-                <MapPin size={16} /> NOS VEMOS EN EL TRUCK
-              </div>
-              <h2>
-                Tu próxima
-                <br />
-                <em>parada feliz.</em>
-              </h2>
-              <p>
-                <MapPin size={18} aria-hidden="true" /> {business.address}
-              </p>
-              <a
-                className="button button-gold"
-                href={business.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Cómo llegar <ArrowUpRight size={18} />
-              </a>
-              <div className="visit-hours">
-                <Clock size={18} aria-hidden="true" />
-                <div><span>Viernes, sábado y domingo</span><strong>7 p. m.–12 a. m.</strong><small>{business.closedDays}</small></div>
-              </div>
-              <div className="business-contact-links">
-                <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} /> WhatsApp</a>
-                <a href={`tel:${business.phoneInternational}`}><Phone size={17} /> {business.phone}</a>
-              </div>
-              <div className="visit-companion"><p>Nos vemos en el truck.<br /><strong>Ronny ya está listo.</strong></p><Mascot character="nose" className="visit-nose" /></div>
-            </div>
-            <div className="visit-map">
-              <iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
-              <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer">Abrir en Google Maps <ArrowUpRight size={16} /></a>
-            </div>
-          </div>
-        </section>
-
-        <GoogleReviews mapsUrl={business.mapsUrl} />
+        <VisitSection />
 
       </main>
       <SiteFooter />
