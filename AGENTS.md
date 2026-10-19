@@ -18,7 +18,7 @@
 
 - No incluir «Elige mi look» ni botones para cambiar personajes. Los Ronnys se ven directamente en portada, menú, promoción, historia, ubicación y contacto.
 
-- Por la última elección del propietario, Ronny usa disfraces COMPLETOS de Halloween, no solo gorros: bruja en Dulces, fantasma en Bebidas, diablito en Salados y zombi para los snacks salados. La elección es automática por categoría/producto, sin selector manual. Usar `lib/ronny-costumes.ts` y los cuatro PNG transparentes de `public/images/ronny/halloween/`, fuera de las tarjetas.
+- Por la última elección del propietario, Ronny usa disfraces COMPLETOS de Halloween, no solo gorros: bruja en Dulces, fantasma en Bebidas frías, vampiro barista en Bebidas calientes, diablito en Salados y zombi para los snacks salados. La elección es automática por categoría/producto, sin selector manual. Usar `lib/ronny-costumes.ts` y los PNG transparentes de `public/images/ronny/halloween/`, fuera de las tarjetas.
 
 - Datos confirmados del negocio: `lib/business.ts`. Dirección New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes a domingo 19:00–00:00, lunes a jueves cerrado. No agregar número de inmueble o coordenadas sin que el propietario los proporcione.
 
@@ -33,7 +33,7 @@
 - El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios. El propietario autorizó crear imágenes para los productos sin foto: conservar las 13 fotos reales del ZIP y las tres cartas sin retoques; guardar los recursos generados por separado y marcarlos como «Imagen ilustrativa», sin presentarlos como fotos reales del negocio.
 - Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
 
-- Priorizar la lectura del cliente: menú compacto por Dulces/Salados/Bebidas y una sola ficha de producto activa, con foto, precios y variantes visibles sin desplegables. No volver a apilar todas las fichas en celular. Mantener búsqueda global, ampliación de fotos accesible y accesos de portada a la categoría correcta. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
+- Priorizar la lectura del cliente: menú compacto por Dulces/Salados/Bebidas frías/Bebidas calientes y una sola ficha de producto activa, con foto, precios y variantes visibles sin desplegables. No volver a apilar todas las fichas en celular. Mantener búsqueda global, ampliación de fotos accesible y accesos de portada a la categoría correcta. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
 
 - Las imágenes se organizan bajo `public/images/`: brand, hero, ronny, menu por categoría y archive para recursos anteriores. Actualizar rutas al moverlas y conservar los bytes originales.
 - Los Ronnys de apoyo se reparten por función: personaje automático por categoría en menú, playerita roja en promoción, diablito en domicilio, zombi en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
@@ -65,3 +65,6 @@
 
 - Por la última petición del propietario, los seis logos sociales son enlaces nativos y abren su destino con un clic o Enter; la preview local aparece al pasar el ratón o enfocar, sin interceptar la navegación. Google y WhatsApp apuntan al negocio. Mientras faltan los perfiles oficiales, Instagram, Facebook, TikTok y X abren su plataforma general y la preview lo aclara; no inventar perfiles de Ronny’s.
 - Menú, carta, promoción, domicilio, temporadas e historia comparten `HalloweenMarketScene`: fondo local de Halloween con luna, telarañas, calabazas, niebla, murciélagos y brasas; movimiento suave con pausa, respeto a `prefers-reduced-motion` y suspensión fuera de pantalla. Mantener legibilidad, clics y carta visible. El escenario y terreno del footer se reflejan para sostener al dúo a la izquierda, conservando intacto su PNG.
+
+- Ronny del menú tiene cuatro opciones neón interactivas a su alrededor, inspiradas en la referencia de culichi.lat: Dulces, Salados, Bebidas frías y Bebidas calientes. Los botones filtran alimentos y cambian el atuendo automáticamente; no añadir un selector manual de ropa. `lib/menu-categories.ts` separa las bebidas existentes: Café es caliente; malteadas, frappés e ICE son fríos. No cambiar los 28 productos ni sus precios.
+- `RonnyOutfitStage` mantiene el atuendo anterior hasta que el siguiente está cargado y hace una transición suave entre imágenes optimizadas, sin marco. Respetar movimiento reducido. `ronny-vampiro-barista.png` es el disfraz completo para calientes; conservar los anteriores y los tres personajes de fotos aprobados. Mantener seis miniaturas por página, búsqueda global y carta siempre visible.

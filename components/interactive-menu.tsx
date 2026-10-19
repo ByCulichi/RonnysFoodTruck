@@ -8,10 +8,11 @@ import { dishes, menuPhotoUrl, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
 import { getMenuCostume, halloweenCostumes } from "@/lib/ronny-costumes";
+import { menuCategories, getMenuCategory, type MenuCategory } from "@/lib/menu-categories";
+import { RonnyOutfitStage } from "@/components/ronny-outfit-stage";
 import "./interactive-menu.css";
+import "./ronny-menu-orbit.css";
 
-type Group = Dish["group"];
-const groups: Group[] = ["Dulces", "Salados", "Bebidas"];
 const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 
@@ -20,9 +21,10 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const searchRef = useRef<HTMLInputElement>(null);
   const requested = dishes.find(({ name }) => name === selection) || dishes[1];
   const term = normalize(query.trim());
-  const choices = term ? dishes.filter((dish) => normalize(`${dish.name} ${dish.description} ${dish.options.map(({ name }) => name).join(" ")}`).includes(term)) : dishes.filter(({ group }) => group === requested.group);
+  const choices = term ? dishes.filter((dish) => normalize(`${dish.name} ${dish.description} ${menuCategories.find(({ id }) => id === getMenuCategory(dish))!.label} ${dish.options.map(({ name }) => name).join(" ")}`).includes(term)) : dishes.filter((dish) => getMenuCategory(dish) === getMenuCategory(requested));
   const active = choices.find(({ name }) => name === selection) || choices[0];
-  const group = active?.group || requested.group;
+  const category = getMenuCategory(active || requested);
+  const categoryLabel = menuCategories.find(({ id }) => id === category)!.label;
   const costume = getMenuCostume(active || requested);
   const guide = halloweenCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active?.name);
@@ -31,9 +33,9 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const totalPages = Math.ceil(choices.length / pageSize);
   const pageChoices = choices.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
 
-  function selectGroup(next: Group) {
+  function selectCategory(next: MenuCategory) {
     setQuery("");
-    if (next !== requested.group) onSelect(dishes.find(({ group }) => group === next)!.name);
+    if (term || next !== getMenuCategory(requested)) onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
   }
 
   function selectNext(direction: number) {
@@ -51,15 +53,14 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         <div>
           <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
           <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
-          <p>Escoge tu antojo. Fotos y precios a un toque.</p>
+          <p>Elige tu antojo y mira cómo Ronny cambia de disfraz.</p>
         </div>
         <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a><span className="compact-menu-currency">Precios en MXN</span></div>
       </div>
       <div className="compact-menu-controls">
         <div className="menu-group-switch" role="group" aria-label="Categorías del menú">
-          {groups.map((item) => <button type="button" key={item} aria-pressed={!term && group === item} onClick={() => selectGroup(item)}>
-            <FoodIcon kind={item === "Dulces" ? "Waffles" : item === "Salados" ? "Hamburguesas" : "Malteadas"} />
-            <span>{item}</span><small>{dishes.filter(({ group }) => group === item).length}</small>
+          {menuCategories.map((item) => <button type="button" key={item.id} aria-label={item.label} aria-pressed={!term && category === item.id} aria-controls="menu-product-browser" onClick={() => selectCategory(item.id)}>
+            <FoodIcon kind={item.icon} /><span>{item.shortLabel}</span><small>{dishes.filter((dish) => getMenuCategory(dish) === item.id).length}</small>
           </button>)}
         </div>
         <div className="compact-menu-search">
@@ -69,18 +70,21 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </div>
       </div>
       <div className="menu-workspace">
-        <aside className={`menu-ronny-guide guide-${group.toLowerCase()}`} aria-label="Ronny te acompaña" data-menu-outfit={costume}>
+        <aside className={`menu-ronny-guide guide-${category}`} aria-label="Elige tu antojo con Ronny" data-menu-outfit={costume}>
           <div className="menu-guide-art">
-            <img key={costume} src={guide.src} alt={guide.alt} width={1024} height={1536} loading="lazy" />
-            <span className="guide-orbit orbit-dulces" aria-hidden="true"><FoodIcon kind="Waffles" /></span>
-            <span className="guide-orbit orbit-salados" aria-hidden="true"><FoodIcon kind="Hamburguesas" /></span>
-            <span className="guide-orbit orbit-bebidas" aria-hidden="true"><FoodIcon kind="Malteadas" /></span>
+            <span className="ronny-orbit-ring" aria-hidden="true" />
+            <RonnyOutfitStage costume={costume} />
+            <div className="ronny-orbit-options" role="group" aria-label="Opciones alrededor de Ronny">
+              {menuCategories.map((item) => <button type="button" key={item.id} className={`ronny-category-orb orb-${item.id}`} aria-label={item.label} aria-pressed={!term && category === item.id} aria-controls="menu-product-browser" onClick={() => selectCategory(item.id)}>
+                <FoodIcon kind={item.icon} /><span>{item.id === "frias" ? <>Bebidas<br />frías</> : item.id === "calientes" ? <>Bebidas<br />calientes</> : item.label}</span>
+              </button>)}
+            </div>
           </div>
           <div className="menu-guide-message"><strong>{guide.title}</strong><p>{guide.message}</p></div>
         </aside>
-        <div className="menu-browser">
+        <div className="menu-browser" id="menu-product-browser">
           <span className="sr-only" role="status">{active ? `${active.name}. Precio inicial: ${getPrice(active)} pesos.` : "Sin productos para esta búsqueda."}</span>
-          <div className="menu-choice-heading"><span aria-live="polite">{term ? `${choices.length} resultados en todo el menú` : `${group} · ${choices.length} antojos`}</span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
+          <div className="menu-choice-heading"><span aria-live="polite">{term ? `${choices.length} resultados en todo el menú` : `${categoryLabel} · ${choices.length} antojos`}</span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
           {choices.length > 0 ? <>
             <div className="menu-choice-grid" role="group" aria-label="Elegir producto">
               {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
