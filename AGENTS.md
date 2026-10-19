@@ -30,7 +30,7 @@
 
 - El footer «Aquí sigue el antojo» reúne contacto, horarios, la dueña con Ronny y los seis logos neón en un grupo centrado. Las previews son una franja discreta que aparece solo al activar un logo; no restaurar la tarjeta grande permanente de WhatsApp ni separar canales en tarjetas. No restaurar el formulario «¿Platicamos algo rico?». El diablito acompaña domicilio y el zombi, la historia; el dúo unicornio/conejito se conserva en el footer; `#contacto` apunta allí.
 
-- El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios ni fotografías de productos. Los iconos ilustrados representan categorías sin foto disponible.
+- El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios. El propietario autorizó crear imágenes para los productos sin foto: conservar las 13 fotos reales del ZIP y las tres cartas sin retoques; guardar los recursos generados por separado y marcarlos como «Imagen ilustrativa», sin presentarlos como fotos reales del negocio.
 - Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
 
 - Priorizar la lectura del cliente: menú compacto por Dulces/Salados/Bebidas y una sola ficha de producto activa, con foto, precios y variantes visibles sin desplegables. No volver a apilar todas las fichas en celular. Mantener búsqueda global, ampliación de fotos accesible y accesos de portada a la categoría correcta. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
@@ -45,3 +45,6 @@
 
 - Personajes aprobados por el propietario, basados en sus fotos: `ronny-red-sports.png`, `ronny-nose-lick.png` y `ronny-unicorn-owner-bunny.png`. Conservar definitivamente sus imágenes, ropa, poses y colores. No regenerarlos al cambiar disfraces de campaña. La imagen con el abuelo sigue pendiente.
 - El icono de la pestaña del navegador usa la cara aprobada de Ronny en `public/images/brand/ronny-flat-logo.png`, configurada en los metadatos de `app/layout.tsx`.
+
+- Menú de Halloween: 28 productos por nombre con sus variantes y precios de las tres cartas, miniaturas con foto, seis productos por página y una sola ficha activa. Mantener búsqueda global y los disfraces automáticos de Ronny. La carta original muestra siempre sus tres imágenes, sin acordeón ni desplegable, y permite ampliarlas con teclado y retorno de foco.
+- Las 19 imágenes nuevas de apoyo se guardan en `public/images/menu/generated/`, claramente marcadas como ilustrativas. Usar `menuPhotoUrl` para resolver fotos originales JPG y generadas PNG. Servir tamaños adaptables con Next Image y optimización activa para no descargar originales grandes en las miniaturas.

@@ -46,7 +46,7 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 ## Menú y datos de contacto
 
-El menú compacto tiene tres categorías (Dulces, Salados y Bebidas), búsqueda global por nombre e ingredientes sin distinguir acentos y una sola ficha activa. Los productos se eligen con botones que muestran su precio inicial; la ficha conserva foto, descripción, variantes y todos sus precios visibles. Las flechas permiten recorrer los productos de la categoría sin apilar tarjetas. Ronny aparece fuera de la ficha y cambia automáticamente de atuendo al elegir categoría, según la preferencia del propietario; no hay selector manual de outfits. Los iconos de portada abren su producto y limpian una búsqueda anterior.
+El menú compacto tiene tres categorías (Dulces, Salados y Bebidas), búsqueda global por nombre e ingredientes sin distinguir acentos y una sola ficha activa. Los productos se eligen con miniaturas de foto y precio inicial, seis por página; la ficha conserva foto, descripción, variantes y todos sus precios visibles. Las flechas permiten recorrer los productos de la categoría sin apilar tarjetas. Ronny aparece fuera de la ficha y cambia automáticamente de atuendo al elegir categoría, según la preferencia del propietario; no hay selector manual de outfits. Los iconos de portada abren su producto y limpian una búsqueda anterior.
 
 Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
@@ -63,11 +63,11 @@ Su color de marca es café/caramelo por la última corrección del propietario, 
 El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.
 
 
-## Carta y fotos reales
+## Carta y fotografías
 
-`lib/menu.ts` centraliza 16 familias de antojos con sus variantes y precios, transcritos de las tres fotos de la carta de `ronnys.zip`. Las cartas originales se conservan en `public/images/menu/cartas/carta-{dulces,salados,bebidas}.jpg` y se pueden consultar desde el menú. Se actualizan, entre otros, papas locas a $40, francesas a $45, nachos a $50 y salchipulpos a $60; se incorporan hamburguesas desde $75, hot dogs desde $20, banderillas saladas $55 y dulces $45, alitas desde $85 y bebidas de la carta.
+`lib/menu.ts` centraliza 28 productos con sus variantes y precios, transcritos de las tres fotos de la carta de `ronnys.zip`: 8 dulces, 11 salados y 9 bebidas. Los productos antes agrupados como «Papas y extras», «Cafecito» o «Fruta con crema» aparecen por su nombre para encontrarlos directamente. Las cartas originales se conservan en `public/images/menu/cartas/carta-{dulces,salados,bebidas}.jpg` y sus tres imágenes permanecen visibles bajo el menú, sin desplegable. `components/menu-carta.tsx` permite ampliarlas, recorrerlas, abrir el archivo original y cerrar con botón, Escape o fondo, con foco contenido y retorno al botón de origen. Se actualizan, entre otros, papas locas a $40, francesas a $45, nachos a $50 y salchipulpos a $60; se incorporan hamburguesas desde $75, hot dogs desde $20, banderillas saladas $55 y dulces $45, alitas desde $85 y bebidas de la carta.
 
-Las 13 fotos de comida del ZIP se conservan sin retoque en `public/images/menu/` y se usan en tarjetas y selectores de fotos: tres crepas, dos malteadas, dos hamburguesas, tres frutas con crema, waffle, hotcakes y salchipulpos. Las imágenes verticales se adaptan con CSS. Los productos sin foto usan iconos ilustrados, no fotografías ficticias. El menú añade tipos de antojo ilustrados, letra local Lilita One y opciones con todos los precios visibles. La foto real del truck también se conserva como recurso. No se modifican las cartas originales ni se publican las referencias antiguas de personajes como si fueran platillos.
+Las 13 fotos de comida del ZIP se conservan sin retoque en `public/images/menu/` y se usan en tarjetas y selectores de fotos: tres crepas, dos malteadas, dos hamburguesas, tres frutas con crema, waffle, hotcakes y salchipulpos. Las imágenes verticales se adaptan con CSS. Por petición explícita del propietario, los productos sin foto usan 19 imágenes generadas en `public/images/menu/generated/`, separadas de las fotos reales y con la etiqueta visible «Imagen ilustrativa» en la ficha y la ampliación. No representan fotos reales del negocio. Todos los productos tienen imagen; las variantes y precios siguen la carta sin añadir ofertas. `menuPhotoUrl` resuelve las extensiones JPG/PNG. Next Image sirve miniaturas y fotos en tamaños adaptables y WebP mediante el optimizador integrado, sin claves o APIs externas. La foto real del truck también se conserva como recurso. No se modifican las cartas originales ni se publican las referencias antiguas de personajes como si fueran platillos.
 
 
 ## Legibilidad para clientes
@@ -102,3 +102,9 @@ Ronny usa cuatro disfraces completos en `public/images/ronny/halloween/`, regist
 Las ilustraciones de Ronny con playerita deportiva roja y cobija, lamiéndose la nariz, y del dúo unicornio/conejito quedan fijas por indicación del propietario. Sus PNG se conservan byte por byte; los disfraces nuevos usan archivos separados. La ilustración con el abuelo sigue pendiente de referencia.
 
 Los metadatos de `app/layout.tsx` usan `/images/brand/ronny-flat-logo.png` como icono de pestaña, acceso directo e icono Apple. Se reutiliza la cara aprobada sin modificarla ni pedir servicios externos.
+
+## Menú de Halloween
+
+La sección usa las fuentes locales Creepster y Lilita One, fondo violeta nocturno, acentos calabaza, telarañas y murciélagos decorativos sin bloquear controles. El movimiento se desactiva con `prefers-reduced-motion`. El resto de las secciones mantiene la ambientación nocturna; Navidad sigue siendo solo un adelanto.
+
+Las categorías muestran como máximo seis miniaturas con fotografía, nombre y precio por página, con botones anterior/siguiente y contador. La ficha seleccionada conserva variantes y precios visibles. Así se recorren los 28 productos sin apilar 28 tarjetas ni esconder la carta original; la búsqueda abarca todo el catálogo.

@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Search, UtensilsCrossed, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, Ghost, Search, X } from "lucide-react";
+import Image from "next/image";
 import { business } from "@/lib/business";
-import { dishes, type Dish } from "@/lib/menu";
+import { dishes, menuPhotoUrl, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
 import { getMenuCostume, halloweenCostumes } from "@/lib/ronny-costumes";
@@ -25,6 +26,10 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const costume = getMenuCostume(active || requested);
   const guide = halloweenCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active?.name);
+  const pageSize = 6;
+  const currentPage = Math.max(0, Math.floor(selectedIndex / pageSize));
+  const totalPages = Math.ceil(choices.length / pageSize);
+  const pageChoices = choices.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
 
   function selectGroup(next: Group) {
     setQuery("");
@@ -44,11 +49,11 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
     <div className="interactive-menu">
       <div className="compact-menu-heading">
         <div>
-          <div className="eyebrow"><UtensilsCrossed size={16} aria-hidden="true" /> EL MENÚ DEL TRUCK</div>
-          <h2 id="compact-menu-title">Tu antojo, <em>sin vueltas.</em></h2>
-          <p>Elige una categoría y toca lo que se te antoje.</p>
+          <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
+          <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
+          <p>Escoge tu antojo. Fotos y precios a un toque.</p>
         </div>
-        <span className="compact-menu-currency">Precios en MXN</span>
+        <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a><span className="compact-menu-currency">Precios en MXN</span></div>
       </div>
       <div className="compact-menu-controls">
         <div className="menu-group-switch" role="group" aria-label="Categorías del menú">
@@ -75,12 +80,12 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </aside>
         <div className="menu-browser">
           <span className="sr-only" role="status">{active ? `${active.name}. Precio inicial: ${getPrice(active)} pesos.` : "Sin productos para esta búsqueda."}</span>
-          <div className="menu-choice-heading"><span aria-live="polite">{term ? `${choices.length} resultados en todo el menú` : `${group} · ${choices.length} antojos`}</span><span>Toca para ver</span></div>
+          <div className="menu-choice-heading"><span aria-live="polite">{term ? `${choices.length} resultados en todo el menú` : `${group} · ${choices.length} antojos`}</span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
           {choices.length > 0 ? <>
             <div className="menu-choice-grid" role="group" aria-label="Elegir producto">
-              {choices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
-                <FoodIcon kind={dish.kind} />
-                <span>{dish.name}</span>
+              {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
+                <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 600px) 30vw, 170px" style={{ objectFit: "cover", objectPosition: dish.photos[0].position || "center 65%" }} /></span>
+                <span className="menu-choice-name">{dish.name}</span>
                 <small>{dish.options.some(({ price }) => price !== getPrice(dish)) ? "Desde" : "MXN"} <strong>${getPrice(dish)}</strong></small>
                 {dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}
               </button>)}

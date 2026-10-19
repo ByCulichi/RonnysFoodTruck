@@ -72,7 +72,6 @@
 .compact-menu-empty h3 { font-size: 24px; margin-top: 18px; }
 .compact-menu-empty p { color: #ccb29d; font-size: 15px; line-height: 1.7; margin-block: 13px; }
 .compact-menu-empty button { min-height: 44px; padding: 10px 16px; border: 1px solid #f0be75; border-radius: 9px; background: #ffc97c; color: #412317; font-weight: 700; }
-.compact-menu-section .original-menu { margin-top: 28px; }
 .compact-menu-section .friday-banner { margin-top: 30px; }
 @keyframes menu-ronny-arrive { from { opacity: .3; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
 @media (max-width: 1100px) {
@@ -131,8 +130,121 @@
   .menu-stepper button { width: 44px; height: 44px; }
   .menu-stepper span { font-size: 10px; white-space: nowrap; }
   .menu-detail-actions > a { font-size: 11px; line-height: 1.5; gap: 3px; text-align: center; }
-  .compact-menu-section .original-menu > summary { font-size: 15px; }
-  .compact-menu-section .original-menu > summary > span { font-size: 12px; }
   .ronny-site:has(.compact-menu-search input:focus) .mobile-order-bar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-guide-art > img { animation: none; } }
+
+/* Halloween night market: poster lettering, warm bulbs, purple mist and food photos. */
+.halloween-season { --bg: #100c1c; --panel: #21142b; background: #100c1c; }
+.halloween-menu-scene { position: relative; isolation: isolate; scroll-margin-top: 0; border-block: 1px solid #e79a534d; background: radial-gradient(ellipse at 2% 15%, #82347d55, transparent 48%), radial-gradient(ellipse at 95% 65%, #bc522333, transparent 42%), linear-gradient(135deg, #1d102d, #151024 58%, #251126); }
+.halloween-menu-scene::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .3; pointer-events: none; background-image: radial-gradient(circle, #ffc47a88 1px, transparent 2px), radial-gradient(circle, #c9a3ff55 1px, transparent 2px); background-size: 155px 180px, 233px 251px; background-position: 30px 70px, 110px 30px; }
+.halloween-menu-decoration { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; }
+.menu-cobweb { position: absolute; top: 0; width: 190px; height: 190px; stroke: #ffd39a; stroke-width: 1; opacity: .2; }
+.web-left { left: 0; }
+.web-right { right: 0; transform: scaleX(-1); }
+.menu-bat { position: absolute; width: 58px; fill: #080615; opacity: .6; animation: halloween-bat-drift 8s ease-in-out infinite; }
+.bat-one { top: 80px; right: 17%; rotate: -12deg; }
+.bat-two { top: 39%; left: 3%; width: 40px; animation-delay: -3s; rotate: 15deg; }
+.bat-three { bottom: 14%; right: 2%; width: 70px; animation-delay: -5s; }
+.halloween-menu-scene .compact-menu-section { padding-top: 55px; }
+.compact-menu-heading { align-items: center; margin-bottom: 26px; }
+.compact-menu-heading .eyebrow { color: #ffba72; letter-spacing: 2px; }
+.compact-menu-heading h2 { font: 400 clamp(40px, 4.8vw, 65px)/1.05 "Ronny Halloween", "Ronny Display", sans-serif; letter-spacing: 1px; color: #fff2d6; margin-top: 18px; text-shadow: 0 3px 0 #482041, 0 0 25px #ff9a2917; }
+.compact-menu-heading h2 em { display: block; font: inherit; color: #ffb859; letter-spacing: 1px; }
+.compact-menu-heading p { color: #e1cbe8; font-size: 16px; }
+.menu-heading-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.menu-heading-actions > a { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 16px; border: 1px solid #f1b57780; border-radius: 14px; color: #ffdaa1; background: #361d37a8; font: 400 17px "Ronny Display", sans-serif; }
+.menu-heading-actions > a:hover { background: #5f2b47; }
+.compact-menu-currency { color: #ceadd1; }
+.compact-menu-controls { background: #22142ff5; border-color: #c67bca55; box-shadow: 0 8px 24px #08041155; }
+.menu-group-switch button { font: 400 19px "Ronny Display", sans-serif; color: #ead8f0; }
+.menu-group-switch small { font: 700 11px Arial, sans-serif; }
+.menu-group-switch button[aria-pressed="true"] { background: linear-gradient(115deg, #ffbc62, #ff9852); border-color: #ffdc9b; box-shadow: 0 0 18px #ff8b352e; }
+.compact-menu-search { background: #160e23; border-color: #9b6faa66; }
+.menu-guide-message strong { font: 400 21px/1.3 "Ronny Display", sans-serif; color: #ffd08c; }
+.menu-guide-message p { color: #ccb8d5; }
+.menu-choice-heading { min-height: 44px; align-items: center; color: #eac6fa; }
+.menu-page-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; color: #ddc4e5; }
+.menu-page-controls button { display: grid; place-items: center; min-width: 44px; height: 44px; border: 1px solid #d0a1c650; border-radius: 50%; color: #ffe0b0; background: #36213d; }
+.menu-page-controls button:disabled { opacity: .3; cursor: default; }
+.menu-page-controls span { font-size: 12px; min-width: 30px; text-align: center; }
+.menu-choice-grid { gap: 9px; }
+.menu-choice-grid button { display: flex; flex-direction: column; flex-wrap: nowrap; min-height: 153px; padding: 0 0 10px; gap: 7px; overflow: hidden; background: #281a36; border-color: #b681bc45; color: #f6e4ff; }
+.menu-choice-grid button[aria-pressed="true"] { background: #713445; border-color: #ffbf6a; box-shadow: 0 0 0 1px #ffbd6c4a, 0 3px 18px #db6b3025; }
+.menu-choice-grid button > .menu-choice-photo { position: relative; display: block; width: 100%; height: 83px; flex-shrink: 0; background: #1a1025; }
+.menu-choice-grid button > .menu-choice-name { font: 400 15px/1.15 "Ronny Display", sans-serif; padding-inline: 5px; }
+.menu-choice-grid button > small { font-size: 10px; color: #d9b6ca; padding-inline: 5px; }
+.menu-choice-grid small strong { font: 800 14px Arial, sans-serif; color: #ffddaa; }
+.menu-choice-check { top: 6px; right: 6px; width: 21px; height: 21px; padding: 3px; border-radius: 50%; background: #b24530; color: #fff0cc; box-shadow: 0 1px 5px #0009; }
+.selected-menu-dish { border-color: #f3b673; box-shadow: 0 12px 30px #09041255; }
+.interactive-menu .selected-menu-dish .dish-title h3 { font-family: "Ronny Display", sans-serif; font-weight: 400; letter-spacing: 0; }
+.interactive-menu .selected-menu-dish .dish-title strong { font-family: Arial, sans-serif; font-weight: 900; }
+.generated-photo-label { position: absolute; z-index: 3; top: 10px; left: 10px; color: #fff0e0; background: #281431e8; border: 1px solid #e4bee24d; border-radius: 999px; padding: 6px 9px; font: 500 10px/1.3 Arial, sans-serif; pointer-events: none; }
+.truck-carta { margin-top: 35px; padding: 25px; border: 1px solid #e7ac6475; border-radius: 22px; background: linear-gradient(125deg, #3a2145, #28182f); box-shadow: 0 12px 30px #08041033; scroll-margin-top: 120px; }
+.truck-carta-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+.truck-carta-heading h3 { font: 400 33px/1.2 "Ronny Display", sans-serif; margin: 12px 0 0; color: #fff1d8; }
+.truck-carta-heading p { color: #d8badc; font-size: 13px; line-height: 1.7; margin: 0; }
+.truck-carta-pages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.truck-carta-pages > button { min-width: 0; padding: 0; overflow: hidden; border: 1px solid #f6cd9070; border-radius: 13px; background: #21132e; text-align: left; }
+.truck-carta-pages > button:hover { border-color: #ffda98; box-shadow: 0 0 15px #ffad4430; }
+.truck-carta-photo { position: relative; display: block; width: 100%; height: 255px; background: #efe0c4; }
+.truck-carta-caption { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 13px; color: #ffd18d; }
+.truck-carta-caption > strong { font: 400 20px "Ronny Display", sans-serif; }
+.truck-carta-caption > span { display: inline-flex; align-items: center; gap: 5px; color: #dbc2de; font-size: 11px; }
+.letter-dialog .photo-dialog-content > img { height: min(72dvh, 950px); object-fit: contain; background: #1b1027; }
+.letter-dialog .photo-dialog-footer > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; color: #ffc782; }
+.halloween-season .story-section { background: linear-gradient(140deg, #21122d, #160e21); }
+.halloween-season .delivery-section { background: radial-gradient(ellipse at 80% 50%, #82404633, transparent 60%), linear-gradient(120deg, #351d3c, #20152d); }
+.halloween-season .visit-card { background: #21162d; }
+.halloween-season .visit-copy { background: transparent; }
+.halloween-season .reviews-invitation { background: linear-gradient(120deg, #2c1b37, #201329); }
+@keyframes halloween-bat-drift { 0%, 100% { translate: 0 0; } 50% { translate: 8px -9px; } }
+@media (max-width: 1100px) {
+  .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .menu-choice-grid button { min-height: 142px; }
+  .menu-choice-grid button > .menu-choice-photo { height: 75px; }
+}
+@media (max-width: 900px) {
+  .compact-menu-heading { align-items: end; }
+  .menu-heading-actions > a { font-size: 15px; padding: 10px 12px; }
+  .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .truck-carta-photo { height: 200px; }
+  .truck-carta-caption { display: block; }
+  .truck-carta-caption > span { margin-top: 5px; }
+}
+@media (max-width: 600px) {
+  .halloween-menu-scene .compact-menu-section { padding-top: 28px; }
+  .compact-menu-heading { margin-bottom: 18px; }
+  .compact-menu-heading h2 { font-size: 39px; letter-spacing: .6px; }
+  .compact-menu-heading h2 em { letter-spacing: .6px; }
+  .compact-menu-heading p { font-size: 14px; margin-top: 8px; }
+  .menu-heading-actions { flex-direction: row; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .menu-heading-actions > a { min-height: 44px; font-size: 15px; padding-block: 9px; }
+  .compact-menu-currency { display: block; font-size: 10px; }
+  .menu-group-switch button { font-size: 17px; }
+  .menu-cobweb { width: 115px; height: 115px; opacity: .15; }
+  .bat-one { top: 75px; right: 9%; width: 37px; }
+  .bat-two { left: 1%; width: 28px; }
+  .menu-guide-message strong { font-size: 18px; }
+  .menu-guide-art { width: 74px; height: 88px; }
+  .menu-workspace { gap: 12px; }
+  .menu-choice-heading { gap: 10px; }
+  .menu-page-controls { gap: 5px; }
+  .menu-page-controls span { font-size: 11px; min-width: 25px; }
+  .menu-choice-grid button { min-height: 136px; gap: 6px; }
+  .menu-choice-grid button > .menu-choice-photo { height: 68px; }
+  .menu-choice-grid button > .menu-choice-name { font-size: 13px; }
+  .menu-choice-grid small strong { font-size: 13px; }
+  .truck-carta { padding: 14px; border-radius: 16px; margin-top: 25px; }
+  .truck-carta-heading { display: block; margin-bottom: 14px; }
+  .truck-carta-heading .eyebrow { font-size: 8px; letter-spacing: 1px; }
+  .truck-carta-heading h3 { font-size: 28px; }
+  .truck-carta-heading p { font-size: 12px; margin-top: 8px; }
+  .truck-carta-pages { gap: 8px; }
+  .truck-carta-photo { height: 132px; }
+  .truck-carta-caption { padding: 9px 6px; }
+  .truck-carta-caption > strong { font-size: 16px; }
+  .truck-carta-caption > span { font-size: 9px; gap: 3px; }
+  .truck-carta-caption svg { width: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .menu-bat { animation: none; } }
