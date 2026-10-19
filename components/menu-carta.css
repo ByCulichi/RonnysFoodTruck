@@ -1,0 +1,112 @@
+/* Typeset from the verified catalog: scalable text, no photographed menu cards. */
+.truck-carta { margin-top: 42px; padding-block: 30px 25px; border-block: 1px solid #ecb56a50; scroll-margin-top: 20px; }
+.carta-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
+.carta-heading h3 { font: 400 clamp(32px, 3vw, 44px)/1.15 "Ronny Halloween", sans-serif; color: #ffcb83; margin: 10px 0 0; }
+.carta-expand { display: inline-flex; align-items: center; justify-content: center; gap: 9px; flex-shrink: 0; min-height: 46px; padding: 10px 16px; background: #ffc478; border: 1px solid #ffdcaa; border-radius: 99px; color: #30162b; font-size: 14px; font-weight: 700; }
+.carta-expand:hover { background: #ffdcaa; }
+.carta-layout { display: grid; grid-template-columns: minmax(0, 1fr) 245px; gap: 38px; align-items: center; }
+.carta-board { min-width: 0; }
+.carta-categories { display: flex; gap: 18px; flex-wrap: wrap; border-bottom: 1px solid #ead1b233; }
+.carta-categories button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; padding: 7px 0 11px; color: #c6b7cc; background: transparent; border: 0; border-bottom: 3px solid transparent; font-size: 16px; font-weight: 700; }
+.carta-categories .food-icon { width: 24px; height: 24px; }
+.carta-categories button[aria-pressed="true"] { color: #ffca82; border-bottom-color: #ff9c44; }
+.carta-categories button:hover { color: #ffdec1; }
+.carta-board-caption { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding-block: 20px 8px; }
+.carta-board-caption > span { font: 400 27px/1.2 "Ronny Halloween", sans-serif; color: #ffd18e; }
+.carta-board-caption > small { color: #cbb5cb; font: 12px Arial, sans-serif; }
+.carta-product-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 35px; row-gap: 4px; list-style: none; margin: 0; padding: 0; }
+.carta-item { min-width: 0; padding-block: 15px; border-bottom: 1px dotted #e6bf8f40; font-size: 16px; }
+.carta-item-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; }
+.carta-item h4 { color: #fff0dc; font: 700 1.125em/1.35 Arial, sans-serif; margin: 0; }
+.carta-item-heading > strong { color: #ffce8a; font: 800 1.25em/1.3 Arial, sans-serif; white-space: nowrap; }
+.carta-item dl { margin: 9px 0 0; }
+.carta-item dl > div { display: flex; justify-content: space-between; gap: 14px; padding-block: 3px; color: #e2cedf; font-size: .9em; line-height: 1.4; }
+.carta-item dt { max-width: 85%; }
+.carta-item dd { color: #ffd99f; font-weight: 700; margin: 0; white-space: nowrap; }
+.carta-item p { color: #bca8c0; font-size: .8em; line-height: 1.55; margin: 8px 0 0; }
+.carta-item > a { display: inline-flex; align-items: center; gap: 5px; min-height: 32px; margin-top: 4px; color: #e5b576; font-size: 12px; }
+.carta-item > a:hover, .carta-original-link:hover { color: #ffe5bb; text-decoration: underline; text-underline-offset: 4px; }
+.carta-board-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; }
+.carta-original-link { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #d9bdd5; font-size: 13px; text-align: left; }
+.carta-pagination { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.carta-pagination button, .carta-reader-heading button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #d1a27e60; border-radius: 50%; color: #ffca88; background: #1c1029; }
+.carta-pagination button:disabled { cursor: default; opacity: .3; }
+.carta-pagination > span { min-width: 38px; color: #e3c9d9; font-size: 12px; text-align: center; }
+.carta-ronny { position: relative; text-align: center; scroll-margin-top: 20px; }
+.carta-ronny-art { position: relative; width: 205px; height: 285px; margin-inline: auto; }
+.carta-ronny-art::after { content: ""; position: absolute; bottom: 0; left: 8%; width: 84%; height: 18px; background: #06030ca6; filter: blur(7px); border-radius: 50%; z-index: -1; }
+.carta-ronny-art > img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 15px #08041355); }
+.carta-ronny-copy .eyebrow { justify-content: center; margin-top: 12px; font-size: 9px; letter-spacing: 1.5px; }
+.carta-ronny-copy h3 { color: #ffda9d; font: 400 27px/1.15 "Ronny Halloween", sans-serif; margin-top: 12px; }
+.carta-ronny-copy h3 em { font-style: normal; color: #ffa24e; }
+.carta-ronny-copy p { color: #c6adbe; font-size: 13px; line-height: 1.65; margin: 12px 0 4px; }
+.carta-ronny-copy > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #ffd399; font-size: 13px; font-weight: 700; }
+.carta-reader { width: min(1000px, calc(100% - 30px)); max-width: none; max-height: calc(100dvh - 30px); padding: 0; border: 1px solid #ecba78a0; border-radius: 18px; color: #fff0dc; background: #1c1228; box-shadow: 0 25px 100px #0009; }
+.carta-reader::backdrop { background: #080510e8; backdrop-filter: blur(8px); }
+.carta-reader button:focus-visible, .carta-reader a:focus-visible, .carta-reader [tabindex="0"]:focus-visible { outline-offset: -3px; }
+.carta-reader-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 22px; border-bottom: 1px solid #efbf7d38; }
+.carta-reader-heading > strong { color: #ffd18c; font: 400 28px/1.2 "Ronny Halloween", sans-serif; }
+.carta-reader-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 10px 22px; }
+.carta-reader-modes { display: flex; gap: 15px; }
+.carta-reader-modes button { border: 0; border-bottom: 2px solid transparent; background: transparent; color: #cbb3cb; min-height: 44px; padding: 7px 0; font-size: 14px; }
+.carta-reader-modes button[aria-pressed="true"] { color: #ffd18a; border-bottom-color: #ffad59; }
+.carta-reader > .carta-categories { margin-inline: 22px; }
+.carta-reader-scroll { max-height: calc(100dvh - 260px); overflow: auto; padding: 0 24px 24px; overscroll-behavior: contain; }
+.carta-reader-scroll .carta-item { font-size: var(--carta-text-size, 18px); }
+.carta-reader-scroll .carta-item p { font-size: .8em; }
+.carta-original-canvas { max-height: 62dvh; overflow: auto; margin: 0 20px; background: #110c18; overscroll-behavior: contain; }
+.carta-original-canvas > img { margin-inline: auto; object-fit: contain; }
+.carta-reader-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 12px 22px; }
+.carta-reader-footer > a { display: inline-flex; align-items: center; gap: 6px; color: #ffce90; font-size: 13px; min-height: 44px; }
+@media (max-width: 1000px) {
+  .carta-layout { grid-template-columns: minmax(0, 1fr) 200px; gap: 24px; }
+  .carta-ronny-art { width: 175px; height: 260px; }
+  .carta-product-list { column-gap: 22px; }
+  .carta-categories { gap: 14px; }
+  .carta-categories .food-icon { display: none; }
+}
+@media (max-width: 760px) {
+  .carta-layout { grid-template-columns: minmax(0, 1fr); gap: 25px; }
+  .carta-ronny { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; align-items: center; text-align: left; padding-top: 10px; }
+  .carta-ronny-art { width: 120px; height: 180px; }
+  .carta-ronny-copy .eyebrow { justify-content: start; margin: 0; }
+  .carta-ronny-copy h3 { font-size: 26px; }
+}
+@media (max-width: 600px) {
+  .truck-carta { margin-top: 30px; padding-block: 24px 10px; }
+  .carta-heading { align-items: end; gap: 10px; margin-bottom: 18px; }
+  .carta-heading .eyebrow { font-size: 8px; letter-spacing: 1.2px; }
+  .carta-heading h3 { font-size: 30px; }
+  .carta-expand { border-radius: 12px; font-size: 12px; padding: 8px; gap: 5px; width: 93px; }
+  .carta-expand svg { width: 16px; flex-shrink: 0; }
+  .carta-categories { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+  .carta-categories button { font-size: 15px; }
+  .carta-product-list { grid-template-columns: minmax(0, 1fr); }
+  .carta-item { padding-block: 12px; }
+  .carta-item > a { min-height: 38px; }
+  .carta-board-caption { padding-top: 17px; }
+  .carta-board-caption > span { font-size: 24px; }
+  .carta-board-caption > small { font-size: 11px; }
+  .carta-original-link { font-size: 12px; gap: 6px; }
+  .carta-board-footer { gap: 8px; }
+  .carta-pagination { gap: 3px; }
+  .carta-pagination > span { min-width: 30px; }
+  .carta-ronny { grid-template-columns: 105px minmax(0, 1fr); gap: 12px; }
+  .carta-ronny-art { width: 105px; height: 160px; }
+  .carta-ronny-copy h3 { font-size: 24px; margin-top: 8px; }
+  .carta-ronny-copy p { font-size: 12px; margin-top: 8px; }
+  .carta-ronny-copy .eyebrow { font-size: 8px; letter-spacing: 1px; }
+  .carta-ronny-copy > a { font-size: 12px; }
+  .carta-reader { width: calc(100% - 16px); max-height: calc(100dvh - 16px); border-radius: 13px; }
+  .carta-reader-heading { padding: 10px 12px; }
+  .carta-reader-heading > strong { font-size: 25px; }
+  .carta-reader-toolbar { flex-wrap: wrap; padding: 5px 12px 10px; gap: 5px 10px; }
+  .carta-reader-modes { gap: 13px; }
+  .carta-reader-modes button { font-size: 13px; }
+  .carta-reader > .carta-categories { margin-inline: 12px; }
+  .carta-reader-scroll { max-height: calc(100dvh - 290px); padding: 0 14px 20px; }
+  .carta-reader-scroll .carta-item h4 { font-size: 1em; }
+  .carta-reader-footer { padding: 9px 12px; }
+  .carta-reader-footer > a { font-size: 12px; }
+  .carta-original-canvas { margin-inline: 10px; max-height: calc(100dvh - 240px); }
+}

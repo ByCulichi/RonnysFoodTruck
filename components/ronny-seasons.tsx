@@ -8,7 +8,7 @@ export function RonnySeasons() {
           <div className="eyebrow"><Sparkles size={17} aria-hidden="true" /> RONNY’S POR TEMPORADAS</div>
           <h2 id="seasons-title">Cambian los disfraces.<br /><em>El antojo se queda.</em></h2>
         </div>
-        <p>El truck rojo, tus favoritos y un Ronny con mucho carácter. Cada temporada tiene su propia magia.</p>
+        <p>El mismo Ronny. Nuevos disfraces para tus antojos.</p>
       </div>
       <div className="seasons-grid">
         <article className="season-chapter season-halloween" aria-labelledby="halloween-title">
@@ -27,7 +27,7 @@ export function RonnySeasons() {
           <div className="season-copy">
             <span className="season-state season-state-next"><Snowflake size={14} aria-hidden="true" /> PRÓXIMA TEMPORADA</span>
             <h3 id="christmas-title">Navidad<br /><em>ya se antoja.</em></h3>
-            <p>Ronny ya tiene su traje de Santa. Su malteada, su hot dog y toda la ilusión de compartir algo rico contigo.</p>
+            <p>El traje de Santa está listo. La malteada y el hot dog también.</p>
             <span className="season-coming-soon">Próximamente en Ronny’s.</span>
             <a href="#menu">Mientras llega, al menú <ArrowUpRight size={17} aria-hidden="true" /></a>
           </div>

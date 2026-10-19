@@ -180,19 +180,6 @@
 .interactive-menu .selected-menu-dish .dish-title h3 { font-family: "Ronny Display", sans-serif; font-weight: 400; letter-spacing: 0; }
 .interactive-menu .selected-menu-dish .dish-title strong { font-family: Arial, sans-serif; font-weight: 900; }
 .generated-photo-label { position: absolute; z-index: 3; top: 10px; left: 10px; color: #fff0e0; background: #281431e8; border: 1px solid #e4bee24d; border-radius: 999px; padding: 6px 9px; font: 500 10px/1.3 Arial, sans-serif; pointer-events: none; }
-.truck-carta { margin-top: 35px; padding: 25px; border: 1px solid #e7ac6475; border-radius: 22px; background: linear-gradient(125deg, #3a2145, #28182f); box-shadow: 0 12px 30px #08041033; scroll-margin-top: 120px; }
-.truck-carta-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
-.truck-carta-heading h3 { font: 400 33px/1.2 "Ronny Display", sans-serif; margin: 12px 0 0; color: #fff1d8; }
-.truck-carta-heading p { color: #d8badc; font-size: 13px; line-height: 1.7; margin: 0; }
-.truck-carta-pages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-.truck-carta-pages > button { min-width: 0; padding: 0; overflow: hidden; border: 1px solid #f6cd9070; border-radius: 13px; background: #21132e; text-align: left; }
-.truck-carta-pages > button:hover { border-color: #ffda98; box-shadow: 0 0 15px #ffad4430; }
-.truck-carta-photo { position: relative; display: block; width: 100%; height: 255px; background: #efe0c4; }
-.truck-carta-caption { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 13px; color: #ffd18d; }
-.truck-carta-caption > strong { font: 400 20px "Ronny Display", sans-serif; }
-.truck-carta-caption > span { display: inline-flex; align-items: center; gap: 5px; color: #dbc2de; font-size: 11px; }
-.letter-dialog .photo-dialog-content > img { height: min(72dvh, 950px); object-fit: contain; background: #1b1027; }
-.letter-dialog .photo-dialog-footer > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; color: #ffc782; }
 .halloween-season .story-section { background: linear-gradient(140deg, #21122d, #160e21); }
 .halloween-season .delivery-section { background: radial-gradient(ellipse at 80% 50%, #82404633, transparent 60%), linear-gradient(120deg, #351d3c, #20152d); }
 .halloween-season .visit-card { background: #21162d; }
@@ -208,9 +195,6 @@
   .compact-menu-heading { align-items: end; }
   .menu-heading-actions > a { font-size: 15px; padding: 10px 12px; }
   .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .truck-carta-photo { height: 200px; }
-  .truck-carta-caption { display: block; }
-  .truck-carta-caption > span { margin-top: 5px; }
 }
 @media (max-width: 600px) {
   .halloween-menu-scene .compact-menu-section { padding-top: 28px; }
@@ -235,16 +219,5 @@
   .menu-choice-grid button > .menu-choice-photo { height: 68px; }
   .menu-choice-grid button > .menu-choice-name { font-size: 13px; }
   .menu-choice-grid small strong { font-size: 13px; }
-  .truck-carta { padding: 14px; border-radius: 16px; margin-top: 25px; }
-  .truck-carta-heading { display: block; margin-bottom: 14px; }
-  .truck-carta-heading .eyebrow { font-size: 8px; letter-spacing: 1px; }
-  .truck-carta-heading h3 { font-size: 28px; }
-  .truck-carta-heading p { font-size: 12px; margin-top: 8px; }
-  .truck-carta-pages { gap: 8px; }
-  .truck-carta-photo { height: 132px; }
-  .truck-carta-caption { padding: 9px 6px; }
-  .truck-carta-caption > strong { font-size: 16px; }
-  .truck-carta-caption > span { font-size: 9px; gap: 3px; }
-  .truck-carta-caption svg { width: 12px; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-bat { animation: none; } }

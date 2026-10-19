@@ -1,6 +1,20 @@
 /* One Halloween atmosphere joins menu, carta, promo, delivery, seasons and story. */
 .halloween-market { position: relative; isolation: isolate; background: radial-gradient(ellipse at 0 15%, #62297066, transparent 38%), radial-gradient(ellipse at 100% 52%, #93452042, transparent 34%), radial-gradient(ellipse at 15% 86%, #77315f38, transparent 32%), linear-gradient(170deg, #1d102d, #110d20 45%, #201028 82%, #100c1c); }
 .halloween-market .halloween-menu-scene { background: transparent; }
+.halloween-market::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .4; background-image: radial-gradient(1px 1px at 10px 25px, #e4b588 70%, transparent), radial-gradient(1px 1px at 70px 90px, #b388cc 70%, transparent); background-size: 145px 160px, 210px 195px; mask-image: linear-gradient(90deg, #000, transparent 35%, transparent 65%, #000); }
+.market-fairground { position: relative; isolation: isolate; padding-block: 8px 15px; background: radial-gradient(ellipse at 15% 45%, #76336b36, transparent 48%), radial-gradient(ellipse at 88% 72%, #c16a2633, transparent 45%), linear-gradient(180deg, transparent, #25132b70 45%, #110d1e); }
+.market-fair-decoration { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; }
+.market-fair-panorama { position: absolute; width: 100%; height: 100%; inset: 0; opacity: .65; mask-image: linear-gradient(180deg, transparent, #000 14%, #000 87%, transparent); }
+.market-fair-moon { position: absolute; width: clamp(100px, 13vw, 205px); aspect-ratio: 1; top: 3%; right: 2%; border-radius: 50%; opacity: .4; background: radial-gradient(circle at 30% 40%, #19102200 60%, #a580ae 61%, #ffe2a9 71%); box-shadow: 12px 4px 40px #d6a16122; rotate: -18deg; }
+.halloween-season .market-fairground .delivery-section { background: radial-gradient(ellipse at 80% 60%, #934b4e38, transparent 62%), linear-gradient(120deg, #381b3bd9, #1d132cdd); border-color: #c4835d70; box-shadow: 0 15px 40px #08051155, inset 0 1px #eeb67618; }
+.market-fairground .delivery-copy h2, .market-fairground .seasons-heading h2 { font-family: "Ronny Halloween", sans-serif; font-weight: 400; color: #ffcb89; }
+.market-fairground .delivery-copy h2 em, .market-fairground .seasons-heading h2 em { font-family: inherit; font-style: normal; color: #ffa655; }
+.market-fairground .seasons-section { position: relative; padding-top: 45px; }
+.market-fairground .seasons-heading > p { max-width: 260px; }
+.market-fairground .season-chapter { box-shadow: 0 15px 35px #08051155; }
+.market-fairground .season-halloween { background: linear-gradient(145deg, #311633ef, #180f24f0); }
+.market-fairground .season-halloween h3 { font-family: "Ronny Halloween", sans-serif; color: #ffb964; }
+.market-fairground .season-christmas { background: radial-gradient(ellipse at 93% 70%, #9a3a1e55, transparent 58%), linear-gradient(135deg, #461417f5, #21151bf5); }
 .halloween-season .halloween-market .story-section { background: linear-gradient(180deg, #1d102d33, #100c1cbb); }
 .market-night-decoration { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; }
 .market-moon { position: absolute; right: 3%; top: 13%; width: clamp(90px, 12vw, 190px); aspect-ratio: 1; border-radius: 50%; opacity: .48; background: radial-gradient(circle at 31% 33%, #b19f8b55 0 6%, transparent 7%), radial-gradient(circle at 68% 59%, #bd9f7c66 0 12%, transparent 13%), radial-gradient(circle at 50% 40%, #ffe1a6, #dfab6f 68%, #97648c); box-shadow: 0 0 45px #edb58226, 0 0 100px #b987a31c; }
@@ -41,6 +55,10 @@
 @keyframes market-bat-sway { from { transform: translate3d(-8px, -5px, 0) rotate(-4deg); } to { transform: translate3d(12px, 10px, 0) rotate(4deg); } }
 @keyframes market-ember-drift { from { transform: translate3d(-7px, 10px, 0) rotate(-20deg); } to { transform: translate3d(15px, -35px, 0) rotate(35deg); } }
 @media (max-width: 760px) {
+  .market-fair-panorama { width: max(100%, 740px); left: 50%; transform: translateX(-50%); opacity: .4; }
+  .market-fair-moon { right: -40px; top: 1%; opacity: .3; }
+  .market-fairground .seasons-section { padding-top: 28px; }
+  .market-fairground .seasons-heading > p { max-width: none; margin-top: 12px; font-size: 14px; }
   .market-motion-control { right: 12px; top: 8px; padding: 8px; }
   .market-motion-control > span { display: none; }
   .market-moon { right: -25px; opacity: .24; }

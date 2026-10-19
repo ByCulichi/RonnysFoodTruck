@@ -1,4 +1,5 @@
 /* Category controls surround an unframed Ronny, inspired by the reference. */
+.selected-menu-dish { scroll-margin-top: 110px; }
 .menu-group-switch { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .menu-workspace { grid-template-columns: 330px minmax(0, 1fr); gap: 26px; }
 .menu-ronny-guide { position: sticky; top: 185px; padding-top: 8px; --guide-accent: #cf91ff; }
