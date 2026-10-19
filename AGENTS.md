@@ -28,9 +28,13 @@
 - Por indicación del propietario, no usar APIs de reseñas/redes ni pedir claves o credenciales. Mantener mapa y enlaces oficiales sin integración de Places API.
 - Ronny conserva el color café/caramelo por la última corrección del propietario. Su ama pelirroja de piel clara con disfraz de conejito y Ronny de unicornio van al footer, con transparencia real y sin recuadros.
 
-- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». Conservar el Ronny anfitrión de Halloween sin marco en la historia; el dúo unicornio/conejito ocupa el footer; `#contacto` apunta allí.
+- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». El Ronny anfitrión de Halloween acompaña el acceso a domicilio; el dúo unicornio/conejito ocupa el footer; `#contacto` apunta allí.
 
 - El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios ni fotografías de productos. Los iconos ilustrados representan categorías sin foto disponible.
 - Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
 
 - Priorizar la lectura del cliente: tarjetas claras con texto oscuro, fotos grandes, precios y variantes visibles sin desplegables. Mantener ampliación de fotos accesible y categorías fáciles de usar en celular. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
+
+- Las imágenes se organizan bajo `public/images/`: brand, hero, ronny, menu por categoría y archive para recursos anteriores. Actualizar rutas al moverlas y conservar los bytes originales.
+- Hay cinco Ronnys de apoyo, uno por función: malteadero en menú, playerita roja en promoción, anfitrión en domicilio, enojón en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
+- La portada usa cuatro iconos tipo emoji con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.
