@@ -22,6 +22,7 @@ import {
   MessageCircle,
   Bike,
   Clock,
+  CalendarDays,
   X,
 } from "lucide-react";
 import { business } from "@/lib/business";
@@ -29,6 +30,7 @@ import { GoogleReviews } from "@/components/google-reviews";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
 import { FooterSocials } from "@/components/footer-socials";
+import { RonnySeasons } from "@/components/ronny-seasons";
 import { dishes, foodKinds } from "@/lib/menu";
 
 const ronnyCharacters = {
@@ -50,11 +52,12 @@ const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u03
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "Menú"],
+  ["temporadas", "Temporadas"],
   ["historia", "Nuestro Ronny"],
   ["encuentranos", "Encuéntranos"],
 ];
 
-const navIcons = { inicio: House, menu: UtensilsCrossed, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
+const navIcons = { inicio: House, menu: UtensilsCrossed, temporadas: CalendarDays, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
 
 function Mascot({ character, className = "" }: { character: keyof typeof ronnyCharacters; className?: string }) {
   const art = ronnyCharacters[character];
@@ -307,6 +310,8 @@ export default function Home() {
           </div>
           <Mascot character="host" className="delivery-host" />
         </section>
+
+        <RonnySeasons />
 
         <section className="story-section" id="historia">
           <div className="shell story-layout">

@@ -40,3 +40,5 @@
 - La portada usa cuatro iconos tipo emoji con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.
 
 - WhatsApp actualizado por el propietario: +52 56 5390 1358, `https://wa.me/525653901358`. Mantener el mismo número en llamadas, domicilio y footer. Los logos del footer son grandes, centrados, estilo neón y sin etiquetas visibles, con nombres accesibles y previews locales al tocar, pasar el ratón o activar con teclado. Perfiles sociales oficiales siguen pendientes; no inventar publicaciones, enlaces o seguidores.
+
+- «Ronny’s por temporadas» (`#temporadas`) reúne la campaña actual de Halloween y el adelanto de Navidad. El Ronny de Santa es café/caramelo, mantiene su identidad y usa transparencia real sin recuadro individual. Navidad debe seguir como «Próxima temporada», sin cambiar automáticamente la portada, inventar fechas ni ofertas.
