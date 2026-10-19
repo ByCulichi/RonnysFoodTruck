@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { business } from "@/lib/business";
 
@@ -16,16 +16,34 @@ const networks = [
 // Local previews only. Never fetch social profiles or invent posts/follower counts.
 export function FooterSocials() {
   const [selected, setSelected] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const active = networks.find(({ id }) => id === selected);
 
-  function closePreview() {
+  const closePreview = useCallback(() => {
     setSelected(null);
-    triggerRef.current?.focus();
-  }
+    triggerRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  useEffect(() => {
+    if (!selected) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") { event.preventDefault(); closePreview(); }
+    }
+    function onPointerDown(event: PointerEvent) {
+      if (event.target instanceof Node && !containerRef.current?.contains(event.target)) setSelected(null);
+    }
+    // A hover preview can open without focus inside this component.
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [selected, closePreview]);
 
   return (
-    <div className="footer-socials" onKeyDown={(event) => { if (event.key === "Escape" && active) { event.preventDefault(); closePreview(); } }}>
+    <div className="footer-socials" ref={containerRef}>
       <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">
         {networks.map(({ id, label }) => (
           <li key={id} className={`footer-network network-${id}`}>

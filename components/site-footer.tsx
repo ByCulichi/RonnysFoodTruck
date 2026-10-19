@@ -3,7 +3,6 @@ import { FooterSocials } from "@/components/footer-socials";
 import { HalloweenFooterIcon } from "@/components/halloween-footer-icon";
 import { HalloweenScenery } from "@/components/halloween-scenery";
 import { FooterFamilyGround } from "@/components/footer-family-ground";
-import { FooterPumpkinLights } from "@/components/footer-pumpkin-lights";
 import "./site-footer.css";
 
 const explore = [
@@ -18,7 +17,6 @@ export function SiteFooter() {
   return (
     <footer className="site-footer footer-refresh footer-halloween" id="contacto" aria-labelledby="footer-title">
       <HalloweenScenery className="footer-scenery" />
-      <FooterPumpkinLights />
       <div className="shell footer-refresh-inner">
         <div className="footer-refresh-main">
           <div className="footer-message">

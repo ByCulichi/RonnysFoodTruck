@@ -123,7 +123,9 @@ Las opiniones usan tres accesos a la ficha real: consultar experiencias, compart
 
 La marca y el cierre del footer usan Creepster, también en el copyright y el enlace «Un antojo más». La cara de Ronny del encabezado aumenta a 76 px en escritorio y 60 px en celular, manteniendo los controles y la altura del encabezado.
 
-El dúo aprobado se integra al escenario con sombra de contacto, luz cálida y una capa SVG de suelo, calabaza, hierba y hojas por delante de sus pies (`FooterFamilyGround`). Las luces de calabaza son elementos decorativos independientes que se adaptan a la pantalla (`FooterPumpkinLights`). El PNG de los personajes no se edita ni se regenera. No se añade animación continua.
+El dúo aprobado se integra al escenario con sombra de contacto, luz cálida y hierba por delante de los pies (`FooterFamilyGround`). En celular, una loma de césped continúa hasta el borde de la escena, sin una base flotante. El PNG de los personajes no se edita ni se regenera. No se añade animación continua.
+
+El escenario completo se adapta al ancho y alto del footer, sin el recorte de `object-fit: cover`. La composición usa el espacio disponible bajo el encabezado en escritorio (con límites para pantallas muy bajas o muy altas); en celular conserva el flujo natural y los controles táctiles. Las luces de la ilustración se muestran directamente, sin una segunda guirnalda encima. Las previews sociales flotan sobre el contenido: abrirlas, cambiarlas o cerrarlas no cambia la altura, el fondo ni el desplazamiento de la página. El cierre devuelve el foco al logo sin desplazar la pantalla.
 
 ## Promo y poses del menú
 

@@ -60,3 +60,5 @@
 - La promoción de viernes usa `FridayPromo`, con el Ronny aprobado de playerita roja más grande y oferta clara «2 malteadas por $100». Conservar precio y día; el acceso de WhatsApp solo prepara una consulta, sin enviar mensajes.
 
 - Por la última corrección del propietario, el escenario del mapa debe ser distinto del footer: ubicación usa noche urbana violeta con faroles, luna y murciélagos (`VisitNightScenery`), sin repetir el bosque o las calabazas grandes del footer. Es decoración ilustrativa, no un plano o una dirección nueva. Mantener el mapa y la foto real.
+
+- El footer debe mostrar la composición completa a zoom normal en escritorio, usando el alto disponible bajo el encabezado. No volver a recortar el escenario con `cover` ni añadir una segunda guirnalda sobre las luces de la ilustración. En móvil, mantener lectura y controles sin exigir zoom. Las previews sociales son flotantes y no deben cambiar la altura del footer, reescalar el fondo ni saltar el scroll; restaurar foco con `preventScroll`. El dúo aprobado se apoya sobre césped y sombra: en móvil, el terreno continúa hasta el borde del escenario, sin una plataforma flotante.
