@@ -3,38 +3,37 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
-  ChevronLeft,
-  ChevronRight,
   House,
   ArrowRight,
   ArrowUpRight,
-  Heart,
   MapPin,
   Menu,
   PawPrint,
   Sparkles,
   Ghost,
   UtensilsCrossed,
-  Search,
-  CakeSlice,
-  Coffee,
   Phone,
   MessageCircle,
   Bike,
   Clock,
+  CalendarDays,
   X,
 } from "lucide-react";
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
-import { MenuCard } from "@/components/menu-card";
-import { dishes, foodKinds } from "@/lib/menu";
+import { SiteFooter } from "@/components/site-footer";
+import { RonnySeasons } from "@/components/ronny-seasons";
+import { dishes } from "@/lib/menu";
+import { InteractiveMenu } from "@/components/interactive-menu";
+import { halloweenCostumes } from "@/lib/ronny-costumes";
+import { MenuCarta } from "@/components/menu-carta";
+import { HalloweenMenuScene } from "@/components/halloween-menu-scene";
 
 const ronnyCharacters = {
-  milkshake: { name: "Ronny preparando una malteada con su outfit de Halloween", image: "/images/ronny/ronny-halloween-milkshake.png", width: 1536, height: 1024 },
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
-  grumpy: { name: "Ronny enojón cuidando sus gusgerías", image: "/images/ronny/ronny-story-cutout.png", width: 1024, height: 1536 },
-  host: { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/images/ronny/ronny-host-cutout.png", width: 1024, height: 1536 },
+  grumpy: { name: halloweenCostumes.zombi.alt, image: halloweenCostumes.zombi.src, width: 1024, height: 1536 },
+  host: { name: halloweenCostumes.diablito.alt, image: halloweenCostumes.diablito.src, width: 1024, height: 1536 },
   nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
 };
 const heroSpecialties: { label: string; kind: FoodKind }[] = [
@@ -43,17 +42,15 @@ const heroSpecialties: { label: string; kind: FoodKind }[] = [
   { label: "Crepas", kind: "Crepas" },
   { label: "Snacks", kind: "Snacks" },
 ];
-const categoryIcons = { Todo: UtensilsCrossed, Dulces: CakeSlice, Salados: UtensilsCrossed, Bebidas: Coffee };
-const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "Menú"],
+  ["temporadas", "Temporadas"],
   ["historia", "Nuestro Ronny"],
   ["encuentranos", "Encuéntranos"],
 ];
 
-const navIcons = { inicio: House, menu: UtensilsCrossed, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
+const navIcons = { inicio: House, menu: UtensilsCrossed, temporadas: CalendarDays, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
 
 function Mascot({ character, className = "" }: { character: keyof typeof ronnyCharacters; className?: string }) {
   const art = ronnyCharacters[character];
@@ -64,7 +61,6 @@ export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
-  const foodPickerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!mobileOpen) return;
     const handleEscape = (event: KeyboardEvent) => {
@@ -73,10 +69,6 @@ export default function Home() {
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [mobileOpen]);
-  function scrollFoodTypes(direction: number) {
-    const picker = foodPickerRef.current;
-    if (picker) picker.scrollBy({ left: direction * picker.clientWidth * .7, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
-  }
   useEffect(() => {
     const updateActiveSection = () => {
       let current = "inicio";
@@ -94,14 +86,12 @@ export default function Home() {
     }
     return () => observer.disconnect();
   }, []);
-  const [filter, setFilter] = useState("Todo");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [foodKind, setFoodKind] = useState<FoodKind>("Todo");
-  const visibleDishes = dishes.filter((dish) =>
-    (filter === "Todo" || dish.group === filter) &&
-    (foodKind === "Todo" || dish.kind === foodKind) &&
-    normalizeSearch(`${dish.name} ${dish.description} ${dish.options.map((option) => option.name).join(" ")}`).includes(normalizeSearch(searchQuery.trim()))
-  ).sort((a, b) => Number(b.name === "Malteadas") - Number(a.name === "Malteadas"));
+  const [menuSelection, setMenuSelection] = useState("Crepas");
+  const [menuEntry, setMenuEntry] = useState(0);
+  function openMenu(kind: FoodKind) {
+    setMenuSelection(dishes.find((dish) => dish.kind === kind)?.name || "Crepas");
+    setMenuEntry((entry) => entry + 1);
+  }
   return (
     <div className="ronny-site halloween-season">
       <a className="skip-link" href="#contenido">
@@ -175,7 +165,7 @@ export default function Home() {
             <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
             <div className="night-specialties hero-food-emojis" role="group" aria-label="Especialidades del truck">
-              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}><FoodIcon kind={kind} /></a>)}
+              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => openMenu(kind)}><FoodIcon kind={kind} /></a>)}
             </div>
           </div>
           <div className="night-bottom shell">
@@ -200,99 +190,22 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="menu-section shell section-space" id="menu">
-          <div className="section-heading">
-            <div>
-              <div className="eyebrow">
-                <UtensilsCrossed size={15} /> EL MENÚ DE LA CASA
+        <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
+          <HalloweenMenuScene />
+          <div className="menu-section compact-menu-section shell section-space">
+            <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
+            <MenuCarta />
+            <div className="friday-banner">
+              <Mascot character="sport" className="promo-ronny" />
+              <div>
+                <span>LOS VIERNES SABEN MEJOR</span>
+                <h3>Una para ti. Otra para tu cómplice.</h3>
               </div>
-              <h2>
-                El menú del truck.
-                <br />
-                <em>Hecho para antojar.</em>
-              </h2>
-              <p className="menu-heading-help">Elige tu antojo. Mira las fotos y encuentra todos los precios aquí.</p>
+              <strong>
+                2 malteadas <span>× $100</span>
+              </strong>
+              <Sparkles className="friday-star" size={34} />
             </div>
-            <div className="menu-ronny-note">
-              <div className="menu-milkshake-art">
-                <Mascot character="milkshake" className="menu-milkshake-ronny" />
-                <Sparkles className="milkshake-spark" size={20} aria-hidden="true" />
-              </div>
-              <div className="menu-milkshake-copy">
-                <p>Ronny está preparando<br /><strong>una malteada de miedo.</strong></p>
-                <button type="button" className="ronny-drinks-link" onClick={() => { setFilter("Bebidas"); setSearchQuery(""); setFoodKind("Todo"); }}>
-                  Ver bebidas <ArrowDown size={15} />
-                </button>
-                <small>Precios en pesos mexicanos.</small>
-              </div>
-            </div>
-          </div>
-          <div className="menu-search-row">
-            <label className="menu-search">
-              <Search size={18} aria-hidden="true" />
-              <input type="search" aria-label="Buscar en el menú" placeholder="¿Qué se te antoja? Busca tu favorito…" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
-            </label>
-            <span className="menu-currency">Preparado con corazón · Precios en MXN</span>
-          </div>
-          <div className="menu-toolbar">
-            <div
-              className="filter-group"
-              role="group"
-              aria-label="Filtrar menú"
-            >
-              {(["Todo", "Dulces", "Salados", "Bebidas"] as const).map((item) => {
-                const Icon = categoryIcons[item];
-                return <button
-                  key={item}
-                  aria-label={item}
-                  aria-pressed={filter === item}
-                  className={filter === item ? "selected" : ""}
-                  onClick={() => { setFilter(item); setFoodKind("Todo"); }}
-                >
-                  <Icon size={16} aria-hidden="true" />
-                  {item}
-                  <span aria-hidden="true">{item === "Todo" ? dishes.length : dishes.filter((dish) => dish.group === item).length}</span>
-                </button>;
-              })}
-            </div>
-          </div>
-          <div className="food-navigation">
-            <div className="food-navigation-heading"><h3>¿Qué se te antoja?</h3><div><button type="button" aria-label="Ver categorías anteriores" onClick={() => scrollFoodTypes(-1)}><ChevronLeft size={22} /></button><button type="button" aria-label="Ver más categorías" onClick={() => scrollFoodTypes(1)}><ChevronRight size={22} /></button></div></div>
-            <div className="food-type-picker" role="group" aria-label="Elegir un antojo" ref={foodPickerRef}>
-              {foodKinds.map((kind) => <button type="button" key={kind} aria-pressed={foodKind === kind} onClick={() => { setFoodKind(kind); setFilter("Todo"); setSearchQuery(""); }}>
-                <FoodIcon kind={kind} />
-                <span>{kind === "Todo" ? "Todo el truck" : kind}</span>
-              </button>)}
-            </div>
-          </div>
-          <div className="menu-results"><span aria-live="polite">{visibleDishes.length} {visibleDishes.length === 1 ? "antojo para ti" : "antojos para ti"}</span><span>Precios en pesos mexicanos</span></div>
-          <div className="dish-grid">
-            {visibleDishes.map((dish, index) => <MenuCard dish={dish} index={index} key={dish.name} />)}
-          </div>
-          {visibleDishes.length === 0 && (
-            <div className="menu-empty" role="status">
-              <Search size={28} />
-              <h3>No encontramos ese antojo.</h3>
-              <p>Prueba otro nombre o vuelve a explorar el menú completo.</p>
-              <button type="button" className="button button-gold" onClick={() => { setSearchQuery(""); setFilter("Todo"); setFoodKind("Todo"); }}>Ver todo el menú</button>
-            </div>
-          )}
-          <details className="original-menu">
-            <summary>La carta del truck <span>Ver menú original y precios</span></summary>
-            <div className="original-menu-pages">
-              {[["dulces", "Crepas, waffles, hotcakes y postres"], ["salados", "Hamburguesas, hot dogs, banderillas y snacks"], ["bebidas", "Malteadas, café y bebidas"]].map(([page, label]) => <a key={page} href={`/images/menu/cartas/carta-${page}.jpg`} target="_blank" rel="noopener noreferrer"><img src={`/images/menu/cartas/carta-${page}.jpg`} alt={`Carta original de Ronny’s: ${label}`} width={828} height={1104} loading="lazy" /><span>{label} <ArrowUpRight size={14} /></span></a>)}
-            </div>
-          </details>
-          <div className="friday-banner">
-            <Mascot character="sport" className="promo-ronny" />
-            <div>
-              <span>LOS VIERNES SABEN MEJOR</span>
-              <h3>Una para ti. Otra para tu cómplice.</h3>
-            </div>
-            <strong>
-              2 malteadas <span>× $100</span>
-            </strong>
-            <Sparkles className="friday-star" size={34} />
           </div>
         </section>
 
@@ -306,6 +219,8 @@ export default function Home() {
           </div>
           <Mascot character="host" className="delivery-host" />
         </section>
+
+        <RonnySeasons />
 
         <section className="story-section" id="historia">
           <div className="shell story-layout">
@@ -392,57 +307,7 @@ export default function Home() {
         <GoogleReviews mapsUrl={business.mapsUrl} />
 
       </main>
-      <footer className="site-footer shell footer-expanded" id="contacto">
-        <div className="footer-top">
-          <div>
-            <a href="#inicio" className="footer-wordmark"><img src="/images/brand/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
-            <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
-          </div>
-          <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
-        </div>
-        <div className="footer-connect" aria-labelledby="footer-connect-title">
-          <div className="footer-host">
-            <div className="footer-unicorn"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></div>
-            <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
-          </div>
-          <div className="footer-connect-copy">
-            <div className="eyebrow">EL ANTOJO NOS CONECTA</div>
-            <h2 id="footer-connect-title">Más de <em>Ronny’s.</em></h2>
-            <p>Escríbenos, encuentra el truck y quédate cerca de tus antojos favoritos.</p>
-            <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">
-              {[
-                { network: "google", label: "Google", url: business.mapsUrl },
-                { network: "whatsapp", label: "WhatsApp", url: business.whatsappUrl },
-                { network: "instagram", label: "Instagram", url: null },
-                { network: "facebook", label: "Facebook", url: null },
-                { network: "tiktok", label: "TikTok", url: null },
-                { network: "x", label: "X", url: null },
-              ].map(({ network, label, url }) => (
-                <li key={network} className={`footer-network network-${network}`}>
-                  {url ? (
-                    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={network === "google" ? "Ronny’s en Google Maps" : "Contactar a Ronny’s por WhatsApp"}>
-                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
-                      <span>{label} <ArrowUpRight size={12} /></span>
-                    </a>
-                  ) : (
-                    <span className="network-pending" aria-label={`${label}: próximamente`}>
-                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
-                      <span>{label}</span>
-                      <small>Próximamente</small>
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="footer-details">
-          <span><MapPin size={15} /> {business.address}</span>
-          <a href={`tel:${business.phoneInternational}`}><Phone size={15} /> {business.phone}</a>
-          <span><Clock size={15} /> {business.hours}</span>
-        </div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>
-      </footer>
+      <SiteFooter />
       <nav className="mobile-order-bar" aria-label="Accesos rápidos para pedir"><a href="#menu"><UtensilsCrossed size={19} /> Ver menú</a><a href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><Bike size={20} /> A domicilio <ArrowUpRight size={16} /></a></nav>
     </div>
   );

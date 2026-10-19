@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { ArrowLeft, ArrowRight, Maximize2, Star, X } from "lucide-react";
+import Image from "next/image";
 import { FoodIcon } from "@/components/food-icon";
-import type { Dish } from "@/lib/menu";
+import { menuPhotoUrl, type Dish } from "@/lib/menu";
 
 export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -42,7 +43,8 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
   return <article className={`dish-card menu-product ${dish.name === "Malteadas" ? "dish-card-featured" : ""}`} data-group={dish.group}>
     <div className={`dish-image ${photo ? "real-food-photo" : "illustrated-food"}`}>
       {photo ? <>
-        <img src={`/images/menu/${photo.src}.jpg`} alt={photo.alt} width={600} height={600} loading="lazy" style={{ objectPosition: photo.position || "center 72%" }} />
+        <Image src={menuPhotoUrl(photo)} alt={photo.alt} fill sizes="(max-width: 600px) 90vw, (max-width: 1100px) 40vw, 460px" style={{ objectPosition: photo.position || "center 72%" }} />
+        {photo.generated && <span className="generated-photo-label">Imagen ilustrativa</span>}
         <button type="button" className="photo-zoom" aria-label={`Ampliar foto de ${dish.name}`} onClick={openPhoto}><span><Maximize2 size={16} /> Ampliar foto</span></button>
       </> : <>
         <FoodIcon kind={dish.kind} />
@@ -52,7 +54,7 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
       {dish.name === "Malteadas" && <span className="dish-favorite"><Star size={14} fill="currentColor" /> EL ANTOJO DE RONNY</span>}
       {dish.photos.length > 1 && <div className="dish-photo-picker" role="group" aria-label={`Fotos de ${dish.name}`}>
         {dish.photos.map((item, photoNumber) => <button type="button" key={item.src} aria-label={item.alt} aria-pressed={photoNumber === photoIndex} onClick={() => setPhotoIndex(photoNumber)}>
-          <img src={`/images/menu/${item.src}.jpg`} alt="" width={56} height={56} loading="lazy" />
+          <Image src={menuPhotoUrl(item)} alt="" width={56} height={56} />
         </button>)}
       </div>}
     </div>
@@ -70,9 +72,9 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
     {photo && <dialog className="food-photo-dialog" ref={dialogRef} aria-label={`Foto ampliada de ${dish.name}`} onKeyDown={keepDialogFocus} onClose={() => setPhotoOpen(false)} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
       <div className="photo-dialog-content">
         <div className="photo-dialog-heading"><strong>{dish.name}</strong><button type="button" autoFocus aria-label="Cerrar foto" onClick={() => dialogRef.current?.close()}><X size={24} /></button></div>
-        {photoOpen && <img src={`/images/menu/${photo.src}.jpg`} alt={photo.alt} width={900} height={1200} />}
+        {photoOpen && <Image src={menuPhotoUrl(photo)} alt={photo.alt} width={900} height={1200} sizes="90vw" />}
         <div className="photo-dialog-footer">
-          <p>{photo.alt}</p>
+          <p>{photo.generated ? "Imagen ilustrativa del producto." : photo.alt}</p>
           {dish.photos.length > 1 && <div className="photo-dialog-controls"><button type="button" aria-label="Foto anterior" onClick={() => setPhotoIndex((photoIndex + dish.photos.length - 1) % dish.photos.length)}><ArrowLeft size={20} /></button><span>{photoIndex + 1} / {dish.photos.length}</span><button type="button" aria-label="Siguiente foto" onClick={() => setPhotoIndex((photoIndex + 1) % dish.photos.length)}><ArrowRight size={20} /></button></div>}
         </div>
       </div>
