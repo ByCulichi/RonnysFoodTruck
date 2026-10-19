@@ -2,12 +2,12 @@ import Image from "next/image";
 import { ArrowUpRight, CalendarDays, MapPin, Maximize2, MessageCircle, Phone } from "lucide-react";
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
-import { HalloweenScenery } from "@/components/halloween-scenery";
+import { VisitNightScenery } from "@/components/visit-night-scenery";
 import "./visit-section.css";
 
 export function VisitSection() {
   return <div className="halloween-visit-scene">
-    <HalloweenScenery className="visit-scenery" />
+    <VisitNightScenery />
     <section className="halloween-visit shell" id="encuentranos" aria-labelledby="visit-title">
       <div className="halloween-visit-copy">
         <div className="eyebrow"><MapPin size={16} aria-hidden="true" /> NUESTRA UBICACIÓN Y CONTACTO</div>

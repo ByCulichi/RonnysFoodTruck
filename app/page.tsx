@@ -9,7 +9,6 @@ import {
   MapPin,
   Menu,
   PawPrint,
-  Sparkles,
   Ghost,
   UtensilsCrossed,
   Phone,
@@ -29,6 +28,7 @@ import { InteractiveMenu } from "@/components/interactive-menu";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
 import { MenuCarta } from "@/components/menu-carta";
 import { HalloweenMenuScene } from "@/components/halloween-menu-scene";
+import { FridayPromo } from "@/components/friday-promo";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
@@ -195,17 +195,7 @@ export default function Home() {
           <div className="menu-section compact-menu-section shell section-space">
             <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
             <MenuCarta />
-            <div className="friday-banner">
-              <Mascot character="sport" className="promo-ronny" />
-              <div>
-                <span>LOS VIERNES SABEN MEJOR</span>
-                <h3>Una para ti. Otra para tu cómplice.</h3>
-              </div>
-              <strong>
-                2 malteadas <span>× $100</span>
-              </strong>
-              <Sparkles className="friday-star" size={34} />
-            </div>
+            <FridayPromo />
           </div>
         </section>
 

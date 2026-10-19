@@ -1,8 +1,9 @@
-import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
-import { business } from "@/lib/business";
+import { ArrowUpRight } from "lucide-react";
 import { FooterSocials } from "@/components/footer-socials";
 import { HalloweenFooterIcon } from "@/components/halloween-footer-icon";
 import { HalloweenScenery } from "@/components/halloween-scenery";
+import { FooterFamilyGround } from "@/components/footer-family-ground";
+import { FooterPumpkinLights } from "@/components/footer-pumpkin-lights";
 import "./site-footer.css";
 
 const explore = [
@@ -17,6 +18,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer footer-refresh footer-halloween" id="contacto" aria-labelledby="footer-title">
       <HalloweenScenery className="footer-scenery" />
+      <FooterPumpkinLights />
       <div className="shell footer-refresh-inner">
         <div className="footer-refresh-main">
           <div className="footer-message">
@@ -28,14 +30,9 @@ export function SiteFooter() {
             <h3 id="footer-explore-title">Explora <HalloweenFooterIcon kind="paw" /></h3>
             <ul>{explore.map(({ href, label, icon }) => <li key={href}><a href={href}><HalloweenFooterIcon kind={icon} /><span>{label}</span></a></li>)}</ul>
           </nav>
-          <figure className="footer-family"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></figure>
+          <figure className="footer-family"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /><FooterFamilyGround /></figure>
         </div>
         <section className="footer-refresh-social" aria-labelledby="footer-follow-title"><h3 id="footer-follow-title">Síguenos</h3><FooterSocials /></section>
-        <div className="footer-contact-lines" aria-label="Visítanos o contáctanos">
-          <a className="footer-contact-line" href={business.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={17} aria-hidden="true" /><span>{business.address}</span><ArrowUpRight size={15} aria-hidden="true" /></a>
-          <div className="footer-contact-line footer-phone-line"><MessageCircle size={18} aria-hidden="true" /><a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer">{business.phone}<span>WhatsApp</span></a><a className="footer-call" href={`tel:${business.phoneInternational}`} aria-label={`Llamar a Ronny’s al ${business.phone}`}><Phone size={16} aria-hidden="true" /></a></div>
-          <div className="footer-contact-line"><Clock size={17} aria-hidden="true" /><p>{business.hours}<small>{business.closedDays}</small></p></div>
-        </div>
         <div className="footer-refresh-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#menu">Un antojo más <ArrowUpRight size={15} aria-hidden="true" /></a></div>
       </div>
     </footer>

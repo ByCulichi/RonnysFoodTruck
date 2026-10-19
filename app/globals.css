@@ -2449,9 +2449,9 @@ h2 em {
   .header-cta span { font-size: 10px; }
   .mobile-toggle { min-width: 38px; min-height: 38px; padding: 6px; }
 }
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .header-cta span { display: none; }
-  .header-cta { padding: 11px; }
+  .header-cta { padding: 10px; min-width: 44px; }
 }
 
 /* One shared footer for contact and social channels, with Ronny outside a frame. */
@@ -2608,7 +2608,7 @@ h2 em {
 /* Customer-facing menu: generous photos, printed-menu contrast, prices always visible. */
 .halloween-season .site-header { background: #180f1df7; }
 .header-inner { height: 88px; gap: 22px; }
-.brand > img { width: 50px; height: 50px; }
+.brand > img { width: 76px; height: 76px; flex-shrink: 0; }
 .brand > span:not(.brand-dot) { font-size: 32px; }
 .brand .brand-sub { font-size: 8px; letter-spacing: 1px; }
 .desktop-nav { border: 0; background: transparent; padding: 0; gap: 4px; }
@@ -2718,7 +2718,7 @@ h2 em {
 @media (max-width: 600px) {
   .header-inner { height: 76px; gap: 9px; }
   .brand { gap: 6px; }
-  .brand > img { width: 42px; height: 42px; }
+  .brand > img { width: 60px; height: 60px; }
   .brand > span:not(.brand-dot) { font-size: 26px; }
   .brand .brand-sub { font-size: 6.5px; letter-spacing: .4px; }
   .header-cta { padding: 10px 12px; min-height: 44px; gap: 6px; }

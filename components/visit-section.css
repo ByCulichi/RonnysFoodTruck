@@ -1,6 +1,13 @@
-.halloween-visit-scene { position: relative; isolation: isolate; background: #100c1c; }
-.visit-scenery { position: absolute; inset: 0; z-index: -2; pointer-events: none; mask-image: linear-gradient(transparent, #000 180px, #000 72%, transparent); opacity: .6; }
-.halloween-visit-scene::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #100c1c, #100c1c55 28%, #100c1c44 75%, #100c1c); }
+/* Cool urban Halloween night: the pumpkin forest belongs only to the footer. */
+.halloween-visit-scene { position: relative; isolation: isolate; background: radial-gradient(ellipse at 12% 20%, #45326d44, transparent 44%), radial-gradient(ellipse at 93% 60%, #314b7650, transparent 40%), linear-gradient(160deg, #111224, #1c142c 60%, #100c1c); }
+.visit-night-scenery { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: clip; }
+.visit-city-silhouette { position: absolute; width: 100%; height: 300px; bottom: 0; opacity: .85; }
+.visit-night-moon { position: absolute; width: 85px; height: 85px; left: 25px; top: 25px; opacity: .18; filter: drop-shadow(0 0 25px #9d7bd955); }
+.visit-street-lamp { position: absolute; width: 75px; height: 265px; bottom: 70px; opacity: .7; }
+.visit-lamp-light { filter: drop-shadow(0 0 9px #ffad45) drop-shadow(0 0 25px #ff8c3844); }
+.lamp-left { left: 13px; }
+.lamp-right { right: 17px; width: 65px; height: 230px; bottom: 105px; }
+.halloween-visit-scene::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #100c1c, transparent 18%, transparent 82%, #100c1c); }
 .halloween-visit { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); align-items: start; gap: 55px; padding-block: 60px 25px; scroll-margin-top: 10px; }
 .halloween-visit-copy { min-width: 0; }
 .halloween-visit-copy > .eyebrow { color: #dfc4a4; font-size: 10px; letter-spacing: 1.5px; }
@@ -87,4 +94,12 @@
   .halloween-review-links h3 { font-size: 18px; }
   .halloween-review-links p { font-size: 12px; margin-block: 6px; }
   .halloween-review-links span { font-size: 12px; min-height: 30px; }
+}
+
+@media (max-width: 600px) {
+  .visit-city-silhouette { height: 180px; opacity: .65; }
+  .visit-night-moon { width: 48px; height: 48px; left: 3px; top: 12px; opacity: .12; }
+  .visit-street-lamp { width: 35px; height: 180px; opacity: .4; }
+  .lamp-left { left: 0; }
+  .lamp-right { right: 0; width: 31px; height: 155px; }
 }

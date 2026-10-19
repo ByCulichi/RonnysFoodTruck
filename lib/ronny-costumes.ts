@@ -2,8 +2,8 @@ import type { Dish } from "@/lib/menu";
 
 export const halloweenCostumes = {
   bruja: {
-    src: "/images/ronny/halloween/ronny-bruja.png",
-    alt: "Ronny café con disfraz completo de bruja: túnica morada, capa, botas y escoba, sosteniendo un waffle",
+    src: "/images/ronny/halloween/ronny-bruja-flying.png",
+    alt: "Ronny café de bruja, sentado y volando en su escoba con la capa al viento y un waffle en la patita",
     title: "Un poquito de magia dulce.",
     message: "Crepas, waffles y postres. Yo pongo el hechizo; tú eliges el antojo.",
   },
@@ -14,8 +14,8 @@ export const halloweenCostumes = {
     message: "Malteadas, frappés y cafecito. ¡Bú! ¿Me guardas un sorbito?",
   },
   diablito: {
-    src: "/images/ronny/halloween/ronny-diablito.png",
-    alt: "Ronny café con traje completo rojo de diablito, cuernitos, alas, cola y botas, sosteniendo un hot dog",
+    src: "/images/ronny/halloween/ronny-diablito-serving.png",
+    alt: "Ronny café de diablito rojo, inclinado para servir una hamburguesa con ambas patitas y una pierna levantada",
     title: "Pequeño diablo del antojo.",
     message: "Hot dogs, hamburguesas y banderillas. Una travesura bien sabrosa.",
   },
