@@ -6,7 +6,6 @@ import {
   House,
   ArrowRight,
   ArrowUpRight,
-  Heart,
   MapPin,
   Menu,
   PawPrint,
@@ -23,15 +22,16 @@ import {
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
-import { FooterSocials } from "@/components/footer-socials";
+import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
 import { dishes } from "@/lib/menu";
 import { InteractiveMenu } from "@/components/interactive-menu";
+import { halloweenCostumes } from "@/lib/ronny-costumes";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
-  grumpy: { name: "Ronny enojón cuidando sus gusgerías", image: "/images/ronny/ronny-story-cutout.png", width: 1024, height: 1536 },
-  host: { name: "Ronny anfitrión de Halloween saludando con su hot dog", image: "/images/ronny/ronny-host-cutout.png", width: 1024, height: 1536 },
+  grumpy: { name: halloweenCostumes.zombi.alt, image: halloweenCostumes.zombi.src, width: 1024, height: 1536 },
+  host: { name: halloweenCostumes.diablito.alt, image: halloweenCostumes.diablito.src, width: 1024, height: 1536 },
   nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
 };
 const heroSpecialties: { label: string; kind: FoodKind }[] = [
@@ -307,33 +307,7 @@ export default function Home() {
         <GoogleReviews mapsUrl={business.mapsUrl} />
 
       </main>
-      <footer className="site-footer shell footer-expanded" id="contacto">
-        <div className="footer-top">
-          <div>
-            <a href="#inicio" className="footer-wordmark"><img src="/images/brand/ronny-flat-logo.png" alt="" width={56} height={56} /><span className="footer-name">RONNY’S<sup>®</sup></span></a>
-            <p>El truck, los antojos y un chihuahua con mucho carácter.</p>
-          </div>
-          <a className="text-link" href="#menu">Una última mirada al menú <ArrowUpRight size={18} /></a>
-        </div>
-        <div className="footer-connect" aria-labelledby="footer-connect-title">
-          <div className="footer-host">
-            <div className="footer-unicorn"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /></div>
-            <span className="contact-signoff">Con cariño, <strong>Ronny.</strong> <PawPrint size={20} /></span>
-          </div>
-          <div className="footer-connect-copy">
-            <div className="eyebrow">EL ANTOJO NOS CONECTA</div>
-            <h2 id="footer-connect-title">Más de <em>Ronny’s.</em></h2>
-            <p>Escríbenos, encuentra el truck y quédate cerca de tus antojos favoritos.</p>
-            <FooterSocials />
-          </div>
-        </div>
-        <div className="footer-details">
-          <span><MapPin size={15} /> {business.address}</span>
-          <a href={`tel:${business.phoneInternational}`}><Phone size={15} /> {business.phone}</a>
-          <span><Clock size={15} /> {business.hours}</span>
-        </div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} Ronny’s Food Truck</span><a href="#inicio">Hecho con <Heart size={12} /> y muchas patitas.</a></div>
-      </footer>
+      <SiteFooter />
       <nav className="mobile-order-bar" aria-label="Accesos rápidos para pedir"><a href="#menu"><UtensilsCrossed size={19} /> Ver menú</a><a href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><Bike size={20} /> A domicilio <ArrowUpRight size={16} /></a></nav>
     </div>
   );

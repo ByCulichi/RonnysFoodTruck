@@ -38,7 +38,7 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran una vista previa con «Enlace oficial pendiente» hasta recibir sus perfiles oficiales. Los seis logos son grandes, centrados, con efecto neón y sin etiquetas visibles; se seleccionan por ratón, teclado o toque para ver una vista previa local y los accesos confirmados. Ronny de unicornio con su ama de conejito ocupa el footer, sin recuadro; el anfitrión de Halloween acompaña el acceso a domicilio. El enlace `#contacto` lleva al footer.
+El footer «Aquí sigue el antojo» reúne contacto y horarios legibles con la ilustración aprobada de la dueña y Ronny, que se conserva sin cambios ni recuadro. Google, WhatsApp, Instagram, Facebook, TikTok y X aparecen juntos como logos neón centrados. Al activar uno aparece una franja de preview discreta, sin tarjeta permanente ni fotografía duplicada del truck. Se puede cerrar con botón o Escape, con retorno de foco. Google y WhatsApp tienen enlaces confirmados; las otras redes indican «Enlace oficial pendiente». El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
@@ -95,4 +95,10 @@ El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358
 
 `components/interactive-menu.tsx` reúne la navegación por categoría, búsqueda global y ficha de producto. `components/interactive-menu.css` contiene sus estilos. Solo se monta una `MenuCard`; no se recortan precios ni se eliminan productos de `lib/menu.ts`. Se mantienen las fotografías originales y su ampliación accesible con Escape, foco contenido y retorno al botón. Las consultas de WhatsApp son borradores que el cliente envía por su cuenta.
 
-Ronny usa tres PNG individuales en `public/images/ronny/menu/`: dulces (repostero con waffle), salados (anfitrión con hot dog), bebidas (malteadero). Se generaron a partir de las ilustraciones existentes para mantener identidad café/caramelo y Halloween, con alpha real, sin fondos ni marco alrededor del personaje. En escritorio acompaña el menú a un lado; en celular se integra de forma compacta antes de los productos y nunca tapa los controles. La composición se inspira en la captura de culichi.lat proporcionada por el propietario; el entorno bloqueó la apertura de la web con `Tunnel connection failed: 403 Forbidden`, por lo que no se afirma haber probado su interacción en vivo.
+Ronny usa cuatro disfraces completos en `public/images/ronny/halloween/`, registrados en `lib/ronny-costumes.ts`: bruja con túnica, capa, botas y escoba para Dulces; fantasma con sábana de cuerpo completo para Bebidas; diablito con traje rojo, alas y cola para Salados; zombi con ropa de parches y botas para los snacks salados. Se conserva su cara café/caramelo reconocible. En escritorio acompaña el menú a un lado; en celular se integra antes de los productos sin tapar controles. El mismo diablito acompaña domicilio y el zombi cuida sus gusgerías en la historia. No hay rotación por tiempo ni selector manual de disfraces. La composición se inspira en la captura de culichi.lat proporcionada por el propietario; el entorno bloqueó su apertura con `Tunnel connection failed: 403 Forbidden`.
+
+## Personajes aprobados e icono del navegador
+
+Las ilustraciones de Ronny con playerita deportiva roja y cobija, lamiéndose la nariz, y del dúo unicornio/conejito quedan fijas por indicación del propietario. Sus PNG se conservan byte por byte; los disfraces nuevos usan archivos separados. La ilustración con el abuelo sigue pendiente de referencia.
+
+Los metadatos de `app/layout.tsx` usan `/images/brand/ronny-flat-logo.png` como icono de pestaña, acceso directo e icono Apple. Se reutiliza la cara aprobada sin modificarla ni pedir servicios externos.

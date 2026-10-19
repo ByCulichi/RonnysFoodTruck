@@ -6,15 +6,11 @@ import { business } from "@/lib/business";
 import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
+import { getMenuCostume, halloweenCostumes } from "@/lib/ronny-costumes";
 import "./interactive-menu.css";
 
 type Group = Dish["group"];
 const groups: Group[] = ["Dulces", "Salados", "Bebidas"];
-const guides = {
-  Dulces: { image: "dulces", width: 1024, height: 1536, title: "El lado dulce de Ronny.", message: "Waffles, crepas y postres. Tú elige, que yo pongo la crema.", alt: "Ronny café de repostero de Halloween decorando un waffle" },
-  Salados: { image: "salados", width: 1024, height: 1536, title: "Pequeño, pero con hambre.", message: "Hot dogs, hamburguesas y snacks. Estos antojos sí los defiendo.", alt: "Ronny café de anfitrión de Halloween con su hot dog" },
-  Bebidas: { image: "bebidas", width: 1536, height: 1024, title: "Un sorbito y se me pasa.", message: "Malteadas, frappés y cafecito. Yo ya estoy preparando el mío.", alt: "Ronny café de malteadero de Halloween preparando una malteada" },
-};
 const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 
@@ -26,7 +22,8 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const choices = term ? dishes.filter((dish) => normalize(`${dish.name} ${dish.description} ${dish.options.map(({ name }) => name).join(" ")}`).includes(term)) : dishes.filter(({ group }) => group === requested.group);
   const active = choices.find(({ name }) => name === selection) || choices[0];
   const group = active?.group || requested.group;
-  const guide = guides[group];
+  const costume = getMenuCostume(active || requested);
+  const guide = halloweenCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active?.name);
 
   function selectGroup(next: Group) {
@@ -67,9 +64,9 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </div>
       </div>
       <div className="menu-workspace">
-        <aside className={`menu-ronny-guide guide-${guide.image}`} aria-label="Ronny te acompaña" data-menu-outfit={guide.image}>
+        <aside className={`menu-ronny-guide guide-${group.toLowerCase()}`} aria-label="Ronny te acompaña" data-menu-outfit={costume}>
           <div className="menu-guide-art">
-            <img key={guide.image} src={`/images/ronny/menu/ronny-${guide.image}.png`} alt={guide.alt} width={guide.width} height={guide.height} loading="lazy" />
+            <img key={costume} src={guide.src} alt={guide.alt} width={1024} height={1536} loading="lazy" />
             <span className="guide-orbit orbit-dulces" aria-hidden="true"><FoodIcon kind="Waffles" /></span>
             <span className="guide-orbit orbit-salados" aria-hidden="true"><FoodIcon kind="Hamburguesas" /></span>
             <span className="guide-orbit orbit-bebidas" aria-hidden="true"><FoodIcon kind="Malteadas" /></span>

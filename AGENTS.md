@@ -18,7 +18,7 @@
 
 - No incluir «Elige mi look» ni botones para cambiar personajes. Los Ronnys se ven directamente en portada, menú, promoción, historia, ubicación y contacto.
 
-- Por la última elección del propietario, Ronny cambia automáticamente con la categoría del menú: repostero para Dulces, anfitrión con hot dog para Salados y malteadero para Bebidas. Usar las tres ilustraciones transparentes de `public/images/ronny/menu/`, fuera de las tarjetas y sin selector manual de atuendos.
+- Por la última elección del propietario, Ronny usa disfraces COMPLETOS de Halloween, no solo gorros: bruja en Dulces, fantasma en Bebidas, diablito en Salados y zombi para los snacks salados. La elección es automática por categoría/producto, sin selector manual. Usar `lib/ronny-costumes.ts` y los cuatro PNG transparentes de `public/images/ronny/halloween/`, fuera de las tarjetas.
 
 - Datos confirmados del negocio: `lib/business.ts`. Dirección New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes a domingo 19:00–00:00, lunes a jueves cerrado. No agregar número de inmueble o coordenadas sin que el propietario los proporcione.
 
@@ -28,7 +28,7 @@
 - Por indicación del propietario, no usar APIs de reseñas/redes ni pedir claves o credenciales. Mantener mapa y enlaces oficiales sin integración de Places API.
 - Ronny conserva el color café/caramelo por la última corrección del propietario. Su ama pelirroja de piel clara con disfraz de conejito y Ronny de unicornio van al footer, con transparencia real y sin recuadros.
 
-- El footer «Más de Ronny’s» reúne Google, WhatsApp y todas las redes en un mismo grupo. No separar Google/WhatsApp en tarjetas. No restaurar la sección ni el formulario «¿Platicamos algo rico?». El Ronny anfitrión de Halloween acompaña el acceso a domicilio; el dúo unicornio/conejito ocupa el footer; `#contacto` apunta allí.
+- El footer «Aquí sigue el antojo» reúne contacto, horarios, la dueña con Ronny y los seis logos neón en un grupo centrado. Las previews son una franja discreta que aparece solo al activar un logo; no restaurar la tarjeta grande permanente de WhatsApp ni separar canales en tarjetas. No restaurar el formulario «¿Platicamos algo rico?». El diablito acompaña domicilio y el zombi, la historia; el dúo unicornio/conejito se conserva en el footer; `#contacto` apunta allí.
 
 - El menú usa las fotos reales y los precios de las tres cartas de ronnys.zip, transcritos en `lib/menu.ts`. No inventar precios ni fotografías de productos. Los iconos ilustrados representan categorías sin foto disponible.
 - Añadir a Ronny con playerita deportiva roja y su gesto de lamerse la nariz; la ilustración con su abuelo queda pendiente por indicación del propietario hasta tener referencia.
@@ -36,9 +36,12 @@
 - Priorizar la lectura del cliente: menú compacto por Dulces/Salados/Bebidas y una sola ficha de producto activa, con foto, precios y variantes visibles sin desplegables. No volver a apilar todas las fichas en celular. Mantener búsqueda global, ampliación de fotos accesible y accesos de portada a la categoría correcta. Ronny acompaña la portada con menor tamaño y el truck conserva protagonismo.
 
 - Las imágenes se organizan bajo `public/images/`: brand, hero, ronny, menu por categoría y archive para recursos anteriores. Actualizar rutas al moverlas y conservar los bytes originales.
-- Los Ronnys de apoyo se reparten por función: personaje automático por categoría en menú, playerita roja en promoción, anfitrión en domicilio, enojón en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
+- Los Ronnys de apoyo se reparten por función: personaje automático por categoría en menú, playerita roja en promoción, diablito en domicilio, zombi en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
 - La portada usa cuatro iconos tipo emoji con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.
 
 - WhatsApp actualizado por el propietario: +52 56 5390 1358, `https://wa.me/525653901358`. Mantener el mismo número en llamadas, domicilio y footer. Los logos del footer son grandes, centrados, estilo neón y sin etiquetas visibles, con nombres accesibles y previews locales al tocar, pasar el ratón o activar con teclado. Perfiles sociales oficiales siguen pendientes; no inventar publicaciones, enlaces o seguidores.
 
 - «Ronny’s por temporadas» (`#temporadas`) reúne la campaña actual de Halloween y el adelanto de Navidad. El Ronny de Santa es café/caramelo, mantiene su identidad y usa transparencia real sin recuadro individual. Navidad debe seguir como «Próxima temporada», sin cambiar automáticamente la portada, inventar fechas ni ofertas.
+
+- Personajes aprobados por el propietario, basados en sus fotos: `ronny-red-sports.png`, `ronny-nose-lick.png` y `ronny-unicorn-owner-bunny.png`. Conservar definitivamente sus imágenes, ropa, poses y colores. No regenerarlos al cambiar disfraces de campaña. La imagen con el abuelo sigue pendiente.
+- El icono de la pestaña del navegador usa la cara aprobada de Ronny en `public/images/brand/ronny-flat-logo.png`, configurada en los metadatos de `app/layout.tsx`.

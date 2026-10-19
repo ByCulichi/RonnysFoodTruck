@@ -4,9 +4,14 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ronny Food Truck - Dulzura y Diversión en Ecatepec",
+  title: "Ronny’s Food Truck | Ecatepec",
   description:
-    "Food truck de postres y antojitos en New York, Ecatepec de Morelos. Malteadas, crepas, marquesitas y papas preparadas. ¡Ven a probar la diversión sobre ruedas!",
+    "El carrito rojo de Ronny’s en New York, Ecatepec. Malteadas, crepas, waffles, hamburguesas y más antojos para compartir.",
+  icons: {
+    icon: { url: "/images/brand/ronny-flat-logo.png", type: "image/png", sizes: "1254x1254" },
+    shortcut: "/images/brand/ronny-flat-logo.png",
+    apple: { url: "/images/brand/ronny-flat-logo.png", sizes: "1254x1254", type: "image/png" },
+  },
   generator: "v0.app",
 };
 

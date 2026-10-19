@@ -23,7 +23,6 @@
 .guide-bebidas { --guide-accent: #e393ee; }
 .menu-guide-art { position: relative; width: 100%; height: 290px; display: grid; place-items: center; }
 .menu-guide-art > img { width: 100%; height: 100%; object-fit: contain; border: 0; background: transparent; border-radius: 0; animation: menu-ronny-arrive .25s ease-out; }
-.guide-bebidas .menu-guide-art > img { transform: scale(1.15); }
 .guide-orbit { display: grid; place-items: center; position: absolute; width: 43px; height: 43px; border: 1px solid #d7ad6550; border-radius: 50%; background: #1c1119e8; box-shadow: 0 0 15px #d3a75210; opacity: .6; }
 .guide-orbit .food-icon { width: 27px; height: 27px; }
 .orbit-dulces { left: -5px; top: 20px; }
