@@ -9,11 +9,11 @@
   border: 0;
   background: #100c1c;
 }
-.footer-scenery { position: absolute; inset: 0; z-index: -2; pointer-events: none; mask-image: linear-gradient(to bottom, transparent, #000 70px); }
+.footer-scenery { position: absolute; inset: 0; z-index: -2; pointer-events: none; transform: scaleX(-1); mask-image: linear-gradient(to bottom, transparent, #000 70px); }
 .footer-halloween::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #100c1c22, transparent 30%, #100c1c10 68%, #100c1cdd 92%, #100c1c), radial-gradient(ellipse at 40% 38%, #120b2033, transparent 60%); }
 .site-footer.footer-refresh > .footer-refresh-inner { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto; justify-content: stretch; min-height: var(--footer-scene-height); width: min(1240px, calc(100% - 96px)); border: 0; padding: 80px 0 0; color: inherit; font-size: inherit; gap: 0; }
-.footer-refresh-main { display: grid; grid-template-columns: 1.18fr .88fr .9fr; gap: 40px; align-items: center; min-width: 0; }
-.footer-message { min-width: 0; }
+.footer-refresh-main { display: grid; grid-template-columns: .9fr .88fr 1.18fr; grid-template-areas: "family explore message"; gap: 40px; align-items: center; min-width: 0; }
+.footer-message { grid-area: message; min-width: 0; }
 .footer-brand { display: inline-flex; align-items: center; gap: 11px; color: #fff0d9; }
 .footer-brand > img { width: 48px; height: 48px; object-fit: contain; }
 .footer-brand > span { font: 400 31px/1.1 "Ronny Halloween", "Ronny Display", sans-serif; letter-spacing: .7px; text-shadow: 0 2px 0 #6b2e20, 0 0 15px #ffac3430; }
@@ -25,7 +25,7 @@
   .footer-message h2 em { color: inherit; }
 }
 .footer-message > p { color: #e3c9b8; font-size: 14px; line-height: 1.8; margin: 0; }
-.footer-explore { position: relative; z-index: 2; border-left: 1px solid #d8a26b40; padding-left: 32px; min-width: 0; }
+.footer-explore { grid-area: explore; position: relative; z-index: 2; border-left: 1px solid #d8a26b40; padding-left: 32px; min-width: 0; }
 .footer-explore h3 { display: flex; align-items: start; gap: 9px; color: #ffc36c; font: 400 32px/1.15 "Ronny Halloween", "Ronny Display", sans-serif; letter-spacing: .7px; margin: 0 0 12px; }
 .footer-explore h3 > svg { width: 20px; height: 20px; rotate: 25deg; }
 .footer-explore ul { list-style: none; padding: 0; margin: 0; }
@@ -34,7 +34,7 @@
 .footer-explore li:nth-child(even) svg, .footer-explore li:last-child svg { color: #b878ee; }
 .footer-explore a:hover { color: #ffd18c; translate: 3px 0; }
 /* The feet, contact shadow and grass use the same ground line. */
-.footer-family { display: grid; place-items: end center; position: relative; isolation: isolate; margin: 0; align-self: end; padding-bottom: 14px; }
+.footer-family { grid-area: family; display: grid; place-items: end center; position: relative; isolation: isolate; margin: 0; align-self: end; padding-bottom: 14px; }
 .footer-family::before { content: ""; position: absolute; z-index: -1; width: 100%; height: 180px; bottom: -25px; background: radial-gradient(ellipse, #ef8c2e3b, transparent 68%); pointer-events: none; }
 .footer-family > img { position: relative; z-index: 1; display: block; width: clamp(210px, calc((100svh - 400px) * .66), 265px); height: auto; aspect-ratio: 2 / 3; max-width: 100%; object-fit: contain; background: transparent; border: 0; border-radius: 0; filter: drop-shadow(-5px 7px 9px #09051690) drop-shadow(5px 4px 7px #ffae4029); }
 .footer-family-shadow { position: absolute; z-index: 0; bottom: 11px; width: 46%; height: 14px; border-radius: 50%; background: #100b17e6; filter: blur(4px); pointer-events: none; }
@@ -60,7 +60,7 @@
 .footer-refresh-bottom > a { display: inline-flex; align-items: center; gap: 7px; color: #e3c29c; min-height: 44px; }
 @media (max-width: 1100px) {
   .site-footer.footer-refresh > .footer-refresh-inner { width: calc(100% - 64px); }
-  .footer-refresh-main { gap: 24px; grid-template-columns: 1.15fr .9fr .85fr; }
+  .footer-refresh-main { gap: 24px; grid-template-columns: .85fr .9fr 1.15fr; }
   .footer-message h2 { font-size: 48px; }
   .footer-explore { padding-left: 22px; }
   .footer-explore li > a { font-size: 15px; gap: 10px; }
@@ -70,20 +70,20 @@
 @media (max-width: 760px) {
   .site-footer.footer-refresh { --footer-scene-height: 0px; }
   .site-footer.footer-refresh > .footer-refresh-inner { width: calc(100% - 40px); padding-top: 65px; }
-  .footer-refresh-main { grid-template-columns: minmax(0, 1fr) minmax(110px, .72fr); gap: 26px 12px; }
+  .footer-refresh-main { grid-template-columns: minmax(110px, .72fr) minmax(0, 1fr); grid-template-areas: "family message" "explore explore"; gap: 26px 12px; }
   .footer-message h2 { font-size: clamp(30px, 8.7vw, 53px); margin: 18px 0 12px; }
   .footer-message > p { font-size: 12px; }
   .footer-brand { gap: 7px; }
   .footer-brand > img { width: 38px; height: 38px; }
   .footer-brand > span { font-size: 26px; letter-spacing: .3px; }
   .footer-brand sup { font-size: 7px; }
-  .footer-family { grid-column: 2; grid-row: 1; align-self: end; padding-bottom: 8px; }
+  .footer-family { align-self: end; padding-bottom: 8px; }
   .footer-family > img { width: 185px; }
   .footer-family-ground { width: 230px; bottom: -27px; }
   .footer-family-shadow { width: 52%; bottom: 6px; height: 9px; }
   .footer-family::before { height: 130px; bottom: -20px; }
-  .footer-family-bank { display: block; position: absolute; z-index: -1; width: 110vw; height: 220px; max-width: none; left: calc(50% - 80vw); top: calc(100% - 60px); pointer-events: none; }
-  .footer-explore { grid-column: 1 / -1; grid-row: 2; border: 0; padding: 0; }
+  .footer-family-bank { display: block; position: absolute; z-index: -1; width: 110vw; height: 220px; max-width: none; left: calc(50% - 30vw); top: calc(100% - 60px); transform: scaleX(-1); pointer-events: none; }
+  .footer-explore { border: 0; padding: 0; }
   .footer-explore h3 { justify-content: center; font-size: 29px; margin-bottom: 9px; }
   .footer-explore ul { display: flex; justify-content: center; flex-wrap: wrap; gap: 2px 18px; }
   .footer-explore li > a { min-height: 44px; font-size: 14px; gap: 7px; padding-inline: 3px; }

@@ -1,0 +1,57 @@
+/* One Halloween atmosphere joins menu, carta, promo, delivery, seasons and story. */
+.halloween-market { position: relative; isolation: isolate; background: radial-gradient(ellipse at 0 15%, #62297066, transparent 38%), radial-gradient(ellipse at 100% 52%, #93452042, transparent 34%), radial-gradient(ellipse at 15% 86%, #77315f38, transparent 32%), linear-gradient(170deg, #1d102d, #110d20 45%, #201028 82%, #100c1c); }
+.halloween-market .halloween-menu-scene { background: transparent; }
+.halloween-season .halloween-market .story-section { background: linear-gradient(180deg, #1d102d33, #100c1cbb); }
+.market-night-decoration { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; }
+.market-moon { position: absolute; right: 3%; top: 13%; width: clamp(90px, 12vw, 190px); aspect-ratio: 1; border-radius: 50%; opacity: .48; background: radial-gradient(circle at 31% 33%, #b19f8b55 0 6%, transparent 7%), radial-gradient(circle at 68% 59%, #bd9f7c66 0 12%, transparent 13%), radial-gradient(circle at 50% 40%, #ffe1a6, #dfab6f 68%, #97648c); box-shadow: 0 0 45px #edb58226, 0 0 100px #b987a31c; }
+.market-web { position: absolute; top: 0; width: clamp(100px, 15vw, 220px); fill: none; stroke: #cea37d; stroke-width: .8; opacity: .28; }
+.market-web-left { left: 0; }
+.market-web-right { right: 0; transform: scaleX(-1); }
+.market-mist { position: absolute; left: -10%; width: 120%; height: 360px; opacity: .4; background: radial-gradient(ellipse at 15% 70%, #a668b62b, transparent 48%), radial-gradient(ellipse at 85% 55%, #e99d4a26, transparent 45%); animation: market-mist-drift 32s ease-in-out infinite alternate; }
+.market-mist-one { top: 32%; }
+.market-mist-two { top: 72%; animation-delay: -16s; }
+.market-bat { position: absolute; width: 66px; fill: #080613; filter: drop-shadow(0 0 1px #ac77c733); animation: market-bat-sway 13s ease-in-out infinite alternate; }
+.market-bat-0 { top: 8%; left: 3%; width: 42px; }
+.market-bat-1 { top: 17%; right: 6%; animation-delay: -4s; }
+.market-bat-2 { top: 38%; left: 5%; width: 90px; animation-delay: -7s; }
+.market-bat-3 { top: 60%; right: 2%; width: 48px; animation-delay: -2s; }
+.market-bat-4 { top: 73%; left: 2%; animation-delay: -9s; }
+.market-bat-5 { top: 91%; right: 5%; width: 74px; animation-delay: -6s; }
+.market-pumpkin { position: absolute; width: clamp(110px, 14vw, 210px); opacity: .65; filter: drop-shadow(0 0 22px #cf6c1a27); }
+.market-pumpkin-left { left: -35px; top: 47%; rotate: -9deg; }
+.market-pumpkin-right { right: -22px; top: 78%; rotate: 8deg; }
+.market-pumpkin-face { filter: drop-shadow(0 0 7px #ff971c); }
+.market-ember { position: absolute; width: 4px; height: 9px; border-radius: 100% 0 100% 0; background: #e9a05f; opacity: .25; box-shadow: 0 0 9px #f49648; animation: market-ember-drift 19s ease-in-out infinite alternate; }
+.market-ember-0 { left: 2%; top: 4%; animation-delay: -1s; }
+.market-ember-1 { left: 12%; top: 16%; animation-delay: -9s; }
+.market-ember-2 { right: 5%; top: 24%; animation-delay: -6s; }
+.market-ember-3 { left: 3%; top: 32%; animation-delay: -12s; }
+.market-ember-4 { right: 9%; top: 43%; animation-delay: -3s; }
+.market-ember-5 { left: 15%; top: 49%; animation-delay: -16s; }
+.market-ember-6 { right: 4%; top: 55%; animation-delay: -10s; }
+.market-ember-7 { left: 6%; top: 64%; animation-delay: -5s; }
+.market-ember-8 { right: 13%; top: 72%; animation-delay: -14s; }
+.market-ember-9 { left: 10%; top: 81%; animation-delay: -8s; }
+.market-ember-10 { right: 3%; top: 89%; animation-delay: -18s; }
+.market-ember-11 { left: 4%; top: 96%; animation-delay: -11s; }
+.market-motion-control { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 44px; min-height: 44px; position: absolute; z-index: 4; top: 10px; right: 18px; padding: 8px 12px; border: 1px solid #e7ad6655; border-radius: 22px; background: #160f25e8; color: #efd0aa; font-size: 11px; }
+.market-motion-control:hover { background: #312039; color: #ffe4b5; }
+.market-night-decoration[data-paused="true"] * { animation-play-state: paused; }
+@keyframes market-mist-drift { from { transform: translate3d(-2%, -8px, 0); } to { transform: translate3d(2%, 12px, 0); } }
+@keyframes market-bat-sway { from { transform: translate3d(-8px, -5px, 0) rotate(-4deg); } to { transform: translate3d(12px, 10px, 0) rotate(4deg); } }
+@keyframes market-ember-drift { from { transform: translate3d(-7px, 10px, 0) rotate(-20deg); } to { transform: translate3d(15px, -35px, 0) rotate(35deg); } }
+@media (max-width: 760px) {
+  .market-motion-control { right: 12px; top: 8px; padding: 8px; }
+  .market-motion-control > span { display: none; }
+  .market-moon { right: -25px; opacity: .24; }
+  .market-pumpkin { width: 110px; opacity: .3; }
+  .market-pumpkin-left { left: -50px; }
+  .market-pumpkin-right { right: -42px; }
+  .market-bat { opacity: .65; width: 45px; }
+  .market-bat-2, .market-bat-4, .market-ember:nth-of-type(even) { display: none; }
+  .market-mist { opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .market-night-decoration * { animation: none !important; }
+  .market-motion-control { display: none; }
+}

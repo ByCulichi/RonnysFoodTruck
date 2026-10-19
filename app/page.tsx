@@ -27,7 +27,7 @@ import { dishes } from "@/lib/menu";
 import { InteractiveMenu } from "@/components/interactive-menu";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
 import { MenuCarta } from "@/components/menu-carta";
-import { HalloweenMenuScene } from "@/components/halloween-menu-scene";
+import { HalloweenMarketScene } from "@/components/halloween-market-scene";
 import { FridayPromo } from "@/components/friday-promo";
 
 const ronnyCharacters = {
@@ -190,67 +190,70 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
-          <HalloweenMenuScene />
-          <div className="menu-section compact-menu-section shell section-space">
-            <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
-            <MenuCarta />
-            <FridayPromo />
-          </div>
-        </section>
+        <div className="halloween-market">
+          <HalloweenMarketScene />
+          <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
+            <div className="menu-section compact-menu-section shell section-space">
+              <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
+              <MenuCarta />
+              <FridayPromo />
+            </div>
+          </section>
 
-        <section className="delivery-section shell" id="domicilio" aria-labelledby="delivery-title">
-          <div className="delivery-copy">
-            <div className="eyebrow"><Bike size={18} /> EL ANTOJO VA CONTIGO</div>
-            <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
-            <p>Consulta tu pedido a domicilio por WhatsApp. Compártenos qué se te antoja y tu ubicación para confirmar la entrega.</p>
-            <a className="button button-gold" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} /> Consultar pedido a domicilio <ArrowUpRight size={18} /></a>
-            <small>Confirma cobertura, costo de envío y disponibilidad antes de pedir.</small>
-          </div>
-          <Mascot character="host" className="delivery-host" />
-        </section>
+          <section className="delivery-section shell" id="domicilio" aria-labelledby="delivery-title">
+            <div className="delivery-copy">
+              <div className="eyebrow"><Bike size={18} /> EL ANTOJO VA CONTIGO</div>
+              <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
+              <p>Consulta tu pedido a domicilio por WhatsApp. Compártenos qué se te antoja y tu ubicación para confirmar la entrega.</p>
+              <a className="button button-gold" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} /> Consultar pedido a domicilio <ArrowUpRight size={18} /></a>
+              <small>Confirma cobertura, costo de envío y disponibilidad antes de pedir.</small>
+            </div>
+            <Mascot character="host" className="delivery-host" />
+          </section>
 
-        <RonnySeasons />
+          <RonnySeasons />
 
-        <section className="story-section" id="historia">
-          <div className="shell story-layout">
-            <div className="story-art">
-              <Mascot character="grumpy" />
-              <div className="story-stamp">
-                <PawPrint size={24} />
-                <span>
-                  CHIHUAHUA
+          <section className="story-section" id="historia">
+            <div className="shell story-layout">
+              <div className="story-art">
+                <Mascot character="grumpy" />
+                <div className="story-stamp">
+                  <PawPrint size={24} />
+                  <span>
+                    CHIHUAHUA
+                    <br />
+                    DE CORAZÓN
+                  </span>
+                </div>
+                <p className="story-character-note">Tiene su genio.<br /><strong>Y un corazón enorme.</strong></p>
+              </div>
+              <div className="story-copy">
+                <div className="eyebrow">
+                  <PawPrint size={16} /> RONNY Y LA FAMILIA
+                </div>
+                <h2>
+                  Orejas grandes.
                   <br />
-                  DE CORAZÓN
-                </span>
+                  Un corazón
+                  <br />
+                  <em>todavía más.</em>
+                </h2>
+                <p>Detrás del carrito rojo está nuestra familia: manos que preparan, sonrisas que reciben y cariño en cada antojo.</p>
+                <p>Y el nombre lo pone Ronny, nuestro chihuahua. Tiene su genio: es valiente, leal y protector de los suyos. También es divertido y fan de las gusgerías.</p>
+                <p>Su playerita roja y esa lengua que siempre acaba en la nariz lo hacen inconfundible. Pequeñito, pero con un corazón enorme.</p>
+                <p className="story-signature">
+                  Aquí no solo hacemos postres.
+                  <br />
+                  <strong>Hacemos que te sientas en casa.</strong>
+                </p>
+                <a className="text-link" href="#encuentranos">
+                  Ven a conocernos <ArrowUpRight size={18} />
+                </a>
               </div>
-              <p className="story-character-note">Tiene su genio.<br /><strong>Y un corazón enorme.</strong></p>
             </div>
-            <div className="story-copy">
-              <div className="eyebrow">
-                <PawPrint size={16} /> RONNY Y LA FAMILIA
-              </div>
-              <h2>
-                Orejas grandes.
-                <br />
-                Un corazón
-                <br />
-                <em>todavía más.</em>
-              </h2>
-              <p>Detrás del carrito rojo está nuestra familia: manos que preparan, sonrisas que reciben y cariño en cada antojo.</p>
-              <p>Y el nombre lo pone Ronny, nuestro chihuahua. Tiene su genio: es valiente, leal y protector de los suyos. También es divertido y fan de las gusgerías.</p>
-              <p>Su playerita roja y esa lengua que siempre acaba en la nariz lo hacen inconfundible. Pequeñito, pero con un corazón enorme.</p>
-              <p className="story-signature">
-                Aquí no solo hacemos postres.
-                <br />
-                <strong>Hacemos que te sientas en casa.</strong>
-              </p>
-              <a className="text-link" href="#encuentranos">
-                Ven a conocernos <ArrowUpRight size={18} />
-              </a>
-            </div>
-          </div>
-        </section>
+          </section>
+
+        </div>
 
         <VisitSection />
 
