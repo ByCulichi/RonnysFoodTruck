@@ -38,7 +38,7 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran «Próximamente» hasta recibir sus perfiles oficiales. Ronny de unicornio con su ama de conejito ocupa el footer, sin recuadro; el anfitrión de Halloween acompaña el acceso a domicilio. El enlace `#contacto` lleva al footer.
+El footer «Más de Ronny’s» reúne Google, WhatsApp, Instagram, Facebook, TikTok y X en un solo grupo. Google y WhatsApp tienen enlaces confirmados; los demás muestran una vista previa con «Enlace oficial pendiente» hasta recibir sus perfiles oficiales. Los seis logos son grandes, centrados, con efecto neón y sin etiquetas visibles; se seleccionan por ratón, teclado o toque para ver una vista previa local y los accesos confirmados. Ronny de unicornio con su ama de conejito ocupa el footer, sin recuadro; el anfitrión de Halloween acompaña el acceso a domicilio. El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
@@ -48,13 +48,13 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 El menú tiene búsqueda por nombre e ingredientes sin distinguir acentos, categorías con cantidades, una tarjeta destacada de malteadas y recuperación cuando no hay coincidencias. Ronny prepara una malteada con outfit de Halloween y fondo transparente en `public/images/ronny/ronny-halloween-milkshake.png`, integrado al contenido sin recuadro. Su enlace permite ver las bebidas.
 
-Los datos de la captura proporcionada por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
+Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
 ## Google Maps y opiniones
 
 La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
 
-Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews quedan pendientes de sus enlaces oficiales; no se inventan cifras.
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews de publicaciones reales quedan pendientes de sus enlaces oficiales; el footer ofrece previews locales de contacto y ficha, sin consultas automáticas; no se inventan cifras.
 
 ## Identidad de Ronny
 
@@ -84,3 +84,5 @@ Las imágenes están ordenadas en `public/images/`: `brand/` para logos, `hero/`
 Los cinco Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los iconos tipo emoji de portada abren el menú filtrado y conservan sus nombres accesibles.
 
 `business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. En celular una barra inferior ofrece acceso a menú y domicilio, respeta el área segura y deja espacio al final para no tapar contenido.
+
+El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358. Se usa `https://wa.me/525653901358` (sin el antiguo prefijo móvil 1) y `tel:+525653901358` en todos los accesos. La captura contiene horarios distintos; se conserva el horario confirmado expresamente por el propietario hasta una nueva confirmación.

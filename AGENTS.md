@@ -20,7 +20,7 @@
 
 - El Ronny junto al menú prepara una malteada con outfit de Halloween y fondo transparente, sin recuadro, borde ni tarjeta; su pose se integra visualmente con el contenido.
 
-- Datos confirmados del negocio: `lib/business.ts`. Dirección New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5234 6248; viernes a domingo 19:00–00:00, lunes a jueves cerrado. No agregar número de inmueble o coordenadas sin que el propietario los proporcione.
+- Datos confirmados del negocio: `lib/business.ts`. Dirección New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes a domingo 19:00–00:00, lunes a jueves cerrado. No agregar número de inmueble o coordenadas sin que el propietario los proporcione.
 
 - Todos los Ronnys de apoyo deben usar archivos individuales con transparencia real, sin sprites recortados, fondos rectangulares, bordes o tarjetas.
 - Ficha oficial de Google: https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. Redes sociales, seguidores y previews pendientes de los enlaces oficiales por indicación del propietario. No inventar reseñas, calificaciones, perfiles ni cantidades.
@@ -38,3 +38,5 @@
 - Las imágenes se organizan bajo `public/images/`: brand, hero, ronny, menu por categoría y archive para recursos anteriores. Actualizar rutas al moverlas y conservar los bytes originales.
 - Hay cinco Ronnys de apoyo, uno por función: malteadero en menú, playerita roja en promoción, anfitrión en domicilio, enojón en historia y nariz en ubicación. La historia y los momentos cotidianos forman una sola sección; no volver a agrupar varios personajes allí. El dúo unicornio/conejito permanece al final.
 - La portada usa cuatro iconos tipo emoji con nombres accesibles y enlaces al filtro correspondiente. Domicilio se consulta por WhatsApp, sin inventar cobertura, costos o tiempos ni enviar mensajes durante pruebas. Mantener accesos móviles a menú y domicilio sin tapar contenido.
+
+- WhatsApp actualizado por el propietario: +52 56 5390 1358, `https://wa.me/525653901358`. Mantener el mismo número en llamadas, domicilio y footer. Los logos del footer son grandes, centrados, estilo neón y sin etiquetas visibles, con nombres accesibles y previews locales al tocar, pasar el ratón o activar con teclado. Perfiles sociales oficiales siguen pendientes; no inventar publicaciones, enlaces o seguidores.

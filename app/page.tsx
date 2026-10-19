@@ -28,6 +28,7 @@ import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 import { FoodIcon, type FoodKind } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
+import { FooterSocials } from "@/components/footer-socials";
 import { dishes, foodKinds } from "@/lib/menu";
 
 const ronnyCharacters = {
@@ -409,31 +410,7 @@ export default function Home() {
             <div className="eyebrow">EL ANTOJO NOS CONECTA</div>
             <h2 id="footer-connect-title">Más de <em>Ronny’s.</em></h2>
             <p>Escríbenos, encuentra el truck y quédate cerca de tus antojos favoritos.</p>
-            <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">
-              {[
-                { network: "google", label: "Google", url: business.mapsUrl },
-                { network: "whatsapp", label: "WhatsApp", url: business.whatsappUrl },
-                { network: "instagram", label: "Instagram", url: null },
-                { network: "facebook", label: "Facebook", url: null },
-                { network: "tiktok", label: "TikTok", url: null },
-                { network: "x", label: "X", url: null },
-              ].map(({ network, label, url }) => (
-                <li key={network} className={`footer-network network-${network}`}>
-                  {url ? (
-                    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={network === "google" ? "Ronny’s en Google Maps" : "Contactar a Ronny’s por WhatsApp"}>
-                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
-                      <span>{label} <ArrowUpRight size={12} /></span>
-                    </a>
-                  ) : (
-                    <span className="network-pending" aria-label={`${label}: próximamente`}>
-                      <span className={`social-logo social-logo-${network}`}><img src={`/brands/${network}.svg`} alt="" width={25} height={25} /></span>
-                      <span>{label}</span>
-                      <small>Próximamente</small>
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <FooterSocials />
           </div>
         </div>
         <div className="footer-details">
