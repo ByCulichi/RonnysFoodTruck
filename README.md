@@ -38,7 +38,7 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer «Aquí sigue el antojo» reúne contacto y horarios legibles con la ilustración aprobada de la dueña y Ronny, que se conserva sin cambios ni recuadro. Google, WhatsApp, Instagram, Facebook, TikTok y X aparecen juntos como logos neón centrados. Al activar uno aparece una franja de preview discreta, sin tarjeta permanente ni fotografía duplicada del truck. Se puede cerrar con botón o Escape, con retorno de foco. Google y WhatsApp tienen enlaces confirmados; las otras redes indican «Enlace oficial pendiente». El enlace `#contacto` lleva al footer.
+El footer de Halloween «Aquí sigue el antojo» sigue la composición de la referencia del propietario con contenido HTML real: marca y título naranja a la izquierda, navegación «Explora» al centro, ilustración aprobada de la dueña y Ronny a la derecha y «Síguenos» abajo. La imagen aprobada se conserva sin cambios ni recuadro. La composición se reorganiza para celular. La fila repetida de dirección, teléfono y horarios se retiró del footer; los datos siguen en ubicación y en las previews de Google y WhatsApp. Google, WhatsApp, Instagram, Facebook, TikTok y X aparecen juntos como logos neón centrados. Al activar uno aparece una franja de preview discreta, sin tarjeta permanente ni fotografía duplicada del truck. Se puede cerrar con botón o Escape, con retorno de foco. Google y WhatsApp tienen enlaces confirmados; las otras redes indican «Enlace oficial pendiente». El enlace `#contacto` lleva al footer.
 
 ## Próximos cambios
 
@@ -108,3 +108,27 @@ Los metadatos de `app/layout.tsx` usan `/images/brand/ronny-flat-logo.png` como 
 La sección usa las fuentes locales Creepster y Lilita One, fondo violeta nocturno, acentos calabaza, telarañas y murciélagos decorativos sin bloquear controles. El movimiento se desactiva con `prefers-reduced-motion`. El resto de las secciones mantiene la ambientación nocturna; Navidad sigue siendo solo un adelanto.
 
 Las categorías muestran como máximo seis miniaturas con fotografía, nombre y precio por página, con botones anterior/siguiente y contador. La ficha seleccionada conserva variantes y precios visibles. Así se recorren los 28 productos sin apilar 28 tarjetas ni esconder la carta original; la búsqueda abarca todo el catálogo.
+
+## Escena del footer
+
+`components/site-footer.tsx` y `components/site-footer.css` construyen el footer como contenido real y adaptable, no como una captura pegada. Los enlaces de «Explora» llevan a las secciones existentes de inicio, menú, ubicación, temporadas e historia. Los iconos de navegación son SVG decorativos y los logos sociales conservan nombres accesibles y sus previews locales.
+
+Las dos ilustraciones de `public/images/scenes/`, reservadas al footer, contienen únicamente escenario: árboles, telarañas, calabazas y luces. No incluyen letras, logos ni personajes. Una panorámica para escritorio y otra vertical para móvil mantienen la decoración alrededor del contenido. `<picture>` con `getImageProps` de Next sirve una sola versión optimizada por pantalla. El degradado superior se funde con el fondo violeta de la página. La ilustración aprobada de Ronny con su dueña permanece separada, transparente e intacta.
+
+## Ubicación con ambiente de Halloween
+
+`components/visit-section.tsx` y su CSS reúnen contacto, mapa y foto real del truck siguiendo la nueva referencia visual. El teléfono, WhatsApp, dirección y horario proceden de `lib/business.ts`; no se copia el email del mockup. La foto real original del truck se conserva sin editar y se encuadra con CSS; puede abrirse completa. En celular, el mapa ocupa el ancho disponible y la foto se vuelve compacta. El Ronny aprobado de la nariz aparece fuera de las tarjetas.
+
+Las opiniones usan tres accesos a la ficha real: consultar experiencias, compartir la visita y ver las fotos. No se publican como reales los testimonios, nombres, estrellas ni cantidades del mockup. Se conserva la decisión del propietario de no usar APIs de reseñas o redes ni solicitar claves.
+
+La marca y el cierre del footer usan Creepster, también en el copyright y el enlace «Un antojo más». La cara de Ronny del encabezado aumenta a 76 px en escritorio y 60 px en celular, manteniendo los controles y la altura del encabezado.
+
+El dúo aprobado se integra al escenario con sombra de contacto, luz cálida y una capa SVG de suelo, calabaza, hierba y hojas por delante de sus pies (`FooterFamilyGround`). Las luces de calabaza son elementos decorativos independientes que se adaptan a la pantalla (`FooterPumpkinLights`). El PNG de los personajes no se edita ni se regenera. No se añade animación continua.
+
+## Promo y poses del menú
+
+`FridayPromo` presenta la oferta existente de viernes como «2 malteadas por $100», con el Ronny deportivo aprobado más grande, tipografía de marca y un cupón claro con enlace para consultar disponibilidad por WhatsApp. La imagen original no se edita y el mensaje no se envía automáticamente.
+
+Dulces y Salados usan nuevas poses en archivos transparentes separados, registrados en `lib/ronny-costumes.ts`: bruja sentada y volando en su escoba con waffle, y diablito inclinado que sirve una hamburguesa con ambas patas. Se conservan los disfraces completos, la cara y el color café de Ronny; los PNG anteriores no se eliminan. Fantasma y zombi mantienen sus imágenes.
+
+El fondo de ubicación se diferencia del footer con `VisitNightScenery`: siluetas urbanas, faroles, luna y murciélagos en SVG sobre degradados violetas y azul noche. Es una decoración ilustrativa y no representa calles, coordenadas o un lugar nuevo. No reutiliza las ilustraciones del bosque y calabazas del footer ni solicita imágenes externas.

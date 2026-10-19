@@ -1,0 +1,50 @@
+.friday-promo { position: relative; isolation: isolate; display: grid; grid-template-columns: 230px minmax(0, 1fr) 210px; gap: 30px; align-items: center; overflow: hidden; margin-top: 30px; padding: 27px; border: 1px solid #ffb66391; border-radius: 26px; background: radial-gradient(ellipse at 15% 80%, #c14d3452, transparent 50%), linear-gradient(120deg, #512333, #301630 65%, #472635); box-shadow: 0 12px 30px #09041144, inset 0 1px 0 #ffe4b326; }
+.friday-promo::before { content: ""; position: absolute; inset: 9px; z-index: -1; border: 1px dashed #e8b46c33; border-radius: 19px; pointer-events: none; }
+.friday-promo-drink { position: absolute; top: 50%; right: 230px; transform: translateY(-50%) rotate(12deg); color: #ffbf6d; opacity: .07; z-index: -1; }
+.friday-promo-ronny { position: relative; width: 230px; }
+.friday-promo-ronny::before { content: ""; position: absolute; z-index: -1; inset: 15% -10% 0; background: radial-gradient(ellipse, #ffa94c24, transparent 65%); }
+.friday-promo-ronny > img { width: 100%; height: auto; object-fit: contain; border: 0; border-radius: 0; background: transparent; filter: drop-shadow(0 7px 9px #110c1b70); }
+.friday-promo-copy { min-width: 0; }
+.friday-promo-copy > span { display: flex; align-items: center; gap: 8px; color: #ffcf8a; font-size: 10px; letter-spacing: 1.6px; line-height: 1.7; }
+.friday-promo-copy > span svg { flex-shrink: 0; }
+.friday-promo-copy h3 { font: 400 clamp(27px, 2.75vw, 39px)/1.12 "Ronny Display", sans-serif; letter-spacing: .2px; color: #fff1d7; margin: 15px 0 12px; }
+.friday-promo-copy h3 em { font: inherit; color: #ffc56c; }
+.friday-promo-copy p { color: #e1c4c2; font-size: 13px; line-height: 1.7; margin: 0; }
+.friday-promo-offer { padding: 18px 17px 6px; border-radius: 19px; border: 1px solid #ffe6b5; color: #6a2e25; text-align: center; background: linear-gradient(155deg, #fff0d2, #ffcc84); box-shadow: 0 7px 18px #130a1b55; }
+.friday-promo-offer > span { display: block; font: 400 24px/1.2 "Ronny Display", sans-serif; }
+.friday-promo-offer > strong { display: block; color: #8c2929; font: 900 53px/1.15 Arial, sans-serif; letter-spacing: -2px; margin-top: 6px; }
+.friday-promo-offer > strong small { font: 600 14px Arial, sans-serif; letter-spacing: 0; }
+.friday-promo-offer > small { display: block; font-size: 10px; letter-spacing: .4px; margin: 5px 0 7px; }
+.friday-promo-offer > a { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; border-top: 1px dashed #a95d3b70; color: #692d27; font-size: 12px; font-weight: 800; }
+.friday-promo-offer > a:hover { color: #b13b2d; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1000px) {
+  .friday-promo { grid-template-columns: 180px minmax(0, 1fr) 180px; gap: 20px; padding: 24px; }
+  .friday-promo-ronny { width: 180px; }
+  .friday-promo-copy h3 { font-size: 29px; }
+  .friday-promo-offer { padding-inline: 12px; }
+  .friday-promo-offer > span { font-size: 21px; }
+  .friday-promo-offer > strong { font-size: 45px; }
+}
+@media (max-width: 600px) {
+  .friday-promo { grid-template-columns: minmax(0, .85fr) minmax(0, 1fr); gap: 17px 13px; padding: 20px; border-radius: 20px; }
+  .friday-promo::before { inset: 7px; border-radius: 15px; }
+  .friday-promo-ronny { width: 100%; }
+  .friday-promo-copy > span { font-size: 8px; letter-spacing: 1px; gap: 6px; }
+  .friday-promo-copy > span svg { width: 14px; }
+  .friday-promo-copy h3 { font-size: 24px; margin-block: 10px 8px; }
+  .friday-promo-copy p { font-size: 11px; line-height: 1.6; }
+  .friday-promo-offer { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; padding: 11px 14px 3px; align-items: center; border-radius: 15px; }
+  .friday-promo-offer > span { font-size: 24px; align-self: end; }
+  .friday-promo-offer > small { grid-column: 1; margin-bottom: 8px; align-self: start; }
+  .friday-promo-offer > strong { grid-column: 2; grid-row: 1 / span 2; font-size: 45px; margin: 0; }
+  .friday-promo-offer > a { grid-column: 1 / -1; }
+  .friday-promo-drink { right: auto; left: -10px; top: 40%; width: 125px; height: 125px; }
+}
+@media (max-width: 360px) {
+  .friday-promo { padding: 17px; gap: 15px 11px; }
+  .friday-promo-copy h3 { font-size: 22px; }
+  .friday-promo-copy > span { letter-spacing: .5px; }
+  .friday-promo-copy p { font-size: 10px; }
+  .friday-promo-offer > span { font-size: 21px; }
+  .friday-promo-offer > strong { font-size: 41px; }
+}
