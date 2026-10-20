@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import {
   ArrowDown,
   House,
@@ -54,7 +55,7 @@ const navIcons = { inicio: House, menu: UtensilsCrossed, temporadas: CalendarDay
 
 function Mascot({ character, className = "" }: { character: keyof typeof ronnyCharacters; className?: string }) {
   const art = ronnyCharacters[character];
-  return <div className={`ronny-cutout ${className}`} data-character={character}><img src={art.image} alt={art.name} width={art.width} height={art.height} loading="lazy" /></div>;
+  return <div className={`ronny-cutout ${className}`} data-character={character}><Image src={art.image} alt={art.name} width={art.width} height={art.height} sizes="(max-width: 600px) 180px, 320px" /></div>;
 }
 
 export default function Home() {
@@ -89,14 +90,11 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
   const [menuSelection, setMenuSelection] = useState("Crepas");
-  const [menuEntry, setMenuEntry] = useState(0);
   function openMenu(kind: FoodKind) {
     setMenuSelection(dishes.find((dish) => dish.kind === kind)?.name || "Crepas");
-    setMenuEntry((entry) => entry + 1);
   }
   function viewCartaDish(name: string) {
     setMenuSelection(name);
-    setMenuEntry((entry) => entry + 1);
   }
   return (
     <div className="ronny-site halloween-season">
@@ -151,12 +149,13 @@ export default function Home() {
       <main id="contenido">
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
-            <img
+            <Image
               src="/images/hero/ronny-halloween-truck.png"
               alt="Ronny vestido de hechicero con sombrero morado y capa, sosteniendo un antojo con queso junto al food truck rojo decorado con calabazas, telarañas y murciélagos de Halloween"
               width={1536}
               height={1024}
-              fetchPriority="high"
+              priority
+              sizes="(max-width: 600px) 135vw, 100vw"
             />
           </div>
           <div className="night-lights" aria-hidden="true">
@@ -200,7 +199,7 @@ export default function Home() {
           <HalloweenMarketScene />
           <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
             <div className="menu-section compact-menu-section shell section-space">
-              <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} key={menuEntry} />
+              <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} />
               <MenuCarta selection={menuSelection} onSelect={viewCartaDish} />
               <FridayPromo />
             </div>
