@@ -16,8 +16,14 @@ import "./ronny-menu-orbit.css";
 const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 
-export function InteractiveMenu({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
+export function InteractiveMenu({ selection, onSelect, entry = 0 }: { selection: string; onSelect: (name: string) => void; entry?: number }) {
   const [query, setQuery] = useState("");
+  // External shortcuts clear search without remounting Ronny and the image layers.
+  const [previousEntry, setPreviousEntry] = useState(entry);
+  if (entry !== previousEntry) {
+    setPreviousEntry(entry);
+    setQuery("");
+  }
   const searchRef = useRef<HTMLInputElement>(null);
   const requested = dishes.find(({ name }) => name === selection) || dishes[1];
   const term = normalize(query.trim());

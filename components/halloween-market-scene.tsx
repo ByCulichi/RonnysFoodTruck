@@ -40,18 +40,28 @@ function Pumpkin({ className }: { className: string }) {
 export function HalloweenMarketScene() {
   const sceneRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const region = sceneRef.current?.parentElement;
-    if (!region) return;
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    observer.observe(region);
-    return () => observer.disconnect();
+    const scene = sceneRef.current;
+    if (!scene) return;
+    // The market spans several screens; observe each moving decoration separately.
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        entry.target.setAttribute("data-in-view", String(entry.isIntersecting));
+      }
+    }, { rootMargin: "80px 0px" });
+    scene.querySelectorAll(".market-mist, .market-bat, .market-ember").forEach((element) => observer.observe(element));
+    const updateVisibility = () => { scene.dataset.hidden = String(document.hidden); };
+    updateVisibility();
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
   }, []);
 
   return <>
-    <div ref={sceneRef} className="market-night-decoration" aria-hidden="true" data-paused={paused || !visible}>
+    <div ref={sceneRef} className="market-night-decoration" aria-hidden="true" data-paused={paused}>
       <span className="market-moon" />
       <svg className="market-web market-web-left" viewBox="0 0 180 180"><path d={web} /></svg>
       <svg className="market-web market-web-right" viewBox="0 0 180 180"><path d={web} /></svg>
