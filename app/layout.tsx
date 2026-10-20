@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ronnys.online"),
+  metadataBase: new URL("https://www.ronnys.online"),
   alternates: { canonical: "/" },
   title: "Ronny’s Food Truck | Ecatepec",
   description:
