@@ -4,6 +4,8 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ronnys.online"),
+  alternates: { canonical: "/" },
   title: "Ronny’s Food Truck | Ecatepec",
   description:
     "El carrito rojo de Ronny’s en New York, Ecatepec. Malteadas, crepas, waffles, hamburguesas y más antojos para compartir.",
