@@ -1,6 +1,18 @@
 /* Category controls surround an unframed Ronny, inspired by the reference. */
 .selected-menu-dish { scroll-margin-top: 110px; }
-.menu-group-switch { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.compact-menu-controls { display: block; width: min(100%, 440px); padding: 12px; margin-inline: auto; margin-bottom: 28px; border-radius: 999px; }
+.menu-group-switch { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.menu-group-switch .menu-category-logo { --category-color: #cf91ff; position: relative; justify-self: center; width: 100%; max-width: 80px; aspect-ratio: 1; min-height: 0; padding: 10px; border: 1px solid color-mix(in srgb, var(--category-color) 65%, transparent); border-radius: 50%; background: radial-gradient(ellipse at 50% 15%, color-mix(in srgb, var(--category-color) 22%, #21142d), #160f23 80%); color: var(--category-color); box-shadow: inset 0 1px #fff2, 0 0 14px color-mix(in srgb, var(--category-color) 14%, transparent); transition: transform .2s, box-shadow .2s, border-color .2s; }
+.menu-group-switch .logo-salados { --category-color: #ff9b6b; }
+.menu-group-switch .logo-frias { --category-color: #76e5ef; }
+.menu-group-switch .logo-calientes { --category-color: #ffc15c; }
+.menu-group-switch .menu-category-logo::before { content: ""; position: absolute; inset: -5px; border: 1px solid var(--category-color); border-radius: inherit; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.menu-group-switch .menu-category-logo .food-icon { display: block; width: 48px; height: 48px; filter: drop-shadow(0 3px 5px #0005); transition: transform .2s; }
+.menu-group-switch .menu-category-logo:is(:hover, :focus-visible, [aria-pressed="true"]) { border-color: var(--category-color); background: radial-gradient(ellipse at 50% 20%, color-mix(in srgb, var(--category-color) 30%, #21142d), #160f23 85%); box-shadow: 0 0 9px color-mix(in srgb, var(--category-color) 45%, transparent), 0 0 25px color-mix(in srgb, var(--category-color) 25%, transparent); }
+.menu-group-switch .menu-category-logo:is(:hover, :focus-visible, [aria-pressed="true"])::before { opacity: .8; }
+.menu-group-switch .menu-category-logo:is(:hover, :focus-visible) .food-icon { transform: translateY(-2px) rotate(-7deg) scale(1.06); }
+.menu-group-switch .menu-category-logo:focus-visible { outline: 2px solid #ffe4bc; outline-offset: 7px; }
+.menu-category-check { position: absolute; right: -1px; bottom: 0; width: 21px; height: 21px; padding: 3px; border-radius: 50%; color: #21142d; background: var(--category-color); box-shadow: 0 0 10px color-mix(in srgb, var(--category-color) 50%, transparent); }
 .menu-workspace { grid-template-columns: 330px minmax(0, 1fr); gap: 26px; }
 .menu-ronny-guide { position: sticky; top: 185px; padding-top: 8px; --guide-accent: #cf91ff; }
 .menu-ronny-guide.guide-salados { --guide-accent: #ff9b6b; }
@@ -14,8 +26,8 @@
 .ronny-outfit-layer.is-visible { opacity: 1; transform: translateY(0) scale(1); }
 .ronny-outfit-magic { position: absolute; left: 50%; top: 70%; width: 180px; height: 38px; border: 2px solid var(--guide-accent); border-radius: 50%; box-shadow: 0 0 18px color-mix(in srgb, var(--guide-accent) 30%, transparent); pointer-events: none; animation: ronny-outfit-change .65s ease-out both; }
 .ronny-orbit-options { position: absolute; inset: 0; pointer-events: none; }
-.ronny-category-orb { --orb-color: #cf91ff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: absolute; width: 82px; height: 82px; padding: 8px 3px; border: 1px solid color-mix(in srgb, var(--orb-color) 55%, transparent); border-radius: 50%; background: #160f23ed; color: var(--orb-color); box-shadow: 0 0 15px color-mix(in srgb, var(--orb-color) 12%, transparent); opacity: .85; pointer-events: auto; transition: box-shadow .2s, transform .2s, background .2s; }
-.ronny-category-orb > .food-icon { width: 29px; height: 29px; flex-shrink: 0; }
+.ronny-category-orb { --orb-color: #cf91ff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: absolute; width: 88px; height: 88px; padding: 7px 3px; border: 1px solid color-mix(in srgb, var(--orb-color) 55%, transparent); border-radius: 50%; background: #160f23ed; color: var(--orb-color); box-shadow: 0 0 15px color-mix(in srgb, var(--orb-color) 12%, transparent); opacity: 1; pointer-events: auto; transition: box-shadow .2s, transform .2s, background .2s; }
+.ronny-category-orb > .food-icon { width: 36px; height: 36px; flex-shrink: 0; }
 .ronny-category-orb > span { font: 600 12px/1.15 Arial, sans-serif; }
 .orb-dulces { left: 0; top: 12px; }
 .orb-salados { --orb-color: #ff9b6b; right: 0; top: 36px; }
@@ -30,7 +42,7 @@
   .menu-workspace { grid-template-columns: 280px minmax(0, 1fr); gap: 22px; }
   .menu-guide-art { height: 340px; }
   .ronny-outfit-layer { width: 185px; height: 277px; }
-  .ronny-category-orb { width: 74px; height: 74px; }
+  .ronny-category-orb { width: 80px; height: 80px; }
   .ronny-category-orb > span { font-size: 11px; }
 }
 @media (max-width: 900px) {
@@ -41,14 +53,16 @@
   .menu-guide-message { max-width: 300px; margin: 0; }
 }
 @media (max-width: 600px) {
-  .menu-group-switch { gap: 4px; }
-  .menu-group-switch button { min-height: 44px; padding: 7px 3px; gap: 3px; font-size: 14px; }
-  .menu-group-switch button .food-icon, .menu-group-switch button small { display: none; }
+  .compact-menu-controls { padding: 10px; }
+  .menu-group-switch { gap: 12px; }
+  .menu-group-switch .menu-category-logo { padding: 6px; }
+  .menu-group-switch .menu-category-logo .food-icon { width: 38px; height: 38px; }
+  .menu-category-check { width: 18px; height: 18px; padding: 2px; }
   .menu-ronny-guide { display: block; text-align: center; }
-  .menu-guide-art { width: min(100%, 300px); height: 256px; margin: 0 auto; }
+  .menu-guide-art { width: min(100%, 300px); height: 280px; margin: 0 auto; }
   .ronny-outfit-layer { width: 145px; height: 217px; }
-  .ronny-category-orb { width: 70px; height: 70px; gap: 3px; }
-  .ronny-category-orb > .food-icon { width: 24px; height: 24px; }
+  .ronny-category-orb { width: 78px; height: 78px; gap: 3px; }
+  .ronny-category-orb > .food-icon { width: 31px; height: 31px; }
   .orb-dulces { top: 0; }
   .orb-salados { top: 13px; }
   .orb-frias { bottom: 14px; }
@@ -60,6 +74,6 @@
   .ronny-outfit-magic { width: 130px; height: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ronny-outfit-layer, .ronny-category-orb { transition: none; }
+  .ronny-outfit-layer, .ronny-category-orb, .menu-category-logo, .menu-category-logo::before, .menu-category-logo .food-icon { transition: none !important; }
   .ronny-outfit-magic { display: none; animation: none; }
 }
