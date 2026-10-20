@@ -11,11 +11,6 @@
 .menu-group-switch small { font-size: 11px; opacity: .8; }
 .menu-group-switch button[aria-pressed="true"] { background: #ffcd7d; border-color: #ffdc9a; color: #3e2016; box-shadow: 0 3px 16px #e89b2c25; }
 .menu-group-switch button:hover:not([aria-pressed="true"]) { background: #ffffff08; border-color: #f0bb7160; }
-.compact-menu-search { display: flex; align-items: center; gap: 10px; min-width: 0; padding-inline: 12px; border: 1px solid #bda08045; border-radius: 12px; background: #100c10; color: #dfbc8e; }
-.compact-menu-search input { width: 100%; min-width: 0; height: 48px; border: 0; outline: 0; background: transparent; color: #fff0dc; font-family: inherit; font-size: 16px; }
-.compact-menu-search input::placeholder { color: #af9784; }
-.compact-menu-search:focus-within { outline: 2px solid #ffc474; outline-offset: 2px; }
-.compact-menu-search button { display: grid; place-items: center; flex-shrink: 0; min-width: 44px; min-height: 44px; margin-right: -8px; border: 0; background: transparent; color: #f6d19f; }
 .menu-workspace { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 30px; align-items: start; }
 .menu-browser { min-width: 0; }
 .menu-ronny-guide { --guide-accent: #f5ae65; padding-top: 35px; text-align: center; }
@@ -68,10 +63,6 @@
 .menu-stepper span { font-size: 12px; color: #6b4631; }
 .menu-detail-actions > a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; color: #763126; font-size: 13px; font-weight: 700; }
 .menu-detail-actions > a svg { flex-shrink: 0; }
-.compact-menu-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 320px; padding: 30px 15px; color: #f2d3a9; border: 1px dashed #c99d6755; border-radius: 18px; }
-.compact-menu-empty h3 { font-size: 24px; margin-top: 18px; }
-.compact-menu-empty p { color: #ccb29d; font-size: 15px; line-height: 1.7; margin-block: 13px; }
-.compact-menu-empty button { min-height: 44px; padding: 10px 16px; border: 1px solid #f0be75; border-radius: 9px; background: #ffc97c; color: #412317; font-weight: 700; }
 .compact-menu-section .friday-banner { margin-top: 30px; }
 @keyframes menu-ronny-arrive { from { opacity: .3; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
 @media (max-width: 1100px) {
@@ -96,7 +87,6 @@
   .menu-choice-grid button { flex-direction: column; flex-wrap: nowrap; min-height: 105px; }
   .menu-choice-grid button > small { margin-top: auto; }
   .compact-menu-controls { grid-template-columns: minmax(0, 1fr); gap: 9px; }
-  .compact-menu-search input { height: 44px; }
 }
 @media (max-width: 600px) {
   .compact-menu-section { padding-block: 35px; scroll-margin-top: 90px; }
@@ -130,7 +120,6 @@
   .menu-stepper button { width: 44px; height: 44px; }
   .menu-stepper span { font-size: 10px; white-space: nowrap; }
   .menu-detail-actions > a { font-size: 11px; line-height: 1.5; gap: 3px; text-align: center; }
-  .ronny-site:has(.compact-menu-search input:focus) .mobile-order-bar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-guide-art > img { animation: none; } }
 
@@ -160,7 +149,6 @@
 .menu-group-switch button { font: 400 19px "Ronny Display", sans-serif; color: #ead8f0; }
 .menu-group-switch small { font: 700 11px Arial, sans-serif; }
 .menu-group-switch button[aria-pressed="true"] { background: linear-gradient(115deg, #ffbc62, #ff9852); border-color: #ffdc9b; box-shadow: 0 0 18px #ff8b352e; }
-.compact-menu-search { background: #160e23; border-color: #9b6faa66; }
 .menu-guide-message strong { font: 400 21px/1.3 "Ronny Display", sans-serif; color: #ffd08c; }
 .menu-guide-message p { color: #ccb8d5; }
 .menu-choice-heading { min-height: 44px; align-items: center; color: #eac6fa; }

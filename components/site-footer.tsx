@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import { FooterSocials } from "@/components/footer-socials";
 import { HalloweenFooterIcon } from "@/components/halloween-footer-icon";
 import { HalloweenScenery } from "@/components/halloween-scenery";
@@ -7,10 +8,10 @@ import "./site-footer.css";
 
 const explore = [
   { href: "#inicio", label: "Inicio", icon: "pumpkin" },
-  { href: "#menu", label: "Menú", icon: "spider" },
-  { href: "#encuentranos", label: "Ubicación", icon: "pumpkin" },
+  { href: "#menu", label: "Menú", icon: "treat" },
+  { href: "#encuentranos", label: "Ubicación", icon: "pin" },
   { href: "#temporadas", label: "Temporadas", icon: "bat" },
-  { href: "#historia", label: "Nuestro Ronny", icon: "ghost" },
+  { href: "#historia", label: "Nuestro Ronny", icon: "paw" },
 ] as const;
 
 export function SiteFooter() {
@@ -25,9 +26,9 @@ export function SiteFooter() {
             <ul>{explore.map(({ href, label, icon }) => <li key={href}><a href={href}><HalloweenFooterIcon kind={icon} /><span>{label}</span></a></li>)}</ul>
           </nav>
           <div className="footer-message">
-            <a href="#inicio" className="footer-brand" aria-label="Ronny’s, volver al inicio"><img src="/images/brand/ronny-flat-logo.png" alt="" width={48} height={48} /><span>RONNY’S<sup>®</sup></span></a>
-            <h2 id="footer-title">Aquí sigue<br /><em>el antojo.</em></h2>
-            <p>Los sustos pasan.<br />El antojo se queda.</p>
+            <a href="#inicio" className="footer-brand" aria-label="Ronny’s, volver al inicio"><Image className="footer-ronny-head" src="/images/brand/ronny-devil-head-caracter.png" alt="Cabeza de Ronny con gesto enojón y travieso, cuernitos de diablito y pañuelo rojo" width={1254} height={1254} sizes="(max-width: 760px) 64px, 88px" /><span>RONNY’S<sup>®</sup></span></a>
+            <h2 id="footer-title"><span>Aquí sigue</span><em>el antojo.</em></h2>
+            <p className="footer-tagline"><span>Los sustos pasan.</span><strong>El antojo se queda.</strong></p>
           </div>
         </div>
         <section className="footer-refresh-social" aria-labelledby="footer-follow-title"><h3 id="footer-follow-title">Síguenos</h3><FooterSocials /></section>
