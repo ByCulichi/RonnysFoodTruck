@@ -90,14 +90,11 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
   const [menuSelection, setMenuSelection] = useState("Crepas");
-  const [menuEntry, setMenuEntry] = useState(0);
   function openMenu(kind: FoodKind) {
     setMenuSelection(dishes.find((dish) => dish.kind === kind)?.name || "Crepas");
-    setMenuEntry((entry) => entry + 1);
   }
   function viewCartaDish(name: string) {
     setMenuSelection(name);
-    setMenuEntry((entry) => entry + 1);
   }
   return (
     <div className="ronny-site halloween-season">
@@ -202,7 +199,7 @@ export default function Home() {
           <HalloweenMarketScene />
           <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
             <div className="menu-section compact-menu-section shell section-space">
-              <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} entry={menuEntry} />
+              <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} />
               <MenuCarta selection={menuSelection} onSelect={viewCartaDish} />
               <FridayPromo />
             </div>

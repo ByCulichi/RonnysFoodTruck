@@ -26,7 +26,7 @@ export function SiteFooter() {
             <ul>{explore.map(({ href, label, icon }) => <li key={href}><a href={href}><HalloweenFooterIcon kind={icon} /><span>{label}</span></a></li>)}</ul>
           </nav>
           <div className="footer-message">
-            <a href="#inicio" className="footer-brand" aria-label="Ronny’s, volver al inicio"><Image className="footer-ronny-head" src="/images/brand/ronny-devil-head.png" alt="Cabeza de Ronny con cuernitos de diablito y pañuelo rojo" width={1254} height={1254} sizes="(max-width: 760px) 64px, 88px" /><span>RONNY’S<sup>®</sup></span></a>
+            <a href="#inicio" className="footer-brand" aria-label="Ronny’s, volver al inicio"><Image className="footer-ronny-head" src="/images/brand/ronny-devil-head-caracter.png" alt="Cabeza de Ronny con gesto enojón y travieso, cuernitos de diablito y pañuelo rojo" width={1254} height={1254} sizes="(max-width: 760px) 64px, 88px" /><span>RONNY’S<sup>®</sup></span></a>
             <h2 id="footer-title"><span>Aquí sigue</span><em>el antojo.</em></h2>
             <p className="footer-tagline"><span>Los sustos pasan.</span><strong>El antojo se queda.</strong></p>
           </div>
