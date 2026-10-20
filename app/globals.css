@@ -153,13 +153,15 @@ img {
   color: var(--gold);
 }
 .header-cta {
-  font-size: 12px;
-  border: 1px solid #f6c75a4d;
-  border-radius: 7px;
-  padding: 13px 17px;
-  color: var(--gold);
+  font-size: 14px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  color: #2d1810;
+  background: #ffc15c;
   display: flex;
-  gap: 16px;
+  font-weight: 800;
+  gap: 8px;
   align-items: center;
 }
 .mobile-toggle {
@@ -2420,11 +2422,11 @@ h2 em {
 .brand > span:not(.brand-dot) { font-family: "Ronny Halloween", "Ronny Display", serif; font-size: 37px; font-style: normal; font-weight: 400; }
 .brand .brand-sub { display: flex; align-items: center; gap: 6px; font-family: Arial, sans-serif; font-size: 8px; letter-spacing: 1.5px; color: #e2c2aa; margin-top: 3px; font-weight: 600; }
 .brand-sub svg { color: var(--gold); }
-.desktop-nav { display: flex; gap: 4px; padding: 5px; border-radius: 999px; border: 1px solid #e9c38218; background: #ffffff04; }
-.desktop-nav a { padding: 11px 15px; border-radius: 999px; font-size: 12px; color: #d4c4d8; font-weight: 600; white-space: nowrap; }
+.desktop-nav { display: flex; gap: 4px; padding: 5px; border-radius: 12px; border: 1px solid #e9c38218; background: transparent; }
+.desktop-nav a { padding: 11px 15px; border-radius: 8px; font-size: 14px; color: #f1e4d6; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
 .desktop-nav a:hover { color: #fff2da; background: #ffffff08; }
-.desktop-nav a[aria-current="location"] { background: #61304d; color: #ffe1a3; box-shadow: inset 0 0 0 1px #f6c75a2e; }
-.header-cta { padding: 14px 19px; border-radius: 999px; gap: 10px; color: #261407; border: 1px solid #ffd688; background: linear-gradient(110deg, #ffd273, #ffad52); box-shadow: 0 3px 18px #ff9e2924; font-weight: 800; font-size: 12px; white-space: nowrap; }
+.desktop-nav a[aria-current="location"] { background: #2a191d; color: #ffe1a3; border-bottom: 2px solid #ffc15c; border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; }
+.header-cta { padding: 12px 24px; border-radius: 999px; gap: 8px; color: #2d1810; border: none; background: #ffc15c; font-weight: 800; font-size: 14px; white-space: nowrap; display: inline-flex; align-items: center; }
 .header-cta:hover { background: #ffe1a0; box-shadow: 0 4px 24px #ff9e2938; }
 .mobile-toggle { min-width: 42px; min-height: 42px; place-items: center; border: 1px solid #e9c38230; border-radius: 12px; background: #ffffff05; color: #ffe4b3; }
 .mobile-nav { background: #1c1027; border-top-color: #e3a35330; }

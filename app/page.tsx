@@ -106,7 +106,7 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/images/brand/ronny-flat-logo.png" alt="" width={64} height={64} />
+            <img src="/images/ronny/halloween/ronny-zombi-caracter.png" alt="" width={64} height={64} style={{ objectFit: "cover", objectPosition: "center 10%", borderRadius: "50%", background: "#4a3528" }} />
             <span>
               RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
