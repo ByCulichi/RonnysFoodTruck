@@ -54,7 +54,7 @@ Los datos proporcionados por el propietario están centralizados en `lib/busines
 
 La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
 
-Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews de publicaciones reales quedan pendientes de sus enlaces oficiales; el footer ofrece previews locales de contacto y ficha, sin consultas automáticas; no se inventan cifras.
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews de publicaciones reales quedan pendientes de sus enlaces oficiales; el footer conserva enlaces directos a las seis plataformas, sin previews ni consultas automáticas; no se inventan cifras.
 
 ## Identidad de Ronny
 
@@ -111,7 +111,7 @@ Las categorías muestran como máximo seis miniaturas con fotografía, nombre y 
 
 ## Escena del footer
 
-`components/site-footer.tsx` y `components/site-footer.css` construyen el footer como contenido real y adaptable, no como una captura pegada. Los enlaces de «Explora» llevan a las secciones existentes de inicio, menú, ubicación, temporadas e historia. Los iconos de navegación son SVG decorativos y los logos sociales conservan nombres accesibles y sus previews locales.
+`components/site-footer.tsx` y `components/site-footer.css` construyen el footer como contenido real y adaptable, no como una captura pegada. Los enlaces de «Explora» llevan a las secciones existentes de inicio, menú, ubicación, temporadas e historia. Los iconos de navegación son SVG decorativos y los logos sociales conservan nombres accesibles y abren su destino directamente, sin previews.
 
 Las dos ilustraciones de `public/images/scenes/`, reservadas al footer, contienen únicamente escenario: árboles, telarañas, calabazas y luces. No incluyen letras, logos ni personajes. Una panorámica para escritorio y otra vertical para móvil mantienen la decoración alrededor del contenido. `<picture>` con `getImageProps` de Next sirve una sola versión optimizada por pantalla. El degradado superior se funde con el fondo violeta de la página. La ilustración aprobada de Ronny con su dueña permanece separada, transparente e intacta.
 
@@ -125,7 +125,7 @@ La marca y el cierre del footer usan Creepster, también en el copyright y el en
 
 El dúo aprobado se integra al escenario con sombra de contacto, luz cálida y hierba por delante de los pies (`FooterFamilyGround`). En celular, una loma de césped continúa hasta el borde de la escena, sin una base flotante. El PNG de los personajes no se edita ni se regenera. El footer no añade animación continua.
 
-El escenario completo se adapta al ancho y alto del footer, sin el recorte de `object-fit: cover`. La composición usa el espacio disponible bajo el encabezado en escritorio (con límites para pantallas muy bajas o muy altas); en celular conserva el flujo natural y los controles táctiles. Las luces de la ilustración se muestran directamente, sin una segunda guirnalda encima. Las previews sociales flotan sobre el contenido: abrirlas, cambiarlas o cerrarlas no cambia la altura, el fondo ni el desplazamiento de la página. El cierre devuelve el foco al logo sin desplazar la pantalla.
+El escenario completo se adapta al ancho y alto del footer, sin el recorte de `object-fit: cover`. La composición usa el espacio disponible bajo el encabezado en escritorio (con límites para pantallas muy bajas o muy altas); en celular conserva el flujo natural y los controles táctiles. Las luces de la ilustración se muestran directamente, sin una segunda guirnalda encima. Por la última petición del propietario, se retiraron las previews sociales y sus controladores de estado y foco. Pasar el ratón o enfocar un logo solo lo ilumina; clic o Enter abre su enlace.
 
 ## Promo y poses del menú
 
@@ -139,7 +139,7 @@ El fondo de ubicación se diferencia del footer con `VisitNightScenery`: silueta
 
 `HalloweenMarketScene` une menú, carta, promoción, domicilio, temporadas e historia con noche violeta, luna, telarañas, calabazas iluminadas, niebla, murciélagos y pequeñas brasas. Son SVG y degradados locales, sin descargar imágenes nuevas ni consultar servicios. Las capas decorativas no interceptan clics ni alteran el flujo. El botón «Pausar fondo» detiene el movimiento, `prefers-reduced-motion` lo desactiva, y un observador pausa las animaciones cuando la región sale de pantalla. Navidad conserva su aviso de próxima temporada. El mapa urbano y el bosque del footer siguen siendo escenarios separados.
 
-Por la última petición del propietario, el dúo del footer va a la izquierda y el mensaje a la derecha, también en celular. Se refleja solo el escenario y el terreno para conservar el apoyo sobre el césped; el PNG aprobado y sus proporciones permanecen intactos. Los logos son enlaces nativos: admiten clic, Enter y apertura en otra pestaña, con previews locales al pasar el ratón/enfocar y sin saltos de altura o scroll.
+Por la última petición del propietario, el dúo del footer va a la izquierda y el mensaje a la derecha, también en celular. Se refleja solo el escenario y el terreno para conservar el apoyo sobre el césped; el PNG aprobado y sus proporciones permanecen intactos. Los logos son enlaces nativos: admiten clic, Enter y apertura en otra pestaña, sin previews al pasar el ratón/enfocar y sin saltos de altura o scroll.
 
 ## Ronny y sus cuatro opciones
 
@@ -152,3 +152,5 @@ Ronny cambia automáticamente de disfraz completo: bruja volando en Dulces, diab
 La carta deja de mostrar tres fotografías diminutas dentro de recuadros. Se compone como texto HTML desde `lib/menu.ts`, sin cambiar productos ni precios; nombres, variantes y precios se pueden ampliar de verdad. Las categorías se sincronizan con el menú de fotos. «Ver foto» y «Sus snacks favoritos» seleccionan el producto y limpian búsquedas previas para mostrar la ficha correcta. La sección larga de historia se sustituye por una presentación breve de Ronny junto a la carta, conservando `#historia`.
 
 Los cinco disfraces usan nuevas versiones individuales `ronny-*-caracter.png`, con cejas y miradas más firmes. Los atuendos, poses, color café y lengua se conservan; los archivos anteriores y los tres personajes aprobados basados en fotos permanecen sin cambios. Domicilio y temporadas comparten una nueva feria nocturna en SVG local: faroles de calabaza, fachadas torcidas, estrellas y luces cálidas sobre violeta. El movimiento general mantiene pausa, reducción de movimiento y suspensión fuera de pantalla.
+
+La navegación «Explora» usa nuevas ilustraciones SVG: calabaza que enciende, waffle con destello, marcador, murciélago y patita. Responden a ratón y foco con animaciones breves, sin bucles permanentes y respetando movimiento reducido. El cierre separa «Aquí sigue» en crema de «el antojo» en naranja y destaca la segunda línea del slogan. La marca del footer usa únicamente la cabeza de Ronny de diablito, más grande (88 px en escritorio, 64/54 px en móvil), en `public/images/brand/ronny-devil-head.png`, con transparencia real y Next Image. Se conserva el logo original para encabezado y favicon.
