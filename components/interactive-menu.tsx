@@ -58,12 +58,12 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
             <span className="ronny-orbit-ring" aria-hidden="true" />
             <RonnyOutfitStage costume={costume} />
             <div className="ronny-orbit-options" role="group" aria-label="Opciones alrededor de Ronny">
-              {menuCategories.map((item) => <button type="button" key={item.id} className={`ronny-category-orb orb-${item.id}`} aria-label={item.label} aria-pressed={category === item.id} aria-controls="menu-product-browser" onClick={() => selectCategory(item.id)}>
-                <FoodIcon kind={item.icon} /><span>{item.id === "frias" ? <>Bebidas<br />frías</> : item.id === "calientes" ? <>Bebidas<br />calientes</> : item.label}</span>
+              {menuCategories.map((item) => <button type="button" key={item.id} className={`ronny-category-orb orb-${item.id}`} title={item.label} aria-label={item.label} aria-pressed={category === item.id} aria-controls="menu-product-browser" onClick={() => selectCategory(item.id)}>
+                <FoodIcon kind={item.icon} />{category === item.id && <Check className="ronny-orb-check" size={16} aria-hidden="true" />}
               </button>)}
             </div>
           </div>
-          <div className="menu-guide-message"><strong>{guide.title}</strong><p>{guide.message}</p></div>
+          <div className="menu-guide-message"><strong>{guide.title}</strong></div>
         </aside>
         <div className="menu-browser" id="menu-product-browser">
           <span className="sr-only" role="status">{`${active.name}. Precio inicial: ${getPrice(active)} pesos.`}</span>

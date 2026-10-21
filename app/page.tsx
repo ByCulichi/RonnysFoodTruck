@@ -30,6 +30,7 @@ import { halloweenCostumes } from "@/lib/ronny-costumes";
 import { MenuCarta } from "@/components/menu-carta";
 import { HalloweenFairground, HalloweenMarketScene } from "@/components/halloween-market-scene";
 import { FridayPromo } from "@/components/friday-promo";
+import { MenuNightScenery } from "@/components/menu-night-scenery";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
@@ -104,7 +105,7 @@ export default function Home() {
       <header className="site-header">
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <img src="/images/brand/ronny-flat-logo.png" alt="" width={64} height={64} />
+            <Image src="/images/brand/ronny-wizard-head.png" alt="Ronny con sombrero de hechicero de Halloween" width={1254} height={1254} sizes="(max-width: 600px) 60px, 76px" />
             <span>
               RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
@@ -198,6 +199,7 @@ export default function Home() {
         <div className="halloween-market">
           <HalloweenMarketScene />
           <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
+            <MenuNightScenery />
             <div className="menu-section compact-menu-section shell section-space">
               <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} />
               <MenuCarta selection={menuSelection} onSelect={viewCartaDish} />

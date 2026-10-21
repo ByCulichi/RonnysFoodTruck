@@ -61,7 +61,7 @@
 .footer-refresh-social { position: relative; z-index: 3; text-align: center; margin: 25px 0 0; padding: 0 0 12px; }
 .footer-refresh-social > h3 { color: #ffc46d; font: 400 34px/1.2 "Ronny Halloween", "Ronny Display", sans-serif; text-shadow: 0 3px 0 #592319, 0 0 18px #f5852240; margin: 0 0 4px; letter-spacing: 1px; }
 .footer-refresh .footer-socials { position: relative; max-width: 680px; margin-inline: auto; }
-.footer-refresh .footer-networks { max-width: 500px; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 0; }
+.footer-refresh .footer-networks { max-width: 440px; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; }
 .footer-halloween .network-trigger { min-height: 62px; aspect-ratio: auto; }
 .footer-halloween .footer-network .social-logo img { width: 40px; height: 40px; }
 .footer-refresh-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 8px 0 10px; color: #bfa589; font: 400 18px/1.5 "Ronny Halloween", "Ronny Display", sans-serif; letter-spacing: .5px; border-top: 1px solid #bc95632b; }

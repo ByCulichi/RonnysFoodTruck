@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ronnys.online"),
   alternates: { canonical: "/" },
-  title: "Ronny’s Food Truck | Ecatepec",
+  title: "Ronny’s Food Truck",
   description:
     "El carrito rojo de Ronny’s en New York, Ecatepec. Malteadas, crepas, waffles, hamburguesas y más antojos para compartir.",
   icons: {
