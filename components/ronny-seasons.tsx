@@ -3,9 +3,9 @@ import { ArrowUpRight, Flower2, Ghost, Snowflake, Sparkles } from "lucide-react"
 import "./ronny-seasons.css";
 
 const seasons = [
-  { id: "halloween", title: "Halloween", state: "TEMPORADA ACTUAL", image: "/images/hero/ronny-halloween-truck.png", alt: "Ronny de hechicero junto al food truck rojo, con luces, calabazas y un bosque nocturno de Halloween", description: "Sombrero de hechicero y luces en el truck.", action: "Se antoja una visita", Icon: Ghost },
-  { id: "muertos", title: "Día de Muertos", state: "NOVIEMBRE · LO QUE SIGUE", image: "/images/hero/ronny-dia-de-muertos-truck.png", alt: "Ronny de catrín con maquillaje de calavera junto al food truck rojo, entre cempasúchil, velas y papel picado en una plaza de Día de Muertos", description: "Cempasúchil, tradición y Ronny de catrín.", action: "Mientras llega, al menú", Icon: Flower2 },
-  { id: "christmas", title: "Navidad", state: "MÁS ADELANTE", image: "/images/hero/ronny-christmas-truck.png", alt: "Ronny vestido de Santa junto al food truck rojo con guirnaldas, luces y un mercado navideño bajo el cielo azul de noche", description: "Ronny de Santa, malteada y hot dog.", action: "Mientras llega, al menú", Icon: Snowflake },
+  { id: "halloween", title: "Halloween", state: "TEMPORADA ACTUAL", image: "/images/hero/ronny-halloween-fair.png", alt: "Ronny de hechicero con varita junto a un caldero, el truck rojo y una feria de Halloween con torre y luna creciente", description: "Hechizos, calabazas y antojos en la feria encantada.", action: "Se antoja una visita", Icon: Ghost },
+  { id: "muertos", title: "Día de Muertos", state: "NOVIEMBRE · LO QUE SIGUE", image: "/images/hero/ronny-muertos-ofrenda.png", alt: "Ronny catrín bailando con bastón junto a una ofrenda y el truck rojo en un patio de arcos turquesa al atardecer", description: "Ronny de catrín entre ofrendas, flores y tradición.", action: "Mientras llega, al menú", Icon: Flower2 },
+  { id: "christmas", title: "Navidad", state: "MÁS ADELANTE", image: "/images/hero/ronny-christmas-posada.png", alt: "Ronny de Santa saludando desde la ventana del truck rojo, en una posada con piñata de estrella, nochebuenas y faroles", description: "Una posada con luces, piñata y Ronny de Santa.", action: "Mientras llega, al menú", Icon: Snowflake },
 ];
 
 export function RonnySeasons() {

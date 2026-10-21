@@ -18,10 +18,10 @@ function PaperArt({ kind }: { kind: keyof typeof paperArt }) {
   return <Image src={`/images/menu/illustrations/${paperArt[kind]}.png`} alt="" width={1024} height={1024} sizes="(max-width: 600px) 80px, 150px" />;
 }
 
-export function TruckStamp({ thankYou = false }: { thankYou?: boolean }) {
+export function TruckStamp({ thankYou = false, sizes = "120px" }: { thankYou?: boolean; sizes?: string }) {
   return <div className={`truck-stamp ${thankYou ? "stamp-thanks" : ""}`} role="img" aria-label={thankYou ? "Gracias por tu visita a Ronny’s" : "Sello de Ronny’s"}>
     {thankYou && <span className="stamp-thanks-label">THANK YOU</span>}
-    <div className="truck-stamp-circle"><Image src="/images/menu/illustrations/sello-ronny.png" alt="" width={1024} height={1024} sizes="120px" /></div>
+    <div className="truck-stamp-circle"><Image src="/images/menu/illustrations/sello-ronny.png" alt="" width={1254} height={1254} sizes={sizes} /></div>
   </div>;
 }
 
