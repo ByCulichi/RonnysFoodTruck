@@ -38,7 +38,7 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer de Halloween «Aquí sigue el antojo» sigue la composición de la referencia del propietario con contenido HTML real: ilustración aprobada de la dueña y Ronny a la izquierda, navegación «Explora» al centro, marca y título naranja a la derecha y «Síguenos» abajo. La imagen aprobada se conserva sin cambios ni recuadro. La composición se reorganiza para celular. La fila repetida de dirección, teléfono y horarios se retiró del footer; los datos siguen en ubicación y en las previews de Google y WhatsApp. Google, WhatsApp, Instagram, Facebook, TikTok y X aparecen juntos como logos neón centrados. Al pasar el ratón o enfocar un logo aparece una franja de preview discreta, sin tarjeta permanente ni fotografía duplicada del truck. Un clic o Enter abre directamente su destino. Se puede cerrar con botón o Escape, con retorno de foco. Google y WhatsApp abren los destinos confirmados del negocio; Instagram, Facebook, TikTok y X abren la plataforma general mientras el perfil de Ronny’s sigue pendiente, como aclaran sus previews. El enlace `#contacto` lleva al footer.
+El footer de Halloween «Aquí sigue el antojo» usa contenido HTML real: ilustración aprobada de la dueña y Ronny a la izquierda, navegación «Explora» al centro y marca a la derecha. «Síguenos» reúne cinco logos neón centrados: Google, WhatsApp, Instagram, Facebook y TikTok. Abren los destinos confirmados del negocio con clic o Enter, sin previews. Los tres enlaces sociales oficiales proporcionados por el propietario se centralizan en `business.socials`; X se retiró. El dúo aprobado permanece intacto y `#contacto` apunta al footer.
 
 ## Próximos cambios
 
@@ -54,7 +54,7 @@ Los datos proporcionados por el propietario están centralizados en `lib/busines
 
 La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
 
-Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. Los perfiles sociales, seguidores y previews de publicaciones reales quedan pendientes de sus enlaces oficiales; el footer conserva enlaces directos a las seis plataformas, sin previews ni consultas automáticas; no se inventan cifras.
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. El footer conserva cinco enlaces directos a los canales confirmados, incluidos los perfiles oficiales de Instagram, Facebook y TikTok del propietario. No se muestran previews, se consultan APIs ni se inventan cifras.
 
 ## Identidad de Ronny
 
@@ -162,3 +162,15 @@ Por la última corrección del propietario, el menú no tiene buscador: la barra
 El dominio del propietario es `ronnys.online`, administrado en GoDaddy. `app/layout.tsx` define su URL canónica. La conexión se hace en el proyecto existente `deshortys-projects/ronnys-food-truck` de Vercel, usando `www.ronnys.online` como principal y redirección 308 de `ronnys.online` al principal, tal como muestra la configuración de Vercel del propietario. Copiar en la zona DNS de GoDaddy los valores A/CNAME/TXT que indique ese proyecto; no fijar IP o CNAME genéricos ni modificar registros de correo. Esperar a que Vercel muestre configuración válida y certificado HTTPS. La configuración del código no sustituye dar de alta los dominios ni el cambio de DNS.
 
 La captura de configuración de Vercel del propietario indica estos registros para GoDaddy: A `@` → `216.198.79.1`; CNAME `www` → `f2dcc3bd6a37e9c5.vercel-dns-017.com`. Cambiar únicamente los registros web correspondientes y comprobar «Valid Configuration» y HTTPS al propagarse.
+
+## Fondo del menú y redes oficiales
+
+`MenuNightScenery` llena los laterales del menú con puestos de feria, faroles de calabaza, guirnalda cálida, destellos y suelo ilustrativo. Son SVG y CSS locales, sin descargas ni animaciones nuevas. La decoración se atenúa cerca del contenido y en móvil; no intercepta controles ni altera la carta. La atmósfera compartida conserva pausa, suspensión fuera de pantalla y movimiento reducido.
+
+Instagram apunta a `ronnystruck04`, TikTok a `ronnystruck1` y Facebook al enlace compartido por el propietario (`https://www.facebook.com/share/1Lgf44svSs/`). Se retiran los parámetros de seguimiento de Instagram y TikTok y se conserva el enlace de Facebook sin inventar otro perfil. X queda fuera por ahora. La fila se adapta a cinco logos sin previews. La pestaña del navegador muestra únicamente «Ronny’s Food Truck».
+
+Los controles alrededor de Ronny ahora muestran únicamente iconos grandes de comida con neón del color de la categoría y señal de selección. Los nombres siguen disponibles para lectores de pantalla y como tooltip. Se retira por ahora la descripción pequeña bajo la frase de Ronny. La cabecera muestra una nueva cabeza de Halloween con sombrero de hechicero en `public/images/brand/ronny-wizard-head.png`; el logo original, el favicon y los personajes aprobados permanecen como recursos independientes.
+
+## La carta, como en el truck
+
+«Abrir carta» muestra primero las tres fotografías originales, completas y sin retoques, en un lector de hojas con pestañas Dulces/Salados/Bebidas, anterior/siguiente, navegación con flechas cuando está al 100% y zoom de 100% a 250%. En móvil se puede desplazar la hoja ampliada. «Texto grande» conserva la lectura accesible y ampliable desde el catálogo verificado. La carta inline usa papel crema, títulos rojos, bordes discontinuos y cuadros como las cartas físicas; nombres, variantes y precios aumentan tamaño y contraste. Se mantienen cuatro productos por página y los 28 productos sin cambios. Escape cierra y devuelve el foco al botón que abrió el lector.

@@ -2467,14 +2467,13 @@ h2 em {
 .footer-connect-copy { min-width: 0; text-align: center; }
 .footer-connect-copy > p { margin-inline: auto; }
 .footer-socials { max-width: 640px; margin-inline: auto; }
-.footer-networks { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; list-style: none; padding: 8px 0; margin: 0 auto; max-width: 570px; }
+.footer-networks { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; list-style: none; padding: 8px 0; margin: 0 auto; max-width: 570px; }
 .footer-network { --network-color: #f4eee6; min-width: 0; }
 .network-google { --network-color: #77a7ff; }
 .network-whatsapp { --network-color: #37f395; }
 .network-instagram { --network-color: #ff71b6; }
 .network-facebook { --network-color: #579fff; }
 .network-tiktok { --network-color: #7df8f0; }
-.network-x { --network-color: #f4eee6; }
 .network-trigger { display: grid; place-items: center; width: 100%; min-height: 64px; aspect-ratio: 1; border: 1px solid transparent; border-radius: 22px; padding: 0; background: transparent; color: var(--network-color); cursor: pointer; position: relative; transition: background .2s, border-color .2s, transform .2s; }
 .footer-network .social-logo { width: 100%; height: 100%; border: 0; border-radius: inherit; background: transparent; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--network-color) 65%, transparent)) drop-shadow(0 0 16px color-mix(in srgb, var(--network-color) 35%, transparent)); transition: filter .2s; }
 .footer-network .social-logo img { width: 38px; height: 38px; }
