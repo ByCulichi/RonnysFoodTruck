@@ -50,7 +50,7 @@ export function HalloweenMarketScene() {
         entry.target.setAttribute("data-in-view", String(entry.isIntersecting));
       }
     }, { rootMargin: "80px 0px" });
-    scene.querySelectorAll(".market-mist, .market-bat, .market-ember").forEach((element) => observer.observe(element));
+    scene.parentElement?.querySelectorAll(".market-mist, .market-bat, .market-ember, .ronny-category-orb").forEach((element) => observer.observe(element));
     const updateVisibility = () => { scene.dataset.hidden = String(document.hidden); };
     updateVisibility();
     document.addEventListener("visibilitychange", updateVisibility);
@@ -71,8 +71,8 @@ export function HalloweenMarketScene() {
       <Pumpkin className="market-pumpkin market-pumpkin-right" />
       {Array.from({ length: 12 }, (_, index) => <span className={`market-ember market-ember-${index}`} key={index} />)}
     </div>
-    <button className="market-motion-control" type="button" aria-pressed={paused} aria-label={paused ? "Activar fondo de Halloween" : "Pausar fondo de Halloween"} onClick={() => setPaused(!paused)}>
-      {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}<span>{paused ? "Activar fondo" : "Pausar fondo"}</span>
+    <button className="market-motion-control" type="button" aria-pressed={paused} aria-label={paused ? "Activar movimiento" : "Pausar movimiento"} onClick={() => setPaused(!paused)}>
+      {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}<span>{paused ? "Activar movimiento" : "Pausar movimiento"}</span>
     </button>
   </>;
 }

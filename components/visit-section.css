@@ -1,29 +1,28 @@
 /* Cool urban Halloween night: the pumpkin forest belongs only to the footer. */
-.halloween-visit-scene { position: relative; isolation: isolate; background: radial-gradient(ellipse at 12% 20%, #45326d44, transparent 44%), radial-gradient(ellipse at 93% 60%, #314b7650, transparent 40%), linear-gradient(160deg, #111224, #1c142c 60%, #100c1c); }
-.visit-night-scenery { position: absolute; inset: 0; z-index: -2; pointer-events: none; overflow: clip; }
+.halloween-visit-scene { position: relative; isolation: isolate; background: transparent; }
+.visit-night-scenery { position: absolute; inset: -100px 0 0; z-index: -2; pointer-events: none; overflow: clip; background: radial-gradient(ellipse at 12% 35%, #45326d44, transparent 55%), radial-gradient(ellipse at 93% 60%, #314b7650, transparent 55%); mask-image: linear-gradient(180deg, transparent, #000 180px, #000 calc(100% - 150px), transparent); }
 .visit-city-silhouette { position: absolute; width: 100%; height: 300px; bottom: 0; opacity: .85; }
 .visit-night-moon { position: absolute; width: 85px; height: 85px; left: 25px; top: 25px; opacity: .18; filter: drop-shadow(0 0 25px #9d7bd955); }
 .visit-street-lamp { position: absolute; width: 75px; height: 265px; bottom: 70px; opacity: .7; }
 .visit-lamp-light { filter: drop-shadow(0 0 9px #ffad45) drop-shadow(0 0 25px #ff8c3844); }
 .lamp-left { left: 13px; }
 .lamp-right { right: 17px; width: 65px; height: 230px; bottom: 105px; }
-.halloween-visit-scene::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #100c1c, transparent 18%, transparent 82%, #100c1c); }
 .halloween-visit { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); align-items: start; gap: 55px; padding-block: 60px 25px; scroll-margin-top: 10px; }
 .halloween-visit-copy { min-width: 0; }
 .halloween-visit-copy > .eyebrow { color: #dfc4a4; font-size: 10px; letter-spacing: 1.5px; }
 .halloween-visit-copy h2 { font: 400 clamp(40px, 4.3vw, 57px)/1.05 "Ronny Halloween", "Ronny Display", sans-serif; letter-spacing: .5px; color: #ffca73; text-shadow: 0 3px 0 #682619, 0 0 22px #d26c222b; margin: 20px 0 25px; }
 .halloween-visit-copy h2 em { font: inherit; color: #ffb354; }
 .visit-contact-card { border: 1px solid #d6a06552; border-radius: 17px; padding: 12px 17px; background: #180f23e8; box-shadow: 0 0 25px #d9781520; }
-.visit-contact-row { display: flex; align-items: center; gap: 11px; min-height: 44px; color: #e9d8c6; font-size: 14px; line-height: 1.6; padding-block: 6px; }
+.visit-contact-row { display: flex; align-items: center; gap: 11px; min-height: 44px; color: #e9d8c6; font: 400 16px/1.6 Arial, sans-serif; padding-block: 10px; }
 .visit-contact-row > svg { flex-shrink: 0; color: #ffb75d; }
 .visit-contact-row > svg:last-child:not(:first-child) { margin-left: auto; width: 15px; color: #d4af7b; }
 .visit-contact-row p { margin: 0; }
-.visit-contact-row small { display: block; color: #bfae9f; font-size: 11px; }
+.visit-contact-row small { display: block; color: #d1bdac; font-size: 13px; }
 .visit-contact-row > span { min-width: 0; }
-.visit-call { color: #ffda93; font-size: 18px; }
-.visit-call strong { font-weight: 800; white-space: nowrap; }
+.visit-call { color: #ffda93; }
+.visit-call strong { display: block; font: 800 clamp(20px, 2vw, 24px)/1.4 Arial, sans-serif; white-space: nowrap; }
+.visit-contact-label { display: block; color: #e9d8c6; font-size: 14px; margin-bottom: 2px; }
 .visit-call > svg:first-child { filter: drop-shadow(0 0 5px #ffbe5c70); }
-.visit-whatsapp > svg:first-child { color: #40d28b; }
 .visit-contact-row:is(a):hover { color: #ffbe73; }
 .visit-ronny-welcome { display: flex; align-items: center; justify-content: flex-end; gap: 17px; padding-top: 8px; margin-top: -8px; }
 .visit-ronny-welcome > img { display: block; width: 95px; height: 103px; object-fit: contain; background: transparent; border: 0; border-radius: 0; filter: drop-shadow(0 7px 10px #0004); }
@@ -60,7 +59,6 @@
   .halloween-visit-copy h2 { margin-bottom: 0; }
   .visit-contact-card { grid-column: 2; grid-row: 1 / span 3; }
   .visit-ronny-welcome { grid-column: 1; justify-content: flex-start; }
-  .visit-call { font-size: 16px; }
   .halloween-review-links { gap: 12px; }
   .halloween-review-links > a { flex-direction: column; padding: 16px; }
 }
@@ -70,9 +68,8 @@
   .halloween-visit-copy > .eyebrow { font-size: 9px; letter-spacing: 1px; }
   .halloween-visit-copy h2 { font-size: 41px; margin-block: 17px 22px; }
   .visit-contact-card { padding: 10px 13px; border-radius: 15px; }
-  .visit-contact-row { font-size: 13px; gap: 10px; }
-  .visit-call { font-size: 15px; }
-  .visit-contact-row small { font-size: 10px; }
+  .visit-contact-row { font-size: 15px; gap: 10px; }
+  .visit-contact-row small { font-size: 13px; }
   .visit-ronny-welcome { justify-content: flex-end; }
   .visit-ronny-welcome > img { width: 77px; height: 85px; }
   .visit-ronny-welcome p { font-size: 18px; }

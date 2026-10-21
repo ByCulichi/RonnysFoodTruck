@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Camera, Minus, PawPrint, Plus, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Minus, PawPrint, Plus, X } from "lucide-react";
 import { dishes, type Dish } from "@/lib/menu";
 import { getMenuCategory, menuCategories, type MenuCategory } from "@/lib/menu-categories";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
@@ -11,23 +11,19 @@ import "./menu-carta.css";
 
 const originals = [{ id: "dulces", title: "Dulces" }, { id: "salados", title: "Salados" }, { id: "bebidas", title: "Bebidas" }];
 
-function CartaItem({ dish, onSelect }: { dish: Dish; onSelect?: (name: string) => void }) {
+function CartaItem({ dish }: { dish: Dish }) {
   const multiple = dish.options.length > 1;
   return <li className="carta-item" data-product={dish.name}>
     <div className="carta-item-heading"><h4>{dish.name}</h4>{!multiple && <strong>${dish.options[0].price}</strong>}</div>
     {multiple && <dl>{dish.options.map((option) => <div key={option.name}><dt>{option.name}</dt><dd>${option.price}</dd></div>)}</dl>}
     {["Crepas", "Waffles", "Hotcakes", "Banderilla dulce", "Malteadas"].includes(dish.name) && <p>{dish.description}</p>}
-    {onSelect && <a href="#selected-menu-dish" onClick={() => onSelect(dish.name)} aria-label={`Ver foto de ${dish.name}`}>Ver foto <ArrowUpRight size={14} aria-hidden="true" /></a>}
   </li>;
 }
 
 export function MenuCarta({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
   const category = getMenuCategory(dishes.find(({ name }) => name === selection) || dishes[0]);
-  const [page, setPage] = useState({ category, index: 0 });
-  const index = page.category === category ? page.index : 0;
+  const previewIndex = category === "dulces" ? 0 : category === "salados" ? 1 : 2;
   const products = dishes.filter((dish) => getMenuCategory(dish) === category);
-  const pageSize = 4;
-  const pageCount = Math.ceil(products.length / pageSize);
   const label = menuCategories.find(({ id }) => id === category)!.label;
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"digital" | "original">("original");
@@ -45,8 +41,12 @@ export function MenuCarta({ selection, onSelect }: { selection: string; onSelect
   }, [open]);
 
   function selectCategory(next: MenuCategory) {
-    setPage({ category: next, index: 0 });
     onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
+  }
+
+  function selectSheet(next: number) {
+    const sheet = (next + originals.length) % originals.length;
+    selectCategory(sheet === 0 ? "dulces" : sheet === 1 ? "salados" : category === "calientes" ? "calientes" : "frias");
   }
 
   function openCarta(button: HTMLButtonElement, nextMode: typeof mode) {
@@ -90,20 +90,19 @@ export function MenuCarta({ selection, onSelect }: { selection: string; onSelect
 
   return <section className="truck-carta" id="carta-original" aria-labelledby="truck-carta-title">
     <div className="carta-heading"><div><span className="eyebrow"><BookOpen size={17} aria-hidden="true" /> EL SABOR, BIEN CLARO</span><h3 id="truck-carta-title">La carta del truck.</h3></div><button type="button" className="carta-expand" onClick={(event) => openCarta(event.currentTarget, "original")}><BookOpen size={18} aria-hidden="true" /> Abrir carta</button></div>
-    <p className="carta-intro">La misma carta del truck. Ábrela, cambia de hoja y amplía tu antojo.</p>
     <div className="carta-layout">
-      <div className="carta-board">
-        <div className="carta-paper-brand"><span>Ronny’s</span><small>FOOD TRUCK</small><BookOpen size={24} aria-hidden="true" /></div>
-        {categories()}
-        <div className="carta-board-caption"><span aria-live="polite">{label}</span><small>Precios en MXN</small></div>
-        <ul className="carta-product-list" aria-label={`Carta de ${label.toLowerCase()}`}>
-          {products.slice(index * pageSize, (index + 1) * pageSize).map((dish) => <CartaItem key={dish.name} dish={dish} onSelect={onSelect} />)}
-        </ul>
-        <div className="carta-board-footer"><button type="button" className="carta-original-link" onClick={(event) => openCarta(event.currentTarget, "original")}><Camera size={16} aria-hidden="true" /> Ver fotos originales</button><div className="carta-pagination" role="group" aria-label="Páginas de la carta"><button type="button" aria-label="Página anterior de la carta" disabled={index === 0} onClick={() => setPage({ category, index: index - 1 })}><ArrowLeft size={18} /></button><span aria-live="polite">{index + 1} / {pageCount}</span><button type="button" aria-label="Página siguiente de la carta" disabled={index === pageCount - 1} onClick={() => setPage({ category, index: index + 1 })}><ArrowRight size={18} /></button></div></div>
+      <div className="carta-exact-preview">
+        <div className="carta-original-tabs" role="group" aria-label="Hojas de la carta del truck">
+          {originals.map((sheet, sheetIndex) => <button type="button" key={sheet.id} aria-pressed={previewIndex === sheetIndex} onClick={() => selectSheet(sheetIndex)}>{sheet.title}</button>)}
+        </div>
+        <button className="carta-sheet-preview" type="button" aria-label={`Abrir carta original de ${originals[previewIndex].title.toLowerCase()}`} onClick={(event) => openCarta(event.currentTarget, "original")}>
+          <Image src={`/images/menu/cartas/carta-${originals[previewIndex].id}.jpg`} alt={`Carta original de ${originals[previewIndex].title.toLowerCase()} de Ronny’s, completa y sin retoques`} width={828} height={1104} unoptimized />
+        </button>
+        <div className="carta-preview-footer"><div className="carta-pagination" role="group" aria-label="Hojas de la carta del truck"><button type="button" aria-label="Carta anterior" onClick={() => selectSheet(previewIndex - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{previewIndex + 1} / 3</span><button type="button" aria-label="Carta siguiente" onClick={() => selectSheet(previewIndex + 1)}><ArrowRight size={18} /></button></div></div>
       </div>
       <aside className="carta-ronny" id="historia" aria-labelledby="carta-ronny-title">
         <div className="carta-ronny-art"><Image src={halloweenCostumes.zombi.src} alt={halloweenCostumes.zombi.alt} width={1024} height={1536} sizes="(max-width: 600px) 125px, 210px" /></div>
-        <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3><p>Nuestro chihuahua le pone el nombre; nuestra familia, el sabor.</p><a href="#selected-menu-dish" onClick={() => onSelect("Salchipulpos")}>Sus snacks favoritos <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+        <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3><a href="#selected-menu-dish" onClick={() => onSelect("Salchipulpos")}>Sus snacks favoritos <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </aside>
     </div>
     <dialog ref={dialogRef} className="carta-reader" data-mode={mode} aria-label={mode === "digital" ? "Carta en texto grande" : `Carta original de ${originals[original].title.toLowerCase()}`} onKeyDown={trapFocus} onClose={() => { setOpen(false); triggerRef.current?.focus({ preventScroll: true }); }} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
@@ -120,7 +119,7 @@ export function MenuCarta({ selection, onSelect }: { selection: string; onSelect
           {originals.map((sheet, sheetIndex) => <button type="button" key={sheet.id} aria-pressed={original === sheetIndex} onClick={() => showOriginal(sheetIndex)}>{sheet.title}</button>)}
         </div>
         <div ref={canvasRef} className="carta-original-canvas" tabIndex={0} aria-label="Carta original ampliable; desliza para recorrerla" style={{ "--carta-zoom": 1 + zoom * .25 } as CSSProperties}>
-          <div className="carta-original-page">{open && <Image key={original} src={`/images/menu/cartas/carta-${originals[original].id}.jpg`} alt={`Carta original de ${originals[original].title.toLowerCase()} de Ronny’s`} width={828} height={1104} sizes="(max-width: 600px) 100vw, 900px" quality={90} />}</div>
+          <div className="carta-original-page">{open && <Image key={original} src={`/images/menu/cartas/carta-${originals[original].id}.jpg`} alt={`Carta original de ${originals[original].title.toLowerCase()} de Ronny’s`} width={828} height={1104} unoptimized />}</div>
         </div>
         <div className="carta-reader-footer"><a href={`/images/menu/cartas/carta-${originals[original].id}.jpg`} target="_blank" rel="noopener noreferrer">Abrir imagen original <ArrowUpRight size={16} /></a><div className="carta-pagination" role="group" aria-label="Pasar hojas de la carta"><button type="button" aria-label="Hoja anterior" onClick={() => showOriginal(original - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{original + 1} / 3</span><button type="button" aria-label="Hoja siguiente" onClick={() => showOriginal(original + 1)}><ArrowRight size={18} /></button></div></div>
       </>}

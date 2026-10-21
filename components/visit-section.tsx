@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowUpRight, CalendarDays, MapPin, Maximize2, MessageCircle, Phone } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin, Maximize2, Phone } from "lucide-react";
 import { business } from "@/lib/business";
 import { GoogleReviews } from "@/components/google-reviews";
 import { VisitNightScenery } from "@/components/visit-night-scenery";
@@ -14,11 +14,10 @@ export function VisitSection() {
         <h2 id="visit-title">Tu próxima<br /><em>parada feliz.</em></h2>
         <div className="visit-contact-card">
           <div className="visit-contact-row"><CalendarDays size={20} aria-hidden="true" /><p>{business.hours}<small>{business.closedDays}</small></p></div>
-          <a className="visit-contact-row visit-call" href={`tel:${business.phoneInternational}`}><Phone size={21} aria-hidden="true" /><span>Llámanos: <strong>{business.phone}</strong></span><ArrowUpRight size={15} aria-hidden="true" /></a>
-          <a className="visit-contact-row visit-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /><span>WhatsApp: {business.phone}</span><ArrowUpRight size={15} aria-hidden="true" /></a>
+          <a className="visit-contact-row visit-call" href={`tel:${business.phoneInternational}`}><Phone size={21} aria-hidden="true" /><span><span className="visit-contact-label">Llámanos</span><strong>{business.phone}</strong></span><ArrowUpRight size={15} aria-hidden="true" /></a>
           <a className="visit-contact-row" href={business.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={20} aria-hidden="true" /><span>{business.address}</span><ArrowUpRight size={15} aria-hidden="true" /></a>
         </div>
-        <div className="visit-ronny-welcome"><p>¡Te esperamos!<small>El truck, los antojos y Ronny.</small></p><img src="/images/ronny/ronny-nose-lick.png" alt="Ronny con su playerita roja lamiéndose la nariz, listo para recibirte" width={1230} height={1278} loading="lazy" /></div>
+        <div className="visit-ronny-welcome"><p>¡Te esperamos!</p><img src="/images/ronny/ronny-nose-lick.png" alt="Ronny con su playerita roja lamiéndose la nariz, listo para recibirte" width={1230} height={1278} loading="lazy" /></div>
       </div>
       <div className="visit-destination">
         <h3>¡Visítanos!</h3>

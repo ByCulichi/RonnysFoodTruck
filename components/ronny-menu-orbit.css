@@ -77,3 +77,17 @@
   .ronny-outfit-layer, .ronny-category-orb, .ronny-category-orb::before, .ronny-category-orb > .food-icon, .menu-category-logo, .menu-category-logo::before, .menu-category-logo .food-icon { transition: none !important; }
   .ronny-outfit-magic { display: none; animation: none; }
 }
+
+/* Small floating paths preserve each category's place and stop for interaction. */
+.ronny-category-orb { animation: ronny-orb-float 9s ease-in-out infinite; animation-play-state: paused; }
+.orb-salados { animation-delay: -2.25s; }
+.orb-frias { animation-delay: -4.5s; }
+.orb-calientes { animation-delay: -6.75s; }
+.halloween-market:has(.market-night-decoration[data-paused="false"][data-hidden="false"]) .ronny-category-orb[data-in-view="true"]:not(:hover, :focus-visible) { animation-play-state: running; }
+@keyframes ronny-orb-float {
+  0%, 100% { translate: 0 0; }
+  25% { translate: 5px -8px; }
+  50% { translate: 9px 0; }
+  75% { translate: 4px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .ronny-category-orb { animation: none; translate: none; } }

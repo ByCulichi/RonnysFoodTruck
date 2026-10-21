@@ -44,7 +44,6 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
     <div className={`dish-image ${photo ? "real-food-photo" : "illustrated-food"}`}>
       {photo ? <>
         <Image src={menuPhotoUrl(photo)} alt={photo.alt} fill sizes="(max-width: 600px) 90vw, (max-width: 1100px) 40vw, 460px" style={{ objectPosition: photo.position || "center 72%" }} />
-        {photo.generated && <span className="generated-photo-label">Imagen ilustrativa</span>}
         <button type="button" className="photo-zoom" aria-label={`Ampliar foto de ${dish.name}`} onClick={openPhoto}><span><Maximize2 size={16} /> Ampliar foto</span></button>
       </> : <>
         <FoodIcon kind={dish.kind} />
@@ -74,7 +73,7 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
         <div className="photo-dialog-heading"><strong>{dish.name}</strong><button type="button" autoFocus aria-label="Cerrar foto" onClick={() => dialogRef.current?.close()}><X size={24} /></button></div>
         {photoOpen && <Image src={menuPhotoUrl(photo)} alt={photo.alt} width={900} height={1200} sizes="90vw" />}
         <div className="photo-dialog-footer">
-          <p>{photo.generated ? "Imagen ilustrativa del producto." : photo.alt}</p>
+          {!photo.generated && <p>{photo.alt}</p>}
           {dish.photos.length > 1 && <div className="photo-dialog-controls"><button type="button" aria-label="Foto anterior" onClick={() => setPhotoIndex((photoIndex + dish.photos.length - 1) % dish.photos.length)}><ArrowLeft size={20} /></button><span>{photoIndex + 1} / {dish.photos.length}</span><button type="button" aria-label="Siguiente foto" onClick={() => setPhotoIndex((photoIndex + 1) % dish.photos.length)}><ArrowRight size={20} /></button></div>}
         </div>
       </div>

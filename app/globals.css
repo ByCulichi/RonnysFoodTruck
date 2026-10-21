@@ -2186,7 +2186,7 @@ h2 em {
 }
 .halloween-season { --gold: #ffc15c; }
 .halloween-season .site-header { background: #130c1bf2; border-bottom-color: #a97bd52b; }
-.halloween-hero { background: #150d20; border-bottom-color: #e69b4a6b; }
+.halloween-hero { background: #150d20; border-bottom: 0; }
 .halloween-hero .night-heading h1 {
   font-family: "Ronny Halloween", "Ronny Display", serif;
   color: #fff8ed;
@@ -2195,7 +2195,7 @@ h2 em {
   text-shadow: 0 8px 0 #261035, 0 10px 32px #0009;
 }
 .halloween-hero .night-scene::after {
-  background: linear-gradient(180deg, #140b23ae 0%, #140b2320 30%, transparent 43%, #150b2038 62%, #100908f5 100%);
+  background: linear-gradient(180deg, #140b23ae 0%, #140b2320 30%, transparent 43%, #150b2038 62%, #100c1c 100%);
 }
 .halloween-hero .night-kicker { color: #ffd29c; }
 .halloween-hero .night-lights ellipse:nth-child(3n) {
@@ -2203,14 +2203,14 @@ h2 em {
   filter: drop-shadow(0 0 8px #ab55fc) drop-shadow(0 0 16px #9134d8);
 }
 .halloween-hero .night-welcome h2 { font-size: clamp(32px, 3.3vw, 46px); }
-.halloween-season .flavor-strip { background: #361440; }
+.halloween-season .flavor-strip { border: 0; background: linear-gradient(180deg, #100c1c, #1d102d); }
 @media (max-width: 600px) {
   .halloween-hero .night-heading h1 { -webkit-text-stroke-width: 5px; }
   .halloween-hero .night-kicker { font-size: 6.5px; letter-spacing: 1.2px; }
   .halloween-hero .night-welcome h2 { font-size: 31px; }
   .halloween-hero .night-welcome h2 br { display: block; }
   .halloween-hero .night-welcome h2 em { margin-left: 0; }
-  .halloween-hero .night-scene::after { background: linear-gradient(180deg, #140b23b0, #140b2310 32%, transparent 45%, #10090800 65%, #100908 100%); }
+  .halloween-hero .night-scene::after { background: linear-gradient(180deg, #140b23b0, #140b2310 32%, transparent 45%, #100c1c00 65%, #100c1c 100%); }
 }
 
 /* Ronny accompanies each section directly; there is no costume selector. */
