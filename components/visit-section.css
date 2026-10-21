@@ -100,3 +100,17 @@
   .lamp-left { left: 0; }
   .lamp-right { right: 0; width: 31px; height: 155px; }
 }
+
+@media (max-width: 600px) {
+  .halloween-visit { padding-block: 28px 16px; gap: 14px; }
+  .halloween-visit-copy h2 { font-size: 35px; margin-block: 14px 18px; }
+  .visit-contact-row { padding-block: 8px; }
+  .visit-destination { padding: 15px; }
+  .visit-live-map iframe { height: 190px; }
+  .visit-destination-views { gap: 12px; }
+  .visit-destination > h3 { margin-bottom: 12px; }
+  .visit-truck-photo { width: 85px; height: 80px; }
+  .halloween-reviews-heading { margin-bottom: 14px; }
+  .halloween-review-links > a { padding: 12px; }
+  .halloween-review-links p { margin-block: 4px; }
+}

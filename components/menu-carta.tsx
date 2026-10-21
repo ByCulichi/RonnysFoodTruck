@@ -4,12 +4,10 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } f
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Minus, PawPrint, Plus, X } from "lucide-react";
 import { dishes, type Dish } from "@/lib/menu";
-import { getMenuCategory, menuCategories, type MenuCategory } from "@/lib/menu-categories";
+import { getMenuCategory } from "@/lib/menu-categories";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
-import { FoodIcon } from "@/components/food-icon";
+import { TruckMenuSheet, TruckStamp, truckSheets } from "@/components/truck-menu-sheet";
 import "./menu-carta.css";
-
-const originals = [{ id: "dulces", title: "Dulces" }, { id: "salados", title: "Salados" }, { id: "bebidas", title: "Bebidas" }];
 
 function CartaItem({ dish }: { dish: Dish }) {
   const multiple = dish.options.length > 1;
@@ -23,15 +21,14 @@ function CartaItem({ dish }: { dish: Dish }) {
 export function MenuCarta({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
   const category = getMenuCategory(dishes.find(({ name }) => name === selection) || dishes[0]);
   const previewIndex = category === "dulces" ? 0 : category === "salados" ? 1 : 2;
-  const products = dishes.filter((dish) => getMenuCategory(dish) === category);
-  const label = menuCategories.find(({ id }) => id === category)!.label;
   const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState<"digital" | "original">("original");
-  const [original, setOriginal] = useState(0);
+  const [mode, setMode] = useState<"design" | "text">("design");
+  const [sheet, setSheet] = useState(0);
   const [zoom, setZoom] = useState(0);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const products = dishes.filter(dish => dish.group === (sheet === 0 ? "Dulces" : sheet === 1 ? "Salados" : "Bebidas"));
 
   useEffect(() => {
     if (!open) return;
@@ -40,42 +37,25 @@ export function MenuCarta({ selection, onSelect }: { selection: string; onSelect
     return () => { document.body.style.overflow = previous; };
   }, [open]);
 
-  function selectCategory(next: MenuCategory) {
-    onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
-  }
-
   function selectSheet(next: number) {
-    const sheet = (next + originals.length) % originals.length;
-    selectCategory(sheet === 0 ? "dulces" : sheet === 1 ? "salados" : category === "calientes" ? "calientes" : "frias");
+    const index = (next + truckSheets.length) % truckSheets.length;
+    onSelect(dishes.find(dish => dish.group === (index === 0 ? "Dulces" : index === 1 ? "Salados" : "Bebidas"))!.name);
   }
 
-  function openCarta(button: HTMLButtonElement, nextMode: typeof mode) {
+  function openCarta(button: HTMLButtonElement) {
     triggerRef.current = button;
-    setMode(nextMode);
-    setZoom(0);
-    setOriginal(category === "dulces" ? 0 : category === "salados" ? 1 : 2);
-    dialogRef.current?.showModal();
-    setOpen(true);
+    setMode("design"); setZoom(0); setSheet(previewIndex);
+    dialogRef.current?.showModal(); setOpen(true);
   }
 
-  function showOriginal(next: number) {
-    setOriginal((next + originals.length) % originals.length);
-    setZoom(0);
-    canvasRef.current?.scrollTo(0, 0);
-  }
-
-  function switchMode(next: typeof mode) {
-    if (next === "original") setOriginal(category === "dulces" ? 0 : category === "salados" ? 1 : 2);
-    else selectCategory(original === 0 ? "dulces" : original === 1 ? "salados" : category === "calientes" ? "calientes" : "frias");
-    setMode(next);
-    setZoom(0);
+  function showSheet(next: number) {
+    setSheet((next + truckSheets.length) % truckSheets.length);
+    setZoom(0); canvasRef.current?.scrollTo(0, 0);
   }
 
   function trapFocus(event: KeyboardEvent<HTMLDialogElement>) {
-    if (mode === "original" && zoom === 0 && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
-      event.preventDefault();
-      showOriginal(original + (event.key === "ArrowRight" ? 1 : -1));
-      return;
+    if (zoom === 0 && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+      event.preventDefault(); showSheet(sheet + (event.key === "ArrowRight" ? 1 : -1)); return;
     }
     if (event.key !== "Tab") return;
     const items = event.currentTarget.querySelectorAll<HTMLElement>("button:not(:disabled), a[href], [tabindex='0']");
@@ -84,45 +64,30 @@ export function MenuCarta({ selection, onSelect }: { selection: string; onSelect
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
 
-  const categories = (dialog = false) => <div className="carta-categories" role="group" aria-label={dialog ? "Categorías de la carta ampliada" : "Categorías de la carta"}>
-    {menuCategories.map((item) => <button key={item.id} type="button" aria-label={item.label} aria-pressed={category === item.id} onClick={() => selectCategory(item.id)}><FoodIcon kind={item.icon} /><span>{item.shortLabel}</span></button>)}
+  const tabs = (inDialog = false) => <div className="carta-sheet-tabs" role="group" aria-label={inDialog ? "Hojas de la carta ampliada" : "Hojas de la carta del truck"}>
+    {truckSheets.map((item, index) => <button type="button" key={item.id} aria-pressed={(inDialog ? sheet : previewIndex) === index} onClick={() => inDialog ? showSheet(index) : selectSheet(index)}>{item.title}</button>)}
   </div>;
 
   return <section className="truck-carta" id="carta-original" aria-labelledby="truck-carta-title">
-    <div className="carta-heading"><div><span className="eyebrow"><BookOpen size={17} aria-hidden="true" /> EL SABOR, BIEN CLARO</span><h3 id="truck-carta-title">La carta del truck.</h3></div><button type="button" className="carta-expand" onClick={(event) => openCarta(event.currentTarget, "original")}><BookOpen size={18} aria-hidden="true" /> Abrir carta</button></div>
+    <div className="carta-heading"><div><span className="eyebrow"><BookOpen size={17} aria-hidden="true" /> EL SABOR, BIEN CLARO</span><h3 id="truck-carta-title">La carta del truck.</h3></div><button type="button" className="carta-expand" onClick={(event) => openCarta(event.currentTarget)}><BookOpen size={18} aria-hidden="true" /> Abrir carta</button></div>
     <div className="carta-layout">
-      <div className="carta-exact-preview">
-        <div className="carta-original-tabs" role="group" aria-label="Hojas de la carta del truck">
-          {originals.map((sheet, sheetIndex) => <button type="button" key={sheet.id} aria-pressed={previewIndex === sheetIndex} onClick={() => selectSheet(sheetIndex)}>{sheet.title}</button>)}
-        </div>
-        <button className="carta-sheet-preview" type="button" aria-label={`Abrir carta original de ${originals[previewIndex].title.toLowerCase()}`} onClick={(event) => openCarta(event.currentTarget, "original")}>
-          <Image src={`/images/menu/cartas/carta-${originals[previewIndex].id}.jpg`} alt={`Carta original de ${originals[previewIndex].title.toLowerCase()} de Ronny’s, completa y sin retoques`} width={828} height={1104} unoptimized />
-        </button>
-        <div className="carta-preview-footer"><div className="carta-pagination" role="group" aria-label="Hojas de la carta del truck"><button type="button" aria-label="Carta anterior" onClick={() => selectSheet(previewIndex - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{previewIndex + 1} / 3</span><button type="button" aria-label="Carta siguiente" onClick={() => selectSheet(previewIndex + 1)}><ArrowRight size={18} /></button></div></div>
+      <div className="carta-digital-preview">
+        <div className="carta-desktop-sheet">{tabs()}<TruckMenuSheet sheet={previewIndex} /><div className="carta-preview-footer"><div className="carta-pagination" role="group" aria-label="Recorrer carta"><button type="button" aria-label="Carta anterior" onClick={() => selectSheet(previewIndex - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{previewIndex + 1} / 3</span><button type="button" aria-label="Carta siguiente" onClick={() => selectSheet(previewIndex + 1)}><ArrowRight size={18} /></button></div></div></div>
+        <button type="button" className="carta-mobile-cover" aria-label="Abrir menú digital del truck" onClick={event=>openCarta(event.currentTarget)}><TruckStamp /><span><strong>El menú del truck</strong><span>Dulces · Snacks · Bebidas</span><span className="carta-cover-action">Ver carta digital <ArrowUpRight size={16} aria-hidden="true" /></span></span></button>
       </div>
       <aside className="carta-ronny" id="historia" aria-labelledby="carta-ronny-title">
-        <div className="carta-ronny-art"><Image src={halloweenCostumes.zombi.src} alt={halloweenCostumes.zombi.alt} width={1024} height={1536} sizes="(max-width: 600px) 125px, 210px" /></div>
+        <div className="carta-ronny-art"><Image src={halloweenCostumes.zombi.src} alt={halloweenCostumes.zombi.alt} width={1024} height={1536} sizes="(max-width: 600px) 85px, 210px" /></div>
         <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3><a href="#selected-menu-dish" onClick={() => onSelect("Salchipulpos")}>Sus snacks favoritos <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </aside>
     </div>
-    <dialog ref={dialogRef} className="carta-reader" data-mode={mode} aria-label={mode === "digital" ? "Carta en texto grande" : `Carta original de ${originals[original].title.toLowerCase()}`} onKeyDown={trapFocus} onClose={() => { setOpen(false); triggerRef.current?.focus({ preventScroll: true }); }} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
-      <div className="carta-reader-heading"><strong>{mode === "digital" ? "Carta en texto grande" : `La carta del truck · ${originals[original].title}`}</strong><button type="button" autoFocus aria-label="Cerrar carta" onClick={() => dialogRef.current?.close()}><X size={24} /></button></div>
-      <div className="carta-reader-toolbar"><div className="carta-reader-modes" role="group" aria-label="Vista de la carta"><button type="button" aria-pressed={mode === "original"} onClick={() => switchMode("original")}><BookOpen size={16} aria-hidden="true" /> Carta del truck</button><button type="button" aria-pressed={mode === "digital"} onClick={() => switchMode("digital")}>Texto grande</button></div><div className="carta-pagination" role="group" aria-label="Tamaño de la carta"><button type="button" aria-label="Reducir carta" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}><Minus size={18} /></button><span aria-live="polite">{100 + zoom * 25}%</span><button type="button" aria-label="Aumentar carta" disabled={zoom === (mode === "original" ? 6 : 3)} onClick={() => setZoom(zoom + 1)}><Plus size={18} /></button></div></div>
-      {mode === "digital" ? <>
-        {categories(true)}
-        <div className="carta-reader-scroll" tabIndex={0} aria-label="Productos y precios de la carta" style={{ "--carta-text-size": `${20 * (1 + zoom * .25)}px` } as CSSProperties}>
-          <div className="carta-board-caption"><span>{label}</span><small>Precios en MXN</small></div>
-          <ul className="carta-product-list">{products.map((dish) => <CartaItem key={dish.name} dish={dish} />)}</ul>
-        </div>
-      </> : <>
-        <div className="carta-original-tabs" role="group" aria-label="Hojas de la carta original">
-          {originals.map((sheet, sheetIndex) => <button type="button" key={sheet.id} aria-pressed={original === sheetIndex} onClick={() => showOriginal(sheetIndex)}>{sheet.title}</button>)}
-        </div>
-        <div ref={canvasRef} className="carta-original-canvas" tabIndex={0} aria-label="Carta original ampliable; desliza para recorrerla" style={{ "--carta-zoom": 1 + zoom * .25 } as CSSProperties}>
-          <div className="carta-original-page">{open && <Image key={original} src={`/images/menu/cartas/carta-${originals[original].id}.jpg`} alt={`Carta original de ${originals[original].title.toLowerCase()} de Ronny’s`} width={828} height={1104} unoptimized />}</div>
-        </div>
-        <div className="carta-reader-footer"><a href={`/images/menu/cartas/carta-${originals[original].id}.jpg`} target="_blank" rel="noopener noreferrer">Abrir imagen original <ArrowUpRight size={16} /></a><div className="carta-pagination" role="group" aria-label="Pasar hojas de la carta"><button type="button" aria-label="Hoja anterior" onClick={() => showOriginal(original - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{original + 1} / 3</span><button type="button" aria-label="Hoja siguiente" onClick={() => showOriginal(original + 1)}><ArrowRight size={18} /></button></div></div>
-      </>}
+    <dialog ref={dialogRef} className="carta-reader" data-mode={mode} aria-label={`Carta digital de ${truckSheets[sheet].title.toLowerCase()}`} onKeyDown={trapFocus} onClose={() => { setOpen(false); triggerRef.current?.focus({ preventScroll: true }); }} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
+      <div className="carta-reader-heading"><strong>La carta del truck</strong><button type="button" autoFocus aria-label="Cerrar carta" onClick={() => dialogRef.current?.close()}><X size={24} /></button></div>
+      <div className="carta-reader-toolbar"><div className="carta-reader-modes" role="group" aria-label="Vista de la carta"><button type="button" aria-pressed={mode === "design"} onClick={() => { setMode("design"); setZoom(0); }}>Diseño del truck</button><button type="button" aria-pressed={mode === "text"} onClick={() => { setMode("text"); setZoom(0); }}>Texto grande</button></div><div className="carta-pagination" role="group" aria-label="Tamaño de la carta"><button type="button" aria-label="Reducir carta" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}><Minus size={18} /></button><span aria-live="polite">{100 + zoom * 25}%</span><button type="button" aria-label="Aumentar carta" disabled={zoom === 4} onClick={() => setZoom(zoom + 1)}><Plus size={18} /></button></div></div>
+      {tabs(true)}
+      <div ref={canvasRef} className="carta-reader-canvas" tabIndex={0} aria-label="Productos y precios de la carta" style={{ "--carta-scale": 1 + zoom * .25, "--carta-text-size": `${20 * (1 + zoom * .25)}px` } as CSSProperties}>
+        {open && (mode === "design" ? <TruckMenuSheet sheet={sheet} /> : <div className="carta-reader-text"><h4>{truckSheets[sheet].title}</h4><p>Precios en MXN</p><ul className="carta-product-list">{products.map(dish=><CartaItem key={dish.name} dish={dish} />)}</ul></div>)}
+      </div>
+      <div className="carta-reader-footer"><span>Precios en MXN</span><div className="carta-pagination" role="group" aria-label="Pasar hojas de la carta"><button type="button" aria-label="Hoja anterior" onClick={() => showSheet(sheet - 1)}><ArrowLeft size={18} /></button><span aria-live="polite">{sheet + 1} / 3</span><button type="button" aria-label="Hoja siguiente" onClick={() => showSheet(sheet + 1)}><ArrowRight size={18} /></button></div></div>
     </dialog>
   </section>;
 }

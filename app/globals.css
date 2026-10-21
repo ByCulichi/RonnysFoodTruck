@@ -2943,3 +2943,33 @@ h2 em {
   .season-sparkle-one { top: 30px; right: 20px; width: 20px; }
   .season-sparkle-two { bottom: 60px; right: 16%; }
 }
+
+/* Mobile rhythm: food first, fewer empty gaps, native page scrolling. */
+@media (max-width: 600px) {
+  .night-hero { min-height: 640px; }
+  .night-heading { padding-top: 20px; }
+  .night-scene { bottom: 170px; }
+  .night-scene img { top: 115px; }
+  .night-bottom { padding-top: 205px; padding-bottom: 34px; gap: 14px; }
+  .night-invitation { gap: 13px; }
+  .night-welcome h2 { font-size: 28px; }
+  .night-welcome p { font-size: 12px; margin-top: 9px; }
+  .halloween-hero .night-welcome h2 { font-size: 28px; }
+  .flavor-strip > div { min-height: 48px; }
+  .halloween-market .compact-menu-section { padding-block: 25px; }
+  .halloween-market .delivery-section { grid-template-columns: minmax(0, 1fr) 90px; gap: 12px; padding: 20px; margin-block: 25px; }
+  .halloween-market .delivery-section .delivery-host { width: 90px; height: 145px; justify-self: end; }
+  .halloween-market .delivery-copy h2 { font-size: 28px; }
+  .halloween-market .delivery-copy p { font-size: 13px; line-height: 1.6; }
+  .halloween-market .delivery-copy .button { font-size: 12px; padding-inline: 10px; gap: 6px; }
+  .halloween-market .delivery-copy > small { font-size: 10px; line-height: 1.5; }
+}
+@media (max-width: 360px) {
+  .halloween-market .delivery-section { grid-template-columns: minmax(0, 1fr); }
+  .halloween-market .delivery-section .delivery-host { position: absolute; right: 15px; top: 16px; width: 60px; height: 90px; }
+  .halloween-market .delivery-copy > .eyebrow, .halloween-market .delivery-copy h2 { padding-right: 56px; }
+}
+@media (max-width: 600px) {
+  html { scroll-padding-top: 88px; }
+  .halloween-season :is(#menu, #carta-original, #temporadas, #encuentranos, #domicilio, #historia, #selected-menu-dish, #contacto) { scroll-margin-top: 0; }
+}

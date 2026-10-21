@@ -115,3 +115,10 @@
 @media (prefers-reduced-motion: reduce) {
   .footer-explore *, .footer-brand .footer-ronny-head { animation: none !important; transition: none !important; }
 }
+
+@media (max-width: 600px) {
+  .site-footer.footer-refresh > .footer-refresh-inner { padding-top: 45px; }
+  .footer-refresh-main { row-gap: 18px; }
+  .footer-message h2 { margin-top: 12px; }
+  .footer-refresh-social { margin-top: 12px; }
+}

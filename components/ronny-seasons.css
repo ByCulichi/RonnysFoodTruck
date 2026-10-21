@@ -1,0 +1,45 @@
+.halloween-market .seasons-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.halloween-market .season-chapter { border-radius: 20px; }
+.halloween-market .season-current-art { height: 165px; }
+.halloween-market .season-copy { padding: 22px; }
+.halloween-market .season-copy h3 { font-size: 32px; }
+.halloween-market .season-copy p { font-size: 14px; line-height: 1.6; margin-block: 12px; }
+.halloween-market .season-copy a { font-size: 13px; gap: 5px; }
+.halloween-market .season-future { display: grid; grid-template-columns: minmax(0, 1fr) 42%; align-items: center; position: relative; min-height: 380px; }
+.halloween-market .season-future .season-copy { width: 100%; padding: 22px 0 22px 22px; }
+.halloween-market .season-future h3 { margin-top: 18px; }
+.halloween-market .season-future h3 em { font: italic 400 .9em/1.1 Georgia, serif; }
+.halloween-market .season-state-next { font-size: 8px; line-height: 1.5; letter-spacing: .6px; padding: 7px; }
+.halloween-market .season-muertos { background: radial-gradient(ellipse at 90% 70%, #ff9d3329, transparent 65%), linear-gradient(135deg, #361b48, #25182e); border-color: #df9b555c; }
+.halloween-market .season-muertos h3 { color: #ffcb84; }
+.season-character { align-self: center; width: 100%; padding: 12px 8px; pointer-events: none; }
+.season-character > img { display: block; width: 100%; height: auto; max-height: 270px; object-fit: contain; filter: drop-shadow(0 8px 10px #08041155); }
+.season-flower { position: absolute; right: 14px; top: 16px; color: #f0b05a; opacity: .55; pointer-events: none; }
+@media (max-width: 1000px) {
+  .halloween-market .seasons-grid { grid-template-columns: minmax(0, 1fr); gap: 15px; }
+  .halloween-market .season-halloween { display: grid; grid-template-columns: .8fr 1.2fr; }
+  .halloween-market .season-current-art { height: 100%; min-height: 200px; }
+  .halloween-market .season-future { grid-template-columns: minmax(0, 1fr) 35%; min-height: 220px; }
+  .season-character { padding: 10px; }
+  .season-character > img { max-height: 220px; }
+}
+@media (max-width: 600px) {
+  .halloween-market .seasons-section { padding-block: 24px 28px; }
+  .halloween-market .seasons-heading { margin-bottom: 18px; }
+  .halloween-market .seasons-heading h2 { font-size: 30px; margin-top: 12px; }
+  .halloween-market .season-halloween { grid-template-columns: 34% minmax(0, 1fr); }
+  .halloween-market .season-current-art { min-height: 190px; }
+  .halloween-market .season-current-art img { object-fit: cover; object-position: 36% center; }
+  .halloween-market .season-state-current { left: 5px; top: 8px; padding: 6px; font-size: 6.5px; letter-spacing: .2px; gap: 3px; }
+  .halloween-market .season-copy { padding: 16px; }
+  .halloween-market .season-copy > svg { width: 18px; margin-bottom: 5px; }
+  .halloween-market .season-copy h3 { font-size: 29px; }
+  .halloween-market .season-copy p { font-size: 13px; line-height: 1.5; margin-block: 8px; }
+  .halloween-market .season-copy a { font-size: 12px; line-height: 1.4; }
+  .halloween-market .season-future { grid-template-columns: minmax(0, 1fr) 38%; min-height: 210px; }
+  .halloween-market .season-future .season-copy { padding: 16px 0 16px 16px; }
+  .halloween-market .season-future h3 { margin-top: 12px; }
+  .season-character { padding: 16px 6px; }
+  .season-character > img { max-height: 190px; }
+  .season-flower { top: 10px; right: 8px; width: 19px; }
+}
