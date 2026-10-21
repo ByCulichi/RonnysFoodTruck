@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, Ghost } from "lucide-react";
 import Image from "next/image";
 import { business } from "@/lib/business";
@@ -15,6 +16,7 @@ import "./ronny-menu-orbit.css";
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 
 export function InteractiveMenu({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
+  const choicesRef = useRef<HTMLDivElement>(null);
   const active = dishes.find(({ name }) => name === selection) || dishes[1];
   const category = getMenuCategory(active);
   const choices = dishes.filter((dish) => getMenuCategory(dish) === category);
@@ -26,6 +28,16 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const currentPage = Math.max(0, Math.floor(selectedIndex / pageSize));
   const totalPages = Math.ceil(choices.length / pageSize);
   const pageChoices = choices.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+
+  useEffect(() => {
+    const rail = choicesRef.current;
+    const button = rail?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');
+    if (!rail || !button || rail.scrollWidth <= rail.clientWidth) return;
+    const item = button.getBoundingClientRect(), frame = rail.getBoundingClientRect();
+    if (item.left < frame.left || item.right > frame.right) {
+      rail.scrollTo({ left: rail.scrollLeft + item.left - frame.left - 4, behavior: "instant" });
+    }
+  }, [selection]);
 
   function selectCategory(next: MenuCategory) {
     if (next !== category) onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
@@ -41,7 +53,6 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         <div>
           <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
           <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
-          <p>Elige tu antojo y mira cómo Ronny cambia de disfraz.</p>
         </div>
         <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a><span className="compact-menu-currency">Precios en MXN</span></div>
       </div>
@@ -69,7 +80,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
           <span className="sr-only" role="status">{`${active.name}. Precio inicial: ${getPrice(active)} pesos.`}</span>
           <div className="menu-choice-heading"><span aria-live="polite">{`${categoryLabel} · ${choices.length} antojos`}</span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
           <>
-            <div className="menu-choice-grid" role="group" aria-label="Elegir producto">
+            <div ref={choicesRef} className="menu-choice-grid" role="group" aria-label="Elegir producto">
               {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
                 <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 600px) 30vw, 170px" style={{ objectFit: "cover", objectPosition: dish.photos[0].position || "center 65%" }} /></span>
                 <span className="menu-choice-name">{dish.name}</span>

@@ -12,6 +12,8 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const photo = dish.photos[photoIndex];
   const price = Math.min(...dish.options.map((option) => option.price));
+  const hasVariants = dish.options.length > 1;
+  const hasFlavors = ["Crepas", "Waffles", "Hotcakes", "Banderilla dulce", "Banderilla coreana", "Malteadas"].includes(dish.name);
   const variablePrice = dish.options.some((option) => option.price !== price);
 
   useEffect(() => {
@@ -63,10 +65,10 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
         <h3>{dish.name}</h3>
         <div className="dish-price"><small>{variablePrice ? "desde" : "MXN"}</small><strong>${price}</strong></div>
       </div>
-      <p>{dish.description}</p>
-      <dl className="dish-price-list" aria-label={`Precios de ${dish.name}`}>
+      {hasFlavors && <p>{dish.description}</p>}
+      {hasVariants && <dl className="dish-price-list" aria-label={`Precios de ${dish.name}`}>
         {dish.options.map((option) => <div key={option.name}><dt>{option.name}</dt><dd>${option.price}</dd></div>)}
-      </dl>
+      </dl>}
     </div>
     {photo && <dialog className="food-photo-dialog" ref={dialogRef} aria-label={`Foto ampliada de ${dish.name}`} onKeyDown={keepDialogFocus} onClose={() => setPhotoOpen(false)} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
       <div className="photo-dialog-content">

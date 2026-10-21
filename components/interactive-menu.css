@@ -40,9 +40,9 @@
 .menu-choice-check { position: absolute; top: 6px; right: 6px; color: #ffe0a2; }
 .selected-menu-dish { width: 100%; max-width: 740px; margin-inline: auto; border-radius: 18px; overflow: hidden; border: 1px solid #e6c398; background: #fff0d5; }
 .interactive-menu .selected-menu-dish .menu-product { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); background: #fff0d5; border: 0; border-radius: 0; box-shadow: none; overflow: hidden; }
-.interactive-menu .selected-menu-dish .dish-image { height: auto; min-height: 220px; border-radius: 0; }
+.interactive-menu .selected-menu-dish .dish-image { height: auto; min-height: 190px; border-radius: 0; }
 .interactive-menu .selected-menu-dish .dish-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.interactive-menu .selected-menu-dish .dish-info { padding: 18px; }
+.interactive-menu .selected-menu-dish .dish-info { display: flex; flex-direction: column; justify-content: center; padding: 18px; }
 .interactive-menu .selected-menu-dish .dish-category, .interactive-menu .selected-menu-dish .dish-number, .interactive-menu .selected-menu-dish .dish-favorite { display: none; }
 .interactive-menu .selected-menu-dish .dish-title { margin: 0 0 10px; gap: 10px; flex-wrap: nowrap; }
 .interactive-menu .selected-menu-dish .dish-title h3 { font-size: clamp(23px, 2.3vw, 28px); line-height: 1.1; min-width: 0; flex-basis: auto; overflow-wrap: anywhere; }
@@ -208,3 +208,15 @@
   .menu-choice-grid small strong { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-bat { animation: none; } }
+
+.interactive-menu .selected-menu-dish .dish-title:only-child { margin-bottom: 0; }
+@media (max-width: 600px) {
+  .compact-menu-heading h2 { font-size: 36px; margin-top: 12px; }
+  .menu-workspace { gap: 14px; }
+  .menu-guide-message { margin-bottom: 0; }
+  .menu-choice-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(100px, 29vw, 120px); overflow-x: auto; scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 3px 10px; gap: 8px; margin-bottom: 12px; }
+  .menu-choice-grid button { scroll-snap-align: start; min-height: 128px; }
+  .menu-choice-grid button > .menu-choice-photo { height: 64px; }
+  .menu-choice-grid button:focus-visible { outline-offset: -3px; }
+  .menu-detail-actions { padding: 6px 10px; }
+}
