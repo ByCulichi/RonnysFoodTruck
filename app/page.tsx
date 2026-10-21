@@ -151,8 +151,8 @@ export default function Home() {
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
             <Image
-              src="/images/hero/ronny-halloween-truck.png"
-              alt="Ronny vestido de hechicero con sombrero morado y capa, sosteniendo un antojo con queso junto al food truck rojo decorado con calabazas, telarañas y murciélagos de Halloween"
+              src="/images/hero/ronny-halloween-fair.png"
+              alt="Ronny de hechicero con varita y un hot dog junto al truck rojo, un caldero de calabaza y una feria encantada bajo la luna creciente"
               width={1536}
               height={1024}
               priority

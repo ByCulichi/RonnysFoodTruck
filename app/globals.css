@@ -2950,6 +2950,7 @@ h2 em {
   .night-heading { padding-top: 20px; }
   .night-scene { bottom: 170px; }
   .night-scene img { top: 115px; }
+  .halloween-hero .night-scene img { left: 0; width: 100%; }
   .night-bottom { padding-top: 205px; padding-bottom: 34px; gap: 14px; }
   .night-invitation { gap: 13px; }
   .night-welcome h2 { font-size: 28px; }
