@@ -38,20 +38,20 @@
 .menu-choice-grid button[aria-pressed="true"] { background: #792e27; border-color: #ffc878; color: #fff1d6; box-shadow: 0 0 0 1px #ffc87835; }
 .menu-choice-grid button:hover { border-color: #ffc878; }
 .menu-choice-check { position: absolute; top: 6px; right: 6px; color: #ffe0a2; }
-.selected-menu-dish { border-radius: 20px; overflow: hidden; border: 1px solid #e6c398; background: #fff0d5; }
+.selected-menu-dish { width: 100%; max-width: 740px; margin-inline: auto; border-radius: 18px; overflow: hidden; border: 1px solid #e6c398; background: #fff0d5; }
 .interactive-menu .selected-menu-dish .menu-product { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); background: #fff0d5; border: 0; border-radius: 0; box-shadow: none; overflow: hidden; }
-.interactive-menu .selected-menu-dish .dish-image { height: auto; min-height: 330px; border-radius: 0; }
+.interactive-menu .selected-menu-dish .dish-image { height: auto; min-height: 220px; border-radius: 0; }
 .interactive-menu .selected-menu-dish .dish-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.interactive-menu .selected-menu-dish .dish-info { padding: 23px; }
+.interactive-menu .selected-menu-dish .dish-info { padding: 18px; }
 .interactive-menu .selected-menu-dish .dish-category, .interactive-menu .selected-menu-dish .dish-number, .interactive-menu .selected-menu-dish .dish-favorite { display: none; }
-.interactive-menu .selected-menu-dish .dish-title { margin: 0 0 14px; gap: 12px; flex-wrap: nowrap; }
-.interactive-menu .selected-menu-dish .dish-title h3 { font-size: clamp(25px, 2.6vw, 34px); line-height: 1.1; min-width: 0; flex-basis: auto; overflow-wrap: anywhere; }
-.interactive-menu .selected-menu-dish .dish-title > .dish-price { min-width: 65px; min-height: 59px; padding: 8px 9px; border-radius: 13px 13px 13px 3px; }
-.interactive-menu .selected-menu-dish .dish-title strong { font-size: 28px; }
+.interactive-menu .selected-menu-dish .dish-title { margin: 0 0 10px; gap: 10px; flex-wrap: nowrap; }
+.interactive-menu .selected-menu-dish .dish-title h3 { font-size: clamp(23px, 2.3vw, 28px); line-height: 1.1; min-width: 0; flex-basis: auto; overflow-wrap: anywhere; }
+.interactive-menu .selected-menu-dish .dish-title > .dish-price { min-width: 58px; min-height: 52px; padding: 7px 8px; border-radius: 13px 13px 13px 3px; }
+.interactive-menu .selected-menu-dish .dish-title strong { font-size: 25px; }
 .interactive-menu .selected-menu-dish .dish-title small { font-size: 10px; }
 .interactive-menu .selected-menu-dish .dish-info > p { color: #62452f; font-size: 14px; line-height: 1.7; margin-bottom: 0; }
-.interactive-menu .selected-menu-dish .dish-price-list { margin-top: 16px; padding-top: 5px; }
-.interactive-menu .selected-menu-dish .dish-price-list > div { padding-block: 8px; font-size: 14px; gap: 15px; }
+.interactive-menu .selected-menu-dish .dish-price-list { margin-top: 10px; padding-top: 3px; }
+.interactive-menu .selected-menu-dish .dish-price-list > div { padding-block: 6px; font-size: 14px; gap: 15px; }
 .interactive-menu .selected-menu-dish .dish-price-list dd { font-size: 17px; }
 .interactive-menu .selected-menu-dish .illustrated-food > .food-icon { width: 110px; height: 110px; }
 .interactive-menu .selected-menu-dish .food-art-label { font-size: 9px; letter-spacing: 1px; }
@@ -108,9 +108,9 @@
   .menu-choice-grid button { min-height: 95px; padding-block: 9px; }
   .menu-choice-grid button > span { font-size: 12px; }
   .interactive-menu .selected-menu-dish .menu-product { grid-template-columns: minmax(0, 1fr); }
-  .interactive-menu .selected-menu-dish .dish-image { height: 175px; min-height: 0; }
-  .interactive-menu .selected-menu-dish .dish-info { padding: 18px; }
-  .interactive-menu .selected-menu-dish .dish-title h3 { font-size: clamp(24px, 7vw, 30px); }
+  .interactive-menu .selected-menu-dish .dish-image { height: 145px; min-height: 0; }
+  .interactive-menu .selected-menu-dish .dish-info { padding: 15px; }
+  .interactive-menu .selected-menu-dish .dish-title h3 { font-size: clamp(23px, 6vw, 27px); }
   .interactive-menu .selected-menu-dish .dish-title { margin-bottom: 10px; }
   .interactive-menu .selected-menu-dish .dish-info > p { font-size: 14px; line-height: 1.6; }
   .interactive-menu .selected-menu-dish .dish-price-list > div { padding-block: 7px; font-size: 14px; }
@@ -125,7 +125,7 @@
 
 /* Halloween night market: poster lettering, warm bulbs, purple mist and food photos. */
 .halloween-season { --bg: #100c1c; --panel: #21142b; background: #100c1c; }
-.halloween-menu-scene { position: relative; isolation: isolate; scroll-margin-top: 0; border-block: 1px solid #e79a534d; background: radial-gradient(ellipse at 2% 15%, #82347d55, transparent 48%), radial-gradient(ellipse at 95% 65%, #bc522333, transparent 42%), linear-gradient(135deg, #1d102d, #151024 58%, #251126); }
+.halloween-menu-scene { position: relative; isolation: isolate; scroll-margin-top: 0; border: 0; background: radial-gradient(ellipse at 2% 15%, #82347d55, transparent 48%), radial-gradient(ellipse at 95% 65%, #bc522333, transparent 42%), linear-gradient(135deg, #1d102d, #151024 58%, #251126); }
 .halloween-menu-scene::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .3; pointer-events: none; background-image: radial-gradient(circle, #ffc47a88 1px, transparent 2px), radial-gradient(circle, #c9a3ff55 1px, transparent 2px); background-size: 155px 180px, 233px 251px; background-position: 30px 70px, 110px 30px; }
 .halloween-menu-decoration { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; }
 .menu-cobweb { position: absolute; top: 0; width: 190px; height: 190px; stroke: #ffd39a; stroke-width: 1; opacity: .2; }
@@ -167,7 +167,6 @@
 .selected-menu-dish { border-color: #f3b673; box-shadow: 0 12px 30px #09041255; }
 .interactive-menu .selected-menu-dish .dish-title h3 { font-family: "Ronny Display", sans-serif; font-weight: 400; letter-spacing: 0; }
 .interactive-menu .selected-menu-dish .dish-title strong { font-family: Arial, sans-serif; font-weight: 900; }
-.generated-photo-label { position: absolute; z-index: 3; top: 10px; left: 10px; color: #fff0e0; background: #281431e8; border: 1px solid #e4bee24d; border-radius: 999px; padding: 6px 9px; font: 500 10px/1.3 Arial, sans-serif; pointer-events: none; }
 .halloween-season .story-section { background: linear-gradient(140deg, #21122d, #160e21); }
 .halloween-season .delivery-section { background: radial-gradient(ellipse at 80% 50%, #82404633, transparent 60%), linear-gradient(120deg, #351d3c, #20152d); }
 .halloween-season .visit-card { background: #21162d; }

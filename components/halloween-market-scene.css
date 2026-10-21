@@ -1,9 +1,9 @@
 /* One Halloween atmosphere joins menu, carta, promo, delivery, seasons and story. */
-.halloween-market { position: relative; isolation: isolate; background: radial-gradient(ellipse at 0 15%, #62297066, transparent 38%), radial-gradient(ellipse at 100% 52%, #93452042, transparent 34%), radial-gradient(ellipse at 15% 86%, #77315f38, transparent 32%), linear-gradient(170deg, #1d102d, #110d20 45%, #201028 82%, #100c1c); }
+.halloween-market { position: relative; isolation: isolate; background: radial-gradient(ellipse at 0 15%, #62297066, transparent 38%), radial-gradient(ellipse at 100% 52%, #93452042, transparent 34%), radial-gradient(ellipse at 15% 86%, #77315f38, transparent 32%), linear-gradient(180deg, #1d102d, #110d20 40%, #201028 70%, #100c1c 100%); }
 .halloween-market .halloween-menu-scene { background: transparent; }
 .halloween-market::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .4; background-image: radial-gradient(1px 1px at 10px 25px, #e4b588 70%, transparent), radial-gradient(1px 1px at 70px 90px, #b388cc 70%, transparent); background-size: 145px 160px, 210px 195px; mask-image: linear-gradient(90deg, #000, transparent 35%, transparent 65%, #000); }
-.market-fairground { position: relative; isolation: isolate; padding-block: 8px 15px; background: radial-gradient(ellipse at 15% 45%, #76336b36, transparent 48%), radial-gradient(ellipse at 88% 72%, #c16a2633, transparent 45%), linear-gradient(180deg, transparent, #25132b70 45%, #110d1e); }
-.market-fair-decoration { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: clip; }
+.market-fairground { position: relative; isolation: isolate; padding-block: 8px 15px; background: transparent; }
+.market-fair-decoration { position: absolute; inset: -120px 0; z-index: -1; pointer-events: none; overflow: clip; background: radial-gradient(ellipse at 15% 45%, #76336b36, transparent 55%), radial-gradient(ellipse at 88% 72%, #c16a2633, transparent 55%); mask-image: linear-gradient(180deg, transparent, #000 180px, #000 calc(100% - 180px), transparent); }
 .market-fair-panorama { position: absolute; width: 100%; height: 100%; inset: 0; opacity: .65; mask-image: linear-gradient(180deg, transparent, #000 14%, #000 87%, transparent); }
 .market-fair-moon { position: absolute; width: clamp(100px, 13vw, 205px); aspect-ratio: 1; top: 3%; right: 2%; border-radius: 50%; opacity: .4; background: radial-gradient(circle at 30% 40%, #19102200 60%, #a580ae 61%, #ffe2a9 71%); box-shadow: 12px 4px 40px #d6a16122; rotate: -18deg; }
 .halloween-season .market-fairground .delivery-section { background: radial-gradient(ellipse at 80% 60%, #934b4e38, transparent 62%), linear-gradient(120deg, #381b3bd9, #1d132cdd); border-color: #c4835d70; box-shadow: 0 15px 40px #08051155, inset 0 1px #eeb67618; }
@@ -75,3 +75,5 @@
   .market-night-decoration * { animation: none !important; }
   .market-motion-control { display: none; }
 }
+/* The shared night ends at the footer's base color, without a horizontal seam. */
+.halloween-market::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 200px; z-index: -1; pointer-events: none; background: linear-gradient(180deg, transparent, #100c1c); }

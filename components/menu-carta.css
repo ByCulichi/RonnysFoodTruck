@@ -1,11 +1,10 @@
-/* Printed-paper styling from the truck menu; originals open as a three-sheet reader. */
-.truck-carta { margin-top: 42px; padding-block: 30px 25px; border-block: 1px solid #ecb56a50; scroll-margin-top: 20px; }
+/* Unchanged truck menu photographs, with a separate accessible text reader. */
+.truck-carta { margin-top: 42px; padding-block: 30px 25px; border: 0; scroll-margin-top: 20px; }
 .carta-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 25px; }
 .carta-heading h3 { font: 400 clamp(32px, 3vw, 44px)/1.15 "Ronny Halloween", sans-serif; color: #ffcb83; margin: 10px 0 0; }
 .carta-expand { display: inline-flex; align-items: center; justify-content: center; gap: 9px; flex-shrink: 0; min-height: 46px; padding: 10px 16px; background: #ffc478; border: 1px solid #ffdcaa; border-radius: 99px; color: #30162b; font-size: 14px; font-weight: 700; }
 .carta-expand:hover { background: #ffdcaa; }
 .carta-layout { display: grid; grid-template-columns: minmax(0, 1fr) 245px; gap: 38px; align-items: center; }
-.carta-board { min-width: 0; position: relative; padding: 24px; border: 2px solid #9b3039; border-radius: 18px; color: #392724; background: #fff5dc; box-shadow: 0 18px 40px #09041255, inset 0 0 0 5px #fffaf0; }
 .carta-categories { display: flex; gap: 18px; flex-wrap: wrap; border-bottom: 1px solid #a43b3f55; }
 .carta-categories button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; padding: 7px 0 11px; color: #74423c; background: transparent; border: 0; border-bottom: 3px solid transparent; font-size: 16px; font-weight: 700; }
 .carta-categories .food-icon { width: 24px; height: 24px; }
@@ -24,10 +23,6 @@
 .carta-item dt { flex: 1; border-bottom: 1px dotted #9b594b55; padding-bottom: 2px; }
 .carta-item dd { color: #392724; font-weight: 800; margin: 0; white-space: nowrap; }
 .carta-item p { color: #6e5145; font-size: .85em; line-height: 1.6; margin: 10px 0 0; }
-.carta-item > a { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; margin-top: 4px; color: #9e2f37; font-size: 13px; font-weight: 700; }
-.carta-item > a:hover, .carta-original-link:hover { color: #6b1926; text-decoration: underline; text-underline-offset: 4px; }
-.carta-board-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; }
-.carta-original-link { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0; border: 0; background: transparent; color: #9b3039; font-size: 14px; font-weight: 700; text-align: left; }
 .carta-pagination { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
 .carta-pagination button, .carta-reader-heading button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #d1a27e60; border-radius: 50%; color: #ffca88; background: #1c1029; }
 .carta-pagination button:disabled { cursor: default; opacity: .3; }
@@ -82,14 +77,10 @@
   .carta-categories { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
   .carta-categories button { font-size: 13px; }
   .carta-product-list { grid-template-columns: minmax(0, 1fr); }
-  .carta-board { padding: 18px 14px; }
   .carta-item { padding: 14px; }
-  .carta-item > a { min-height: 38px; }
   .carta-board-caption { padding-top: 17px; }
   .carta-board-caption > span { font-size: 24px; }
   .carta-board-caption > small { font-size: 12px; }
-  .carta-original-link { font-size: 12px; gap: 6px; }
-  .carta-board-footer { gap: 8px; }
   .carta-pagination { gap: 3px; }
   .carta-pagination > span { min-width: 30px; }
   .carta-ronny { grid-template-columns: 105px minmax(0, 1fr); gap: 12px; }
@@ -112,16 +103,6 @@
   .carta-original-canvas { margin-inline: 10px; max-height: calc(100dvh - 300px); }
 }
 
-.carta-intro { margin: -10px 0 24px; max-width: 620px; font-size: 16px; line-height: 1.65; color: #e1c9c0; }
-.carta-board::before, .carta-board::after { content: ""; position: absolute; left: 14px; right: 14px; height: 7px; background: repeating-conic-gradient(#a42b32 0 25%, transparent 0 50%) 0 / 14px 14px; pointer-events: none; }
-.carta-board::before { top: 8px; }
-.carta-board::after { bottom: 8px; }
-.carta-paper-brand { display: flex; align-items: baseline; gap: 12px; color: #a02632; padding: 4px 0 14px; }
-.carta-paper-brand > span { font: 400 34px/1.1 "Ronny Display", sans-serif; }
-.carta-paper-brand > small { font: 700 10px/1.4 Arial, sans-serif; letter-spacing: .15em; }
-.carta-paper-brand > svg { align-self: center; margin-left: auto; }
-.carta-board .carta-pagination button { color: #902832; border-color: #9b303966; background: #ffedca; }
-.carta-board .carta-pagination > span { color: #74423c; font-size: 13px; }
 .carta-original-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 0 12px 10px; }
 .carta-original-tabs > button { min-height: 44px; padding: 8px 18px; border: 1px solid #d19c7655; border-radius: 99px; color: #efcebb; background: #24121f; font-size: 14px; }
 .carta-original-tabs > button[aria-pressed="true"] { background: #fff0ce; color: #932b35; border-color: #fff0ce; font-weight: 700; }
@@ -130,13 +111,15 @@
 .carta-reader[open] { animation: carta-open .2s ease-out; }
 @keyframes carta-open { from { opacity: .5; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
 @media (max-width: 600px) {
-  .carta-intro { font-size: 14px; margin-top: -4px; }
   .carta-original-tabs > button { padding-inline: 14px; }
   .carta-original-page { padding: 12px; }
-  .carta-paper-brand { gap: 8px; }
-  .carta-paper-brand > span { font-size: 29px; }
 }
 @media (max-height: 560px) {
   .carta-reader { --carta-page-width: min(calc(100vw - 80px), 360px); }
 }
 @media (prefers-reduced-motion: reduce) { .carta-reader[open] { animation: none; } }
+
+.carta-exact-preview { width: min(100%, 500px); min-width: 0; margin-inline: auto; }
+.carta-sheet-preview { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; box-shadow: 0 12px 30px #08041066; }
+.carta-sheet-preview > img { display: block; width: 100%; height: auto; }
+.carta-preview-footer { display: flex; justify-content: center; margin-top: 12px; }

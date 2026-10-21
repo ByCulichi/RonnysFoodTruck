@@ -223,9 +223,8 @@ export default function Home() {
             <RonnySeasons />
           </div>
 
+          <VisitSection />
         </div>
-
-        <VisitSection />
 
       </main>
       <SiteFooter />

@@ -137,7 +137,7 @@ El fondo de ubicación se diferencia del footer con `VisitNightScenery`: silueta
 
 ## Ambiente de Halloween entre secciones
 
-`HalloweenMarketScene` une menú, carta, promoción, domicilio, temporadas e historia con noche violeta, luna, telarañas, calabazas iluminadas, niebla, murciélagos y pequeñas brasas. Son SVG y degradados locales, sin descargar imágenes nuevas ni consultar servicios. Las capas decorativas no interceptan clics ni alteran el flujo. El botón «Pausar fondo» detiene el movimiento, `prefers-reduced-motion` lo desactiva, y un observador pausa las animaciones cuando la región sale de pantalla. Navidad conserva su aviso de próxima temporada. El mapa urbano y el bosque del footer siguen siendo escenarios separados.
+`HalloweenMarketScene` une menú, carta, promoción, domicilio, temporadas e historia con noche violeta, luna, telarañas, calabazas iluminadas, niebla, murciélagos y pequeñas brasas. Son SVG y degradados locales, sin descargar imágenes nuevas ni consultar servicios. Las capas decorativas no interceptan clics ni alteran el flujo. El botón «Pausar movimiento» detiene el movimiento, `prefers-reduced-motion` lo desactiva, y un observador pausa las animaciones cuando la región sale de pantalla. Navidad conserva su aviso de próxima temporada. El mapa urbano y el bosque del footer siguen siendo escenarios separados.
 
 Por la última petición del propietario, el dúo del footer va a la izquierda y el mensaje a la derecha, también en celular. Se refleja solo el escenario y el terreno para conservar el apoyo sobre el césped; el PNG aprobado y sus proporciones permanecen intactos. Los logos son enlaces nativos: admiten clic, Enter y apertura en otra pestaña, sin previews al pasar el ratón/enfocar y sin saltos de altura o scroll.
 
@@ -173,4 +173,12 @@ Los controles alrededor de Ronny ahora muestran únicamente iconos grandes de co
 
 ## La carta, como en el truck
 
-«Abrir carta» muestra primero las tres fotografías originales, completas y sin retoques, en un lector de hojas con pestañas Dulces/Salados/Bebidas, anterior/siguiente, navegación con flechas cuando está al 100% y zoom de 100% a 250%. En móvil se puede desplazar la hoja ampliada. «Texto grande» conserva la lectura accesible y ampliable desde el catálogo verificado. La carta inline usa papel crema, títulos rojos, bordes discontinuos y cuadros como las cartas físicas; nombres, variantes y precios aumentan tamaño y contraste. Se mantienen cuatro productos por página y los 28 productos sin cambios. Escape cierra y devuelve el foco al botón que abrió el lector.
+«Abrir carta» muestra primero las tres fotografías originales, completas y sin retoques, en un lector de hojas con pestañas Dulces/Salados/Bebidas, anterior/siguiente, navegación con flechas cuando está al 100% y zoom de 100% a 250%. En móvil se puede desplazar la hoja ampliada. «Texto grande» conserva la lectura accesible y ampliable desde el catálogo verificado. La carta inline muestra las mismas fotografías originales completas, servidas sin transformar, con pestañas y navegación entre las tres hojas; no recrea ni redibuja el diseño físico. El catálogo conserva sus 28 productos y precios. Escape cierra y devuelve el foco al botón que abrió el lector.
+
+## Últimos ajustes de lectura y continuidad
+
+La ficha activa ocupa menos espacio, con foto y separaciones más compactas y precios legibles. Por petición del propietario se retiran las etiquetas visibles de imagen ilustrativa, conservando los metadatos `generated` y los textos alternativos veraces del catálogo. Las imágenes originales y generadas siguen en sus carpetas independientes.
+
+Los círculos de categoría alrededor de Ronny flotan en recorridos suaves y con fases distintas. El movimiento se pausa al interactuar, con el control general, fuera de pantalla o con la pestaña oculta; `prefers-reduced-motion` lo elimina. Los filtros y nombres accesibles se conservan. Contacto destaca el teléfono con letra clara y elimina la fila duplicada de WhatsApp; footer y pedidos mantienen su enlace. Se retiran las pequeñas leyendas de temporadas, carta y bienvenida señaladas por el propietario.
+
+Menú, feria, temporadas y ubicación comparten el fondo de `HalloweenMarketScene`. Los ambientes locales son capas transparentes con degradados y máscaras amplias, sin líneas divisorias entre secciones; el final se funde con la base del footer. Se conservan los puestos, calabazas, ciudad y bosque, sin modificar sus personajes ni bloquear controles.
