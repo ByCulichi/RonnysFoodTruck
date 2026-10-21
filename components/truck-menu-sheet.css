@@ -1,13 +1,13 @@
 @font-face { font-family: "Truck Titles"; src: url("/fonts/shrikhand-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Truck Menu"; src: url("/fonts/poppins-latin-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-.truck-menu-sheet { --paper-red: #a52339; container-type: inline-size; position: relative; min-width: 0; padding: 0 22px; color: #211f25; background: radial-gradient(ellipse at 15% 40%, #dfcfa344, transparent 65%), #f4ebd2; box-shadow: 0 10px 28px #08041155; font: 700 calc(clamp(14px, 2.6cqw, 19px) * var(--carta-scale, 1))/1.35 "Truck Menu", Arial, sans-serif; }
+.truck-menu-sheet { --paper-red: #a52339; container-type: inline-size; position: relative; min-width: 0; padding: 0 22px; color: #211f25; background: radial-gradient(ellipse at 15% 40%, #dfcfa344, transparent 65%), #f4ebd2; box-shadow: 0 10px 28px #08041155; font: 700 clamp(14px, 2.6cqw, 17px)/1.35 "Truck Menu", Arial, sans-serif; }
 .paper-checkers { height: 32px; margin-inline: -22px; background: repeating-conic-gradient(var(--paper-red) 0 25%, transparent 0 50%) 0 0 / 32px 32px; }
 .paper-panel { border: 2.5px dashed #292632; border-radius: 27px; padding: 16px; }
 .truck-menu-sheet h4 { color: var(--paper-red); font-family: "Truck Titles", Georgia, serif; font-weight: 400; }
-.paper-sweet-sections { display: grid; gap: 10px; padding-block: 16px; }
+.paper-sweet-sections { display: grid; gap: 8px; padding-block: 14px; }
 .paper-sweet-panel { display: grid; grid-template-columns: .8fr 1.1fr 1.7fr; align-items: center; gap: 10px; }
 .paper-food-art { min-width: 0; align-self: center; }
-.paper-food-art > svg { display: block; width: 100%; height: auto; max-height: 170px; }
+.paper-food-art > img { display: block; width: 100%; height: auto; max-height: 150px; object-fit: contain; }
 .paper-sweet-flavors { min-width: 0; }
 .paper-sweet-flavors h4, .paper-list-panel h4 { font-size: 1.65em; line-height: 1.15; margin: 0 0 5px; }
 .paper-sweet-flavors p { margin: 0; font-size: .85em; line-height: 1.5; }
@@ -22,23 +22,22 @@
 .paper-price-line > span { min-width: 0; overflow-wrap: break-word; }
 .paper-price-line > i { flex: 1; min-width: 16px; border-bottom: 2px dotted #a7464a; }
 .paper-price-line > strong { flex-shrink: 0; color: #211f25; font: inherit; }
-.paper-sheet-heading { position: relative; padding: 65px 0 45px; text-align: center; }
+.paper-sheet-heading { position: relative; padding: 50px 0 32px; text-align: center; }
 .paper-sheet-heading > h4 { font-size: 4.1em; line-height: 1.2; margin: 0; }
 .paper-sheet-heading > .truck-stamp { position: absolute; top: 16px; right: 0; width: 76px; }
-.paper-main-panel { display: grid; grid-template-columns: 22% minmax(0, 1fr); gap: 14px; padding: 30px 20px; }
+.paper-main-panel { display: grid; grid-template-columns: 22% minmax(0, 1fr); gap: 14px; padding: 22px 16px; }
 .sheet-salados .paper-main-panel { align-items: start; }
 .sheet-salados .paper-food-art { align-self: start; padding-top: 60px; }
 .paper-sheet-footer { display: grid; justify-items: center; padding: 24px 0; }
 .paper-star { color: #c9233f; font-size: 34px; line-height: 1; }
 .truck-stamp { width: 100px; flex-shrink: 0; text-align: center; }
-.truck-stamp-circle { display: grid; justify-items: center; position: relative; padding: 7px 8px 5px; border: 4px double #24283d; outline: 2px solid #24283d; outline-offset: 1px; border-radius: 50%; background: repeating-linear-gradient(-35deg, #f7d15b 0 9px, #ffe99a 9px 15px); }
-.truck-stamp-circle > img { display: block; width: 68%; height: auto; aspect-ratio: 1; object-fit: contain; }
-.truck-stamp-circle > span { font: 700 15px/1.1 "Truck Menu", Arial, sans-serif; color: #20243e; transform: rotate(-7deg); }
+.truck-stamp-circle { position: relative; }
+.truck-stamp-circle > img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .stamp-thanks { width: 120px; padding: 10px 15px 15px; background: #bc2039; clip-path: polygon(50% 0,61% 5%,73% 4%,80% 13%,92% 17%,94% 29%,100% 40%,95% 52%,97% 65%,86% 73%,81% 86%,67% 90%,56% 99%,44% 96%,31% 98%,23% 87%,10% 82%,8% 68%,0 57%,5% 44%,3% 31%,14% 22%,20% 10%,35% 7%); }
 .stamp-thanks-label { display: block; color: #201e26; font: 700 11px/1.2 "Truck Menu", Arial, sans-serif; margin-bottom: 7px; }
 .sheet-bebidas { display: flex; flex-direction: column; }
-.sheet-bebidas .paper-sheet-heading { padding-block: 150px 120px; }
-.sheet-bebidas .paper-sheet-footer { padding-block: 70px 26px; }
+.sheet-bebidas .paper-sheet-heading { padding-block: 110px 80px; }
+.sheet-bebidas .paper-sheet-footer { padding-block: 45px 22px; }
 .sheet-bebidas .paper-sheet-heading > .truck-stamp { top: 25px; }
 @container (max-width: 440px) {
   .paper-sweet-panel { grid-template-columns: 58px minmax(0, 1fr); gap: 9px; padding: 12px; }
@@ -50,13 +49,17 @@
   .paper-sweet-flavors h4, .paper-list-panel h4 { font-size: 1.5em; }
   .paper-main-panel { grid-template-columns: minmax(0, 1fr); padding: 15px; gap: 10px; }
   .paper-main-panel > .paper-food-art { width: 55px; padding: 0; justify-self: center; }
-  .sheet-salados .paper-main-panel > .paper-food-art { display: none; }
   .paper-price-line { gap: 7px; padding-block: 5px; }
   .paper-price-line > i { min-width: 8px; }
   .paper-sheet-heading { padding-block: 30px; }
   .paper-sheet-heading > h4 { font-size: 2.8em; }
   .sheet-bebidas .paper-sheet-heading { padding-block: 100px 35px; }
   .paper-sheet-heading > .truck-stamp { width: 63px; }
-  .truck-stamp-circle > span { font-size: 11px; }
   .sheet-bebidas .paper-sheet-footer { padding-block: 25px; }
+}
+
+@container (min-width: 441px) and (max-width: 600px) {
+  .paper-sweet-panel { grid-template-columns: .65fr 1fr 1.8fr; gap: 8px; padding: 13px; }
+  .paper-sweet-flavors h4 { font-size: 1.5em; }
+  .paper-variants th { font-size: .82em; }
 }
