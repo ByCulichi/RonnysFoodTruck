@@ -16,7 +16,7 @@
 .market-fairground .season-halloween h3 { font-family: "Ronny Halloween", sans-serif; color: #ffb964; }
 .market-fairground .season-christmas { background: radial-gradient(ellipse at 93% 70%, #9a3a1e55, transparent 58%), linear-gradient(135deg, #461417f5, #21151bf5); }
 .halloween-season .halloween-market .story-section { background: linear-gradient(180deg, #1d102d33, #100c1cbb); }
-.market-night-decoration { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; }
+.market-night-decoration { position: absolute; inset: 0; z-index: -1; overflow: clip; pointer-events: none; background: linear-gradient(180deg, #1d102d, transparent 160px); }
 .market-moon { position: absolute; right: 3%; top: 13%; width: clamp(90px, 12vw, 190px); aspect-ratio: 1; border-radius: 50%; opacity: .48; background: radial-gradient(circle at 31% 33%, #b19f8b55 0 6%, transparent 7%), radial-gradient(circle at 68% 59%, #bd9f7c66 0 12%, transparent 13%), radial-gradient(circle at 50% 40%, #ffe1a6, #dfab6f 68%, #97648c); box-shadow: 0 0 45px #edb58226, 0 0 100px #b987a31c; }
 .market-web { position: absolute; top: 0; width: clamp(100px, 15vw, 220px); fill: none; stroke: #cea37d; stroke-width: .8; opacity: .28; }
 .market-web-left { left: 0; }
