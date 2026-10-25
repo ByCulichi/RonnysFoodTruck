@@ -93,3 +93,20 @@
 @media (prefers-reduced-motion: reduce) { .ronny-category-orb { animation: none; translate: none; } }
 
 @media (max-width: 600px) { .ronny-category-orb { --orb-drift: .5; } }
+
+@media (max-width: 900px) { .compact-menu-controls { display: none; } }
+@media (min-width: 701px) and (max-width: 900px) {
+  .menu-workspace { grid-template-columns: 240px minmax(0, 1fr); gap: 20px; }
+  .menu-ronny-guide { display: block; position: sticky; top: 104px; text-align: center; }
+  .menu-guide-art { height: 300px; }
+  .ronny-outfit-layer { width: 125px; height: 188px; }
+  .ronny-category-orb { width: 68px; height: 68px; padding: 11px; }
+  .ronny-category-orb > .food-icon { width: 42px; height: 42px; }
+  .menu-guide-message { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  .menu-guide-art { height: 210px; }
+  .ronny-outfit-layer { width: 114px; height: 171px; }
+  .ronny-category-orb { width: 68px; height: 68px; padding: 11px; }
+  .menu-guide-message { margin-top: 6px; }
+}

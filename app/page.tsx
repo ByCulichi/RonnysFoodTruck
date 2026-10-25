@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import {
   ArrowDown,
@@ -63,14 +63,33 @@ export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!mobileOpen) return;
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { setMobileOpen(false); mobileToggleRef.current?.focus(); }
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const desktop = window.matchMedia("(min-width: 1181px)");
+    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    const handleEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") { setMobileOpen(false); mobileToggleRef.current?.focus({ preventScroll: true }); }
     };
+    mobileNavRef.current?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
     document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", handleEscape);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
   }, [mobileOpen]);
+  function keepMobileFocus(event: KeyboardEvent<HTMLElement>) {
+    if (!mobileOpen) return;
+    if (event.key !== "Tab") return;
+    const links = mobileNavRef.current?.querySelectorAll<HTMLAnchorElement>("a");
+    const first = mobileToggleRef.current, last = links?.[links.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+  }
   useEffect(() => {
     const updateActiveSection = () => {
       let current = "inicio";
@@ -98,11 +117,11 @@ export default function Home() {
     setMenuSelection(name);
   }
   return (
-    <div className="ronny-site halloween-season">
+    <div className="ronny-site halloween-season" data-navigation-open={mobileOpen}>
       <a className="skip-link" href="#contenido">
         Saltar al contenido
       </a>
-      <header className="site-header">
+      <header className="site-header" onKeyDown={keepMobileFocus}>
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
             <Image src="/images/brand/ronny-wizard-head.png" alt="Ronny con sombrero de hechicero de Halloween" width={1254} height={1254} sizes="(max-width: 600px) 60px, 76px" />
@@ -134,6 +153,7 @@ export default function Home() {
         {mobileOpen && (
           <nav
             id="mobile-nav"
+            ref={mobileNavRef}
             className="mobile-nav"
             aria-label="Navegación móvil"
           >
