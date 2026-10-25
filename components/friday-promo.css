@@ -48,3 +48,10 @@
   .friday-promo-offer > span { font-size: 21px; }
   .friday-promo-offer > strong { font-size: 41px; }
 }
+
+@media (max-width: 600px) {
+  .friday-promo { grid-template-columns: 85px minmax(0, 1fr); padding: 17px; gap: 12px; margin-top: 22px; }
+  .friday-promo-copy h3 { font-size: 22px; margin-block: 8px; }
+  .friday-promo-copy p { font-size: 12px; line-height: 1.5; }
+  .friday-promo-offer { padding-top: 9px; }
+}

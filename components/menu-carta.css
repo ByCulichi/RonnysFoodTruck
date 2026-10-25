@@ -127,3 +127,9 @@
   .carta-sheet-tabs { padding-bottom: 2px; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-book-turn { display: none; animation: none; } }
+
+@media (max-width: 600px) {
+  .carta-digital-preview > .menu-book-viewport { height: clamp(220px, 42svh, 300px); }
+  .carta-ronny-art { width: 65px; height: 90px; }
+  .carta-ronny-copy h3 { font-size: 20px; }
+}

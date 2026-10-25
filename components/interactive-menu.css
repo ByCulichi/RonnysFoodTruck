@@ -220,3 +220,34 @@
   .menu-choice-grid button:focus-visible { outline-offset: -3px; }
   .menu-detail-actions { padding: 6px 10px; }
 }
+
+/* Keep the desktop product controls and photos in a single compact touch rail. */
+@media (max-width: 900px) {
+  .menu-choice-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(100px, 29vw, 120px); overflow-x: auto; scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 3px 10px; gap: 8px; margin-bottom: 12px; }
+  .menu-choice-grid button { scroll-snap-align: start; min-height: 128px; }
+  .menu-choice-grid button > .menu-choice-photo { height: 64px; }
+  .menu-choice-grid button:focus-visible { outline-offset: -3px; }
+}
+@media (max-width: 600px) {
+  .compact-menu-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .compact-menu-heading .eyebrow { font-size: 7.5px; letter-spacing: .6px; gap: 5px; }
+  .compact-menu-heading .eyebrow > svg { width: 13px; }
+  .compact-menu-heading h2 { font-size: clamp(28px, 8vw, 34px); margin-top: 8px; }
+  .menu-heading-actions { flex-direction: column; gap: 6px; margin: 0; }
+  .menu-heading-actions > a { max-width: 112px; min-height: 44px; gap: 5px; padding: 7px; font-size: 12px; line-height: 1.2; }
+  .menu-heading-actions > a > svg { width: 14px; flex-shrink: 0; }
+  .compact-menu-currency { font-size: 9px; }
+  .interactive-menu .selected-menu-dish .dish-image { height: clamp(110px, 32vw, 140px); }
+  .interactive-menu .selected-menu-dish .dish-info { padding: 12px; }
+  .interactive-menu .selected-menu-dish .dish-info > p { font-size: 13px; line-height: 1.5; }
+  .interactive-menu .selected-menu-dish .dish-price-list > div { padding-block: 5px; font-size: 13px; }
+  .interactive-menu .selected-menu-dish .dish-price-list dd { font-size: 16px; }
+}
+
+@media (max-width: 600px) {
+  /* Leave the atmosphere pause button its own space above the carta shortcut. */
+  .menu-heading-actions { padding-top: 34px; align-self: start; }
+}
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+  .menu-heading-actions { padding-top: 0; align-self: center; }
+}

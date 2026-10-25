@@ -200,3 +200,11 @@ Las tres cartas siguen siendo HTML seleccionable y usan los mismos productos, va
 Las escenas tienen poses, perspectivas, paletas y ambientes distintos: `ronny-halloween-fair.png` muestra a Ronny con varita junto a un caldero y una feria encantada; `ronny-muertos-ofrenda.png`, al catrín con bastón en un patio de arcos turquesa y una ofrenda al atardecer; `ronny-christmas-posada.png`, a Santa Ronny saludando desde el truck en una posada con piñata y nochebuenas. Halloween elimina la franja blanca de la frente por petición del propietario y se usa también en la portada principal, sin recortar a Ronny en móvil. Halloween sigue siendo la campaña actual; no se cambian fechas automáticamente ni se inventan ofertas.
 
 Los dibujos de comida y el sello están en `public/images/menu/illustrations/`, se sirven con Next Image y mantienen la apariencia de las cartas físicas. Las fotografías originales, las escenas anteriores y los personajes aprobados se conservan intactos como recursos.
+
+## Presentación móvil y tablet
+
+El contenido y las acciones del escritorio se conservan en pantallas pequeñas. Las miniaturas del menú forman una sola fila táctil hasta 900 px; Ronny mantiene los cuatro filtros y la selección conserva su posición vertical. Se compactan la cabecera del menú, la portada inline de la carta, la promoción, domicilio y ubicación; el lector de la carta conserva portada, hojas completas, animación y ampliación. El botón de pausa tiene espacio propio junto al acceso a la carta.
+
+Hasta 1000 px, las mismas tarjetas de temporada se recorren en una fila con desplazamiento nativo, ajuste al inicio de cada tarjeta y flechas de 44 px. Las tres escenas y sus enlaces siguen accesibles; el movimiento reducido elimina el desplazamiento animado. El visor no mueve verticalmente la página al navegar y se actualiza al cambiar la orientación.
+
+La navegación desplegable ocupa el alto disponible, bloquea el desplazamiento de fondo y contiene el foco entre sus enlaces y el botón de cierre. Escape devuelve el foco sin saltar la página; cambiar a escritorio cierra el panel y libera el desplazamiento. La barra inferior se oculta mientras el panel está abierto para no tapar sus enlaces. El diseño ancho conserva sus tres tarjetas de temporada y la distribución habitual.

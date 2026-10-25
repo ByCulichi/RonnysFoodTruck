@@ -26,3 +26,22 @@
   .halloween-market .season-copy a { font-size: 11px; line-height: 1.4; max-width: 130px; margin: 0; text-align: right; }
   .season-banner > .season-state { top: 10px; left: 10px; font-size: 7px; padding: 6px 8px; }
 }
+
+/* The same three complete cards become a native swipe rail on smaller screens. */
+.season-navigation { display: none; }
+@media (max-width: 1000px) {
+  .halloween-market .seasons-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc(50% - 8px); gap: 14px; align-items: stretch; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 2px 12px; }
+  .halloween-market .season-chapter { display: flex; flex-direction: column; scroll-snap-align: start; }
+  .halloween-market .season-copy { padding: 16px; }
+  .halloween-market .season-copy h3 { font-size: 28px; }
+  .halloween-market .season-copy p { font-size: 13px; }
+  .season-navigation { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+  .season-navigation > button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #d1a27e60; border-radius: 50%; color: #ffca88; background: #1c1029; }
+  .season-navigation > button:disabled { opacity: .3; }
+  .season-navigation > span { min-width: 40px; text-align: center; color: #e3c9d9; font-size: 12px; }
+}
+@media (max-width: 600px) {
+  .halloween-market .seasons-grid { grid-auto-columns: calc(100% - 18px); gap: 12px; }
+  .halloween-market .season-copy { display: grid; padding: 14px; }
+  .halloween-market .season-copy h3 { font-size: 26px; }
+}
