@@ -110,3 +110,7 @@
   .ronny-category-orb { width: 68px; height: 68px; padding: 11px; }
   .menu-guide-message { margin-top: 6px; }
 }
+
+/* Keep the food logos anchored to their section while the page scrolls. */
+.menu-ronny-guide { position: relative; top: auto; }
+.ronny-category-orb { animation: none; translate: none; }

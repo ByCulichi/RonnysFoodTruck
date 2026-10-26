@@ -145,6 +145,9 @@ export function MenuBook({ page, zoom = 1, onOpen, onClose, onNext, onPrevious }
     function draw(value: number) {
       progress = value;
       if (hard) {
+        // Show only the facing surface of the hard cover as it crosses 90°.
+        front.style.visibility = value < .5 ? "visible" : "hidden";
+        lift.style.visibility = value >= .5 ? "visible" : "hidden";
         leaf!.style.transform = `rotateY(${-180 * value}deg)`;
         frame!.style.transform = `scale(var(--book-scale)) translateX(${-CLOSED_OFFSET * (1 - value)}px)`;
         if (board) board.style.transform = `rotateY(${180 * (1 - value)}deg)`;

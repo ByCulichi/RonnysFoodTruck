@@ -3,8 +3,7 @@
 .compact-menu-heading h2 { font-family: Arial, sans-serif; font-size: clamp(32px, 3.5vw, 46px); font-weight: 800; letter-spacing: -.5px; line-height: 1.12; margin-top: 14px; }
 .compact-menu-heading h2 em { font-family: Georgia, serif; font-weight: 400; font-style: italic; color: var(--gold); }
 .compact-menu-heading p { font-size: 16px; line-height: 1.7; color: #dfc5ab; margin: 12px 0 0; }
-.compact-menu-currency { color: #d8b78d; font-size: 12px; white-space: nowrap; padding-bottom: 4px; }
-.compact-menu-controls { display: grid; grid-template-columns: 1fr 290px; align-items: center; gap: 20px; padding: 10px; margin-bottom: 25px; border: 1px solid #dfad6745; border-radius: 18px; background: #1e1119f5; backdrop-filter: blur(12px); position: sticky; top: 96px; z-index: 25; }
+.compact-menu-controls { display: grid; grid-template-columns: 1fr 290px; align-items: center; gap: 20px; padding: 10px; margin-bottom: 25px; border: 1px solid #dfad6745; border-radius: 18px; background: #1e1119f5; backdrop-filter: blur(12px); position: relative; top: auto; z-index: 25; }
 .menu-group-switch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .menu-group-switch button { display: flex; justify-content: center; align-items: center; gap: 8px; min-width: 0; min-height: 52px; padding: 8px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: #e6d1bc; font-size: 16px; font-weight: 700; }
 .menu-group-switch .food-icon { width: 30px; height: 30px; flex-shrink: 0; }
@@ -74,7 +73,7 @@
   .menu-choice-grid button { flex-direction: row; flex-wrap: wrap; min-height: 82px; padding: 10px 7px; gap: 5px; }
   .menu-choice-grid button > small { width: 100%; margin-top: 0; }
   .menu-choice-grid button > .food-icon { width: 26px; height: 26px; }
-  .compact-menu-controls { top: 90px; }
+  .compact-menu-controls { top: auto; }
 }
 @media (max-width: 900px) {
   .menu-workspace { grid-template-columns: minmax(0, 1fr); gap: 18px; }
@@ -93,8 +92,7 @@
   .compact-menu-heading { display: block; margin-bottom: 18px; }
   .compact-menu-heading h2 { font-size: 33px; }
   .compact-menu-heading p { font-size: 14px; margin-top: 10px; }
-  .compact-menu-currency { display: none; }
-  .compact-menu-controls { top: 82px; gap: 7px; padding: 7px; margin-bottom: 18px; border-radius: 14px; }
+  .compact-menu-controls { top: auto; gap: 7px; padding: 7px; margin-bottom: 18px; border-radius: 14px; }
   .menu-group-switch { gap: 4px; }
   .menu-group-switch button { min-height: 45px; gap: 5px; padding-inline: 4px; font-size: 14px; }
   .menu-group-switch .food-icon { width: 24px; height: 24px; }
@@ -144,7 +142,6 @@
 .menu-heading-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .menu-heading-actions > a { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 16px; border: 1px solid #f1b57780; border-radius: 14px; color: #ffdaa1; background: #361d37a8; font: 400 17px "Ronny Display", sans-serif; }
 .menu-heading-actions > a:hover { background: #5f2b47; }
-.compact-menu-currency { color: #ceadd1; }
 .compact-menu-controls { background: #22142ff5; border-color: #c67bca55; box-shadow: 0 8px 24px #08041155; }
 .menu-group-switch button { font: 400 19px "Ronny Display", sans-serif; color: #ead8f0; }
 .menu-group-switch small { font: 700 11px Arial, sans-serif; }
@@ -191,7 +188,6 @@
   .compact-menu-heading p { font-size: 14px; margin-top: 8px; }
   .menu-heading-actions { flex-direction: row; justify-content: space-between; align-items: center; margin-top: 12px; }
   .menu-heading-actions > a { min-height: 44px; font-size: 15px; padding-block: 9px; }
-  .compact-menu-currency { display: block; font-size: 10px; }
   .menu-group-switch button { font-size: 17px; }
   .menu-cobweb { width: 115px; height: 115px; opacity: .15; }
   .bat-one { top: 75px; right: 9%; width: 37px; }
@@ -236,7 +232,6 @@
   .menu-heading-actions { flex-direction: column; gap: 6px; margin: 0; }
   .menu-heading-actions > a { max-width: 112px; min-height: 44px; gap: 5px; padding: 7px; font-size: 12px; line-height: 1.2; }
   .menu-heading-actions > a > svg { width: 14px; flex-shrink: 0; }
-  .compact-menu-currency { font-size: 9px; }
   .interactive-menu .selected-menu-dish .dish-image { height: clamp(110px, 32vw, 140px); }
   .interactive-menu .selected-menu-dish .dish-info { padding: 12px; }
   .interactive-menu .selected-menu-dish .dish-info > p { font-size: 13px; line-height: 1.5; }
