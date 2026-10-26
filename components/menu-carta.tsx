@@ -2,12 +2,11 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, BookX, Minus, PawPrint, Plus, X } from "lucide-react";
+import { BookOpen, Minus, PawPrint, Plus, X } from "lucide-react";
 import { dishes, type Dish } from "@/lib/menu";
-import { getMenuCategory } from "@/lib/menu-categories";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
 import { truckSheets } from "@/components/truck-menu-sheet";
-import { MenuBook } from "@/components/menu-book";
+import { MenuBook, type BookPage } from "@/components/menu-book";
 import "./menu-carta.css";
 
 function CartaItem({ dish }: { dish: Dish }) {
@@ -19,111 +18,79 @@ function CartaItem({ dish }: { dish: Dish }) {
   </li>;
 }
 
-export function MenuCarta({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
-  const category = getMenuCategory(dishes.find(({ name }) => name === selection) || dishes[0]);
-  const previewIndex = category === "dulces" ? 0 : category === "salados" ? 1 : 2;
+export function MenuCarta(_props: { selection: string; onSelect: (name: string) => void }) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"design" | "text">("design");
-  const [sheet, setSheet] = useState(0);
+  const [page, setPage] = useState<BookPage>("cover");
+  const [preview, setPreview] = useState<BookPage>("cover");
   const [zoom, setZoom] = useState(0);
-  const [previewClosed, setPreviewClosed] = useState(true);
-  const [closed, setClosed] = useState(true);
-  const [previewEnd, setPreviewEnd] = useState(false);
-  const [end, setEnd] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const autoOpen = useRef<0 | 2>(0);
+  const sheet = typeof page === "number" ? page : page === "back" ? 2 : 0;
   const products = dishes.filter(dish => dish.group === (sheet === 0 ? "Dulces" : sheet === 1 ? "Salados" : "Bebidas"));
+
+  useEffect(() => {
+    if (!open && triggerRef.current) previewRef.current?.querySelector<HTMLButtonElement>(".menu-cover-open")?.focus({ preventScroll: true });
+  }, [open, preview]);
 
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = previous; };
+    // Mount the closed book before lifting its cover, including reduced motion.
+    let second = 0;
+    const first = requestAnimationFrame(() => { second = requestAnimationFrame(() => setPage(autoOpen.current)); });
+    return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); document.body.style.overflow = previous; };
   }, [open]);
 
-  function selectSheet(next: number) {
-    previewRef.current?.querySelector<HTMLElement>(".menu-book-viewport")?.focus({ preventScroll: true });
-    if (next === 3) { setPreviewClosed(false); setPreviewEnd(true); return; }
-    setPreviewEnd(false);
-    const index = (next + truckSheets.length) % truckSheets.length;
-    setPreviewClosed(false);
-    onSelect(dishes.find(dish => dish.group === (index === 0 ? "Dulces" : index === 1 ? "Salados" : "Bebidas"))!.name);
-  }
-
-  function openCarta(button: HTMLButtonElement) {
-    triggerRef.current = button;
-    setMode("design"); setZoom(0); setClosed(true); setEnd(false); setSheet(previewIndex);
+  function openCarta(trigger?: HTMLButtonElement) {
+    triggerRef.current = trigger || document.activeElement as HTMLElement;
+    autoOpen.current = preview === "back" ? 2 : 0;
+    setMode("design"); setZoom(0); setPage(preview);
     dialogRef.current?.showModal(); setOpen(true);
   }
 
-  function showSheet(next: number) {
-    const readingArea = canvasRef.current?.querySelector<HTMLElement>(".menu-book-viewport") || canvasRef.current;
-    readingArea?.focus({ preventScroll: true });
-    setClosed(false);
-    setEnd(next === 3);
-    setSheet(next === 3 ? 2 : (next + truckSheets.length) % truckSheets.length);
-    setZoom(0); canvasRef.current?.scrollTo(0, 0);
+  function showPage(next: BookPage) {
+    canvasRef.current?.querySelector<HTMLElement>(".menu-book-viewport")?.focus({ preventScroll: true });
+    setPage(next); setZoom(0);
   }
+  function nextPage() { if (page === "cover") showPage(0); else if (typeof page === "number") showPage(page === 2 ? "back" : page + 1); }
+  function previousPage() { if (page === "back") showPage(2); else if (typeof page === "number") showPage(page === 0 ? "cover" : page - 1); }
 
   function trapFocus(event: KeyboardEvent<HTMLDialogElement>) {
-    if (zoom === 0 && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+    if (zoom === 0 && mode === "design" && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
       event.preventDefault();
-      if (event.key === "ArrowRight") { if (closed) showSheet(0); else if (!end && (mode === "design" || sheet < 2)) showSheet(sheet + 1); }
-      else if (!closed) { if (end) showSheet(2); else if (sheet > 0) showSheet(sheet - 1); else closeBook(); }
+      if (event.key === "ArrowRight") nextPage(); else previousPage();
       return;
     }
     if (event.key !== "Tab") return;
-    const items = event.currentTarget.querySelectorAll<HTMLElement>("button:not(:disabled), a[href], [tabindex='0']");
+    const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>("button:not(:disabled), select, [tabindex='0']")).filter(item => item.getClientRects().length > 0);
     const first = items[0], last = items[items.length - 1];
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   }
 
-  function closeBook(inDialog = true) {
-    const area = inDialog ? dialogRef.current : previewRef.current;
-    area?.querySelector<HTMLButtonElement>(".carta-book-toggle")?.focus({ preventScroll: true });
-    if (inDialog) { setClosed(true); setEnd(false); setZoom(0); setMode("design"); }
-    else { setPreviewClosed(true); setPreviewEnd(false); }
-  }
-
-  const bookToggle = (inDialog = false) => {
-    const isClosed = inDialog ? closed : previewClosed;
-    const Icon = isClosed ? BookOpen : BookX;
-    return <button type="button" className="carta-book-toggle" aria-label={isClosed ? "Abrir libro del menú" : "Cerrar libro del menú"} onClick={() => {
-      if (!isClosed) closeBook(inDialog);
-      else if (inDialog) { setClosed(false); setEnd(false); } else { setPreviewClosed(false); setPreviewEnd(false); }
-    }}><Icon size={16} aria-hidden="true" />{isClosed ? "Abrir menú" : "Cerrar menú"}</button>;
-  };
-
   return <section className="truck-carta" id="carta-original" aria-labelledby="truck-carta-title">
-    <div className="carta-heading"><div><span className="eyebrow"><BookOpen size={17} aria-hidden="true" /> EL SABOR, BIEN CLARO</span><h3 id="truck-carta-title">La carta del truck.</h3></div><button type="button" className="carta-expand" onClick={(event) => openCarta(event.currentTarget)}><BookOpen size={18} aria-hidden="true" /> Abrir carta</button></div>
+    <div className="carta-heading"><div><span className="eyebrow"><BookOpen size={17} aria-hidden="true" /> EL SABOR, BIEN CLARO</span><h3 id="truck-carta-title">La carta del truck.</h3></div></div>
     <div className="carta-layout">
       <div ref={previewRef} className="carta-digital-preview">
-        <MenuBook page={previewClosed ? "cover" : previewEnd ? "end" : previewIndex} onOpen={() => { setPreviewClosed(false); }} onClose={() => closeBook(false)} onNext={() => { if (!previewEnd) selectSheet(previewClosed ? 0 : previewIndex + 1); }} onPrevious={() => { if (!previewClosed) { if (previewEnd) selectSheet(2); else if (previewIndex === 0) closeBook(false); else selectSheet(previewIndex - 1); } }} />
-        <div className="carta-preview-footer"><div className="carta-pagination" role="group" aria-label="Recorrer carta">
-          <button type="button" aria-label="Carta anterior" disabled={previewClosed} onClick={() => previewEnd ? selectSheet(2) : previewIndex === 0 ? closeBook(false) : selectSheet(previewIndex - 1)}><ArrowLeft size={18} /></button>
-          <span aria-live="polite">{previewClosed ? "Portada" : previewEnd ? "Final" : `${previewIndex + 1} / 3`}</span>
-          <button type="button" aria-label="Carta siguiente" disabled={previewEnd} onClick={() => selectSheet(previewClosed ? 0 : previewIndex + 1)}><ArrowRight size={18} /></button>
-        </div>{bookToggle()}</div>
+        <MenuBook key={preview} page={preview} onOpen={openCarta} onNext={() => openCarta()} onPrevious={() => { if (preview === "back") openCarta(); }} />
       </div>
       <aside className="carta-ronny" id="historia" aria-labelledby="carta-ronny-title">
         <div className="carta-ronny-art"><Image src={halloweenCostumes.zombi.src} alt={halloweenCostumes.zombi.alt} width={1024} height={1536} sizes="(max-width: 600px) 85px, 210px" /></div>
-        <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3><a href="#selected-menu-dish" onClick={() => onSelect("Salchipulpos")}>Sus snacks favoritos <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+        <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3></div>
       </aside>
     </div>
-    <dialog ref={dialogRef} className="carta-reader" data-mode={mode} aria-label={end ? "Contraportada del menú de Ronny’s" : closed && mode === "design" ? "Portada del menú de Ronny’s" : `Carta digital de ${truckSheets[sheet].title.toLowerCase()}`} onKeyDown={trapFocus} onClose={() => { setOpen(false); triggerRef.current?.focus({ preventScroll: true }); }} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
+    <dialog ref={dialogRef} className="carta-reader" data-mode={mode} aria-label={page === "back" ? "Contraportada del menú de Ronny’s" : page === "cover" ? "Portada del menú de Ronny’s" : `Carta digital de ${truckSheets[sheet].title.toLowerCase()}`} onKeyDown={trapFocus} onClose={() => { setPreview(page === "back" ? "back" : "cover"); setOpen(false); triggerRef.current?.focus({ preventScroll: true }); }} onClick={event => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
       <div className="carta-reader-heading"><strong>La carta del truck</strong><button type="button" autoFocus aria-label="Cerrar carta" onClick={() => dialogRef.current?.close()}><X size={24} /></button></div>
-      <div className="carta-reader-toolbar"><div className="carta-reader-modes" role="group" aria-label="Vista de la carta"><button type="button" aria-pressed={mode === "design"} onClick={() => { setMode("design"); setZoom(0); }}>Diseño del truck</button><button type="button" aria-pressed={mode === "text"} onClick={() => { setMode("text"); setClosed(false); setEnd(false); setZoom(0); }}>Texto grande</button></div><div className="carta-pagination" role="group" aria-label="Tamaño de la carta"><button type="button" aria-label="Reducir carta" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}><Minus size={18} /></button><span aria-live="polite">{100 + zoom * 25}%</span><button type="button" aria-label="Aumentar carta" disabled={zoom === (mode === "design" ? 12 : 4)} onClick={() => setZoom(zoom + 1)}><Plus size={18} /></button></div></div>
+      <div className="carta-reader-toolbar"><div className="carta-reader-modes" role="group" aria-label="Vista de la carta"><button type="button" aria-pressed={mode === "design"} onClick={() => { setMode("design"); setZoom(0); }}>Diseño del truck</button><button type="button" aria-pressed={mode === "text"} onClick={() => { setMode("text"); setZoom(0); }}>Texto grande</button></div><div className="carta-pagination" role="group" aria-label="Tamaño de la carta"><button type="button" aria-label="Reducir carta" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}><Minus size={18} /></button><span aria-live="polite">{100 + zoom * 25}%</span><button type="button" aria-label="Aumentar carta" disabled={zoom === (mode === "design" ? 12 : 4)} onClick={() => setZoom(zoom + 1)}><Plus size={18} /></button></div></div>
       <div ref={canvasRef} className="carta-reader-canvas" data-mode={mode} tabIndex={mode === "text" ? 0 : undefined} aria-label="Productos y precios de la carta" style={{ "--carta-text-size": `${20 * (1 + zoom * .25)}px` } as CSSProperties}>
-        {open && (mode === "design" ? <MenuBook page={closed ? "cover" : end ? "end" : sheet} zoom={1 + zoom * .25} onOpen={() => { setClosed(false); }} onClose={() => closeBook()} onNext={() => { if (!end) showSheet(closed ? 0 : sheet + 1); }} onPrevious={() => { if (!closed) { if (end) showSheet(2); else if (sheet === 0) closeBook(); else showSheet(sheet - 1); } }} /> : <div className="carta-reader-text"><h4>{truckSheets[sheet].title}</h4><p>Precios en MXN</p><ul className="carta-product-list">{products.map(dish=><CartaItem key={dish.name} dish={dish} />)}</ul></div>)}
+        {open && (mode === "design" ? <MenuBook page={page} zoom={1 + zoom * .25} onOpen={() => showPage(page === "back" ? 2 : 0)} onNext={nextPage} onPrevious={previousPage} /> : <div className="carta-reader-text"><label className="carta-text-category">Carta <select aria-label="Categoría de la carta" value={sheet} onChange={event => setPage(Number(event.target.value))}>{truckSheets.map((item, index) => <option value={index} key={item.id}>{item.title}</option>)}</select></label><h4>{truckSheets[sheet].title}</h4><ul className="carta-product-list">{products.map(dish => <CartaItem key={dish.name} dish={dish} />)}</ul></div>)}
       </div>
-      <div className="carta-reader-footer"><div className="carta-book-footer-start">{bookToggle(true)}<span><span className="sr-only">Precios en </span>MXN</span></div><div className="carta-pagination" role="group" aria-label="Pasar hojas de la carta">
-        <button type="button" aria-label="Hoja anterior" disabled={closed} onClick={() => end ? showSheet(2) : sheet === 0 ? closeBook() : showSheet(sheet - 1)}><ArrowLeft size={18} /></button>
-        <span aria-live="polite">{closed && mode === "design" ? "Portada" : end ? "Final" : `${sheet + 1} / 3`}</span>
-        <button type="button" aria-label="Hoja siguiente" disabled={end || (mode === "text" && sheet === 2)} onClick={() => showSheet(closed ? 0 : sheet + 1)}><ArrowRight size={18} /></button>
-      </div></div>
+      <span className="sr-only" aria-live="polite">{page === "back" ? "Libro cerrado. Contraportada." : page === "cover" ? "Libro cerrado. Portada." : `${truckSheets[sheet].title}. Hoja ${sheet + 1} de 3.`}</span>
     </dialog>
   </section>;
 }
