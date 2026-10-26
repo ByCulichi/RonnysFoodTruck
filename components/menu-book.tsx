@@ -10,6 +10,7 @@ export type BookPage = "cover" | "end" | number;
 type LeafBack = "cover" | number;
 const PAGE_WIDTH = 596;
 const CLOSED_WIDTH = 628;
+const LEAF_SECTIONS = 6;
 const OPEN_WIDTH = 1224;
 const BOOK_HEIGHT = 878;
 
@@ -27,11 +28,11 @@ function MenuCover({ back = false }: { back?: boolean }) {
 
 const reverseArt = [
   { costume: halloweenCostumes.bruja, food: "waffle" },
-  { costume: halloweenCostumes.diablito, food: "papas" },
+  { costume: halloweenCostumes.zombi, food: "papas" },
   { costume: halloweenCostumes.vampiro, food: "cafe" },
 ] as const;
 
-// Each printed front has an illustrated back, which stays on the left stack.
+// The facing illustration belongs to the same category as the readable right page.
 function MenuReverse({ page }: { page: LeafBack }) {
   const art = page === "cover" ? null : reverseArt[page];
   const title = page === "cover" ? "Ronny’s" : truckSheets[page].title;
@@ -55,8 +56,22 @@ function BookContent({ page }: { page: BookPage }) {
   return page === "cover" ? <MenuCover /> : page === "end" ? <MenuCover back /> : <TruckMenuSheet sheet={page} />;
 }
 
-const leftPage = (page: BookPage): LeafBack | null => page === "cover" ? null : page === "end" ? 2 : page === 0 ? "cover" : page - 1;
+const leftPage = (page: BookPage): LeafBack | null => page === "cover" ? null : page === "end" ? "cover" : page;
 const pageOrder = (page: BookPage) => page === "cover" ? -1 : page === "end" ? 3 : page;
+// Six hinged strips share the same full-size artwork. Their small cumulative
+// rotations give the paper a continuous bow instead of turning a rigid card.
+function LeafSection({ front, back, index = 0, stiff = false }: { front: BookPage; back: LeafBack | null; index?: number; stiff?: boolean }) {
+  const count = stiff ? 1 : LEAF_SECTIONS;
+  const sectionWidth = PAGE_WIDTH / count;
+  // A subpixel overlap hides GPU antialias cracks between the hinged surfaces.
+  const overlap = index + 1 < count ? 1.25 : 0;
+  return <div className="menu-leaf-section" style={{ "--section-width": `${sectionWidth}px`, "--section-overlap": `${overlap}px`, "--leaf-bend": `${index === 0 ? 0 : -2 - index}deg` } as CSSProperties}>
+    <div className="menu-book-front"><div className="menu-leaf-content" style={{ left: -index * sectionWidth }}><BookContent page={front} /></div><span className="menu-leaf-light" style={{ left: -index * sectionWidth }} /></div>
+    <div className="menu-book-back"><div className="menu-leaf-content" style={{ left: -(count - index - 1) * sectionWidth + overlap }}>{back !== null && <MenuReverse page={back} />}</div><span className="menu-leaf-light" style={{ left: -(count - index - 1) * sectionWidth + overlap }} /></div>
+    {index + 1 < count && <LeafSection front={front} back={back} index={index + 1} />}
+  </div>;
+}
+
 type Turn = { from: BookPage; to: BookPage; id: number; direction: "next" | "previous" };
 
 export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; zoom?: number; onOpen: () => void; onClose: () => void }) {
@@ -92,10 +107,12 @@ export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; 
   }, []);
 
   const width = page === "cover" ? CLOSED_WIDTH : OPEN_WIDTH;
-  const fit = Math.max(0.05, Math.min((bounds.width - 16) / width, (bounds.height - 16) / BOOK_HEIGHT, 1));
+  // The camera and leaf scale stay fixed while the cover opens; only the binding
+  // shifts across the stage. This avoids the old resize/zoom halfway through a turn.
+  const fit = Math.max(0.05, Math.min((bounds.width - 16) / OPEN_WIDTH, (bounds.height - 16) / BOOK_HEIGHT, 1));
   const scale = fit * zoom;
   const turn = motion.turn;
-  const left = turn?.direction === "next" ? leftPage(turn.from) : leftPage(page);
+  const left = turn && (turn.direction === "next" || turn.to === "cover") ? leftPage(turn.from) : leftPage(page);
   const right = turn?.direction === "previous" ? turn.from : page;
   const reverse = turn && (turn.direction === "next" ? leftPage(turn.to) : leftPage(turn.from));
 
@@ -104,26 +121,25 @@ export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; 
     const host = hostRef.current;
     if (!host) return;
     if (zoom === 1) { host.scrollTo(0, 0); return; }
-    const center = (page === "cover" ? PAGE_WIDTH / 2 + 18 : PAGE_WIDTH * 1.5 + 18) * scale;
+    const center = (page === "cover" ? OPEN_WIDTH / 2 : PAGE_WIDTH * 1.5 + 18) * scale;
     host.scrollTo({ left: Math.max(0, center - host.clientWidth / 2) });
   }, [zoom, page, scale]);
 
-  return <div ref={hostRef} className="menu-book-viewport" data-zoomed={zoom > 1} data-page={page} data-spread={page !== "cover"} data-cover-turn={Boolean(turn && (turn.from === "cover" || turn.to === "cover") && zoom === 1)} tabIndex={0} aria-label="Libro del menú; las hojas giradas permanecen a la izquierda">
-    <div className="menu-book-space" style={{ width: width * scale, height: BOOK_HEIGHT * scale }}>
-      <div className="menu-book-frame" style={{ "--book-scale": scale, "--book-width": `${width}px`, "--right-page-left": page === "cover" ? "0px" : `${PAGE_WIDTH}px` } as CSSProperties}>
+  return <div ref={hostRef} className="menu-book-viewport" data-zoomed={zoom > 1} data-page={page} data-spread={page !== "cover" || Boolean(turn)} data-turning={Boolean(turn)} data-closing={turn?.to === "cover"} data-cover-turn={Boolean(turn && (turn.from === "cover" || turn.to === "cover") && zoom === 1)} tabIndex={0} aria-label="Libro del menú; las hojas giradas permanecen a la izquierda">
+    <div className="menu-book-space" style={{ width: OPEN_WIDTH * scale, height: BOOK_HEIGHT * scale }}>
+      <div className="menu-book-frame" style={{ "--book-scale": scale, "--book-width": `${width}px`, "--book-offset": page === "cover" ? `${(OPEN_WIDTH - CLOSED_WIDTH) / 2}px` : "0px", "--right-page-left": page === "cover" ? "0px" : `${PAGE_WIDTH}px` } as CSSProperties}>
         <div className="menu-book-spread">
+          {turn && <span className="menu-book-receiver-shadow" data-direction={turn.direction} data-opening={turn.from === "cover" || turn.to === "cover"} aria-hidden="true" />}
           {left !== null && <div className="menu-book-left"><MenuReverse page={left} /></div>}
           <div className="menu-book-paper">
             <div className="menu-book-current"><BookContent page={right} />{(page === "cover" || page === "end") && !turn && <button type="button" className="menu-cover-open" aria-label={page === "cover" ? "Abrir menú de Ronny’s" : "Cerrar menú de Ronny’s"} onClick={() => { (page === "cover" ? onOpen : onClose)(); hostRef.current?.focus({ preventScroll: true }); }} />}</div>
-            {turn && <div key={turn.id} className="menu-book-turn" data-direction={turn.direction} data-opening={turn.from === "cover" || turn.to === "cover"} aria-hidden="true" inert onAnimationEnd={event => {
+            {turn && <div key={turn.id} className="menu-book-turn" data-direction={turn.direction} data-opening={turn.from === "cover" || turn.to === "cover"} data-stiff={turn.from === "cover" || turn.to === "cover" || turn.from === "end" || turn.to === "end"} aria-hidden="true" inert onAnimationEnd={event => {
               if (event.target === event.currentTarget) setMotion(current => current.turn?.id === turn.id ? { ...current, turn: null } : current);
             }}>
-              <div className="menu-book-front"><BookContent page={turn.direction === "next" ? turn.from : turn.to} /></div>
-              <div className="menu-book-back">{reverse !== null && <MenuReverse page={reverse} />}</div>
-              <span className="menu-book-fold" />
+              <LeafSection front={turn.direction === "next" ? turn.from : turn.to} back={reverse} stiff={turn.from === "cover" || turn.to === "cover" || turn.from === "end" || turn.to === "end"} />
             </div>}
           </div>
-          {page !== "cover" && <span className="menu-book-spine" aria-hidden="true" />}
+          {(page !== "cover" || turn) && <span className="menu-book-spine" aria-hidden="true" />}
         </div>
       </div>
     </div>
