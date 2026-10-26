@@ -1,28 +1,17 @@
-.truck-cinema { position: absolute; z-index: 1; container-type: inline-size; transform: perspective(700px) rotateY(-7deg) rotateZ(2.4deg); transform-origin: center; }
-/* Empty hero layout space must not block the television behind it. */
-.halloween-hero :is(.night-heading, .night-bottom) { pointer-events: none; }
-.halloween-hero :is(.night-heading, .night-bottom) :is(a, button) { pointer-events: auto; }
+.truck-cinema { position: absolute; z-index: 1; container-type: inline-size; pointer-events: none; transform: perspective(700px) rotateY(-7deg) rotateZ(2.4deg); transform-origin: center; }
 .truck-tv-mount { position: absolute; width: 8%; height: 32%; top: -24%; left: 46%; background: linear-gradient(90deg, #18131b, #71604b, #21171a); box-shadow: 1px 0 2px #0009; }
 .truck-tv-bezel { position: relative; width: 100%; height: 100%; padding: 3%; border: 1px solid #ae7955; border-radius: 5%; background: linear-gradient(130deg, #4a3941, #17121e 50%, #513626); box-shadow: 2px 4px 5px #160913bb, 0 0 11px #d4a4ff38; }
-.truck-tv-picture { position: relative; width: 100%; height: 100%; overflow: hidden; background: #180d36; border-radius: 2%; }
-.truck-tv-picture > iframe { position: absolute; top: 0; left: 0; width: 480px; height: 270px; border: 0; transform: scale(var(--tv-scale)); transform-origin: top left; pointer-events: none; }
-.truck-tv-poster { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3cqw; background: radial-gradient(ellipse at 50% 90%, #b4642780, transparent 70%), linear-gradient(140deg, #3b1b67, #100d24); color: #ffd58d; text-align: center; }
-.truck-tv-poster > span { font-size: 4cqw; font-weight: 800; letter-spacing: 1cqw; }
-.truck-tv-poster > strong { font: 700 10cqw/1 Georgia, serif; }
-.truck-tv-poster > svg { width: 10cqw; height: 10cqw; }
-.truck-tv-poster > small { font-size: 5cqw; }
-.truck-tv-open { position: absolute; inset: 0; display: grid; align-items: end; justify-items: end; width: 100%; height: 100%; min-width: 44px; min-height: 44px; padding: 5%; background: transparent; border: 0; border-radius: 5%; cursor: pointer; }
-.truck-tv-open > svg { width: 13%; height: auto; min-width: 8px; padding: 1%; color: #fff3cd; background: #130b2299; border-radius: 2px; opacity: .85; }
-.truck-tv-open:hover, .truck-tv-open:focus-visible { outline: 2px solid #ffd182; outline-offset: 3px; }
-.truck-tv-led { position: absolute; bottom: 1%; right: 7%; width: 2%; height: 2%; border-radius: 50%; background: #b1e8b1; box-shadow: 0 0 3px #6fff88; pointer-events: none; }
-.truck-cinema-dialog { position: fixed; inset: 0; width: min(940px, calc(100% - 24px)); max-width: none; max-height: calc(100dvh - 24px); overflow: auto; margin: auto; padding: 0; color: #ffe7c6; background: #211025; border: 1px solid #ca9c62; border-radius: 16px; box-shadow: 0 20px 80px #000a; }
-.truck-cinema-dialog::backdrop { background: #080513e8; backdrop-filter: blur(6px); }
-.truck-cinema-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; }
-.truck-cinema-heading > div > span { font-size: 10px; letter-spacing: 1px; color: #ffc57e; }
-.truck-cinema-heading h2 { margin: 3px 0 0; font: 700 28px/1.2 Georgia, serif; }
-.truck-cinema-heading > button { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 1px solid #ca9c6260; border-radius: 50%; color: #ffd38c; background: #100b20; }
-.truck-cinema-player { position: relative; aspect-ratio: 16 / 9; min-height: 200px; background: #09060e; }
-.truck-cinema-player > iframe { position: absolute; inset: 0; border: 0; width: 100%; height: 100%; }
-.truck-cinema-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; font-size: 12px; }
-.truck-cinema-footer > a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: #ffd38c; }
-@media (max-height: 500px) { .truck-cinema-dialog { width: min(540px, calc(100% - 24px)); } .truck-cinema-heading { padding-block: 6px; } .truck-cinema-heading h2 { font-size: 20px; } .truck-cinema-player { max-height: calc(100dvh - 155px); min-height: 160px; } .truck-cinema-footer { padding-block: 0; } }
+.truck-tv-picture { position: relative; width: 100%; height: 100%; overflow: hidden; background: #091729; border-radius: 2%; }
+.truck-movie-art { width: 100%; height: 100%; display: block; }
+.truck-movie-title { position: absolute; bottom: 2%; left: 2%; width: 96%; color: #ffe3a7; text-align: center; text-shadow: 0 1px 2px #000; font: 700 6.5cqw/1.15 Georgia, serif; }
+.truck-tv-led { position: absolute; bottom: 1%; right: 7%; width: 2%; height: 2%; border-radius: 50%; background: #b1e8b1; box-shadow: 0 0 3px #6fff88; }
+.cinema-camera { transform-origin: 65% 50%; animation: cinema-camera 10s ease-in-out infinite alternate paused; }
+.cinema-mist { animation: cinema-mist 8s ease-in-out infinite alternate paused; }
+.cinema-petals, .cinema-snow { animation: cinema-drift 7s linear infinite paused; }
+.cinema-ghost { animation: cinema-ghost 5s ease-in-out infinite alternate paused; }
+.truck-cinema[data-playing="true"] :is(.cinema-camera, .cinema-mist, .cinema-petals, .cinema-snow, .cinema-ghost) { animation-play-state: running; }
+@keyframes cinema-camera { from { transform: scale(1.02) translateX(0); } to { transform: scale(1.11) translateX(-8px); } }
+@keyframes cinema-mist { from { transform: translateX(-14px); opacity: .2; } to { transform: translateX(18px); opacity: .45; } }
+@keyframes cinema-drift { from { transform: translate(0,-10px); opacity: .2; } 20%, 80% { opacity: .9; } to { transform: translate(-12px,23px); opacity: .2; } }
+@keyframes cinema-ghost { from { transform: translateY(2px); opacity: .65; } to { transform: translateY(-12px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .truck-cinema * { animation: none !important; } }
