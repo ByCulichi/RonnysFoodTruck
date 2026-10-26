@@ -153,3 +153,17 @@
 .carta-book-toggle > svg { flex-shrink: 0; }
 .carta-book-footer-start { display: flex; align-items: center; gap: 7px; }
 .carta-book-footer-start > span { color: #ffce90; font-size: 10px; }
+
+/* The printed cover and page surfaces are the controls; no external button row. */
+.menu-page-touch { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.menu-page-touch:focus-visible { outline: 4px solid #c19047; outline-offset: -7px; }
+.menu-book-current[hidden] { display: none; }
+.menu-book-board-right { transform-origin: 16px center; }
+.menu-book-back-closed { box-shadow: 2px 4px 8px #180c1244; }
+.carta-reader-canvas { margin-bottom: 12px; }
+.carta-text-category { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 16px; }
+.carta-text-category select { min-height: 44px; padding: 8px 12px; color: #a52339; border: 1px solid #b18a53; border-radius: 6px; background: #fff5df; }
+.menu-book-viewport[data-page="back"][data-turning="false"] .menu-book-frame { width: 628px; }
+.menu-book-viewport[data-page="back"][data-turning="false"] :is(.menu-book-paper, .menu-book-board-right) { display: none; }
+.menu-page-touch::after { content: ""; position: absolute; right: 0; bottom: 0; width: 36px; height: 36px; background: linear-gradient(135deg, transparent 47%, #c7ad86 49%, #fff7df 60%); clip-path: polygon(100% 0, 0 100%, 100% 100%); opacity: .8; }
+.menu-book-left .menu-page-touch::after { left: 0; right: auto; transform: scaleX(-1); }
