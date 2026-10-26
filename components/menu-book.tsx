@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
 import { ArrowUpRight, PawPrint } from "lucide-react";
 import { TruckMenuSheet, TruckStamp, truckSheets } from "@/components/truck-menu-sheet";
@@ -10,9 +10,9 @@ export type BookPage = "cover" | "end" | number;
 type LeafBack = "cover" | number;
 const PAGE_WIDTH = 596;
 const CLOSED_WIDTH = 628;
-const LEAF_SECTIONS = 6;
 const OPEN_WIDTH = 1224;
 const BOOK_HEIGHT = 878;
+const CLOSED_OFFSET = (OPEN_WIDTH - CLOSED_WIDTH) / 2;
 
 function MenuCover({ back = false }: { back?: boolean }) {
   return <div className="menu-book-cover">
@@ -58,24 +58,35 @@ function BookContent({ page }: { page: BookPage }) {
 
 const leftPage = (page: BookPage): LeafBack | null => page === "cover" ? null : page === "end" ? "cover" : page;
 const pageOrder = (page: BookPage) => page === "cover" ? -1 : page === "end" ? 3 : page;
-// Six hinged strips share the same full-size artwork. Their small cumulative
-// rotations give the paper a continuous bow instead of turning a rigid card.
-function LeafSection({ front, back, index = 0, stiff = false }: { front: BookPage; back: LeafBack | null; index?: number; stiff?: boolean }) {
-  const count = stiff ? 1 : LEAF_SECTIONS;
-  const sectionWidth = PAGE_WIDTH / count;
-  // A subpixel overlap hides GPU antialias cracks between the hinged surfaces.
-  const overlap = index + 1 < count ? 1.25 : 0;
-  return <div className="menu-leaf-section" style={{ "--section-width": `${sectionWidth}px`, "--section-overlap": `${overlap}px`, "--leaf-bend": `${index === 0 ? 0 : -2 - index}deg` } as CSSProperties}>
-    <div className="menu-book-front"><div className="menu-leaf-content" style={{ left: -index * sectionWidth }}><BookContent page={front} /></div><span className="menu-leaf-light" style={{ left: -index * sectionWidth }} /></div>
-    <div className="menu-book-back"><div className="menu-leaf-content" style={{ left: -(count - index - 1) * sectionWidth + overlap }}>{back !== null && <MenuReverse page={back} />}</div><span className="menu-leaf-light" style={{ left: -(count - index - 1) * sectionWidth + overlap }} /></div>
-    {index + 1 < count && <LeafSection front={front} back={back} index={index + 1} />}
-  </div>;
+type Turn = { from: BookPage; to: BookPage; id: number; direction: "next" | "previous" };
+type Point = { x: number; y: number };
+type Gesture = { pointer: number; x: number; y: number; width: number; active: boolean; progress: number; direction: "next" | "previous" };
+
+// Clip a sheet against the perpendicular bisector between its resting corner
+// and the moving corner. Reflecting the folded polygon keeps both faces joined.
+function clipSheet(normal: Point, distance: number, folded: boolean) {
+  const rectangle = [{ x: 0, y: 0 }, { x: PAGE_WIDTH, y: 0 }, { x: PAGE_WIDTH, y: 850 }, { x: 0, y: 850 }];
+  const polygon: Point[] = [];
+  const side = (point: Point) => (normal.x * point.x + normal.y * point.y - distance) * (folded ? 1 : -1);
+  for (let i = 0; i < rectangle.length; i++) {
+    const a = rectangle[i], b = rectangle[(i + 1) % rectangle.length];
+    const da = side(a), db = side(b);
+    if (da >= 0) polygon.push(a);
+    if ((da >= 0) !== (db >= 0)) {
+      const fraction = da / (da - db);
+      polygon.push({ x: a.x + (b.x - a.x) * fraction, y: a.y + (b.y - a.y) * fraction });
+    }
+  }
+  return polygon.length < 3 ? "polygon(0px 0px, 0px 0px, 0px 0px)" : `polygon(${polygon.map(point => `${point.x.toFixed(2)}px ${point.y.toFixed(2)}px`).join(",")})`;
 }
 
-type Turn = { from: BookPage; to: BookPage; id: number; direction: "next" | "previous" };
-
-export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; zoom?: number; onOpen: () => void; onClose: () => void }) {
+export function MenuBook({ page, zoom = 1, onOpen, onClose, onNext, onPrevious }: { page: BookPage; zoom?: number; onOpen: () => void; onClose: () => void; onNext?: () => void; onPrevious?: () => void }) {
   const hostRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const turnRef = useRef<HTMLDivElement>(null);
+  const gestureRef = useRef<Gesture | null>(null);
+  const suppressClick = useRef(false);
+  const controllerRef = useRef<{ draw: (progress: number) => void; resume: () => void; direction: "next" | "previous" } | null>(null);
   const [bounds, setBounds] = useState({ width: 400, height: 560 });
   const [reduceMotion, setReduceMotion] = useState(false);
   const [motion, setMotion] = useState<{ page: BookPage; serial: number; turn: Turn | null }>({ page, serial: 0, turn: null });
@@ -106,17 +117,74 @@ export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; 
     return () => preference.removeEventListener("change", update);
   }, []);
 
-  const width = page === "cover" ? CLOSED_WIDTH : OPEN_WIDTH;
-  // The camera and leaf scale stay fixed while the cover opens; only the binding
-  // shifts across the stage. This avoids the old resize/zoom halfway through a turn.
-  const fit = Math.max(0.05, Math.min((bounds.width - 16) / OPEN_WIDTH, (bounds.height - 16) / BOOK_HEIGHT, 1));
+  // Keep room above and below the paper for the lifted corner and hard cover.
+  const fit = Math.max(0.05, Math.min((bounds.width - 16) / OPEN_WIDTH, (bounds.height - 16) * .86 / BOOK_HEIGHT, 1));
   const scale = fit * zoom;
   const turn = motion.turn;
-  const left = turn && (turn.direction === "next" || turn.to === "cover") ? leftPage(turn.from) : leftPage(page);
+  const hard = Boolean(turn && (turn.from === "cover" || turn.to === "cover"));
+  const left = turn?.to === "cover" ? null : turn?.direction === "next" ? leftPage(turn.from) : leftPage(page);
   const right = turn?.direction === "previous" ? turn.from : page;
   const reverse = turn && (turn.direction === "next" ? leftPage(turn.to) : leftPage(turn.from));
 
-  // Enlarging focuses the readable front; the left stack remains available by panning.
+  useLayoutEffect(() => {
+    const frame = frameRef.current;
+    const leaf = turnRef.current;
+    const board = frame?.querySelector<HTMLElement>(".menu-book-board-left");
+    const rest = () => {
+      if (frame) frame.style.transform = `scale(var(--book-scale)) translateX(${page === "cover" ? -CLOSED_OFFSET : 0}px)`;
+      if (board) board.style.transform = `rotateY(${page === "cover" ? 180 : 0}deg)`;
+    };
+    if (!turn || !leaf || !frame) { rest(); return; }
+    const front = leaf.querySelector<HTMLElement>(".menu-book-front")!;
+    const back = leaf.querySelector<HTMLElement>(".menu-book-back")!;
+    const lift = leaf.querySelector<HTMLElement>(".menu-fold-lift")!;
+    const shades = leaf.querySelectorAll<HTMLElement>(".menu-fold-shade");
+    const finish = turn.direction === "next" ? 1 : 0;
+    let progress = gestureRef.current?.active ? (turn.direction === "next" ? gestureRef.current.progress : 1 - gestureRef.current.progress) : 1 - finish;
+    let request = 0, alive = true;
+    function draw(value: number) {
+      progress = value;
+      if (hard) {
+        leaf!.style.transform = `rotateY(${-180 * value}deg)`;
+        frame!.style.transform = `scale(var(--book-scale)) translateX(${-CLOSED_OFFSET * (1 - value)}px)`;
+        if (board) board.style.transform = `rotateY(${180 * (1 - value)}deg)`;
+        return;
+      }
+      const amount = Math.max(.00001, Math.min(.99999, value));
+      const corner = { x: PAGE_WIDTH * (1 - 2 * amount), y: 850 - 80 * Math.sin(Math.PI * amount) };
+      const delta = { x: PAGE_WIDTH - corner.x, y: 850 - corner.y };
+      const length = Math.hypot(delta.x, delta.y);
+      const normal = { x: delta.x / length, y: delta.y / length };
+      const middle = { x: (PAGE_WIDTH + corner.x) / 2, y: (850 + corner.y) / 2 };
+      const distance = normal.x * middle.x + normal.y * middle.y;
+      front.style.clipPath = clipSheet(normal, distance, false);
+      back.style.clipPath = clipSheet(normal, distance, true);
+      lift.style.transform = `matrix(${1 - 2 * normal.x ** 2},${-2 * normal.x * normal.y},${-2 * normal.x * normal.y},${1 - 2 * normal.y ** 2},${2 * normal.x * distance},${2 * normal.y * distance})`;
+      shades.forEach(shade => {
+        shade.style.transform = `translate(${middle.x}px,${middle.y}px) translate(-50%,-50%) rotate(${Math.atan2(normal.y, normal.x)}rad)`;
+        shade.style.opacity = `${Math.sin(Math.PI * amount) * .55}`;
+      });
+    }
+    function resume() {
+      cancelAnimationFrame(request);
+      const from = progress, start = performance.now();
+      const duration = Math.max(140, (hard ? 850 : 680) * Math.abs(finish - from));
+      const animate = (time: number) => {
+        if (!alive) return;
+        const elapsed = Math.min(1, (time - start) / duration);
+        const ease = .5 - .5 * Math.cos(Math.PI * elapsed);
+        draw(from + (finish - from) * ease);
+        if (elapsed < 1) request = requestAnimationFrame(animate);
+        else setMotion(current => current.turn?.id === turn!.id ? { ...current, turn: null } : current);
+      };
+      request = requestAnimationFrame(animate);
+    }
+    controllerRef.current = { draw, resume, direction: turn.direction };
+    draw(progress);
+    if (!gestureRef.current?.active) resume();
+    return () => { alive = false; cancelAnimationFrame(request); controllerRef.current = null; };
+  }, [turn, hard, page]);
+
   useLayoutEffect(() => {
     const host = hostRef.current;
     if (!host) return;
@@ -125,18 +193,52 @@ export function MenuBook({ page, zoom = 1, onOpen, onClose }: { page: BookPage; 
     host.scrollTo({ left: Math.max(0, center - host.clientWidth / 2) });
   }, [zoom, page, scale]);
 
-  return <div ref={hostRef} className="menu-book-viewport" data-zoomed={zoom > 1} data-page={page} data-spread={page !== "cover" || Boolean(turn)} data-turning={Boolean(turn)} data-closing={turn?.to === "cover"} data-cover-turn={Boolean(turn && (turn.from === "cover" || turn.to === "cover") && zoom === 1)} tabIndex={0} aria-label="Libro del menú; las hojas giradas permanecen a la izquierda">
+  function pointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (zoom !== 1 || turn || !event.isPrimary || event.button !== 0) return;
+    const paper = hostRef.current?.querySelector<HTMLElement>(".menu-book-paper");
+    gestureRef.current = { pointer: event.pointerId, x: event.clientX, y: event.clientY, width: paper?.getBoundingClientRect().width || 200, active: false, progress: 0, direction: "next" };
+    suppressClick.current = false;
+  }
+  function pointerMove(event: PointerEvent<HTMLDivElement>) {
+    const gesture = gestureRef.current;
+    if (!gesture || gesture.pointer !== event.pointerId) return;
+    const dx = event.clientX - gesture.x, dy = event.clientY - gesture.y;
+    if (!gesture.active) {
+      if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      const direction = dx < 0 ? "next" : "previous";
+      const action = direction === "next" ? onNext : onPrevious;
+      if (!action || (direction === "previous" && page === "cover") || (direction === "next" && page === "end")) return;
+      gesture.active = true; gesture.direction = direction;
+      event.currentTarget.setPointerCapture(event.pointerId);
+      suppressClick.current = true;
+      action();
+    }
+    event.preventDefault();
+    gesture.progress = Math.min(.98, Math.max(0, (gesture.direction === "next" ? -dx : dx) / (gesture.width * 2)));
+    controllerRef.current?.draw(gesture.direction === "next" ? gesture.progress : 1 - gesture.progress);
+  }
+  function pointerUp(event: PointerEvent<HTMLDivElement>) {
+    const gesture = gestureRef.current;
+    if (!gesture || gesture.pointer !== event.pointerId) return;
+    const active = gesture.active;
+    gesture.active = false;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    if (active) controllerRef.current?.resume();
+    gestureRef.current = null;
+  }
+
+  return <div ref={hostRef} className="menu-book-viewport" data-zoomed={zoom > 1} data-page={page} data-spread={page !== "cover" || Boolean(turn)} data-turning={Boolean(turn)} data-closing={turn?.to === "cover"} tabIndex={0} aria-label="Libro del menú; desliza horizontalmente o usa las flechas para pasar las hojas" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp} onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}>
     <div className="menu-book-space" style={{ width: OPEN_WIDTH * scale, height: BOOK_HEIGHT * scale }}>
-      <div className="menu-book-frame" style={{ "--book-scale": scale, "--book-width": `${width}px`, "--book-offset": page === "cover" ? `${(OPEN_WIDTH - CLOSED_WIDTH) / 2}px` : "0px", "--right-page-left": page === "cover" ? "0px" : `${PAGE_WIDTH}px` } as CSSProperties}>
+      <div ref={frameRef} className="menu-book-frame" style={{ "--book-scale": scale, "--book-offset": page === "cover" ? `${-CLOSED_OFFSET}px` : "0px", "--cover-angle": page === "cover" ? "180deg" : "0deg" } as CSSProperties}>
         <div className="menu-book-spread">
-          {turn && <span className="menu-book-receiver-shadow" data-direction={turn.direction} data-opening={turn.from === "cover" || turn.to === "cover"} aria-hidden="true" />}
+          <div className="menu-book-board menu-book-board-left" aria-hidden="true" />
+          <div className="menu-book-board menu-book-board-right" aria-hidden="true" />
           {left !== null && <div className="menu-book-left"><MenuReverse page={left} /></div>}
           <div className="menu-book-paper">
             <div className="menu-book-current"><BookContent page={right} />{(page === "cover" || page === "end") && !turn && <button type="button" className="menu-cover-open" aria-label={page === "cover" ? "Abrir menú de Ronny’s" : "Cerrar menú de Ronny’s"} onClick={() => { (page === "cover" ? onOpen : onClose)(); hostRef.current?.focus({ preventScroll: true }); }} />}</div>
-            {turn && <div key={turn.id} className="menu-book-turn" data-direction={turn.direction} data-opening={turn.from === "cover" || turn.to === "cover"} data-stiff={turn.from === "cover" || turn.to === "cover" || turn.from === "end" || turn.to === "end"} aria-hidden="true" inert onAnimationEnd={event => {
-              if (event.target === event.currentTarget) setMotion(current => current.turn?.id === turn.id ? { ...current, turn: null } : current);
-            }}>
-              <LeafSection front={turn.direction === "next" ? turn.from : turn.to} back={reverse} stiff={turn.from === "cover" || turn.to === "cover" || turn.from === "end" || turn.to === "end"} />
+            {turn && <div ref={turnRef} key={turn.id} className="menu-book-turn" data-direction={turn.direction} data-kind={hard ? "hard" : "paper"} aria-hidden="true" inert>
+              <div className="menu-book-front"><BookContent page={turn.direction === "next" ? turn.from : turn.to} /><span className="menu-fold-shade" /></div>
+              <div className="menu-fold-lift"><div className="menu-book-back"><div className="menu-fold-back-content">{reverse !== null && <MenuReverse page={reverse} />}</div><span className="menu-fold-shade" /></div></div>
             </div>}
           </div>
           {(page !== "cover" || turn) && <span className="menu-book-spine" aria-hidden="true" />}
