@@ -31,6 +31,7 @@ import { MenuCarta } from "@/components/menu-carta";
 import { HalloweenFairground, HalloweenMarketScene } from "@/components/halloween-market-scene";
 import { FridayPromo } from "@/components/friday-promo";
 import { MenuNightScenery } from "@/components/menu-night-scenery";
+import { TruckCinema } from "@/components/truck-cinema";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
@@ -178,6 +179,7 @@ export default function Home() {
               priority
               sizes="(max-width: 600px) 135vw, 100vw"
             />
+            <TruckCinema season="halloween" />
           </div>
           <div className="night-lights" aria-hidden="true">
             <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
