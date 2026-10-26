@@ -4,8 +4,8 @@
 .carta-expand { display: inline-flex; align-items: center; justify-content: center; gap: 9px; flex-shrink: 0; min-height: 46px; padding: 10px 16px; background: #ffc478; border: 1px solid #ffdcaa; border-radius: 99px; color: #30162b; font-size: 14px; font-weight: 700; }
 .carta-expand:hover { background: #ffdcaa; }
 .carta-layout { display: grid; grid-template-columns: minmax(0, 1fr) 215px; gap: 35px; align-items: center; }
-.carta-digital-preview { width: min(100%, 440px); min-width: 0; margin-inline: auto; }
-.carta-preview-footer { display: flex; justify-content: center; margin-top: 12px; }
+.carta-digital-preview { width: 100%; min-width: 0; margin-inline: auto; }
+.carta-preview-footer { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 12px; }
 .carta-sheet-tabs { display: flex; justify-content: center; gap: 8px; padding-bottom: 12px; }
 .carta-sheet-tabs > button { min-height: 44px; padding: 8px 18px; border: 1px solid #d19c7655; border-radius: 99px; color: #efcebb; background: #24121f; font-size: 14px; }
 .carta-sheet-tabs > button[aria-pressed="true"] { background: #fff0ce; color: #932b35; border-color: #fff0ce; font-weight: 700; }
@@ -21,7 +21,7 @@
 .carta-ronny-copy h3 { color: #ffda9d; font: 400 27px/1.15 "Ronny Halloween", sans-serif; margin-top: 12px; }
 .carta-ronny-copy h3 em { font-style: normal; color: #ffa24e; }
 .carta-ronny-copy > a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: #ffd399; font-size: 13px; font-weight: 700; }
-.carta-reader { width: min(820px, calc(100% - 24px)); height: min(960px, calc(100dvh - 24px)); margin: auto; max-width: none; max-height: calc(100dvh - 24px); padding: 0; border: 1px solid #dc9a6d; border-radius: 18px; color: #fff0dc; background: #321a27; box-shadow: 0 25px 100px #0009; }
+.carta-reader { width: min(1180px, calc(100% - 24px)); height: min(960px, calc(100dvh - 24px)); margin: auto; max-width: none; max-height: calc(100dvh - 24px); padding: 0; border: 1px solid #dc9a6d; border-radius: 18px; color: #fff0dc; background: #321a27; box-shadow: 0 25px 100px #0009; }
 .carta-reader::backdrop { background: #080510e8; backdrop-filter: blur(8px); }
 .carta-reader button:focus-visible, .carta-reader [tabindex="0"]:focus-visible { outline-offset: -3px; }
 .carta-reader-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 12px 20px; border-bottom: 1px solid #efbf7d38; }
@@ -87,10 +87,13 @@
 .menu-book-viewport { display: flex; flex-direction: column; height: clamp(220px, calc(100svh - 300px), 560px); overflow: hidden; outline-offset: -3px; padding: 8px; }
 .menu-book-space { position: relative; margin: auto; flex-shrink: 0; }
 .menu-book-viewport[data-zoomed="true"] { overflow: auto; overscroll-behavior: contain; }
-.menu-book-frame { position: absolute; top: 0; left: 0; width: 628px; height: 878px; padding: 12px 12px 12px 16px; border: 2px solid #b9864f; border-radius: 13px 17px 17px 13px; background: linear-gradient(90deg, #38251d 0 8px, #765035 10px, #523423 20px, #61432d); box-shadow: 0 10px 22px #08041166, inset 0 0 0 1px #e5b27866; transform: scale(var(--book-scale)); transform-origin: top left; }
+.menu-book-frame { position: absolute; top: 0; left: 0; width: var(--book-width); height: 878px; padding: 12px 12px 12px 16px; border: 2px solid #b9864f; border-radius: 13px 17px 17px 13px; background: linear-gradient(90deg, #38251d 0 8px, #765035 10px, #523423 20px, #61432d); box-shadow: 0 10px 22px #08041166, inset 0 0 0 1px #e5b27866; transform: scale(var(--book-scale)); transform-origin: top left; }
 .menu-book-frame::before { content: ""; position: absolute; top: 14px; bottom: 15px; left: 7px; width: 3px; border-left: 1px solid #edcb8c70; border-right: 1px solid #1d100d; border-radius: 2px; pointer-events: none; }
 .menu-book-frame::after { content: ""; position: absolute; bottom: 4px; left: 22px; right: 13px; height: 8px; border-radius: 0 0 4px 2px; background: repeating-linear-gradient(#eadcba 0 1px, #c6ae86 1px 2px); pointer-events: none; }
-.menu-book-paper { position: relative; width: 596px; height: 850px; background: #f4ebd2; border-radius: 3px; perspective: 1800px; container-type: inline-size; }
+.menu-book-spread { position: relative; height: 850px; }
+.menu-book-left { position: absolute; top: 0; left: 0; width: 596px; height: 850px; border-radius: 3px; overflow: hidden; box-shadow: inset -8px 0 14px #51321c33; }
+.menu-book-paper { position: absolute; top: 0; left: var(--right-page-left); width: 596px; height: 850px; background: #f4ebd2; border-radius: 3px; perspective: 1800px; container-type: inline-size; }
+.menu-book-spine { position: absolute; top: 0; bottom: 0; left: calc(var(--right-page-left) - 12px); width: 24px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, transparent, #38221833 38%, #41291b66 49%, #fff2d53b 55%, transparent); }
 .menu-book-current, .menu-book-front, .menu-book-back { position: absolute; inset: 0; border-radius: 3px; overflow: hidden; }
 .menu-book-current { box-shadow: inset 9px 0 15px #51321c26, 2px 4px 3px #180c1266; }
 .menu-book-turn { position: absolute; inset: 0; z-index: 2; transform-origin: left center; transform-style: preserve-3d; animation: book-turn-forward .95s cubic-bezier(.35,.05,.25,1) both; pointer-events: none; }
@@ -98,9 +101,7 @@
 .menu-book-turn[data-opening="true"] { animation-duration: 1.15s; }
 .menu-book-front, .menu-book-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .menu-book-front { background: #f4ebd2; box-shadow: 6px 8px 26px #160c1266; }
-.menu-book-back { transform: rotateY(180deg); background: linear-gradient(90deg, #c7b08c, #f4ebd2 18%, #f8efd8 80%, #d2bf9b); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px; color: #a5233966; }
-.menu-book-back .truck-stamp { width: 150px; opacity: .4; }
-.menu-book-back > span { font: 400 45px "Truck Titles", Georgia, serif; }
+.menu-book-back { transform: rotateY(180deg); background: #f4ebd2; box-shadow: -6px 8px 26px #160c1266; }
 .menu-book-fold { position: absolute; inset: 0; background: linear-gradient(90deg, #2a13022b, transparent 16%, #fff4cd33 58%, #1d10054a); backface-visibility: hidden; pointer-events: none; }
 .menu-book-cover { height: 100%; display: flex; flex-direction: column; align-items: center; padding: 45px 36px 32px; border: 12px double #e4b972; background: radial-gradient(ellipse at center, #773329, transparent 65%), repeating-linear-gradient(45deg, #f3c98504 0 2px, transparent 2px 8px), #3e1421; color: #ffdda5; box-shadow: inset 7px 0 13px #180a14aa; }
 .menu-cover-rule { display: flex; align-items: center; gap: 15px; width: 100%; font: 700 14px "Truck Menu", sans-serif; letter-spacing: 3px; }
@@ -133,3 +134,26 @@
   .carta-ronny-art { width: 65px; height: 90px; }
   .carta-ronny-copy h3 { font-size: 20px; }
 }
+
+/* Every turned leaf rests on the left, with its own full illustrated reverse. */
+.menu-page-reverse { height: 850px; display: flex; flex-direction: column; color: #a52339; background: radial-gradient(ellipse at 60% 40%, #e4cda455, transparent 65%), #f4ebd2; }
+.menu-reverse-checkers { height: 24px; flex-shrink: 0; background: repeating-conic-gradient(#a52339 0 25%, transparent 0 50%) 0 / 24px 24px; }
+.menu-reverse-content { flex: 1; min-height: 0; margin: 20px; padding: 28px 20px; border: 3px double #b18a53; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
+.menu-reverse-rule { display: flex; align-items: center; gap: 18px; color: #9a7848; font: 700 13px "Truck Menu", sans-serif; letter-spacing: 3px; }
+.menu-reverse-content > h4 { font: 400 58px/1.2 "Truck Titles", Georgia, serif; margin: 18px 0 12px; }
+.menu-reverse-emblem { position: relative; display: grid; place-items: center; width: 340px; height: 405px; isolation: isolate; }
+.menu-reverse-emblem::before { content: ""; position: absolute; width: 330px; height: 330px; border: 3px double #b18a5370; border-radius: 50%; background: radial-gradient(#d9b77944, transparent 70%); z-index: -1; }
+.menu-reverse-emblem > img { width: 280px; height: 405px; object-fit: contain; filter: drop-shadow(0 7px 6px #5a2d2326); }
+.menu-reverse-seal { display: grid; place-items: center; height: 405px; }
+.menu-reverse-seal .truck-stamp { width: 300px; }
+.menu-reverse-food { display: flex; align-items: center; justify-content: center; gap: 40px; color: #af864a; min-height: 100px; }
+.menu-reverse-food > img { width: 110px; height: 100px; object-fit: contain; }
+.menu-reverse-food > span { font: 700 17px "Truck Menu", sans-serif; }
+.carta-book-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: 104px; min-height: 44px; padding: 8px; border: 1px solid #d1a27e60; border-radius: 99px; background: #1c1029; color: #ffca88; font-size: 12px; white-space: nowrap; }
+.carta-book-toggle > svg { flex-shrink: 0; }
+.carta-book-footer-start { display: flex; align-items: center; gap: 7px; }
+.carta-book-footer-start > span { color: #ffce90; font-size: 10px; }
+.menu-book-viewport[data-cover-turn="true"] .menu-book-space { transition: width .5s ease, height .5s ease; }
+.menu-book-viewport[data-cover-turn="true"] .menu-book-frame { transition: width .5s ease, transform .5s ease; }
+.menu-book-viewport[data-cover-turn="true"] .menu-book-paper { transition: left .5s ease; }
+@media (prefers-reduced-motion: reduce) { .menu-book-space, .menu-book-frame, .menu-book-paper { transition: none !important; } }
