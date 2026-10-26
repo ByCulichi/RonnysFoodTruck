@@ -48,8 +48,6 @@
 .market-ember-9 { left: 10%; top: 81%; animation-delay: -8s; }
 .market-ember-10 { right: 3%; top: 89%; animation-delay: -18s; }
 .market-ember-11 { left: 4%; top: 96%; animation-delay: -11s; }
-.market-motion-control { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 44px; min-height: 44px; position: absolute; z-index: 4; top: 10px; right: 18px; padding: 8px 12px; border: 1px solid #e7ad6655; border-radius: 22px; background: #160f25e8; color: #efd0aa; font-size: 11px; }
-.market-motion-control:hover { background: #312039; color: #ffe4b5; }
 .market-night-decoration[data-paused="true"] *,
 .market-night-decoration[data-hidden="true"] *,
 .market-night-decoration :is(.market-mist, .market-bat, .market-ember):not([data-in-view="true"]) { animation-play-state: paused; }
@@ -61,8 +59,6 @@
   .market-fair-moon { right: -40px; top: 1%; opacity: .3; }
   .market-fairground .seasons-section { padding-top: 28px; }
   .market-fairground .seasons-heading > p { max-width: none; margin-top: 12px; font-size: 14px; }
-  .market-motion-control { right: 12px; top: 8px; padding: 8px; }
-  .market-motion-control > span { display: none; }
   .market-moon { right: -25px; opacity: .24; }
   .market-pumpkin { width: 110px; opacity: .3; }
   .market-pumpkin-left { left: -50px; }
@@ -73,7 +69,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .market-night-decoration * { animation: none !important; }
-  .market-motion-control { display: none; }
 }
 /* The shared night ends at the footer's base color, without a horizontal seam. */
 .halloween-market::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 200px; z-index: -1; pointer-events: none; background: linear-gradient(180deg, transparent, #100c1c); }

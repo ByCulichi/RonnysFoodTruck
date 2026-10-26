@@ -101,8 +101,7 @@
 .menu-book-back .menu-fold-shade { background: linear-gradient(90deg, #3b241a77, #fff6d144 60%, transparent); }
 .menu-book-turn[data-kind="paper"] :is(.menu-book-front, .menu-book-back) { will-change: clip-path; }
 .menu-book-turn[data-kind="paper"] .menu-fold-lift { will-change: transform; }
-.menu-book-turn[data-kind="hard"] :is(.menu-book-front, .menu-book-back) { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.menu-book-turn[data-kind="hard"] .menu-fold-lift { transform: rotateY(180deg); transform-style: preserve-3d; filter: none; }
+.menu-book-turn[data-kind="hard"] .menu-fold-lift { transform: rotateY(180deg); transform-origin: center center; transform-style: preserve-3d; filter: none; }
 .menu-book-turn[data-kind="hard"] .menu-fold-back-content { transform: none; }
 .menu-book-turn[data-kind="hard"] .menu-fold-shade { display: none; }
 .menu-book-viewport[data-zoomed="false"] { touch-action: pan-y; }

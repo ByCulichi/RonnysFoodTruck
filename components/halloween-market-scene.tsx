@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Pause, Play } from "lucide-react";
+import { useEffect, useRef } from "react";
 import "./halloween-market-scene.css";
 
 const web = "M0 0h175M0 0v175M0 0l175 175M0 0l155 65M0 0l65 155M0 35q20-2 25-10q10-5 10-25M0 75q35-4 53-22q20-18 22-53M0 115q54-5 81-34q30-28 34-81M0 160q75-8 113-47q40-38 47-113";
@@ -39,7 +38,6 @@ function Pumpkin({ className }: { className: string }) {
 // Decorative SVG/CSS only: no image downloads, APIs, timers or scroll handlers.
 export function HalloweenMarketScene() {
   const sceneRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -61,7 +59,7 @@ export function HalloweenMarketScene() {
   }, []);
 
   return <>
-    <div ref={sceneRef} className="market-night-decoration" aria-hidden="true" data-paused={paused}>
+    <div ref={sceneRef} className="market-night-decoration" aria-hidden="true" data-paused="false">
       <span className="market-moon" />
       <svg className="market-web market-web-left" viewBox="0 0 180 180"><path d={web} /></svg>
       <svg className="market-web market-web-right" viewBox="0 0 180 180"><path d={web} /></svg>
@@ -71,8 +69,5 @@ export function HalloweenMarketScene() {
       <Pumpkin className="market-pumpkin market-pumpkin-right" />
       {Array.from({ length: 12 }, (_, index) => <span className={`market-ember market-ember-${index}`} key={index} />)}
     </div>
-    <button className="market-motion-control" type="button" aria-pressed={paused} aria-label={paused ? "Activar movimiento" : "Pausar movimiento"} onClick={() => setPaused(!paused)}>
-      {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}<span>{paused ? "Activar movimiento" : "Pausar movimiento"}</span>
-    </button>
   </>;
 }

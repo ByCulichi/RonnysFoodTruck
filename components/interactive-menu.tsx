@@ -54,7 +54,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
           <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
           <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
         </div>
-        <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a><span className="compact-menu-currency">Precios en MXN</span></div>
+        <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </div>
       <div className="compact-menu-controls">
         <div className="menu-group-switch" role="group" aria-label="Categorías del menú">
