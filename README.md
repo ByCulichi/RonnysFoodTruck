@@ -89,7 +89,9 @@ El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358
 
 ## Ronny’s por temporadas
 
-`#temporadas`, después de menú y domicilio, presenta Halloween como campaña actual y Navidad como próxima. El adelanto navideño usa `public/images/seasons/ronny-christmas.png`: Ronny café de Santa con malteada y hot dog, ilustrado a partir de la referencia del propietario y con transparencia real. No hay cambio automático de campaña, fecha de lanzamiento ni ofertas de Navidad inventadas. «Temporadas» aparece en navegación de escritorio y móvil; se conserva Halloween en portada. Las dos campañas llevan al menú existente.
+`#temporadas`, después de menú y domicilio, presenta Halloween actual, Día de Muertos en noviembre y Navidad en diciembre como adelantos. Las tres ilustraciones independientes `public/images/seasons/ronny-{halloween,muertos,christmas}-foreground.png` acercan al truck rojo y a Roo para distinguirlos en tarjetas pequeñas. Halloween usa noche oscura, noviembre naranja/cempasúchil y diciembre azul con nieve. Los encabezados 4:3 y el color de cada tarjeta refuerzan esa separación; se conserva el carrusel táctil móvil sin apilar las tres temporadas.
+
+Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
 
 ## Menú compacto e interacción de Ronny
 
