@@ -225,21 +225,23 @@ export default function Home() {
             <div className="menu-section compact-menu-section shell section-space">
               <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} />
               <MenuCarta selection={menuSelection} onSelect={viewCartaDish} />
-              <FridayPromo />
             </div>
           </section>
 
           <div className="market-fairground">
             <HalloweenFairground />
-            <section className="delivery-section shell" id="domicilio" aria-labelledby="delivery-title">
-              <div className="delivery-copy">
-                <div className="eyebrow"><Bike size={18} /> EL ANTOJO VA CONTIGO</div>
-                <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
-                <p>Tu antojo y tu ubicación por WhatsApp. Nosotros confirmamos la entrega.</p>
-                <a className="button button-gold" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} /> Consultar pedido a domicilio <ArrowUpRight size={18} /></a>
-                <small>Confirma cobertura, costo de envío y disponibilidad antes de pedir.</small>
+            <section className="promo-delivery shell" id="domicilio" aria-label="Promoción y pedidos a domicilio">
+              <FridayPromo />
+              <div className="promo-delivery-service">
+                <div className="promo-delivery-copy">
+                  <div className="eyebrow"><Bike size={18} aria-hidden="true" /> EL ANTOJO VA CONTIGO</div>
+                  <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
+                  <p>Elige tu antojo y mándanos tu ubicación por WhatsApp.</p>
+                </div>
+                <Mascot character="host" className="promo-delivery-host" />
+                <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a>
+                <small>Consulta cobertura, costo de envío y disponibilidad.</small>
               </div>
-              <Mascot character="host" className="delivery-host" />
             </section>
 
             <RonnySeasons />

@@ -129,7 +129,7 @@ El escenario completo se adapta al ancho y alto del footer, sin el recorte de `o
 
 ## Promo y poses del menú
 
-`FridayPromo` presenta la oferta existente de viernes como «2 malteadas por $100», con el Ronny deportivo aprobado más grande, tipografía de marca y un cupón claro con enlace para consultar disponibilidad por WhatsApp. La imagen original no se edita y el mensaje no se envía automáticamente.
+`#domicilio` reúne la oferta de viernes y el pedido a domicilio en un único panel con fondo y contorno compartidos. `FridayPromo` conserva «2 malteadas por $100», el Ronny deportivo aprobado y su consulta propia de disponibilidad; el diablito acompaña el acceso «Pedir a domicilio». En escritorio aparecen lado a lado; en móvil comparten un panel compacto con una división interior. Las imágenes originales se conservan y se sirven optimizadas. Los enlaces de WhatsApp preparan consultas separadas, sin enviar mensajes ni prometer cobertura, envío gratuito o entrega de la oferta sin confirmación.
 
 Dulces y Salados usan nuevas poses en archivos transparentes separados, registrados en `lib/ronny-costumes.ts`: bruja con waffle y escoba, y diablito con hamburguesa. Las versiones actuales `*-natural.png` usan poses de pie y expresión tranquila. Se conservan los disfraces completos, la cara y el color café de Ronny; los PNG anteriores no se eliminan. Las versiones anteriores de fantasma y zombi se conservan como recursos; la última campaña usa sus versiones con más carácter.
 
