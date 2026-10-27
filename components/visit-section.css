@@ -12,47 +12,61 @@
 .visit-panel { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); grid-template-areas: "info map" "actions map"; gap: 20px 34px; padding: 28px; border: 1px solid #d6a06570; border-radius: 22px; background: linear-gradient(115deg, #21142de8, #160f22e8); box-shadow: 0 12px 40px #08051028; }
 .visit-info { grid-area: info; min-width: 0; }
 .visit-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
-.visit-heading h2 { font: 400 clamp(34px, 3.8vw, 48px)/1.1 "Ronny Halloween", "Ronny Display", sans-serif; color: #ffc16c; text-shadow: 0 2px 0 #512118; margin: 0; }
+.visit-heading h2 { font: 400 clamp(40px, 4vw, 54px)/1.1 "Ronny Halloween", "Ronny Display", sans-serif; color: #ffc16c; text-shadow: 0 2px 0 #512118; margin: 0; }
 .visit-heading > img { width: 78px; height: 82px; object-fit: contain; flex-shrink: 0; filter: drop-shadow(0 5px 8px #0004); }
-.visit-contact-row { display: flex; align-items: center; gap: 12px; min-height: 48px; color: #eee0d0; font: 400 16px/1.55 Arial, sans-serif; padding-block: 10px; }
+.visit-contact-row { display: flex; align-items: center; gap: 12px; min-height: 48px; color: #eee0d0; font: 600 16px/1.55 Arial, sans-serif; padding-block: 10px; }
 .visit-contact-row + .visit-contact-row { border-top: 1px solid #d6a06524; }
 .visit-contact-row > svg { flex-shrink: 0; color: #ffbd67; }
 .visit-contact-row > svg:last-child:not(:first-child) { margin-left: auto; color: #d4af7b; }
-.visit-contact-row p { margin: 0; }
-.visit-contact-row small { display: block; color: #cbb6a6; font-size: 13px; }
+.visit-contact-row p { margin: 0; font: 400 20px/1.4 "Ronny Display", Arial, sans-serif; color: #fff0d4; }
+.visit-contact-row small { display: block; margin-top: 4px; color: #cbb6a6; font: 400 13px/1.4 Arial, sans-serif; }
 .visit-contact-row > span { min-width: 0; overflow-wrap: anywhere; }
-.visit-call strong { color: #ffda93; font: 800 clamp(21px, 2vw, 25px)/1.4 Arial, sans-serif; white-space: nowrap; }
+.visit-call strong { color: #ffda93; font: 800 clamp(24px, 2.2vw, 29px)/1.4 Arial, sans-serif; white-space: nowrap; }
 .visit-contact-row:is(a):hover { color: #ffbe73; }
 .visit-live-map { grid-area: map; min-width: 0; min-height: 300px; border-radius: 14px; overflow: hidden; background: #21182d; }
 .visit-live-map iframe { display: block; width: 100%; height: 100%; min-height: 300px; border: 0; }
-.visit-actions { grid-area: actions; display: flex; align-items: center; gap: 16px; min-width: 0; }
-.visit-truck-photo { position: relative; display: block; width: 100px; height: 70px; overflow: hidden; border: 1px solid #d6a06570; border-radius: 10px; background: #21182d; flex-shrink: 0; }
-.visit-truck-photo > img { transform: scale(1.23); transform-origin: center 85%; }
+.visit-actions { grid-area: actions; display: flex; align-items: stretch; gap: 16px; min-width: 0; }
+.visit-truck-photo { position: relative; display: block; width: 156px; min-height: 152px; overflow: hidden; border: 1px solid #d6a06590; border-radius: 14px; background: #21182d; flex-shrink: 0; }
+.visit-truck-photo > img { transform: scale(1.4); transform-origin: center bottom; }
 .visit-truck-photo > svg { position: absolute; bottom: 5px; right: 5px; padding: 3px; box-sizing: content-box; color: #ffdfad; border-radius: 5px; background: #160d24db; }
-.visit-map-button { flex: 1; gap: 12px; min-height: 48px; padding-inline: 16px; font-size: 15px; white-space: nowrap; }
-.visit-map-button > img { width: 20px; height: 20px; flex-shrink: 0; }
+.visit-google-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; flex: 1; min-width: 0; }
+.visit-map-button { gap: 12px; min-height: 52px; padding: 8px 12px; border-radius: 10px; font: 400 20px/1.2 "Ronny Display", Arial, sans-serif; white-space: nowrap; }
+.visit-map-button > img { width: 26px; height: 26px; flex-shrink: 0; }
+.visit-review-link { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 6px 10px; border: 1px solid #d6a06555; border-radius: 10px; color: #f6e3c9; font: 400 18px/1.2 "Ronny Display", Arial, sans-serif; }
+.visit-review-link > svg { flex-shrink: 0; color: #ffcb7a; }
+.visit-write-review { color: #ffdc9d; background: #ffb75d0d; border-color: #d6a0658c; }
+.visit-review-link:hover { background: #ffb75d1a; border-color: #ffcb7a; }
 .visit-panel a:focus-visible { outline: 2px solid #ffda93; outline-offset: 4px; }
 @media (max-width: 1000px) {
   .visit-panel { gap: 18px 24px; padding: 22px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .visit-heading > img { width: 65px; height: 70px; }
-  .visit-heading h2 { font-size: 36px; }
+  .visit-heading h2 { font-size: 40px; }
   .visit-contact-row { font-size: 15px; gap: 10px; }
-  .visit-truck-photo { width: 76px; height: 64px; }
+  .visit-truck-photo { width: 116px; }
   .visit-actions { gap: 12px; }
-  .visit-map-button { padding-inline: 12px; gap: 8px; font-size: 14px; }
+  .visit-map-button { padding-inline: 8px; gap: 8px; font-size: 18px; }
+  .visit-map-button > img { width: 24px; height: 24px; }
+  .visit-review-link { gap: 6px; font-size: 17px; }
 }
 @media (max-width: 700px) {
   .halloween-visit { padding-block: 28px 32px; }
   .visit-panel { grid-template-columns: minmax(0, 1fr); grid-template-areas: "info" "map" "actions"; gap: 14px; padding: 18px; border-radius: 18px; }
   .visit-heading { margin-bottom: 4px; }
-  .visit-heading h2 { font-size: 36px; }
+  .visit-heading h2 { font-size: 40px; }
   .visit-heading > img { width: 58px; height: 62px; }
   .visit-contact-row { padding-block: 8px; }
+  .visit-contact-row p { font-size: 19px; }
   .visit-contact-row small { font-size: 12px; }
   .visit-live-map, .visit-live-map iframe { min-height: 0; height: 185px; }
   .visit-actions { gap: 12px; }
-  .visit-truck-photo { width: 76px; height: 56px; }
-  .visit-map-button { min-height: 48px; }
+  .visit-truck-photo { width: 112px; }
+  .visit-map-button { min-height: 52px; }
+}
+@media (max-width: 360px) {
+  .visit-truck-photo { width: 96px; }
+  .visit-map-button { gap: 6px; font-size: 17px; }
+  .visit-map-button > img { width: 22px; height: 22px; }
+  .visit-review-link { font-size: 16px; padding-inline: 6px; }
 }
 @media (max-width: 600px) {
   .visit-city-silhouette { height: 180px; opacity: .65; }

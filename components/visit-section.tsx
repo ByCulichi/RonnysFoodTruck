@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowUpRight, CalendarDays, MapPin, Maximize2, Phone } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin, Maximize2, MessageSquare, Phone, Star } from "lucide-react";
 import { business } from "@/lib/business";
 import { VisitNightScenery } from "@/components/visit-night-scenery";
 import "./visit-section.css";
@@ -22,8 +22,12 @@ export function VisitSection() {
         </div>
         <div className="visit-live-map"><iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
         <div className="visit-actions">
-          <a className="visit-truck-photo" href="/images/hero/food-truck.jpg" target="_blank" rel="noopener noreferrer" aria-label="Ampliar foto real del truck"><Image src="/images/hero/food-truck.jpg" alt="Food truck rojo de Ronny’s con su logo y letrero de crepas" fill sizes="(max-width: 600px) 76px, 100px" style={{ objectFit: "cover", objectPosition: "center 85%" }} /><Maximize2 size={15} aria-hidden="true" /></a>
-          <a className="button button-gold visit-map-button" href={business.mapsUrl} target="_blank" rel="noopener noreferrer"><img src="/brands/google.svg" alt="" width={20} height={20} loading="lazy" />Cómo llegar <ArrowUpRight size={18} aria-hidden="true" /></a>
+          <a className="visit-truck-photo" href="/images/hero/food-truck.jpg" target="_blank" rel="noopener noreferrer" aria-label="Ampliar foto real del truck"><Image src="/images/hero/food-truck.jpg" alt="Food truck rojo de Ronny’s con su logo y letrero de crepas" fill sizes="(max-width: 360px) 96px, (max-width: 700px) 112px, (max-width: 1000px) 116px, 156px" style={{ objectFit: "cover", objectPosition: "center 85%" }} /><Maximize2 size={18} aria-hidden="true" /></a>
+          <div className="visit-google-actions">
+            <a className="button button-gold visit-map-button" href={business.mapsUrl} target="_blank" rel="noopener noreferrer"><img src="/brands/google.svg" alt="" width={26} height={26} loading="lazy" />Cómo llegar</a>
+            <a className="visit-review-link" href={business.reviewsUrl} target="_blank" rel="noopener noreferrer" aria-label="Ver reseñas en Google"><MessageSquare size={19} aria-hidden="true" />Ver reseñas</a>
+            <a className="visit-review-link visit-write-review" href={business.writeReviewUrl} target="_blank" rel="noopener noreferrer" aria-label="Dejar reseña en Google"><Star size={19} aria-hidden="true" />Dejar reseña</a>
+          </div>
         </div>
       </div>
     </section>

@@ -117,7 +117,7 @@ Las dos ilustraciones de `public/images/scenes/`, reservadas al footer, contiene
 
 ## Ubicación con ambiente de Halloween
 
-`components/visit-section.tsx` y su CSS reúnen «¡Visítanos!», horarios, teléfono, dirección, mapa y foto real del truck en un único panel. Todos los datos y destinos proceden de `lib/business.ts`. «Cómo llegar» abre la ficha oficial de Google; no se repiten leyendas, tarjetas de opiniones ni explicaciones. El mapa es ancho en celular y la foto original conserva un acceso para ampliarla. El Ronny aprobado de la nariz acompaña el título, sin editar su imagen. No se usan APIs de reseñas/redes ni se solicitan claves.
+`components/visit-section.tsx` y su CSS reúnen «¡Visítanos!», horarios, teléfono, dirección, mapa y foto real del truck en un único panel. Todos los datos y destinos proceden de `lib/business.ts`. «Cómo llegar», «Ver reseñas» y «Dejar reseña» abren directamente Google con destinos derivados de la ficha oficial; no se publican reseñas automáticamente ni se repiten tarjetas explicativas. El horario y el teléfono tienen mayor jerarquía tipográfica. El mapa es ancho en celular y la foto real, más grande, conserva el acceso para ampliarla. El Ronny aprobado de la nariz acompaña el título, sin editar su imagen. No se usan APIs de reseñas/redes ni se solicitan claves.
 
 La marca y el cierre del footer usan Creepster, también en el copyright y el enlace «Un antojo más». La cara de Ronny del encabezado aumenta a 76 px en escritorio y 60 px en celular, manteniendo los controles y la altura del encabezado.
 
