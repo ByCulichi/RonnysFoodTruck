@@ -80,12 +80,13 @@ export function RooPuppet({ puppetRef, style }: { puppetRef: Ref<SVGSVGElement>;
 type RegisterAnimation = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => Animation;
 
 /** Natural beats are sampled once; the browser animates the finite joint curves. */
-export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation) {
+export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation, measuredWalkDistance: number = rooWelcomeStory.walkDistance) {
   const move = (name: string, frames: Keyframe[]) => {
     const joint = puppet.querySelector(`[data-roo-part="${name}"]`);
     if (joint) animate(joint, frames.map(frame => ({ ...frame, easing: frame.easing || "cubic-bezier(.37, 0, .32, 1)" })), { duration, fill: "both", easing: "linear" });
   };
-  const { walkDistance, walkStart, walkEnd } = rooWelcomeStory;
+  const { walkStart, walkEnd } = rooWelcomeStory;
+  const walkDistance = Math.min(rooWelcomeStory.walkDistance, Math.max(0, measuredWalkDistance));
   const walk: Keyframe[] = [];
   for (let step = 1; step <= 48; step++) {
     const t = step / 48;

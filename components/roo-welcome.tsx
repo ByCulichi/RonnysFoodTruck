@@ -41,7 +41,12 @@ function measureWelcome(anchor: HTMLElement, scene: HTMLElement) {
   scene.style.setProperty("--roo-size", `${size}px`);
   scene.style.setProperty("--roo-copy-top", `${y + size / 2 + 18}px`);
   const destination = { x: target.left + target.width / 2, y: target.top + target.height / 2, width: target.width };
-  return { x: headX - destination.x, y: headY - destination.y, scale: headSize / target.width, destination };
+  // Reserve a real viewport margin for the whole source canvas at the first
+  // reaction. Small screens shorten the approach, without shrinking Roo.
+  const leftEdge = viewport?.offsetLeft ?? 0;
+  const availableApproach = Math.max(0, (x - size / 2 - leftEdge - 10) / sourceScale);
+  const walkDistance = Math.min(rooWelcomeStory.walkDistance, availableApproach);
+  return { x: headX - destination.x, y: headY - destination.y, scale: headSize / target.width, walkDistance, destination };
 }
 
 const pose = (x: number, y: number, scale: number, tilt = 0) => `translate3d(${x}px, ${y}px, 0) rotate(${tilt}deg) scale(${scale})`;
@@ -185,7 +190,7 @@ export function RooWelcome() {
         { offset: .96, clipPath: headMask },
         { offset: 1, clipPath: headMask },
       ], { duration, fill: "both" });
-      animateRooPuppet(image!, duration, animate);
+      animateRooPuppet(image!, duration, animate, geometry.walkDistance);
       animate(scene!, [
         { offset: 0, opacity: 1 },
         { offset: .76, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
@@ -214,13 +219,20 @@ export function RooWelcome() {
         barkAudio.preload = "auto";
         barkAudio.volume = .44;
         barkAudio.load();
-        soundCue = setTimeout(() => {
-          if (stopped || document.hidden || motion.matches || !barkAudio) return;
-          const audio = barkAudio;
-          if (audio.readyState < 3) { stopSound(); return; }
-          try { void audio.play().catch(stopSound); }
-          catch { stopSound(); }
-        }, duration * rooWelcomeStory.barkStart);
+        void character.ready.then(() => {
+          if (stopped || !barkAudio) return;
+          // WAAPI may start on a later compositor frame. Read its clock once so
+          // the real bark follows the mouth, rather than a hydration timestamp.
+          const delay = duration * rooWelcomeStory.barkStart - Number(character!.currentTime ?? 0);
+          if (delay < 0) { stopSound(); return; }
+          soundCue = setTimeout(() => {
+            if (stopped || document.hidden || motion.matches || !barkAudio) return;
+            const audio = barkAudio;
+            if (audio.readyState < 3) { stopSound(); return; }
+            try { void audio.play().catch(stopSound); }
+            catch { stopSound(); }
+          }, delay);
+        }).catch(stopSound);
       } catch { stopSound(); }
 
       const remeasure = () => {
