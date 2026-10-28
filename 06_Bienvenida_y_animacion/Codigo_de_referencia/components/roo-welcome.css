@@ -1,0 +1,111 @@
+/* The layout slot never moves; only its one original Roo image is transformed. */
+.brand .roo-welcome-anchor {
+  position: relative;
+  display: block;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
+  overflow: hidden;
+}
+.roo-welcome-figure {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+}
+.brand .roo-welcome-anchor .roo-welcome-character {
+  position: absolute;
+  max-width: none;
+  object-fit: fill;
+  clip-path: var(--roo-head-mask);
+  filter: drop-shadow(0 4px 11px #f6ad4320);
+}
+.brand .roo-welcome-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: clip;
+  pointer-events: none;
+  white-space: normal;
+  font: normal 400 16px/1.2 Arial, sans-serif;
+  letter-spacing: normal;
+  color: #ffe1a7;
+  background:
+    radial-gradient(ellipse at 50% 39%, #63314e99, transparent 51%),
+    radial-gradient(ellipse at 14% 82%, #69302555, transparent 48%),
+    linear-gradient(145deg, #1c102c, #28132d 53%, #120c20);
+  animation: roo-welcome-failopen var(--roo-welcome-failsafe, 4450ms) step-end forwards;
+}
+.brand .roo-welcome-scene[data-state="done"] { display: none; }
+.roo-welcome-glow {
+  position: absolute;
+  left: calc(var(--roo-center-x, 50vw) - (var(--roo-size, 300px) + 100px) / 2);
+  top: calc(var(--roo-center-y, 40vh) - (var(--roo-size, 300px) + 100px) / 2);
+  width: calc(var(--roo-size, 300px) + 100px);
+  height: calc(var(--roo-size, 300px) + 100px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #e49d4022, transparent 69%);
+  opacity: 0;
+}
+.roo-welcome-glow > span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ffd58a24;
+  border-radius: 50%;
+  transform: rotate(-24deg) scaleY(.87);
+}
+.roo-welcome-glow > span:nth-child(2) { inset: 12px; transform: rotate(28deg) scaleY(.92); border-color: #d39cff20; }
+.roo-welcome-glow > i { position: absolute; font-size: 23px; font-style: normal; color: #ffd17e; }
+.roo-welcome-glow > i:nth-of-type(1) { left: 9%; top: 18%; }
+.roo-welcome-glow > i:nth-of-type(2) { right: 3%; top: 46%; font-size: 15px; }
+.roo-welcome-glow > i:nth-of-type(3) { left: 13%; bottom: 8%; font-size: 16px; color: #d8abf1; }
+.brand .roo-welcome-copy {
+  position: absolute;
+  top: var(--roo-copy-top, 68vh);
+  left: 50%;
+  width: min(90%, 600px);
+  margin-left: max(-45%, -300px);
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  text-align: center;
+  opacity: 0;
+}
+.roo-welcome-copy > span { font: 500 clamp(17px, 2.2vw, 23px)/1.3 Arial, sans-serif; letter-spacing: 1px; color: #efd7c8; }
+.roo-welcome-copy > strong { font: 400 clamp(48px, 6vw, 78px)/1.1 "Ronny Display", Georgia, serif; color: #ffcf81; text-shadow: 0 6px 28px #b7592926; }
+.roo-puppet { display: block; overflow: visible; }
+.roo-puppet [data-roo-part] { transform-box: view-box; }
+.roo-puppet [data-roo-part="pivot"] { transform-origin: 690px 990px; }
+.roo-puppet [data-roo-part="tail"] { transform-origin: 267px 742px; }
+.roo-puppet [data-roo-part="head"] { transform-origin: 790px 805px; }
+.roo-puppet [data-roo-part="mouth"] { transform-origin: 900px 680px; opacity: 0; }
+.roo-puppet [data-roo-part="craving"],
+.roo-puppet [data-roo-part="burger"],
+.roo-puppet [data-roo-part="aroma"] { opacity: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* backdrop-filter would otherwise make a fixed descendant header-sized. */
+  .site-header:has(.roo-welcome-scene:not([data-state="done"])) { backdrop-filter: none; }
+  .roo-welcome-anchor:not([data-welcome-state="done"]) { overflow: visible; }
+  .roo-welcome-anchor:not([data-welcome-state="done"]) .roo-welcome-figure {
+    z-index: 2;
+    opacity: 0;
+    animation: roo-welcome-showhead var(--roo-welcome-failsafe, 4450ms) step-end forwards;
+  }
+  .roo-welcome-anchor[data-welcome-state="running"] .roo-welcome-figure { will-change: transform, opacity; }
+}
+@media (max-width: 600px) {
+  .brand .roo-welcome-anchor { flex-basis: 60px; width: 60px; height: 60px; }
+}
+@media (max-height: 460px) {
+  .roo-welcome-copy > span { font-size: 16px; }
+  .roo-welcome-copy > strong { font-size: 45px; }
+  .brand .roo-welcome-copy { gap: 3px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand .roo-welcome-scene { display: none; }
+}
+@keyframes roo-welcome-failopen { to { opacity: 0; visibility: hidden; } }
+@keyframes roo-welcome-showhead { to { opacity: 1; } }

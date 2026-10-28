@@ -1,0 +1,6 @@
+Estos archivos son una copia de referencia del código de la bienvenida de ronnys.online.
+La animación articula cuatro patas, cola, cuerpo, cabeza y boca en SVG con Web Animations API.
+Los PNG se usan como recursos registrados; no son un GIF o video autónomo.
+El código pertenece al proyecto Next.js/React y requiere sus importaciones/alias habituales.
+En el proyecto, las imágenes se ubican en public/images/ronny/welcome/.
+La imagen de boca abierta se usa únicamente dentro de una máscara del hocico; la expresión de antojo usa una máscara de rostro.

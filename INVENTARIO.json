@@ -1,0 +1,212 @@
+[
+  {
+    "Archivo": "01_Logos_y_marca/ronny-devil-head-caracter.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1065761,
+    "SHA256": "6e54a67524347dfbe8efff45002b3f36f16b3dfc0a6fbbe01ae5a213fcc92682",
+    "Origen": "public/images/brand/ronny-devil-head-caracter.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-devil-head.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1056984,
+    "SHA256": "492250851d2143cbff6b0bebfe8c2b4a18bc944d9d5e9fd80a4de15a6318976b",
+    "Origen": "public/images/brand/ronny-devil-head.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-flat-logo.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1002494,
+    "SHA256": "1cb404f4ca27ed78ff54062d25b2ee9cfd1e9bfea06108915b47d0c7438509d1",
+    "Origen": "public/images/brand/ronny-flat-logo.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-logo.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1199,
+    "Alto": 908,
+    "Transparencia": "Sí",
+    "Bytes": 964824,
+    "SHA256": "a0abb24c813d712eebf07c9b8d8aa616a2a897e50cab2b69df543bc27b8e371d",
+    "Origen": "public/images/brand/ronny-logo.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-wizard-head.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1089677,
+    "SHA256": "6c84f02d5f1bc1242db810cfe56df69848c8a7edc9b855366be8af5c213e1117",
+    "Origen": "public/images/brand/ronny-wizard-head.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronnys-logo-design.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1199,
+    "Alto": 389,
+    "Transparencia": "Sí",
+    "Bytes": 282321,
+    "SHA256": "56fbeb42eae65a103567c9c8c65ca9ea511cc8ca8ef6454b385bd1b96b48477b",
+    "Origen": "public/images/brand/ronnys-logo-design.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronnys-logo-text.jpg",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1237,
+    "Alto": 414,
+    "Transparencia": "No",
+    "Bytes": 32050,
+    "SHA256": "7daeda3d304d4d48ce9a1929b06e0265f2b7b1e821e2e8dc8e50bba74ee1e16a",
+    "Origen": "public/images/brand/ronnys-logo-text.jpg"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-halloween-milkshake.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1554720,
+    "SHA256": "f0ae1b578bacf870d4af2a18a7d6609d2e08a397a862f44c17eb882076e3966a",
+    "Origen": "public/images/ronny/ronny-halloween-milkshake.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-host-cutout.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1647771,
+    "SHA256": "ea00a3b8661577e9d72ac1462c29a1c21ee91a4363b16ab08b0f881b105316b5",
+    "Origen": "public/images/ronny/ronny-host-cutout.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-nose-lick.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1230,
+    "Alto": 1278,
+    "Transparencia": "Sí",
+    "Bytes": 1088798,
+    "SHA256": "b5ec8de74d69d423bcc22ee58e716367c93f47d692d95bbca976f02b57baaa9f",
+    "Origen": "public/images/ronny/ronny-nose-lick.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-red-sports.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1544837,
+    "SHA256": "0a71b9122725f2c570f25cf5d60ebd81cd01dd8ac47eff22f319893890ccaf92",
+    "Origen": "public/images/ronny/ronny-red-sports.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-story-cutout.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1547403,
+    "SHA256": "4bf82e31dab4b59d024901bd5cbda2d0caaa59effb9d5a60772a59e994f2ac99",
+    "Origen": "public/images/ronny/ronny-story-cutout.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-unicorn-owner-bunny.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1672287,
+    "SHA256": "e0ef50e8c15de77fb6629f98ad92ebbb0013cca561a51f596c9ef1bfcce71f15",
+    "Origen": "public/images/ronny/ronny-unicorn-owner-bunny.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-bark.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1297467,
+    "SHA256": "a79b92473e4f766a747d30a8b00dd6e3b98788085ef2c16c16f0ce31cfe625f2",
+    "Origen": "public/images/ronny/welcome/roo-bark.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-craving.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1291409,
+    "SHA256": "2912349d03d9318b0ac887614d8c566f491a6a75a62e5f6254bf354b0d6df440",
+    "Origen": "public/images/ronny/welcome/roo-craving.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-four-paws.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1284051,
+    "SHA256": "18038d8372517dd05c98da0b66d6a2e19355c7051393b175c3e497a1cebbb8b3",
+    "Origen": "public/images/ronny/welcome/roo-four-paws.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-flat-outfits.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1535373,
+    "SHA256": "d05113a8c1bab791472931ec13c1bd47d1d7128168a10f3aeffb943fb4d713b4",
+    "Origen": "public/images/archive/ronny/ronny-flat-outfits.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-outfits.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2417307,
+    "SHA256": "36d5f09bce9de7f3b4f8851b3a1dae33a14ffec8e8be4e0c93663ee6e312c55a",
+    "Origen": "public/images/archive/ronny/ronny-outfits.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-personalities.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1592243,
+    "SHA256": "abe819d6f47ec4a783e9a3d38c3aaeb004421faab810eed799325e762e5455ec",
+    "Origen": "public/images/archive/ronny/ronny-personalities.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-promo-cutout.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1698605,
+    "SHA256": "e339ffb93b5b1eeb36de867a076a29ae6cf7a062f279277857c3216c38db7adf",
+    "Origen": "public/images/archive/ronny/ronny-promo-cutout.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/sello-ronny.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1747450,
+    "SHA256": "3ae5b6e846a3010958ef77b05779abdacef96b1e36255c717899ed9970a5deda",
+    "Origen": "public/images/menu/illustrations/sello-ronny.png"
+  }
+]
