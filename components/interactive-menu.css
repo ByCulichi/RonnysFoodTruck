@@ -257,3 +257,21 @@
   .menu-choice-heading > span > small { font-size: 11px; }
   .menu-choice-grid small strong { font-size: 14px; }
 }
+
+/* Larger, complete photos; the catalogue keeps one compact row on mobile. */
+.compact-menu-heading { display: block; }
+.menu-choice-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.menu-choice-grid button { min-height: 286px; }
+.menu-choice-grid button > .menu-choice-photo { height: 220px; background: #1c1427; }
+.selected-menu-dish { max-width: 840px; }
+.interactive-menu .selected-menu-dish .dish-image { min-height: 340px; padding: 8px; background: #201629; }
+.interactive-menu .selected-menu-dish .dish-image > img { object-fit: contain; object-position: center; padding: 8px; }
+@media (max-width: 900px) {
+  .menu-choice-grid { grid-template-columns: none; grid-auto-columns: clamp(128px, 36vw, 156px); }
+  .menu-choice-grid button { min-height: 240px; }
+  .menu-choice-grid button > .menu-choice-photo { height: 176px; }
+}
+@media (max-width: 600px) {
+  .menu-choice-grid button { min-height: 236px; }
+  .interactive-menu .selected-menu-dish .dish-image { height: clamp(210px, 64vw, 260px); min-height: 0; }
+}

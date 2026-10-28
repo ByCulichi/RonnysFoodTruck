@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import Image from "next/image";
 import { BookOpen, Minus, PawPrint, Plus, Type } from "lucide-react";
 import { dishes, type Dish } from "@/lib/menu";
-import { halloweenCostumes } from "@/lib/ronny-costumes";
+import { truckSheetCostumes } from "@/lib/ronny-costumes";
+import { RonnyOutfitStage } from "@/components/ronny-outfit-stage";
 import { truckSheets } from "@/components/truck-menu-sheet";
 import { MenuBook, type BookPage } from "@/components/menu-book";
 import "./menu-carta.css";
@@ -56,8 +56,8 @@ export function MenuCarta(_props: { selection: string; onSelect: (name: string) 
         </div>
         <span className="sr-only" aria-live="polite">{page === "back" ? "Libro cerrado. Contraportada." : page === "cover" ? "Libro cerrado. Portada." : `${truckSheets[sheet].title}. Hoja ${sheet + 1} de 3.`}</span>
       </div>
-      <aside className="carta-ronny" id="historia" aria-labelledby="carta-ronny-title">
-        <div className="carta-ronny-art"><Image src={halloweenCostumes.zombi.src} alt={halloweenCostumes.zombi.alt} width={1024} height={1536} sizes="(max-width: 600px) 85px, 210px" /></div>
+      <aside className="carta-ronny" id="historia" aria-labelledby="carta-ronny-title" data-book-outfit={truckSheetCostumes[sheet]}>
+        <div className="carta-ronny-art"><RonnyOutfitStage costume={truckSheetCostumes[sheet]} sizes="(max-width: 600px) 90px, (max-width: 1000px) 160px, 200px" /></div>
         <div className="carta-ronny-copy"><span className="eyebrow"><PawPrint size={15} aria-hidden="true" /> NUESTRO RONNY</span><h3 id="carta-ronny-title">Tiene su genio.<br /><em>Y buen gusto.</em></h3></div>
       </aside>
     </div>

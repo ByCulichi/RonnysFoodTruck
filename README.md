@@ -46,7 +46,7 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 ## Menú y datos de contacto
 
-El menú compacto tiene cuatro categorías (Dulces, Salados, Bebidas frías y Bebidas calientes), sin buscador y con una sola ficha activa. Los productos se eligen con miniaturas de foto y precio inicial, seis por página; la ficha conserva foto, descripción, variantes y todos sus precios visibles. Las flechas permiten recorrer los productos de la categoría sin apilar tarjetas. Ronny aparece fuera de la ficha y cambia automáticamente de atuendo al elegir categoría, según la preferencia del propietario; no hay selector manual de outfits. Los iconos de portada abren su producto y la categoría correspondiente.
+El menú compacto tiene cuatro categorías (Dulces, Salados, Bebidas frías y Bebidas calientes), sin buscador y con una sola ficha activa. Los productos se eligen con miniaturas de foto y precio inicial, cuatro por página; la ficha conserva foto, descripción, variantes y todos sus precios visibles. Las flechas permiten recorrer los productos de la categoría sin apilar tarjetas. Ronny aparece fuera de la ficha y cambia automáticamente de atuendo al elegir categoría, según la preferencia del propietario; no hay selector manual de outfits. Los iconos de portada abren su producto y la categoría correspondiente.
 
 Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
@@ -95,7 +95,7 @@ Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporiza
 
 ## Menú compacto e interacción de Ronny
 
-`components/interactive-menu.tsx` reúne la navegación por categoría mediante logos y la ficha de producto. `components/interactive-menu.css` contiene sus estilos. Solo se monta una `MenuCard`; no se recortan precios ni se eliminan productos de `lib/menu.ts`. Se mantienen las fotografías originales y su ampliación accesible con Escape, foco contenido y retorno al botón. Las consultas de WhatsApp son borradores que el cliente envía por su cuenta.
+`components/interactive-menu.tsx` reúne la navegación por categoría mediante logos y la ficha de producto. `components/interactive-menu.css` contiene sus estilos. Solo se monta una `MenuCard`; no se recortan precios ni se eliminan productos de `lib/menu.ts`. Las fotos de producto se muestran completas y más grandes, sin botón de ampliación ni visor emergente. Las originales se conservan intactas. Las consultas de WhatsApp son borradores que el cliente envía por su cuenta.
 
 Ronny usa cuatro disfraces completos en `public/images/ronny/halloween/`, registrados en `lib/ronny-costumes.ts`: bruja con túnica, capa, botas y escoba para Dulces; fantasma con sábana de cuerpo completo para Bebidas; diablito con traje rojo, alas y cola para Salados; zombi con ropa de parches y botas para los snacks salados. Se conserva su cara café/caramelo reconocible. En escritorio acompaña el menú a un lado; en celular se integra antes de los productos sin tapar controles. El mismo diablito acompaña domicilio y el zombi cuida sus gusgerías en la historia. No hay rotación por tiempo ni selector manual de disfraces. La composición se inspira en la captura de culichi.lat proporcionada por el propietario; el entorno bloqueó su apertura con `Tunnel connection failed: 403 Forbidden`.
 
@@ -109,7 +109,7 @@ Los metadatos de `app/layout.tsx` usan `/images/brand/ronny-flat-logo.png` como 
 
 La sección usa las fuentes locales Creepster y Lilita One, fondo violeta nocturno, acentos calabaza, telarañas y murciélagos decorativos sin bloquear controles. El movimiento se desactiva con `prefers-reduced-motion`. El resto de las secciones mantiene la ambientación nocturna; Navidad sigue siendo solo un adelanto.
 
-Las categorías muestran como máximo seis miniaturas con fotografía, nombre y precio por página, con botones anterior/siguiente y contador. La ficha seleccionada conserva variantes y precios visibles. Así se recorren los 28 productos sin apilar 28 tarjetas ni esconder la carta digital; las cuatro categorías permiten recorrer todo el catálogo.
+Las categorías muestran como máximo cuatro miniaturas con fotografía, nombre y precio por página, con botones anterior/siguiente y contador. La ficha seleccionada conserva variantes y precios visibles. Así se recorren los 28 productos sin apilar 28 tarjetas ni esconder la carta digital; las cuatro categorías permiten recorrer todo el catálogo.
 
 ## Escena del footer
 
@@ -145,7 +145,7 @@ Por la última petición del propietario, el dúo del footer va a la izquierda y
 
 El menú ofrece Dulces (8), Salados (11), Bebidas frías (5) y Bebidas calientes (4). `lib/menu-categories.ts` organiza los mismos 28 productos: americano, capuchinos y moka en calientes; malteadas, frappés e ICE en frías. Los precios, variantes y fotos de `lib/menu.ts` permanecen intactos. Los cuatro botones neón alrededor de Ronny y la barra compacta seleccionan la misma categoría; la barra muestra solo sus cuatro logos grandes, con colores propios, halo neón y marca de selección, sin buscador ni contadores dentro de los botones.
 
-Ronny cambia automáticamente de disfraz completo: bruja de pie con escoba en Dulces, diablito con ambas patas apoyadas en Salados, fantasma con malteada en Frías y vampiro barista preparando café en Calientes. Los snacks salados conservan al zombi. `RonnyOutfitStage` sirve imágenes optimizadas con transparencia, conserva el traje anterior hasta cargar el nuevo y muestra una transición entre ambos. No hay selector manual de vestuario ni rotación por tiempo. El movimiento reducido elimina la transición. La composición adapta los cuatro controles y el personaje a teléfono, sin marcos; el catálogo mantiene una ficha activa y seis miniaturas por página. El atuendo nuevo se guarda aparte, sin modificar personajes aprobados ni PNG anteriores.
+Ronny cambia automáticamente de disfraz completo: bruja de pie con escoba en Dulces, diablito con ambas patas apoyadas en Salados, fantasma con malteada en Frías y vampiro barista preparando café en Calientes. Los snacks salados conservan al zombi. `RonnyOutfitStage` sirve imágenes optimizadas con transparencia, conserva el traje anterior hasta cargar el nuevo y muestra una transición entre ambos. No hay selector manual de vestuario ni rotación por tiempo. El movimiento reducido elimina la transición. La composición adapta los cuatro controles y el personaje a teléfono, sin marcos; el catálogo mantiene una ficha activa y cuatro miniaturas por página. El atuendo nuevo se guarda aparte, sin modificar personajes aprobados ni PNG anteriores.
 
 ### Carta legible, Ronny con carácter y feria nocturna
 
@@ -236,3 +236,5 @@ El panel de promoción prioriza el lado izquierdo: más ancho, Roo deportivo may
 Por elección del propietario, la última mejora del catálogo es visual: una sola selección de categorías alrededor de Roo y un encabezado más claro para «Fotos y precios». Roo conserva sus cambios automáticos de disfraz. El catálogo y las hojas del libro mantienen sus navegaciones independientes.
 
 Se retiró `@react-email/render`, que no se utiliza: el código de correo existente entrega HTML directamente a Resend. Esto elimina la cadena de dependencias `html-to-text`/`deepmerge` sin cambiar el contacto ni activar envíos.
+
+Último ajuste de fotos y carta: cuatro productos por página, miniaturas mayores con `object-fit: contain` y foto activa más alta, también completa. Se retiran «Ampliar foto» y el acceso superior «Carta del truck». La carta sigue abriéndose directamente desde su portada. El Roo acompañante usa la misma tabla de disfraces que las hojas: bruja/Dulces, zombi/Snacks y vampiro/Bebidas, con transición sin parpadeos y movimiento reducido. El catálogo de fotos mantiene su navegación independiente del libro.

@@ -132,3 +132,16 @@
 .menu-book-viewport[data-page="back"][data-turning="false"] :is(.menu-book-paper, .menu-book-board-right) { display: none; }
 .menu-page-touch::after { content: ""; position: absolute; right: 0; bottom: 0; width: 36px; height: 36px; background: linear-gradient(135deg, transparent 47%, #c7ad86 49%, #fff7df 60%); clip-path: polygon(100% 0, 0 100%, 100% 100%); opacity: .8; }
 .menu-book-left .menu-page-touch::after { left: 0; right: auto; transform: scaleX(-1); }
+
+/* The companion transforms into the same Roo shown on the facing book leaf. */
+.carta-layout { grid-template-columns: minmax(0, 1fr) 200px; }
+.carta-ronny { --guide-accent: #ffd08c; }
+.carta-ronny-art { position: relative; width: 200px; height: 285px; }
+.carta-ronny-art .ronny-outfit-layer { width: 100%; height: 100%; }
+.carta-ronny-art .ronny-outfit-magic { width: 90%; height: 22px; }
+@media (max-width: 1000px) {
+  .carta-layout { grid-template-columns: minmax(0, 1fr) 160px; }
+  .carta-ronny-art { width: 160px; height: 230px; }
+}
+@media (max-width: 760px) { .carta-layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .carta-ronny-art { width: 90px; height: 125px; } }
