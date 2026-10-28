@@ -1,0 +1,202 @@
+[
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1817884,
+    "SHA256": "aa3aba4673dc0e8215233ce0f6cd20afa17b6de53b6b5537aff57ebac69b9994",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-flying.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1772437,
+    "SHA256": "383a9e24a9d1cb6fcaeb22b47386726d618d88e9dd75b88a36379e4d74572c75",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-flying.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1885826,
+    "SHA256": "17489e378751054232514e131963fc4827e54dbf70ac8bc9a0a837da05567d53",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1976978,
+    "SHA256": "744c5422bca1a671a1da07dd4a3dd44cf1613fbddc5c291ce9786c90949961a5",
+    "Origen": "public/images/ronny/halloween/ronny-bruja.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1709939,
+    "SHA256": "435ec9cbdc045a00320c1c64811b351f34b0410fe2951d12b3a6376e213812d4",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1702809,
+    "SHA256": "8e67b81542909f8d1a972b5f83f92f9886f792556faeb50e8b93457ad1c5e947",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-serving.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1680386,
+    "SHA256": "d8973ef4cd3403299e03f5770aa3464e7f3a73de495f71625056b5039ce6fdd3",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-serving.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1740669,
+    "SHA256": "aa5822399281f29596b297d8a9d66bab0e1d831683f490e8b49da192caf33e13",
+    "Origen": "public/images/ronny/halloween/ronny-diablito.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1762757,
+    "SHA256": "db9f95896e3bf34c31d504170adf0427d42c48dcafd3b7bbbaa2e94542b11609",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1701762,
+    "SHA256": "1ac886a1c21fa63c9e779d89415f0cbe7cc406213a2ef0ab245a2357750670d8",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1753741,
+    "SHA256": "525c91813872132c4719da993f85b51e8c66935d0f16eb44ebceea8d21c9b7e7",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-barista.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1744774,
+    "SHA256": "2a4fee4998d72d91f4aea9f96b3a27f4f7ec975aa56f2fcc3b889f8b2ca12599",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-barista.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1750630,
+    "SHA256": "f0fb0dd98ab9fa37e06f562182f35330fb66616353a93fdee18f1e6f7626bbae",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1722354,
+    "SHA256": "0e51164a4b09276cac10a8065291b239d4440466b23ee34cd54ed4ac98454240",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1724326,
+    "SHA256": "cc568a1ad83592fcf6f1928e00874d9e4b5ca55b3cb14a4610775f8155bcb5d2",
+    "Origen": "public/images/ronny/halloween/ronny-zombi-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1684457,
+    "SHA256": "4b33f6f90adfe835d58c907cad1ff98907ae170468d3d3fcf50c436ef8a1eb84",
+    "Origen": "public/images/ronny/halloween/ronny-zombi-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1712689,
+    "SHA256": "20840e67f1448fecdb89bc7ad326db26678e2d29dec0c39377703c9c80d6c4ee",
+    "Origen": "public/images/ronny/halloween/ronny-zombi.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-bebidas.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1576701,
+    "SHA256": "eb8693fef02bf77985375badce500d48fde888be17429ff706de76a81da9d60e",
+    "Origen": "public/images/ronny/menu/ronny-bebidas.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-dulces.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1751943,
+    "SHA256": "3b2d4e5d36de19ce8a14d25cd75832a035d27847f52fec3ce906d8ffd078d290",
+    "Origen": "public/images/ronny/menu/ronny-dulces.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-salados.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1663372,
+    "SHA256": "112bfaf53350eb8a43633d7e740eae9d6df952afd6eaf0e765bcc6e2e84262e5",
+    "Origen": "public/images/ronny/menu/ronny-salados.png"
+  }
+]
