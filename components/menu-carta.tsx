@@ -22,6 +22,7 @@ export function MenuCarta(_props: { selection: string; onSelect: (name: string) 
   const [mode, setMode] = useState<"design" | "text">("design");
   const [page, setPage] = useState<BookPage>("cover");
   const [zoom, setZoom] = useState(0);
+  const [bookOverview, setBookOverview] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
   const sheet = typeof page === "number" ? page : page === "back" ? 2 : 0;
   const products = dishes.filter(dish => dish.group === (sheet === 0 ? "Dulces" : sheet === 1 ? "Salados" : "Bebidas"));
@@ -48,10 +49,11 @@ export function MenuCarta(_props: { selection: string; onSelect: (name: string) 
     <div className="carta-layout">
       <div className="carta-digital-preview">
         <div ref={canvasRef} className="carta-inline-canvas" data-mode={mode} onKeyDown={handleBookKeys} tabIndex={mode === "text" ? 0 : undefined} aria-label="Productos y precios de la carta" style={{ "--carta-text-size": `${20 * (1 + zoom * .25)}px` } as CSSProperties}>
-          {mode === "design" ? <MenuBook page={page} zoom={1 + zoom * .25} onOpen={() => showPage(page === "back" ? 2 : 0)} onNext={nextPage} onPrevious={previousPage} /> : <div className="carta-inline-text"><label className="carta-text-category">Carta <select aria-label="Categoría de la carta" value={sheet} onChange={event => { setPage(Number(event.target.value)); canvasRef.current?.scrollTo(0, 0); }}>{truckSheets.map((item, index) => <option value={index} key={item.id}>{item.title}</option>)}</select></label><h4>{truckSheets[sheet].title}</h4><ul className="carta-product-list">{products.map(dish => <CartaItem key={dish.name} dish={dish} />)}</ul></div>}
+          {mode === "design" ? <MenuBook page={page} zoom={1 + zoom * .25} overview={bookOverview} onOpen={() => showPage(page === "back" ? 2 : 0)} onNext={nextPage} onPrevious={previousPage} /> : <div className="carta-inline-text"><label className="carta-text-category">Carta <select aria-label="Categoría de la carta" value={sheet} onChange={event => { setPage(Number(event.target.value)); canvasRef.current?.scrollTo(0, 0); }}>{truckSheets.map((item, index) => <option value={index} key={item.id}>{item.title}</option>)}</select></label><h4>{truckSheets[sheet].title}</h4><ul className="carta-product-list">{products.map(dish => <CartaItem key={dish.name} dish={dish} />)}</ul></div>}
         </div>
-        <div className="carta-inline-tools" data-visible={reading} role="group" aria-label="Opciones de lectura de la carta">
+        <div className="carta-inline-tools" data-mode={mode} data-visible={reading} role="group" aria-label="Opciones de lectura de la carta">
           <button type="button" className="carta-text-toggle" onClick={() => { setMode(mode === "design" ? "text" : "design"); setZoom(0); }}>{mode === "design" ? <Type size={18} aria-hidden="true" /> : <BookOpen size={18} aria-hidden="true" />}{mode === "design" ? "Texto grande" : "Volver al libro"}</button>
+          {mode === "design" && <button type="button" className="carta-text-toggle carta-book-view-toggle" aria-pressed={bookOverview} onClick={() => { setBookOverview(value => !value); setZoom(0); }}>{bookOverview ? "Leer hoja" : "Ver libro completo"}</button>}
           <div className="carta-pagination" role="group" aria-label="Tamaño de la carta"><button type="button" aria-label="Reducir carta" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}><Minus size={18} aria-hidden="true" /></button><span aria-live="polite">{100 + zoom * 25}%</span><button type="button" aria-label="Aumentar carta" disabled={zoom === (mode === "design" ? 12 : 4)} onClick={() => setZoom(zoom + 1)}><Plus size={18} aria-hidden="true" /></button></div>
         </div>
         <span className="sr-only" aria-live="polite">{page === "back" ? "Libro cerrado. Contraportada." : page === "cover" ? "Libro cerrado. Portada." : `${truckSheets[sheet].title}. Hoja ${sheet + 1} de 3.`}</span>

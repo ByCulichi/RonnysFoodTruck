@@ -19,7 +19,7 @@ import {
   CalendarDays,
   X,
 } from "lucide-react";
-import { business } from "@/lib/business";
+import { business, contactDetailsVisible } from "@/lib/business";
 import { VisitSection } from "@/components/visit-section";
 import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
@@ -43,9 +43,8 @@ const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "Menú"],
   ["temporadas", "Temporadas"],
-  ["historia", "Nuestro Ronny"],
   ["encuentranos", "Encuéntranos"],
-];
+].filter(([id]) => contactDetailsVisible || id !== "encuentranos");
 
 const navIcons = { inicio: House, menu: UtensilsCrossed, temporadas: CalendarDays, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
 
@@ -150,11 +149,11 @@ export default function Home() {
             aria-label="Navegación móvil"
           >
             <p className="mobile-nav-heading">Tu próxima parada feliz.</p>
-            {[...navLinks, ["domicilio", "A domicilio"], ["contacto", "Contacto"]].map(([id, label]) => {
+            {[...navLinks, ...(contactDetailsVisible ? [["domicilio", "A domicilio"], ["contacto", "Contacto"]] : [])].map(([id, label]) => {
               const Icon = navIcons[id as keyof typeof navIcons];
               return <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined} onClick={() => { setMobileOpen(false); setActiveSection(id); }}><span><Icon size={22} aria-hidden="true" />{label}</span><ArrowUpRight size={18} aria-hidden="true" /></a>;
             })}
-            <a className="mobile-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} /></a>
+            {contactDetailsVisible && <a className="mobile-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} /></a>}
           </nav>
         )}
       </header>
@@ -181,7 +180,7 @@ export default function Home() {
             </svg>
           </div>
           <div className="night-heading shell">
-            <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
+            <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
           </div>
           <div className="night-bottom shell">
@@ -192,7 +191,7 @@ export default function Home() {
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
-              <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>New York, Ecatepec<small>{business.hours}</small></span><ArrowRight size={18} /></a>
+              {contactDetailsVisible && <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>{business.address}<small>{business.hours}</small></span><ArrowRight size={18} /></a>}
             </div>
           </div>
           <a className="night-scroll" href="#menu" aria-label="Descubrir el menú"><ArrowDown size={17} /></a>
@@ -218,17 +217,17 @@ export default function Home() {
 
           <div className="market-fairground">
             <HalloweenFairground />
-            <section className="promo-delivery shell" id="domicilio" aria-label="Promoción y pedidos a domicilio">
+            <section className="promo-delivery shell" id="domicilio" aria-label={contactDetailsVisible ? "Promoción y pedidos a domicilio" : "Promoción y menú"}>
               <FridayPromo />
               <div className="promo-delivery-service">
                 <div className="promo-delivery-copy">
-                  <div className="eyebrow"><Bike size={18} aria-hidden="true" /> EL ANTOJO VA CONTIGO</div>
-                  <h2 id="delivery-title">¿Se te antojó <em>en casa?</em></h2>
-                  <p>Elige tu antojo y mándanos tu ubicación por WhatsApp.</p>
+                  <div className="eyebrow"><Bike size={18} aria-hidden="true" /> {contactDetailsVisible ? "EL ANTOJO VA CONTIGO" : "EL ANTOJO TE ESPERA"}</div>
+                  <h2 id="delivery-title">{contactDetailsVisible ? <>¿Se te antojó <em>en casa?</em></> : <>¿Cuál se te <em>antoja?</em></>}</h2>
+                  <p>{contactDetailsVisible ? "Elige tu antojo y mándanos tu ubicación por WhatsApp." : "Descubre nuestros dulces, snacks y bebidas."}</p>
                 </div>
                 <Mascot character="host" className="promo-delivery-host" />
-                <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a>
-                <small>Consulta cobertura, costo de envío y disponibilidad.</small>
+                {contactDetailsVisible ? <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a> : <a className="button button-gold promo-delivery-order" href="#menu"><UtensilsCrossed size={20} aria-hidden="true" /> Ver menú <ArrowUpRight size={18} aria-hidden="true" /></a>}
+                {contactDetailsVisible && <small>Consulta cobertura, costo de envío y disponibilidad.</small>}
               </div>
             </section>
 
