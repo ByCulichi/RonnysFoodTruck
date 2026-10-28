@@ -64,27 +64,39 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` presenta a Roo hechicero sobre sus cuatro patas con los nuevos recursos transparentes `public/images/ronny/welcome/roo-four-paws.png` y `roo-bark.png`, creados con su identidad de marca. Los recursos anteriores permanecen intactos. `components/roo-puppet.tsx` articula cuatro patas, cola, giro del cuerpo y cabeza en un único SVG. La segunda imagen se muestra únicamente dentro de una máscara del hocico para dos ciclos de abrir/cerrar la boca; no hay globo de diálogo ni audio automático. Las articulaciones usan animaciones WAAPI finitas, sin bucle JavaScript por fotograma. Las dos imágenes se sirven optimizadas a 640 px (unos 69 KB cada una); la imagen de boca abierta solo se solicita al preparar una bienvenida con movimiento permitido. Sin JavaScript o con movimiento reducido basta la imagen cerrada.
+`components/roo-welcome.tsx` presenta una escena de unos 3.5 segundos: Roo entra caminando sobre sus cuatro patas, se acerca a una hamburguesa frontal, la huele dos veces, pone cara de antojo y después da la bienvenida a Ronny’s. `components/roo-puppet.tsx` articula patas, cola, cuerpo y cabeza en un único SVG. El hocico se mueve al saludar; el texto aparece después del gesto de antojo.
 
-Ese mismo SVG y su cabeza viajan mediante FLIP hasta la caja real de la navegación mientras una máscara recoge el cuerpo: no se sustituye al personaje por otro logo. La caja conserva 76 px (60 px en móvil), sin cambios de diseño. No se añaden GSAP ni Framer Motion. `app/page.tsx` integra la bienvenida en la marca del encabezado.
+Los recursos transparentes `public/images/ronny/welcome/roo-four-paws.png`, `roo-bark.png` y `roo-craving.png` conservan su registro en el mismo lienzo. Las variantes de expresión se muestran únicamente a través de las máscaras de hocico y rostro, y se cargan al preparar una bienvenida con movimiento permitido. Las articulaciones usan animaciones WAAPI finitas, sin trabajo JavaScript por fotograma. Sin JavaScript o con movimiento reducido se conserva la cabeza estática, con hamburguesa, aroma y gesto de antojo ocultos. Los recursos anteriores permanecen intactos.
+
+`components/welcome-burger.tsx` dibuja la hamburguesa en SVG local. Su grupo está registrado en el lienzo fuente y es hijo directo del SVG, fuera del pivote que camina: la comida permanece quieta mientras Roo se acerca. El aroma acompaña los dos movimientos de olfateo. La hamburguesa se desvanece entre `.60` y `.665`, antes del vuelo hacia la navegación; no hay globo de diálogo ni audio automático.
+
+Ese mismo SVG y su cabeza viajan mediante FLIP hasta la caja real de la navegación. La máscara mantiene el cuerpo completo hasta `.70` y termina de recogerlo en la cabeza en `.94`. La caja conserva 76 px (60 px en móvil), sin cambios de diseño ni sustitución por otro logo. No se añaden GSAP ni Framer Motion. `app/page.tsx` integra la bienvenida en la marca del encabezado.
 
 La configuración `rooWelcomeMotion`, al principio del componente, permite ajustar:
 
 | Valor | Efecto | Inicial |
 | --- | --- | --- |
-| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3100` |
+| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3500` |
 | `maxSize` | Alto máximo del cuerpo completo, en píxeles | `520` |
 | `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.76` / `.64` |
 | `centerY` | Altura inicial de su centro como fracción de pantalla | `.40` |
-| `entranceLift` / `entranceTilt` | Desplazamiento vertical inicial y giro, en píxeles/grados | `32` / `-7` |
 | `flightTilt` / `flightCurve` | Inclinación máxima y curvatura del viaje | `-8` / `.22` |
-| `flightStart` | Fracción de la secuencia en que empieza el viaje; mantener entre `.40` y `.65` | `.49` |
-| `imageTimeout` | Espera máxima para las dos imágenes antes de omitir la bienvenida | `850` |
+| `flightStart` | Inicio del viaje, tomado de `rooWelcomeStory` para coordinar las fases | `.67` |
+| `imageTimeout` | Espera máxima de las imágenes antes de omitir la bienvenida | `850` |
 
-`lib/roo-welcome-art.ts` registra las fuentes, dimensiones y contorno de cabeza usados por el SVG y las máscaras. `animateRooPuppet` en `components/roo-puppet.tsx` define los movimientos y los dos ciclos de boca como fracciones de la duración; `components/roo-welcome.css` establece los pivotes de articulación, el estado estático y la escena violeta/dorada. Las coordenadas finales se obtienen de `getBoundingClientRect()` de la caja real del logo. Al girar o redimensionar el dispositivo se conserva la pose visible y se recalcula el viaje restante. En una carga fría se acorta ligeramente la secuencia para compensar la espera de las imágenes.
+`lib/roo-welcome-story.ts` coordina las fases normalizadas de la duración total y `walkDistance: 820`, la distancia inicial de caminata en píxeles del lienzo fuente:
+
+| Fase | Intervalo |
+| --- | --- |
+| Caminata hacia la hamburguesa | `0–.24` |
+| Dos olfateos | `.24–.43` |
+| Cara de antojo | `.43–.56` |
+| Bienvenida | Desde `.56` |
+| Viaje al logo | Desde `.67` hasta `1` |
+
+`lib/roo-welcome-art.ts` registra las fuentes, dimensiones y contorno de cabeza usados por el SVG y las máscaras. `animateRooPuppet` en `components/roo-puppet.tsx` define los movimientos coordinados; `components/roo-welcome.css` establece los pivotes de articulación, los estados estáticos y la escena violeta/dorada. Las coordenadas finales se obtienen de `getBoundingClientRect()` de la caja real del logo. Al girar o redimensionar el dispositivo se conserva la pose visible y se recalcula el viaje restante. En una carga fría se acorta ligeramente la secuencia para compensar la espera de las imágenes.
 
 La bienvenida se ejecuta en cada documento nuevo o refresh; no vuelve al cambiar de sección ni al remontar la página mediante navegación cliente. Respeta `prefers-reduced-motion` desde CSS y JavaScript. No bloquea el cuerpo ni cambia el foco: tocar, usar teclado o empezar a desplazarse permite entrar inmediatamente. Al ocultar la pestaña, fallar la animación o tardar demasiado el recurso, se revela la página. Sin JavaScript, el contenido aparece directamente; hay además una salida CSS acotada por si la hidratación no llega a ejecutarse. Todos los listeners, observadores y efectos de la bienvenida se liberan al terminar.
-
 
 ## Carta y fotografías
 

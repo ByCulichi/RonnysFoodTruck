@@ -3,17 +3,20 @@
 import { getImageProps } from "next/image";
 import { useId, type CSSProperties, type Ref } from "react";
 import { rooHeadOutline, rooWelcomeArt } from "@/lib/roo-welcome-art";
+import { rooWelcomeStory } from "@/lib/roo-welcome-story";
+import { WelcomeBurger } from "@/components/welcome-burger";
 
 function optimizedSource(src: string) {
   const { props } = getImageProps({ src, width: 640, height: 640, alt: "Roo", quality: 80 });
   return props.srcSet?.split(",")[0].trim().split(" ")[0] || props.src;
 }
 
-// Both registered cels use the same small, cached Next Image optimization. The
-// open-mouth cel is shown ONLY through a muzzle mask, never as another dog.
+// Registered cels share the small Next Image optimization. Expression patches
+// change only the face, never replace the walking character or navbar head.
 export const rooPuppetSources = {
   closed: optimizedSource(rooWelcomeArt.src),
   bark: optimizedSource(rooWelcomeArt.bark),
+  craving: optimizedSource(rooWelcomeArt.craving),
 };
 
 const regions = {
@@ -48,6 +51,9 @@ export function RooPuppet({ puppetRef, style }: { puppetRef: Ref<SVGSVGElement>;
       <mask id={`${id}-mouth`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
         <ellipse cx="900" cy="714" rx="165" ry="112" fill={`url(#${id}-muzzle-blend)`} />
       </mask>
+      <mask id={`${id}-face`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
+        <ellipse cx="860" cy="640" rx="310" ry="240" fill={`url(#${id}-muzzle-blend)`} />
+      </mask>
     </defs>
     <g data-roo-part="pivot">
       {part("rear-far")}{part("front-far")}{part("tail")}
@@ -55,12 +61,17 @@ export function RooPuppet({ puppetRef, style }: { puppetRef: Ref<SVGSVGElement>;
       {part("rear-near")}{part("front-near")}
       <g data-roo-part="head">
         <use href={`#${id}-skin`} clipPath={`url(#${id}-head)`} />
-        <g data-roo-part="mouth"><image data-roo-mouth-cel="true" width="1254" height="1254" mask={`url(#${id}-mouth)`} /></g>
-        <g data-roo-part="bark-lines" fill="none" stroke="#ffdb9c" strokeWidth="8" strokeLinecap="round">
-          <path d="M1130 690l55-20M1140 730l65 3M1124 770l50 24" />
+        <g data-roo-part="craving">
+          <image data-roo-craving-cel="true" width="1254" height="1254" mask={`url(#${id}-face)`} />
+          <path d="M1137 456v32m-16-16h32M1170 530v20m-10-10h20" fill="none" stroke="#ffe3a4" strokeWidth="6" strokeLinecap="round" />
         </g>
+        <g data-roo-part="mouth"><image data-roo-mouth-cel="true" width="1254" height="1254" mask={`url(#${id}-mouth)`} /></g>
       </g>
     </g>
+    <g data-roo-part="aroma" fill="none" stroke="#ffe2b7" strokeWidth="6" strokeLinecap="round" aria-hidden="true">
+      <path d="M1065 802c-38-7-12-38-54-46s-11-28-43-38M1112 791c-45-15-15-41-52-55M1130 815c-39-12-5-34-30-47" />
+    </g>
+    <WelcomeBurger />
   </svg>;
 }
 
@@ -70,61 +81,88 @@ type RegisterAnimation = (element: Element, frames: Keyframe[], options: Keyfram
 export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation) {
   const move = (name: string, frames: Keyframe[]) => {
     const joint = puppet.querySelector(`[data-roo-part="${name}"]`);
-    if (joint) animate(joint, frames.map(frame => ({ ...frame, easing: "ease-in-out" })), { duration, fill: "both", easing: "linear" });
+    if (joint) animate(joint, frames.map(frame => ({ ...frame, easing: frame.easing || "ease-in-out" })), { duration, fill: "both", easing: "linear" });
   };
   move("pivot", [
-    { offset: 0, transform: "translate(-18px, 0) rotate(-5deg)" },
-    { offset: .14, transform: "translate(10px, -9px) rotate(3deg)" },
-    { offset: .24, transform: "translate(-9px, 0) rotate(-4deg)" },
-    { offset: .34, transform: "translate(8px, -4px) rotate(2deg)" },
-    { offset: .48, transform: "none" }, { offset: 1, transform: "none" },
+    { offset: 0, transform: `translate(${-rooWelcomeStory.walkDistance}px, 0) rotate(-1deg)`, easing: "linear" },
+    { offset: .06, transform: "translate(-615px, -7px) rotate(1deg)", easing: "linear" },
+    { offset: .12, transform: "translate(-410px, 0) rotate(-1deg)", easing: "linear" },
+    { offset: .18, transform: "translate(-175px, -6px) rotate(1deg)" },
+    { offset: rooWelcomeStory.walkEnd, transform: "none" },
+    { offset: .31, transform: "translate(12px, 8px) rotate(6deg)" },
+    { offset: .345, transform: "translate(5px, 3px) rotate(3deg)" },
+    { offset: .385, transform: "translate(12px, 8px) rotate(6deg)" },
+    { offset: rooWelcomeStory.sniffEnd, transform: "none" },
+    { offset: .48, transform: "translate(0, -6px) rotate(-1deg)" },
+    { offset: rooWelcomeStory.cravingEnd, transform: "none" },
+    { offset: 1, transform: "none" },
   ]);
   const legOrigins = { "rear-near": "310px 960px", "rear-far": "455px 970px", "front-near": "685px 965px", "front-far": "850px 965px" };
   Object.entries(legOrigins).forEach(([name, origin], index) => {
     const element = puppet.querySelector<SVGElement>(`[data-roo-part="${name}"]`);
     if (element) element.style.transformOrigin = origin;
-    const direction = index % 2 ? -1 : 1;
+    const direction = index === 0 || index === 3 ? 1 : -1;
     move(name, [
       { offset: 0, transform: `rotate(${direction * -4}deg)` },
-      { offset: .13, transform: `rotate(${direction * 6}deg)` },
-      { offset: .23, transform: `rotate(${direction * -5}deg)` },
-      { offset: .32, transform: `rotate(${direction * 3}deg)` },
-      { offset: .43, transform: "none" }, { offset: 1, transform: "none" },
+      { offset: .045, transform: `rotate(${direction * 6}deg)` },
+      { offset: .09, transform: `rotate(${direction * -5}deg)` },
+      { offset: .135, transform: `rotate(${direction * 6}deg)` },
+      { offset: .18, transform: `rotate(${direction * -4}deg)` },
+      { offset: .22, transform: `rotate(${direction * 2}deg)` },
+      { offset: rooWelcomeStory.walkEnd, transform: "none" }, { offset: 1, transform: "none" },
     ]);
   });
   move("tail", [
     { offset: 0, transform: "rotate(-12deg)" },
-    { offset: .1, transform: "rotate(13deg)" },
-    { offset: .2, transform: "rotate(-12deg)" },
-    { offset: .3, transform: "rotate(12deg)" },
-    { offset: .4, transform: "rotate(-9deg)" },
-    { offset: .5, transform: "none" }, { offset: 1, transform: "none" },
+    { offset: .09, transform: "rotate(13deg)" },
+    { offset: .18, transform: "rotate(-12deg)" },
+    { offset: .26, transform: "rotate(7deg)" },
+    { offset: .36, transform: "rotate(-4deg)" },
+    { offset: .43, transform: "rotate(8deg)" },
+    { offset: .48, transform: "rotate(-12deg)" },
+    { offset: .53, transform: "rotate(12deg)" },
+    { offset: .59, transform: "rotate(-9deg)" },
+    { offset: .65, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("head", [
-    { offset: 0, transform: "rotate(3deg) skewX(2deg)" },
-    { offset: .17, transform: "rotate(-7deg) skewX(-3deg)" },
-    { offset: .27, transform: "rotate(4deg) skewX(2deg)" },
-    { offset: .32, transform: "rotate(-3deg)" },
-    { offset: .37, transform: "rotate(1deg)" },
-    { offset: .41, transform: "rotate(-3deg)" },
-    { offset: .48, transform: "none" }, { offset: 1, transform: "none" },
+    { offset: 0, transform: "rotate(-2deg)" },
+    { offset: .12, transform: "rotate(2deg)" },
+    { offset: rooWelcomeStory.walkEnd, transform: "none" },
+    { offset: .31, transform: "translate(12px, 24px) rotate(6deg)" },
+    { offset: .345, transform: "translate(3px, 6px) rotate(2deg)" },
+    { offset: .385, transform: "translate(12px, 24px) rotate(6deg)" },
+    { offset: rooWelcomeStory.sniffEnd, transform: "none" },
+    { offset: .48, transform: "rotate(-4deg)" },
+    { offset: rooWelcomeStory.cravingEnd, transform: "none" },
+    { offset: .60, transform: "rotate(-2deg)" },
+    { offset: .65, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("mouth", [
     { offset: 0, opacity: 0, transform: "scaleY(.72)" },
-    { offset: .29, opacity: 0, transform: "scaleY(.72)" },
-    { offset: .315, opacity: 1, transform: "scaleY(1)" },
-    { offset: .34, opacity: 1, transform: "scaleY(1)" },
-    { offset: .365, opacity: 0, transform: "scaleY(.72)" },
-    { offset: .39, opacity: 0, transform: "scaleY(.72)" },
-    { offset: .415, opacity: 1, transform: "scaleY(1)" },
-    { offset: .435, opacity: 1, transform: "scaleY(1)" },
-    { offset: .46, opacity: 0, transform: "scaleY(.72)" },
+    { offset: .57, opacity: 0, transform: "scaleY(.72)" },
+    { offset: .59, opacity: 1, transform: "scaleY(1)" },
+    { offset: .605, opacity: 0, transform: "scaleY(.72)" },
+    { offset: .625, opacity: 1, transform: "scaleY(1)" },
+    { offset: .65, opacity: 0, transform: "scaleY(.72)" },
     { offset: 1, opacity: 0, transform: "scaleY(.72)" },
   ]);
-  move("bark-lines", [
-    { offset: 0, opacity: 0 }, { offset: .30, opacity: 0 },
-    { offset: .32, opacity: .85 }, { offset: .35, opacity: 0 },
-    { offset: .40, opacity: 0 }, { offset: .42, opacity: .85 },
-    { offset: .45, opacity: 0 }, { offset: 1, opacity: 0 },
+  move("craving", [
+    { offset: 0, opacity: 0 }, { offset: rooWelcomeStory.sniffEnd, opacity: 0 },
+    { offset: .46, opacity: 1 }, { offset: .54, opacity: 1 },
+    { offset: .57, opacity: 0 }, { offset: 1, opacity: 0 },
+  ]);
+  move("burger", [
+    { offset: 0, opacity: 0 }, { offset: .04, opacity: 1 },
+    { offset: .60, opacity: 1 }, { offset: .665, opacity: 0 },
+    { offset: 1, opacity: 0 },
+  ]);
+  move("aroma", [
+    { offset: 0, opacity: 0, transform: "translate(6px, 7px)" },
+    { offset: rooWelcomeStory.walkEnd, opacity: 0, transform: "translate(6px, 7px)" },
+    { offset: .295, opacity: .8, transform: "translate(0, 0)" },
+    { offset: .335, opacity: .4, transform: "translate(-9px, -6px)" },
+    { offset: .36, opacity: .8, transform: "translate(0, 0)" },
+    { offset: .415, opacity: 0, transform: "translate(-9px, -6px)" },
+    { offset: 1, opacity: 0, transform: "translate(-9px, -6px)" },
   ]);
 }

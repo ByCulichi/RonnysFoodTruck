@@ -81,7 +81,9 @@
 .roo-puppet [data-roo-part="tail"] { transform-origin: 267px 742px; }
 .roo-puppet [data-roo-part="head"] { transform-origin: 790px 805px; }
 .roo-puppet [data-roo-part="mouth"] { transform-origin: 900px 680px; opacity: 0; }
-.roo-puppet [data-roo-part="bark-lines"] { opacity: 0; }
+.roo-puppet [data-roo-part="craving"],
+.roo-puppet [data-roo-part="burger"],
+.roo-puppet [data-roo-part="aroma"] { opacity: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
   /* backdrop-filter would otherwise make a fixed descendant header-sized. */

@@ -3,20 +3,19 @@
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
 import { rooWelcomeArt, rooHeadMask as headMask, rooFullMask as fullMask } from "@/lib/roo-welcome-art";
+import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
 export const rooWelcomeMotion = {
-  duration: 3100,
+  duration: 3500,
   imageTimeout: 850,
   maxSize: 520,
   viewportWidth: .76,
   viewportHeight: .64,
   centerY: .40,
-  entranceLift: 32,
-  entranceTilt: -7,
   flightTilt: -8,
-  flightStart: .49,
+  flightStart: rooWelcomeStory.flightStart,
   flightCurve: .22,
 } as const;
 
@@ -68,10 +67,9 @@ function flightFrames({ x, y, scale }: { x: number; y: number; scale: number }, 
 
 function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyframe[] {
   return [
-    { offset: 0, transform: pose(x, y + rooWelcomeMotion.entranceLift, scale * .88, rooWelcomeMotion.entranceTilt), opacity: 0, easing: "cubic-bezier(.16, 1, .3, 1)" },
-    { offset: .20, transform: pose(x, y - 5, scale * 1.018, 1.5), opacity: 1, easing: "ease-in-out" },
-    { offset: .29, transform: pose(x, y, scale), opacity: 1, easing: "ease-in-out" },
-    { offset: .39, transform: pose(x, y - 4, scale, -2), opacity: 1, easing: "ease-in-out" },
+    // Hold the stage still: Roo's inner joints walk toward a stationary burger.
+    { offset: 0, transform: pose(x, y, scale), opacity: 0 },
+    { offset: .04, transform: pose(x, y, scale), opacity: 1 },
     { offset: rooWelcomeMotion.flightStart, transform: pose(x, y, scale), opacity: 1 },
     ...flightFrames({ x, y, scale }, rooWelcomeMotion.flightStart),
   ];
@@ -107,6 +105,7 @@ export function RooWelcome() {
       scene!.dataset.state = "done";
       animations.forEach(animation => animation.cancel());
       image!.querySelector("[data-roo-mouth-cel]")?.removeAttribute("href");
+      image!.querySelector("[data-roo-craving-cel]")?.removeAttribute("href");
       clearTimeout(deadline);
       clearTimeout(watchdog);
       removeListeners.forEach(remove => remove());
@@ -134,7 +133,7 @@ export function RooWelcome() {
     deadline = setTimeout(release, rooWelcomeMotion.imageTimeout);
 
     async function start() {
-      // Decode the two small registered cels before articulating the character.
+      // Decode the small registered cels before articulating the character.
       // A slow / missing resource skips the sequence, never holds the page.
       const bitmaps = await Promise.all(Object.values(rooPuppetSources).map(async src => {
         const bitmap = new window.Image();
@@ -145,6 +144,7 @@ export function RooWelcome() {
       if (stopped) return;
       if (bitmaps.some(bitmap => !bitmap.naturalWidth) || !anchor!.getBoundingClientRect().width) { finish(); return; }
       image!.querySelector("[data-roo-mouth-cel]")?.setAttribute("href", rooPuppetSources.bark);
+      image!.querySelector("[data-roo-craving-cel]")?.setAttribute("href", rooPuppetSources.craving);
       clearTimeout(deadline);
       welcomeAttempted = true;
       let geometry = measureWelcome(anchor!, scene!);
@@ -162,29 +162,29 @@ export function RooWelcome() {
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
         { offset: 0, clipPath: fullMask },
-        { offset: .55, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .90, clipPath: headMask },
+        { offset: .70, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .94, clipPath: headMask },
         { offset: 1, clipPath: headMask },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate);
       animate(scene!, [
         { offset: 0, opacity: 1 },
-        { offset: .54, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .93, opacity: 0 },
+        { offset: .70, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .96, opacity: 0 },
         { offset: 1, opacity: 0 },
       ], { duration, fill: "both" });
       if (copyRef.current) animate(copyRef.current, [
         { offset: 0, opacity: 0, transform: "translateY(16px)", easing: "ease-out" },
-        { offset: .16, opacity: 0, transform: "translateY(16px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
-        { offset: .31, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
-        { offset: .48, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
-        { offset: .61, opacity: 0, transform: "translateY(-12px)" },
+        { offset: rooWelcomeStory.greetingStart, opacity: 0, transform: "translateY(16px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
+        { offset: .62, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
+        { offset: .74, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
+        { offset: .84, opacity: 0, transform: "translateY(-12px)" },
         { offset: 1, opacity: 0, transform: "translateY(-12px)" },
       ], { duration, fill: "both" });
       if (glowRef.current) animate(glowRef.current, [
         { opacity: 0, transform: "scale(.88) rotate(-8deg)" },
-        { offset: .3, opacity: 1, transform: "scale(1) rotate(0deg)" },
-        { offset: .54, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
+        { offset: .2, opacity: 1, transform: "scale(1) rotate(0deg)" },
+        { offset: .67, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
       const remeasure = () => {
