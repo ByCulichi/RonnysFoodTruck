@@ -1,4 +1,4 @@
-/* The layout slot never moves; only its one original Roo image is transformed. */
+/* The layout slot never moves; the same articulated Roo figure travels to it. */
 .brand .roo-welcome-anchor {
   position: relative;
   display: block;
@@ -36,9 +36,21 @@
     radial-gradient(ellipse at 50% 39%, #63314e99, transparent 51%),
     radial-gradient(ellipse at 14% 82%, #69302555, transparent 48%),
     linear-gradient(145deg, #1c102c, #28132d 53%, #120c20);
-  animation: roo-welcome-failopen var(--roo-welcome-failsafe, 4450ms) step-end forwards;
+  animation: roo-welcome-failopen var(--roo-welcome-failsafe, 5150ms) step-end forwards;
 }
 .brand .roo-welcome-scene[data-state="done"] { display: none; }
+.roo-welcome-truck {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--roo-center-y, 40vh) + 28px);
+  width: min(96vw, 930px);
+  height: auto;
+  transform: translate(-50%, -45%);
+  opacity: .20;
+  filter: blur(.6px);
+  pointer-events: none;
+}
+
 .roo-welcome-glow {
   position: absolute;
   left: calc(var(--roo-center-x, 50vw) - (var(--roo-size, 300px) + 100px) / 2);
@@ -81,6 +93,7 @@
 .roo-puppet [data-roo-part="tail"] { transform-origin: 267px 742px; }
 .roo-puppet [data-roo-part="head"] { transform-origin: 790px 805px; }
 .roo-puppet [data-roo-part="mouth"] { transform-origin: 900px 680px; opacity: 0; }
+.roo-puppet [data-roo-part="surprise"],
 .roo-puppet [data-roo-part="craving"],
 .roo-puppet [data-roo-part="burger"],
 .roo-puppet [data-roo-part="aroma"] { opacity: 0; }
@@ -92,7 +105,7 @@
   .roo-welcome-anchor:not([data-welcome-state="done"]) .roo-welcome-figure {
     z-index: 2;
     opacity: 0;
-    animation: roo-welcome-showhead var(--roo-welcome-failsafe, 4450ms) step-end forwards;
+    animation: roo-welcome-showhead var(--roo-welcome-failsafe, 5150ms) step-end forwards;
   }
   .roo-welcome-anchor[data-welcome-state="running"] .roo-welcome-figure { will-change: transform, opacity; }
 }

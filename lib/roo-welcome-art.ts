@@ -1,7 +1,9 @@
 export const rooWelcomeArt = {
-  src: "/images/ronny/welcome/roo-four-paws.png",
-  bark: "/images/ronny/welcome/roo-bark.png",
-  craving: "/images/ronny/welcome/roo-craving.png",
+  src: "/images/ronny/welcome/roo-four-paws-caramel.png",
+  bark: "/images/ronny/welcome/roo-bark-caramel.png",
+  craving: "/images/ronny/welcome/roo-craving-caramel.png",
+  surprise: "/images/ronny/welcome/roo-surprise-caramel.png",
+  barkSound: "/audio/roo-bark.mp3",
   width: 1254,
   height: 1254,
   head: { left: 244, top: 0, size: 1010 },

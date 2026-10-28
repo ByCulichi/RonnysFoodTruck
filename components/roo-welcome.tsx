@@ -4,17 +4,18 @@ import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
 import { rooWelcomeArt, rooHeadMask as headMask, rooFullMask as fullMask } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
+import { WelcomeTruck } from "@/components/welcome-truck";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
 export const rooWelcomeMotion = {
-  duration: 3500,
+  duration: 3800,
   imageTimeout: 850,
   maxSize: 520,
   viewportWidth: .76,
   viewportHeight: .64,
   centerY: .40,
-  flightTilt: -8,
+  flightTilt: -6,
   flightStart: rooWelcomeStory.flightStart,
   flightCurve: .22,
 } as const;
@@ -94,20 +95,37 @@ export function RooWelcome() {
     let character: Animation | undefined;
     let deadline: ReturnType<typeof setTimeout> | undefined;
     let watchdog: ReturnType<typeof setTimeout> | undefined;
+    let soundCue: ReturnType<typeof setTimeout> | undefined;
+    let barkAudio: HTMLAudioElement | undefined;
+
+    function stopSound() {
+      const audio = barkAudio;
+      barkAudio = undefined;
+      if (!audio) return;
+      try {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.removeAttribute("src");
+        audio.load();
+      } catch { /* Audio support never controls the visual welcome. */ }
+    }
 
     function finish(remember = true) {
       if (stopped) return;
       stopped = true;
       if (remember) welcomeAttempted = true;
       // Restore the real, already reserved navbar box BEFORE canceling effects.
-      // This is the same image node throughout; there is no clone or handoff.
+      // The same SVG and head remain throughout; there is no clone or handoff.
       anchor!.dataset.welcomeState = "done";
       scene!.dataset.state = "done";
       animations.forEach(animation => animation.cancel());
       image!.querySelector("[data-roo-mouth-cel]")?.removeAttribute("href");
       image!.querySelector("[data-roo-craving-cel]")?.removeAttribute("href");
+      image!.querySelector("[data-roo-surprise-cel]")?.removeAttribute("href");
       clearTimeout(deadline);
       clearTimeout(watchdog);
+      clearTimeout(soundCue);
+      stopSound();
       removeListeners.forEach(remove => remove());
     }
     const release = () => finish();
@@ -145,13 +163,14 @@ export function RooWelcome() {
       if (bitmaps.some(bitmap => !bitmap.naturalWidth) || !anchor!.getBoundingClientRect().width) { finish(); return; }
       image!.querySelector("[data-roo-mouth-cel]")?.setAttribute("href", rooPuppetSources.bark);
       image!.querySelector("[data-roo-craving-cel]")?.setAttribute("href", rooPuppetSources.craving);
+      image!.querySelector("[data-roo-surprise-cel]")?.setAttribute("href", rooPuppetSources.surprise);
       clearTimeout(deadline);
       welcomeAttempted = true;
       let geometry = measureWelcome(anchor!, scene!);
       let elapsedBeforeResize = 0;
       anchor!.dataset.welcomeState = "running";
       scene!.dataset.state = "running";
-      // Keep the complete experience near three seconds on a cold image cache.
+      // Keep the complete experience under four seconds on a cold image cache.
       const duration = Math.max(rooWelcomeMotion.duration * .8, rooWelcomeMotion.duration - Math.max(0, performance.now() - preparationStarted - 100));
       const animate = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => {
         const animation = element.animate(frames, options);
@@ -162,23 +181,23 @@ export function RooWelcome() {
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
         { offset: 0, clipPath: fullMask },
-        { offset: .70, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .94, clipPath: headMask },
+        { offset: .76, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .96, clipPath: headMask },
         { offset: 1, clipPath: headMask },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate);
       animate(scene!, [
         { offset: 0, opacity: 1 },
-        { offset: .70, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .96, opacity: 0 },
+        { offset: .76, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .985, opacity: 0 },
         { offset: 1, opacity: 0 },
       ], { duration, fill: "both" });
       if (copyRef.current) animate(copyRef.current, [
         { offset: 0, opacity: 0, transform: "translateY(16px)", easing: "ease-out" },
         { offset: rooWelcomeStory.greetingStart, opacity: 0, transform: "translateY(16px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
-        { offset: .62, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
-        { offset: .74, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
-        { offset: .84, opacity: 0, transform: "translateY(-12px)" },
+        { offset: .715, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
+        { offset: .80, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
+        { offset: .89, opacity: 0, transform: "translateY(-12px)" },
         { offset: 1, opacity: 0, transform: "translateY(-12px)" },
       ], { duration, fill: "both" });
       if (glowRef.current) animate(glowRef.current, [
@@ -187,6 +206,23 @@ export function RooWelcome() {
         { offset: .67, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
+      // A tiny real bark is optional enhancement, never a visual prerequisite.
+      // One scheduled attempt only: blocked / late audio stays silent, and an
+      // interaction or hidden page clears the cue instead of replaying later.
+      try {
+        barkAudio = new Audio(rooWelcomeArt.barkSound);
+        barkAudio.preload = "auto";
+        barkAudio.volume = .44;
+        barkAudio.load();
+        soundCue = setTimeout(() => {
+          if (stopped || document.hidden || motion.matches || !barkAudio) return;
+          const audio = barkAudio;
+          if (audio.readyState < 3) { stopSound(); return; }
+          try { void audio.play().catch(stopSound); }
+          catch { stopSound(); }
+        }, duration * rooWelcomeStory.barkStart);
+      } catch { stopSound(); }
+
       const remeasure = () => {
         if (stopped) return;
         try {
@@ -246,6 +282,7 @@ export function RooWelcome() {
       </span>
     </span>
     <span ref={sceneRef} className="roo-welcome-scene" data-state="pending" style={safetyStyle} aria-hidden="true">
+      <WelcomeTruck />
       <span ref={glowRef} className="roo-welcome-glow"><span /><span /><i>✦</i><i>✦</i><i>✧</i></span>
       <span ref={copyRef} className="roo-welcome-copy"><span>¡Bienvenido a</span><strong>Ronny’s!</strong></span>
     </span>

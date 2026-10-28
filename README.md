@@ -36,6 +36,10 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 ## Contacto directo
 
+El propietario solicitó una pausa temporal de toda la información de ubicación y contacto. `contactDetailsVisible = false` en `lib/business.ts` oculta visita, horarios, mapa, Google, teléfono, WhatsApp y redes; sus valores también están vacíos para excluirlos del HTML y de los bundles del cliente. Las consultas del catálogo/promoción y el formulario de servidor quedan desactivados. Restaurar requiere autorización y configuración revisada; no basta con volver visible una sección. No se guardan los valores de recuperación en este repositorio público.
+
+La nueva respuesta incluye `noindex/nofollow/noarchive`, `nosniff`, prohibición de enmarcado y una política de permisos sin cámara, micrófono ni geolocalización. Estas medidas no eliminan datos ya publicados en buscadores, redes, versiones anteriores o historial Git. No implican que la página sea invulnerable ni sustituyen controles de acceso de las cuentas de administración.
+
 La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
 
 El footer de Halloween «Aquí sigue el antojo» usa contenido HTML real: ilustración aprobada de la dueña y Ronny a la izquierda, navegación «Explora» al centro y marca a la derecha. «Síguenos» reúne cinco logos neón centrados: Google, WhatsApp, Instagram, Facebook y TikTok. Abren los destinos confirmados del negocio con clic o Enter, sin previews. Los tres enlaces sociales oficiales proporcionados por el propietario se centralizan en `business.socials`; X se retiró. El dúo aprobado permanece intacto y `#contacto` apunta al footer.
@@ -48,11 +52,11 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 El menú tiene cuatro categorías (Dulces, Salados, Bebidas frías y Bebidas calientes), sin buscador y con una sola ficha activa. Todos los productos de la categoría aparecen juntos en una cuadrícula de cuatro columnas en escritorio, tres en tablet y dos en móvil, sin paginación, flechas de productos ni fila horizontal oculta. Cada tarjeta muestra foto, nombre y precio inicial; la ficha se inserta después de la fila del producto elegido y conserva variantes y todos sus precios. Ronny cambia automáticamente de atuendo al elegir categoría; no hay selector manual de outfits. El catálogo y el libro mantienen navegaciones independientes.
 
-Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: New York, Ecatepec de Morelos, 55330, Estado de México; teléfono 56 5390 1358; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
+Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: [dirección reservada]; teléfono [teléfono reservado]; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
 
 ## Google Maps y opiniones
 
-La ficha oficial proporcionada por el propietario es https://maps.app.goo.gl/7YXxNfNkTWyo46yR8. El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
+La ficha oficial proporcionada por el propietario es [enlace de contacto reservado] El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
 
 Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. El footer conserva cinco enlaces directos a los canales confirmados, incluidos los perfiles oficiales de Instagram, Facebook y TikTok del propietario. No se muestran previews, se consultan APIs ni se inventan cifras.
 
@@ -60,39 +64,43 @@ Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen 
 
 Su color de marca es café/caramelo por la última corrección del propietario, con orejas rosas, ojos grandes y lengua de lado. Esa identidad se mantiene en el logo y todas las ilustraciones activas. El cierre de la página muestra a Ronny con disfraz de unicornio junto a su ama pelirroja, de piel clara, con disfraz de conejito, ambos en caricatura plana y con transparencia real. Dos personajes adicionales lo muestran con su playerita roja Adidas y lamiéndose la nariz. La ilustración con su abuelo queda pendiente hasta recibir referencia, por indicación del propietario.
 
-El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.
+El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. Por petición del propietario se retira «Nuestro Ronny» de la navegación superior y móvil; su presentación junto a la carta permanece. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` presenta una escena de unos 3.5 segundos: Roo entra caminando sobre sus cuatro patas, se acerca a una hamburguesa frontal, la huele dos veces, pone cara de antojo y después da la bienvenida a Ronny’s. `components/roo-puppet.tsx` articula patas, cola, cuerpo y cabeza en un único SVG. El hocico se mueve al saludar; el texto aparece después del gesto de antojo.
+`components/roo-welcome.tsx` presenta una escena de unos 3.8 segundos: Roo reacciona al ver una hamburguesa con tocino, se acerca con pasos cortos desfasados y frenado suave, la olfatea dos veces, pone cara de antojo y mueve alegremente la cola antes del ladrido y la bienvenida. `components/roo-puppet.tsx` articula patas, cola, cuerpo y cabeza en un único SVG. `components/welcome-truck.tsx` añade un truck rojo vectorial tenue al fondo, sin otro Roo ni descargas de imágenes.
 
-Los recursos transparentes `public/images/ronny/welcome/roo-four-paws.png`, `roo-bark.png` y `roo-craving.png` conservan su registro en el mismo lienzo. Las variantes de expresión se muestran únicamente a través de las máscaras de hocico y rostro, y se cargan al preparar una bienvenida con movimiento permitido. Las articulaciones usan animaciones WAAPI finitas, sin trabajo JavaScript por fotograma. Sin JavaScript o con movimiento reducido se conserva la cabeza estática, con hamburguesa, aroma y gesto de antojo ocultos. Los recursos anteriores permanecen intactos.
+Los recursos transparentes `public/images/ronny/welcome/roo-{four-paws,surprise,craving,bark}-caramel.png` usan el mismo lienzo y registro. El hocico es café/caramelo continuo, sin mancha crema, como el logo de referencia del propietario. Las variantes de expresión se muestran únicamente a través de máscaras del hocico y rostro y se cargan al preparar una bienvenida con movimiento permitido. Las articulaciones usan animaciones WAAPI finitas, sin trabajo JavaScript por fotograma. Sin JavaScript o con movimiento reducido se conserva la cabeza estática, con hamburguesa, aroma y expresiones ocultos. Los recursos anteriores permanecen intactos.
 
-`components/welcome-burger.tsx` dibuja la hamburguesa en SVG local. Su grupo está registrado en el lienzo fuente y es hijo directo del SVG, fuera del pivote que camina: la comida permanece quieta mientras Roo se acerca. El aroma acompaña los dos movimientos de olfateo. La hamburguesa se desvanece entre `.60` y `.665`, antes del vuelo hacia la navegación; no hay globo de diálogo ni audio automático.
+`components/welcome-burger.tsx` dibuja la hamburguesa con tiras de tocino en SVG local. Su grupo está registrado en el lienzo fuente y es hijo directo del SVG, fuera del pivote que camina: la comida permanece quieta mientras Roo se acerca. El aroma acompaña los dos movimientos de olfateo. La hamburguesa se desvanece entre `.665` y `.73`, antes del vuelo hacia la navegación.
 
-Ese mismo SVG y su cabeza viajan mediante FLIP hasta la caja real de la navegación. La máscara mantiene el cuerpo completo hasta `.70` y termina de recogerlo en la cabeza en `.94`. La caja conserva 76 px (60 px en móvil), sin cambios de diseño ni sustitución por otro logo. No se añaden GSAP ni Framer Motion. `app/page.tsx` integra la bienvenida en la marca del encabezado.
+El propietario autorizó un ladrido real cuando el navegador lo permita. `public/audio/roo-bark.mp3` pesa 3.8 KB y contiene un único ladrido de Chihuahua de unos 0.38 segundos. `public/audio/LICENCIA.txt` documenta la grabación de LittleBigSounds, su licencia individual CC0 y la edición. La carga no bloquea las imágenes ni la animación: solo se intenta reproducir una vez en `.585`, si el audio ya está listo. Autoplay bloqueado, recurso lento o ausente siguen con gestos sin sonido; no hay reintento posterior ni controles nuevos. Salir de la bienvenida detiene y libera el audio.
+
+Ese mismo SVG y su cabeza viajan mediante FLIP hasta la caja real de la navegación. La máscara mantiene el cuerpo completo hasta `.76` y termina de recogerlo en la cabeza en `.96`. La caja conserva 76 px (60 px en móvil), sin cambios de diseño ni sustitución por otro logo. No se añaden GSAP ni Framer Motion. `app/page.tsx` integra la bienvenida en la marca del encabezado.
 
 La configuración `rooWelcomeMotion`, al principio del componente, permite ajustar:
 
 | Valor | Efecto | Inicial |
 | --- | --- | --- |
-| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3500` |
+| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3800` |
 | `maxSize` | Alto máximo del cuerpo completo, en píxeles | `520` |
 | `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.76` / `.64` |
 | `centerY` | Altura inicial de su centro como fracción de pantalla | `.40` |
 | `flightTilt` / `flightCurve` | Inclinación máxima y curvatura del viaje | `-8` / `.22` |
-| `flightStart` | Inicio del viaje, tomado de `rooWelcomeStory` para coordinar las fases | `.67` |
+| `flightStart` | Inicio del viaje, tomado de `rooWelcomeStory` para coordinar las fases | `.74` |
 | `imageTimeout` | Espera máxima de las imágenes antes de omitir la bienvenida | `850` |
 
-`lib/roo-welcome-story.ts` coordina las fases normalizadas de la duración total y `walkDistance: 820`, la distancia inicial de caminata en píxeles del lienzo fuente:
+`lib/roo-welcome-story.ts` coordina las fases normalizadas de la duración total y `walkDistance: 560`, la distancia inicial de caminata en píxeles del lienzo fuente:
 
 | Fase | Intervalo |
 | --- | --- |
-| Caminata hacia la hamburguesa | `0–.24` |
-| Dos olfateos | `.24–.43` |
-| Cara de antojo | `.43–.56` |
-| Bienvenida | Desde `.56` |
-| Viaje al logo | Desde `.67` hasta `1` |
+| Reacción al ver la hamburguesa | `0–.105` |
+| Caminata hacia la hamburguesa | `.105–.315` |
+| Dos olfateos | `.315–.445` |
+| Cara de antojo y cola alegre | `.445–.565` |
+| Ladrido | Desde `.585` |
+| Bienvenida | Desde `.65` |
+| Viaje al logo | Desde `.74` hasta `1` |
 
 `lib/roo-welcome-art.ts` registra las fuentes, dimensiones y contorno de cabeza usados por el SVG y las máscaras. `animateRooPuppet` en `components/roo-puppet.tsx` define los movimientos coordinados; `components/roo-welcome.css` establece los pivotes de articulación, los estados estáticos y la escena violeta/dorada. Las coordenadas finales se obtienen de `getBoundingClientRect()` de la caja real del logo. Al girar o redimensionar el dispositivo se conserva la pose visible y se recalcula el viaje restante. En una carga fría se acorta ligeramente la secuencia para compensar la espera de las imágenes.
 
@@ -101,6 +109,8 @@ La bienvenida se ejecuta en cada documento nuevo o refresh; no vuelve al cambiar
 ## Carta y fotografías
 
 `lib/menu.ts` centraliza los 28 productos con sus variantes y precios originales, transcritos de las tres cartas de `ronnys.zip`: 8 dulces, 11 salados y 9 bebidas. La galería los organiza en cuatro filtros, independientes del libro. `components/menu-carta.tsx` muestra la carta digital HTML como libro inline de Dulces, Snacks y Bebidas, con zoom y «Texto grande», sin visor modal. Las fotos originales se conservan intactas en `public/images/menu/cartas/carta-{dulces,salados,bebidas}.jpg` como referencia.
+
+En celular, el libro encuadra la hoja legible a ancho útil y conserva físicamente su reverso. «Ver libro completo» permite consultar las dos caras y «Leer hoja» vuelve a la lectura; se conservan zoom, texto grande, precios y giros inline. El contacto táctil no muestra recuadro azul; la navegación con teclado mantiene un foco dorado visible.
 
 Las 13 fotos de comida del ZIP se conservan sin retoque en `public/images/menu/` y se usan en la galería y la ficha: tres crepas, dos malteadas, dos hamburguesas, tres frutas con crema, waffle, hotcakes y salchipulpos. Las imágenes verticales se adaptan con CSS. Por petición explícita del propietario, los productos sin foto usan 19 imágenes generadas en `public/images/menu/generated/`, separadas de las fotos reales, con metadatos `generated` y textos alternativos veraces; por petición del propietario no se muestra la etiqueta «Imagen ilustrativa». No representan fotos reales del negocio. Todos los productos tienen imagen; las variantes y precios siguen la carta sin añadir ofertas. `menuPhotoUrl` resuelve las extensiones JPG/PNG. Next Image sirve miniaturas y fotos en tamaños adaptables y WebP mediante el optimizador integrado, sin claves o APIs externas. La foto real del truck también se conserva como recurso. No se modifican las cartas originales ni se publican las referencias antiguas de personajes como si fueran platillos.
 
@@ -120,11 +130,13 @@ Los Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y u
 
 `business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. Por petición del propietario, en celular se retira la barra inferior fija de menú/domicilio y su espacio reservado. Los accesos superiores y las opciones de la página se conservan.
 
-El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358. Se usa `https://wa.me/525653901358` (sin el antiguo prefijo móvil 1) y `tel:+525653901358` en todos los accesos. La captura contiene horarios distintos; se conserva el horario confirmado expresamente por el propietario hasta una nueva confirmación.
+El teléfono actual procede de la captura de WhatsApp Business: [teléfono reservado]. Se usa `[enlace de contacto reservado] reservado]` (sin el antiguo prefijo móvil 1) y `tel:[teléfono reservado]` en todos los accesos. La captura contiene horarios distintos; se conserva el horario confirmado expresamente por el propietario hasta una nueva confirmación.
 
 ## Ronny’s por temporadas
 
-`#temporadas`, después de menú y domicilio, presenta Halloween actual, Día de Muertos en noviembre y Navidad en diciembre como adelantos. Las tres ilustraciones independientes `public/images/seasons/ronny-{halloween,muertos,christmas}-foreground.png` acercan al truck rojo y a Roo para distinguirlos en tarjetas pequeñas. Halloween usa noche oscura, noviembre naranja/cempasúchil y diciembre azul con nieve. Los encabezados 4:3 y el color de cada tarjeta refuerzan esa separación; se conserva el carrusel táctil móvil sin apilar las tres temporadas.
+`#temporadas`, después de menú y domicilio, presenta Halloween actual, Día de Muertos en noviembre, Navidad en diciembre y Año Nuevo en enero, dando la bienvenida al 2027. Las ilustraciones `public/images/seasons/ronny-{halloween,muertos,christmas}-foreground.png` y `ronny-newyear-2027.png` acercan al truck rojo y a Roo. Halloween usa noche oscura, noviembre naranja/cempasúchil, diciembre azul con nieve y enero noche ciruela/dorada con Roo de gala, globos 2027 y fuegos artificiales. Los cuatro encabezados 4:3 se organizan en dos columnas en escritorio y conservan el carrusel táctil móvil, sin cambio automático de la campaña actual.
+
+La pantalla de enero usa una mini celebración SVG local con reloj, fuegos artificiales y 2027; no se atribuye a ninguna película no elegida por el propietario. Sus coordenadas están registradas para la nueva ilustración en `lib/truck-cinema.ts`. Comparte las pausas fuera de vista, al ocultar la pestaña y con movimiento reducido de las otras pantallas.
 
 El panel de Navidad usa rojo tinto, acentos crema/dorados y conserva intactos el truck, Roo, nieve, escena azul y pantalla de película de su ilustración. Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
 
@@ -202,7 +214,7 @@ La captura de configuración de Vercel del propietario indica estos registros pa
 
 `MenuNightScenery` llena los laterales del menú con puestos de feria, faroles de calabaza, guirnalda cálida, destellos y suelo ilustrativo. Son SVG y CSS locales, sin descargas ni animaciones nuevas. La decoración se atenúa cerca del contenido y en móvil; no intercepta controles ni altera la carta. La atmósfera compartida conserva pausa, suspensión fuera de pantalla y movimiento reducido.
 
-Instagram apunta a `ronnystruck04`, TikTok a `ronnystruck1` y Facebook al enlace compartido por el propietario (`https://www.facebook.com/share/1Lgf44svSs/`). Se retiran los parámetros de seguimiento de Instagram y TikTok y se conserva el enlace de Facebook sin inventar otro perfil. X queda fuera por ahora. La fila se adapta a cinco logos sin previews. La pestaña del navegador muestra únicamente «Ronny’s Food Truck».
+Instagram apunta a `ronnystruck04`, TikTok a `ronnystruck1` y Facebook al enlace compartido por el propietario (`[enlace de contacto reservado]`). Se retiran los parámetros de seguimiento de Instagram y TikTok y se conserva el enlace de Facebook sin inventar otro perfil. X queda fuera por ahora. La fila se adapta a cinco logos sin previews. La pestaña del navegador muestra únicamente «Ronny’s Food Truck».
 
 Los controles alrededor de Ronny ahora muestran únicamente iconos grandes de comida con neón del color de la categoría y señal de selección. Los nombres siguen disponibles para lectores de pantalla y como tooltip. Se retira por ahora la descripción pequeña bajo la frase de Ronny. La cabecera conserva la misma cabeza del Roo articulado de bienvenida; `public/images/brand/ronny-wizard-head.png`, el logo original, el favicon y los personajes aprobados permanecen como recursos independientes.
 

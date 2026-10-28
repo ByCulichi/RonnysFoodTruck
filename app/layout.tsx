@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   title: "Ronny’s Food Truck",
   description:
-    "El carrito rojo de Ronny’s en New York, Ecatepec. Malteadas, crepas, waffles, hamburguesas y más antojos para compartir.",
+    "El carrito rojo de Ronny’s. Malteadas, crepas, waffles, hamburguesas y más antojos para compartir.",
+  robots: { index: false, follow: false, googleBot: { index: false, follow: false, noimageindex: true, noarchive: true } },
   icons: {
     icon: { url: "/images/brand/ronny-flat-logo.png", type: "image/png", sizes: "1254x1254" },
     shortcut: "/images/brand/ronny-flat-logo.png",

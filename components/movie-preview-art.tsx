@@ -31,6 +31,21 @@ export function MoviePreviewArt({ season }: { season: CinemaSeason }) {
         <g className="cinema-guitar" transform="translate(413 72) rotate(16)"><path d="M34 121q-47-23-60 19-6 24 14 43-41 17-35 57 6 49 60 50 56 2 65-43 7-39-31-62 20-18 15-40-7-30-28-24Z" fill="#f8eccd" stroke="#cf9652" strokeWidth="6" /><path d="M7 135V31h25v104" fill="#b77b43" stroke="#ffdda1" strokeWidth="5" /><path d="M1 15h35v36H1Z" fill="#f8eccd" stroke="#cf9652" strokeWidth="3" /><circle cx="17" cy="183" r="21" fill="#74305b" /><circle cx="17" cy="183" r="13" fill="#241b38" /><path d="M-6 242h47" stroke="#74305b" strokeWidth="10" /><path d="M10 30v218m6-218v218m6-218v218m6-218v218" stroke="#d4b98a" strokeWidth="1.5" /><path d="M-14 221q30 20 64 0m-48-75q15-12 31 0" fill="none" stroke="#b94967" strokeWidth="4" /></g>
         <g className="cinema-petals" fill="#ffc852">{[[80,130],[150,110],[270,190],[355,96],[590,182],[230,48],[540,280],[100,260]].map(([x,y])=><path key={x} d={`M${x} ${y}q12-19 18-3-7 18-18 3Z`} />)}</g>
         <g transform="translate(115 197)"><path d="M-28 29v-25q0-37 38-37t38 37v25l-15 6v21h-45V35Z" fill="#fff0d0" /><circle cx="-2" cy="7" r="12" fill="#9f3e86" /><circle cx="25" cy="7" r="12" fill="#9f3e86" /><path d="m8 25 5-9 5 9M-5 40h35" stroke="#a63465" strokeWidth="4" fill="none" /></g>
+      </> : season === "newyear" ? <>
+        <path d="M-30-20h700v400H-30Z" fill="#201428" />
+        <circle cx="325" cy="155" r="185" fill={`url(#${glow})`} opacity=".3" />
+        <path d="M0 290V180h47v55h36v-83h61v74h39v-39h52v103h62V157h57v86h35v-40h55v87h39V169h64v59h39v-31h54v163H0Z" fill="#110e1a" />
+        <g fill="#efc47b" opacity=".65">{[20,95,118,197,311,340,400,490,525,582].map((x,i)=><path key={x} d={`M${x} ${227+i%3*14}h7v12h-7Zm0 26h7v12h-7Z`} />)}</g>
+        <g className="cinema-fireworks" stroke="#ffdb8b" fill="none" strokeLinecap="round" strokeWidth="5">
+          <path d="M112 74V32m0 112v-35M77 76H34m155 0h-43M85 49 58 22m84 81 28 28M85 103l-26 28m84-82 27-27" />
+          <path d="M531 102V66m0 104v-35m-32-30h-38m141 0h-38m-55-23-27-27m74 74 27 27m-74-27-27 27m74-74 27-27" stroke="#d9b2ec" />
+        </g>
+        <circle cx="322" cy="131" r="83" fill="#392437" stroke="#f4c97b" strokeWidth="7" />
+        <circle cx="322" cy="131" r="70" fill="#f9e4ad" />
+        <g stroke="#866036" strokeWidth="5"><path d="M322 68v12m0 102v12m-63-63h12m102 0h12M277 86l8 8m74 74 8 8m-90 0 8-8m74-74 8-8" /></g>
+        <path d="M322 131V86m0 45 25-20" fill="none" stroke="#452c36" strokeWidth="8" strokeLinecap="round" />
+        <circle cx="322" cy="131" r="7" fill="#c68a3f" />
+        <text x="320" y="285" textAnchor="middle" fill="#ffe3a1" stroke="#3a2332" strokeWidth="2" paintOrder="stroke" fontFamily="Georgia, serif" fontSize="86" fontWeight="bold">2027</text>
       </> : <>
         <circle cx="195" cy="100" r="130" fill={`url(#${glow})`} opacity=".4" />
         <path d="M0 255h640v105H0Z" fill="#9dc1d8" /><path d="M0 273q160-25 325 16t315-5v76H0Z" fill="#d5e7ea" />

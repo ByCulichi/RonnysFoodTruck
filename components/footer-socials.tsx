@@ -1,4 +1,4 @@
-import { business } from "@/lib/business";
+import { business, contactDetailsVisible } from "@/lib/business";
 
 const networks = [
   { id: "google", label: "Google", url: business.mapsUrl },
@@ -9,6 +9,7 @@ const networks = [
 ] as const;
 
 export function FooterSocials() {
+  if (!contactDetailsVisible) return null;
   return (
     <div className="footer-socials">
       <ul className="footer-networks" aria-label="Redes y contacto de Ronny’s">

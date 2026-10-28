@@ -1,9 +1,12 @@
-/** Normalized positions in the finite welcome timeline (0–1). */
+/** Normalized beats of one finite, responsive welcome (0–1). */
 export const rooWelcomeStory = {
-  walkDistance: 820,
-  walkEnd: .24,
-  sniffEnd: .43,
-  cravingEnd: .56,
-  greetingStart: .56,
-  flightStart: .67,
+  walkDistance: 560,
+  noticeEnd: .10,
+  walkStart: .105,
+  walkEnd: .315,
+  sniffEnd: .445,
+  cravingEnd: .565,
+  barkStart: .585,
+  greetingStart: .65,
+  flightStart: .74,
 } as const;

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { ArrowUpRight, CalendarDays, MapPin, Maximize2, MessageSquare, Phone, Star } from "lucide-react";
-import { business } from "@/lib/business";
+import { business, contactDetailsVisible } from "@/lib/business";
 import { VisitNightScenery } from "@/components/visit-night-scenery";
 import "./visit-section.css";
 
 export function VisitSection() {
+  if (!contactDetailsVisible) return null;
   return <div className="halloween-visit-scene">
     <VisitNightScenery />
     <section className="halloween-visit shell" id="encuentranos" aria-labelledby="visit-title">

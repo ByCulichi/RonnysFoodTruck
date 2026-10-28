@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties } from "react";
 import { ArrowUpRight, Check, Ghost, X } from "lucide-react";
-import { business } from "@/lib/business";
+import { business, contactDetailsVisible } from "@/lib/business";
 import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
@@ -81,7 +81,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
               <MenuCard dish={active} index={dishes.indexOf(active)} key={active.name} />
               <div className="menu-detail-actions">
                 <button type="button" className="menu-detail-close" aria-label={`Cerrar detalles de ${active.name}`} onClick={closeDetails}><X size={16} aria-hidden="true" /> Cerrar</button>
-                <a href={`${business.whatsappUrl}?text=${encodeURIComponent(`Hola, Ronny’s. Me gustaría consultar disponibilidad de ${active.name.toLowerCase()}.`)}`} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a>
+                {contactDetailsVisible && <a href={`${business.whatsappUrl}?text=${encodeURIComponent(`Hola, Ronny’s. Me gustaría consultar disponibilidad de ${active.name.toLowerCase()}.`)}`} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a>}
               </div>
             </div>
           </div>

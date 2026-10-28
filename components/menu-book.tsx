@@ -80,7 +80,7 @@ function clipSheet(normal: Point, distance: number, folded: boolean) {
   return polygon.length < 3 ? "polygon(0px 0px, 0px 0px, 0px 0px)" : `polygon(${polygon.map(point => `${point.x.toFixed(2)}px ${point.y.toFixed(2)}px`).join(",")})`;
 }
 
-export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page: BookPage; zoom?: number; onOpen: (trigger?: HTMLButtonElement) => void; onNext?: () => void; onPrevious?: () => void }) {
+export function MenuBook({ page, zoom = 1, overview = false, onOpen, onNext, onPrevious }: { page: BookPage; zoom?: number; overview?: boolean; onOpen: (trigger?: HTMLButtonElement) => void; onNext?: () => void; onPrevious?: () => void }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const turnRef = useRef<HTMLDivElement>(null);
@@ -89,6 +89,7 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
   const controllerRef = useRef<{ draw: (progress: number) => void; resume: () => void; direction: "next" | "previous" } | null>(null);
   const [bounds, setBounds] = useState({ width: 400, height: 560 });
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [compact, setCompact] = useState(false);
   const [motion, setMotion] = useState<{ page: BookPage; serial: number; turn: Turn | null }>({ page, serial: 0, turn: null });
   if (motion.page !== page) {
     const direction = pageOrder(page) > pageOrder(motion.page) ? "next" : "previous";
@@ -107,6 +108,14 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
   }, []);
 
   useLayoutEffect(() => {
+    const mobile = window.matchMedia("(max-width: 600px)");
+    const update = () => setCompact(mobile.matches);
+    update();
+    mobile.addEventListener("change", update);
+    return () => mobile.removeEventListener("change", update);
+  }, []);
+
+  useLayoutEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => {
       setReduceMotion(preference.matches);
@@ -117,8 +126,10 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
     return () => preference.removeEventListener("change", update);
   }, []);
 
-  // Keep room above and below the paper for the lifted corner and hard cover.
-  const fit = Math.max(0.05, Math.min((bounds.width - 16) / OPEN_WIDTH, (bounds.height - 16) * .86 / BOOK_HEIGHT, 1));
+  // On a phone, give the readable leaf the available width. Both physical faces
+  // remain mounted; the overview utility reveals the complete spread at any time.
+  const readingLeaf = compact && !overview;
+  const fit = Math.max(0.05, Math.min((bounds.width - 16) / (readingLeaf ? CLOSED_WIDTH : OPEN_WIDTH), (bounds.height - 16) * (readingLeaf ? .96 : .86) / BOOK_HEIGHT, 1));
   const scale = fit * zoom;
   const turn = motion.turn;
   const backTurn = Boolean(turn && (turn.from === "back" || turn.to === "back"));
@@ -155,6 +166,14 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
         frame!.style.transform = `scale(var(--book-scale)) translateX(${backTurn ? CLOSED_OFFSET * value : -CLOSED_OFFSET * (1 - value)}px)`;
         if (board) board.style.transform = `rotateY(${backTurn ? 0 : 180 * (1 - value)}deg)`;
         if (rightBoard) rightBoard.style.transform = `rotateY(${backTurn ? -180 * value : 0}deg)`;
+        // Move the phone's framing with the opening cover rather than jumping
+        // from a centered cover to the right leaf in the first animation frame.
+        const host = hostRef.current;
+        if (host && readingLeaf && zoom === 1) {
+          const opening = backTurn ? 1 - value : value;
+          const center = OPEN_WIDTH / 2 + (PAGE_WIDTH * 1.5 + 18 - OPEN_WIDTH / 2) * opening;
+          host.scrollLeft = Math.max(0, center * scale - host.clientWidth / 2);
+        }
         return;
       }
       const amount = Math.max(.00001, Math.min(.99999, value));
@@ -190,15 +209,16 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
     draw(progress);
     if (!gestureRef.current?.active) resume();
     return () => { alive = false; cancelAnimationFrame(request); controllerRef.current = null; };
-  }, [turn, hard, backTurn, page]);
+  }, [turn, hard, backTurn, page, readingLeaf, zoom, scale]);
 
   useLayoutEffect(() => {
     const host = hostRef.current;
     if (!host) return;
-    if (zoom === 1) { host.scrollTo(0, 0); return; }
+    if (zoom === 1 && !readingLeaf) { host.scrollTo(0, 0); return; }
+    if (readingLeaf && zoom === 1 && turn && hard) return;
     const center = ((page === "cover" || page === "back") ? OPEN_WIDTH / 2 : PAGE_WIDTH * 1.5 + 18) * scale;
-    host.scrollTo({ left: Math.max(0, center - host.clientWidth / 2) });
-  }, [zoom, page, scale]);
+    host.scrollTo({ left: Math.max(0, center - host.clientWidth / 2), top: 0 });
+  }, [zoom, page, scale, readingLeaf, turn, hard]);
 
   function pointerDown(event: PointerEvent<HTMLDivElement>) {
     if (zoom !== 1 || turn || !event.isPrimary || event.button !== 0) return;
@@ -234,7 +254,7 @@ export function MenuBook({ page, zoom = 1, onOpen, onNext, onPrevious }: { page:
     gestureRef.current = null;
   }
 
-  return <div ref={hostRef} className="menu-book-viewport" data-zoomed={zoom > 1} data-page={page} data-spread={(page !== "cover" && page !== "back") || Boolean(turn)} data-turning={Boolean(turn)} data-closing={turn?.to === "cover"} tabIndex={0} aria-label="Libro del menú; desliza horizontalmente o usa las flechas para pasar las hojas" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp} onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}>
+  return <div ref={hostRef} className="menu-book-viewport" data-reading-layout={readingLeaf ? "page" : "spread"} data-zoomed={zoom > 1} data-page={page} data-spread={(page !== "cover" && page !== "back") || Boolean(turn)} data-turning={Boolean(turn)} data-closing={turn?.to === "cover"} tabIndex={0} aria-label="Libro del menú; desliza horizontalmente o usa las flechas para pasar las hojas" onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={pointerUp} onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}>
     <div className="menu-book-space" style={{ width: OPEN_WIDTH * scale, height: BOOK_HEIGHT * scale }}>
       <div ref={frameRef} className="menu-book-frame" style={{ "--book-scale": scale, "--book-offset": page === "cover" ? `${-CLOSED_OFFSET}px` : page === "back" ? `${CLOSED_OFFSET}px` : "0px", "--cover-angle": page === "cover" ? "180deg" : "0deg" } as CSSProperties}>
         <div className="menu-book-spread">

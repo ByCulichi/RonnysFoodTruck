@@ -1,4 +1,4 @@
-.halloween-market .seasons-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.halloween-market .seasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .halloween-market .season-chapter { display: flex; flex-direction: column; min-height: 0; border-radius: 20px; }
 .season-banner { position: relative; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--season-border, #df9b555c); }
 .season-banner > img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -17,6 +17,11 @@
 .halloween-market .season-christmas .season-copy p { color: #efd7d4; }
 .season-christmas .season-banner > .season-state { color: #ffe7c2; border-color: #d79b8a70; background: #381520ed; }
 .season-muertos .season-banner > .season-state { color: #ffe2ae; border-color: #f8a24680; background: #351a12ed; }
+.halloween-market .seasons-grid .season-newyear { --season-border: #d7b26580; background: linear-gradient(145deg, #342331, #17121e); border-color: var(--season-border); }
+.halloween-market .seasons-grid .season-newyear h3, .halloween-market .season-newyear .season-copy > svg { color: #ffe0a0; }
+.halloween-market .season-newyear .season-copy p { color: #edddcd; }
+.halloween-market .season-newyear .season-copy a { color: #ffce77; }
+.season-newyear .season-banner > .season-state { color: #ffe5b4; border-color: #d7b26580; background: #241927ed; }
 /* Just six compositor-animated flakes; paused outside the card or hidden tab. */
 .season-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .season-snow > span { position: absolute; top: -8px; left: 8%; width: 3px; height: 3px; border-radius: 50%; background: #edf9ff; animation: season-snowfall 8s linear infinite; animation-play-state: paused; }
@@ -46,7 +51,7 @@
   .season-banner > .season-state { top: 10px; left: 10px; font-size: 7px; padding: 6px 8px; }
 }
 
-/* The same three complete cards become a native swipe rail on smaller screens. */
+/* The four complete cards become a native swipe rail on smaller screens. */
 .season-navigation { display: none; }
 @media (max-width: 1000px) {
   .halloween-market .market-fairground .seasons-section { padding-block: 30px 35px; }

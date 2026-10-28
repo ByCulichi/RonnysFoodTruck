@@ -1,4 +1,4 @@
-/** A front-facing, local SVG prop registered beside Roo's nose. */
+/** The bacon burger is a local visual prop, without a price or invented offer. */
 export function WelcomeBurger() {
   const sesame = [
     [72, 70, -24], [104, 49, 28], [143, 39, -20], [184, 42, 26],
@@ -7,7 +7,7 @@ export function WelcomeBurger() {
   ];
 
   return <g data-roo-part="burger" aria-hidden="true" opacity="0">
-    <svg data-burger-art="true" x="972" y="765" width="314" height="226" viewBox="0 0 320 230" overflow="visible">
+    <svg data-burger-art="true" data-burger-kind="tocinera" x="972" y="765" width="314" height="226" viewBox="0 0 320 230" overflow="visible">
       <ellipse cx="160" cy="211" rx="139" ry="13" fill="#160e1b" opacity=".16" />
       <g stroke="#382019" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round">
         {/* The shallow plate remains visible around the bottom bun. */}
@@ -28,6 +28,14 @@ export function WelcomeBurger() {
         <path d="M61 133Q156 145 261 132" fill="none" stroke="#ff9862" strokeWidth="4" />
         <path d="M37 103Q31 95 45 94Q56 88 68 95Q82 86 97 95Q111 87 126 94Q143 85 159 94Q176 86 191 94Q207 85 222 94Q240 87 251 95Q268 89 279 99Q295 99 288 111Q301 122 284 126Q272 135 258 126Q244 138 227 127Q212 137 198 127Q181 138 167 127Q149 138 134 127Q117 138 103 126Q88 136 74 125Q58 134 46 123Q29 127 35 113Z" fill="#70a94b" />
         <path d="M52 112L67 115M91 109L108 114M136 110L151 115M181 109L199 114M228 111L246 115M263 109L275 112" fill="none" stroke="#416b35" strokeWidth="3" />
+
+        {/* Two crisp bacon ribbons stay in front of the lettuce and below the bun. */}
+        <g data-burger-bacon="true" strokeWidth="3.5">
+          <path d="M39 123C62 109 81 134 104 120S145 132 166 119S207 135 229 121S266 132 284 120L282 134C261 148 244 130 224 143S184 129 164 142S125 129 103 142S64 127 41 138Z" fill="#a64931" />
+          <path d="M44 127C64 117 83 140 106 125S146 138 167 125S207 141 230 127S265 138 279 127" fill="none" stroke="#f4b58e" strokeWidth="5" />
+          <path d="M82 112C103 104 123 124 144 114S181 119 201 108L212 117C189 131 168 120 148 128S105 116 84 124Z" fill="#c56a3c" />
+          <path d="M88 116C108 111 126 128 146 119S181 125 203 114" fill="none" stroke="#f6c197" strokeWidth="4" />
+        </g>
 
         {/* A broad rounded dome keeps the burger unmistakably front-facing. */}
         <path d="M34 103C36 54 91 16 160 16C229 16 284 54 286 103Q160 120 34 103Z" fill="#f3ae45" />

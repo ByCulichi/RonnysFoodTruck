@@ -49,7 +49,7 @@ export function TruckCinema({ season = "halloween" }: { season?: CinemaSeason })
     return () => { clearTimeout(timer); observer.disconnect(); pause.disconnect(); preference.removeEventListener("change", update); document.removeEventListener("visibilitychange", update); };
   }, [season]);
 
-  return <div ref={rootRef} className="truck-cinema" data-season={season} data-playing={playing} style={placement} hidden={!placement} role="img" aria-label={`Mini animación inspirada en ${movie.title}, ${movie.season}`}>
+  return <div ref={rootRef} className="truck-cinema" data-season={season} data-playing={playing} style={placement} hidden={!placement} role="img" aria-label={season === "newyear" ? "Mini celebración animada de Año Nuevo: bienvenida al 2027" : `Mini animación inspirada en ${movie.title}, ${movie.season}`}>
     <div className="truck-tv-mount" aria-hidden="true" />
     <div className="truck-tv-bezel">
       <div className="truck-tv-picture" aria-hidden="true"><MoviePreviewArt season={season} /><span className="truck-movie-title">{movie.title}</span></div>

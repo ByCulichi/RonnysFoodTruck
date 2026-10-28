@@ -1,0 +1,40 @@
+Ladrido real de Roo — archivos locales
+
+Archivos:
+- roo-bark.mp3: 3804 bytes; audio útil 0,38 s (contenedor MP3 0,444 s).
+- roo-bark.ogg: 5549 bytes; 0,38 s.
+
+Grabación original:
+Título: LBS_FX DOG Small Alert Bark001.wav
+Autor: LittleBigSounds
+Publicación: 21 de agosto de 2012
+Página del autor: https://freesound.org/people/LittleBigSounds/sounds/163459/
+La página identifica una grabación con micrófonos Marantz PMD620 y la etiqueta
+«Chihuahua». No es un sonido sintetizado ni una voz que imita un ladrido.
+
+Licencia del sonido original: Creative Commons Zero (CC0 1.0 Universal).
+https://creativecommons.org/publicdomain/zero/1.0/
+La página original indica expresamente Creative Commons 0 y permite copiar,
+modificar y distribuir el sonido, incluido su uso comercial, sin pedir permiso.
+Licencia y procedencia verificadas el 28 de octubre de 2026.
+
+Copia intermedia utilizada para obtener la grabación:
+https://github.com/karolpiczak/ESC-50/blob/33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6/audio/3-163459-A-0.wav
+Procedencia/licencia individual en el mismo repositorio:
+https://github.com/karolpiczak/ESC-50/blob/33c8ce9eb2cf0b1c2f8bcf322eb349b6be34dbb6/LICENSE
+Su entrada 3-163459-A identifica a LittleBigSounds, la página original y CC0.
+Se utiliza únicamente esa grabación individual CC0, no la colección ESC-50 ni
+su licencia de conjunto.
+
+Edición local:
+Se extrajo un solo ladrido del intervalo 0,29–0,67 s de la copia WAV; se conservó
+su tono y velocidad. Conversión a mono 22050 Hz, volumen multiplicado por 0,8,
+fundido inicial de 6 ms y final de 30 ms. Codificación MP3 64 kbit/s y OGG Vorbis
+calidad 3. No se mezclaron otros sonidos ni se añadieron voces.
+
+SHA-256 de la copia intermedia WAV:
+fede0d9dcbf6c0252880acf39d411d62e0060e9c9ff3bda9135b3dc2bccb41fe
+SHA-256 roo-bark.mp3:
+9857cf551ecccdebdf35cbb91b1438e0bc2a5a7a28f5e231c9e049dbe8b3becc
+SHA-256 roo-bark.ogg:
+8c40c542a4643662fddaf9716ade88844265dad04ef6fe2af4d93c33072d200a

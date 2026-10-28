@@ -9,6 +9,7 @@
 .carta-inline-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; min-height: 52px; margin-top: 4px; }
 .carta-inline-tools[data-visible="false"] { visibility: hidden; }
 .carta-text-toggle { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 12px; border: 1px solid #d1a27e60; border-radius: 99px; background: #1c1029; color: #ffca88; font-size: 13px; }
+.carta-book-view-toggle { display: none; }
 .carta-text-toggle > svg { flex-shrink: 0; }
 .carta-pagination { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
 .carta-pagination button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #d1a27e60; border-radius: 50%; color: #ffca88; background: #1c1029; }
@@ -41,9 +42,13 @@
   .carta-heading .eyebrow { font-size: 8px; letter-spacing: 1px; }
   .carta-heading h3 { font-size: 28px; margin-top: 7px; }
   .carta-layout { gap: 12px; }
-  .carta-digital-preview { --carta-stage-height: clamp(240px, 39svh, 300px); width: calc(100% + 20px); margin-inline: -10px; }
-  .carta-inline-tools { gap: 6px 10px; }
-  .carta-text-toggle { padding-inline: 10px; font-size: 12px; }
+  .carta-digital-preview { --carta-stage-height: min(600px, max(360px, calc((100vw - 20px) * 1.48)), calc(100svh - 100px)); width: calc(100% + 20px); margin-inline: -10px; }
+  .carta-inline-tools { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 6px; }
+  .carta-inline-tools[data-mode="text"] { grid-template-columns: minmax(0, 1fr) auto; }
+  .carta-text-toggle { padding: 5px; font-size: 11px; text-align: center; line-height: 1.2; }
+  .carta-text-toggle > svg { display: none; }
+  .carta-book-view-toggle { display: flex; }
+  .carta-inline-tools > .carta-pagination { justify-self: end; }
   .carta-pagination { gap: 3px; }
   .carta-pagination > span { min-width: 34px; }
   .carta-inline-text { padding: 14px; }
@@ -55,7 +60,8 @@
 }
 
 /* Fixed-size live HTML paper is scaled to the available width AND height. */
-.menu-book-viewport { display: flex; flex-direction: column; height: clamp(220px, calc(100svh - 300px), 560px); overflow: hidden; outline-offset: -3px; padding: 8px; }
+.menu-book-viewport { display: flex; flex-direction: column; height: clamp(220px, calc(100svh - 300px), 560px); overflow: hidden; outline: none; outline-offset: -3px; -webkit-tap-highlight-color: transparent; padding: 8px; }
+.menu-book-viewport:focus-visible, .carta-text-category select:focus-visible { outline: 2px solid #ffca88; }
 .menu-book-space { position: relative; margin: auto; flex-shrink: 0; }
 .menu-book-viewport[data-zoomed="true"] { overflow: auto; overscroll-behavior: contain; }
 .menu-book-frame { position: absolute; top: 0; left: 0; width: 1224px; height: 878px; padding: 14px 16px; transform: scale(var(--book-scale)) translateX(var(--book-offset)); transform-origin: top left; }
@@ -127,7 +133,7 @@
 .menu-book-board-right { transform-origin: 16px center; }
 .menu-book-back-closed { box-shadow: 2px 4px 8px #180c1244; }
 .carta-text-category { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 16px; }
-.carta-text-category select { min-height: 44px; padding: 8px 12px; color: #a52339; border: 1px solid #b18a53; border-radius: 6px; background: #fff5df; }
+.carta-text-category select { outline: none; -webkit-tap-highlight-color: transparent; min-height: 44px; padding: 8px 12px; color: #a52339; border: 1px solid #b18a53; border-radius: 6px; background: #fff5df; }
 .menu-book-viewport[data-page="back"][data-turning="false"] .menu-book-frame { width: 628px; }
 .menu-book-viewport[data-page="back"][data-turning="false"] :is(.menu-book-paper, .menu-book-board-right) { display: none; }
 .menu-page-touch::after { content: ""; position: absolute; right: 0; bottom: 0; width: 36px; height: 36px; background: linear-gradient(135deg, transparent 47%, #c7ad86 49%, #fff7df 60%); clip-path: polygon(100% 0, 0 100%, 100% 100%); opacity: .8; }
@@ -145,3 +151,27 @@
 }
 @media (max-width: 760px) { .carta-layout { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 600px) { .carta-ronny-art { width: 90px; height: 125px; } }
+
+/* Read one physical leaf on phones; the complete spread remains available. */
+@media (max-width: 600px) {
+  .menu-book-viewport[data-reading-layout="page"] .menu-book-paper .truck-menu-sheet {font-size:25px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sweet-sections {gap:6px;padding-block:8px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sweet-panel {grid-template-columns:60px minmax(0,1fr) 210px;gap:6px;padding:6px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sweet-flavors h4,.menu-book-viewport[data-reading-layout="page"] .paper-list-panel h4 {font-size:1.35em;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sweet-flavors p {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 5px;font-size:.9em;line-height:1.1;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sweet-panel:first-child .paper-sweet-flavors p>span:nth-child(n+3) {grid-column:1/-1;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-variants th {font-size:.65em;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-variants td {font-size:1em;padding:4px 0;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-list-panel {grid-template-columns:60px minmax(0,1fr);gap:6px;padding:6px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-price-line {padding-block:2px;line-height:1.15;gap:6px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sheet-heading {padding-block:8px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-sheet-heading>h4 {font-size:2.6em;}
+  .menu-book-viewport[data-reading-layout="page"] .sheet-salados .paper-main-panel {position:relative;display:block;padding:12px;}
+  .menu-book-viewport[data-reading-layout="page"] .sheet-salados .paper-main-panel>.paper-food-art {position:absolute;left:15px;bottom:-100px;width:90px;padding:0;}
+  .menu-book-viewport[data-reading-layout="page"] .sheet-salados .paper-sheet-footer {padding-block:8px;}
+  .menu-book-viewport[data-reading-layout="page"] .sheet-salados .paper-sheet-footer>.truck-stamp {width:60px;}
+  .menu-book-viewport[data-reading-layout="page"] .paper-star {font-size:20px;}
+  .menu-book-viewport[data-reading-layout="page"] .sheet-bebidas .paper-sheet-heading {padding-block:40px 30px;}
+  .menu-cover-open, .menu-page-touch { -webkit-tap-highlight-color: transparent; }
+  .menu-cover-open:focus:not(:focus-visible), .menu-page-touch:focus:not(:focus-visible) { outline: none; }
+}

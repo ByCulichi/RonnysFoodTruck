@@ -1,6 +1,7 @@
 "use server"
 
 import { Resend } from "resend"
+import { contactDetailsVisible } from "@/lib/business"
 
 
 interface ContactFormData {
@@ -10,6 +11,8 @@ interface ContactFormData {
 }
 
 export async function sendContactEmail(data: ContactFormData) {
+  // The privacy pause must apply even if old production email settings remain.
+  if (!contactDetailsVisible) return { success: false, message: "El contacto por formulario no está disponible." }
   try {
     // Validate the data
     if (!data.name || !data.message) {
