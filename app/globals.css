@@ -2995,3 +2995,13 @@ h2 em {
 .mobile-nav { height: calc(100dvh - 88px); max-height: calc(100dvh - 88px); overscroll-behavior: contain; padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)); }
 @media (max-width: 900px) { .mobile-nav { height: calc(100dvh - 82px); max-height: calc(100dvh - 82px); } }
 @media (max-width: 600px) { .mobile-nav { height: calc(100dvh - 76px); max-height: calc(100dvh - 76px); } }
+
+/* The updated 4:3 Halloween scene is also the masthead artwork. */
+.halloween-hero .night-scene > img { object-position: 50% 40%; }
+@media (min-width: 601px) and (max-width: 900px) {
+  .halloween-hero .night-scene > img { object-fit: contain; object-position: 50% 35%; }
+}
+@media (max-width: 600px) {
+  .halloween-hero .night-scene > img { mask-image: linear-gradient(180deg, transparent, #000 8%, #000 95%, transparent); }
+  .halloween-hero .night-bottom { padding-top: calc(75vw - 40px); }
+}

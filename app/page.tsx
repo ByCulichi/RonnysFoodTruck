@@ -21,10 +21,8 @@ import {
 } from "lucide-react";
 import { business } from "@/lib/business";
 import { VisitSection } from "@/components/visit-section";
-import { FoodIcon, type FoodKind } from "@/components/food-icon";
 import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
-import { dishes } from "@/lib/menu";
 import { InteractiveMenu } from "@/components/interactive-menu";
 import { halloweenCostumes } from "@/lib/ronny-costumes";
 import { MenuCarta } from "@/components/menu-carta";
@@ -32,6 +30,7 @@ import { HalloweenFairground, HalloweenMarketScene } from "@/components/hallowee
 import { FridayPromo } from "@/components/friday-promo";
 import { MenuNightScenery } from "@/components/menu-night-scenery";
 import { TruckCinema } from "@/components/truck-cinema";
+import { truckArtwork } from "@/lib/truck-cinema";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
@@ -39,12 +38,6 @@ const ronnyCharacters = {
   host: { name: halloweenCostumes.diablito.alt, image: halloweenCostumes.diablito.src, width: 1024, height: 1536 },
   nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
 };
-const heroSpecialties: { label: string; kind: FoodKind }[] = [
-  { label: "Waffles", kind: "Waffles" },
-  { label: "Malteadas", kind: "Malteadas" },
-  { label: "Crepas", kind: "Crepas" },
-  { label: "Snacks", kind: "Snacks" },
-];
 const navLinks = [
   ["inicio", "Inicio"],
   ["menu", "Menú"],
@@ -111,9 +104,6 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
   const [menuSelection, setMenuSelection] = useState("Crepas");
-  function openMenu(kind: FoodKind) {
-    setMenuSelection(dishes.find((dish) => dish.kind === kind)?.name || "Crepas");
-  }
   function viewCartaDish(name: string) {
     setMenuSelection(name);
   }
@@ -172,12 +162,12 @@ export default function Home() {
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
             <Image
-              src="/images/hero/ronny-halloween-fair.png"
-              alt="Ronny de hechicero con varita y un hot dog junto al truck rojo, un caldero de calabaza y una feria encantada bajo la luna creciente"
-              width={1536}
-              height={1024}
+              src={truckArtwork.halloween.src}
+              alt="Roo de hechicero junto al truck rojo iluminado, entre calabazas, niebla y árboles oscuros de Halloween"
+              width={truckArtwork.halloween.width}
+              height={truckArtwork.halloween.height}
               priority
-              sizes="(max-width: 600px) 135vw, 100vw"
+              sizes="100vw"
             />
             <TruckCinema season="halloween" />
           </div>
@@ -192,9 +182,6 @@ export default function Home() {
           <div className="night-heading shell">
             <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK · ECATEPEC <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
-            <div className="night-specialties hero-food-emojis" role="group" aria-label="Especialidades del truck">
-              {heroSpecialties.map(({ label, kind }) => <a key={kind} href="#menu" aria-label={`Ver ${label.toLowerCase()}`} title={label} onClick={() => openMenu(kind)}><FoodIcon kind={kind} /></a>)}
-            </div>
           </div>
           <div className="night-bottom shell">
             <div className="night-welcome">

@@ -56,13 +56,6 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </div>
         <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </div>
-      <div className="compact-menu-controls">
-        <div className="menu-group-switch" role="group" aria-label="Categorías del menú">
-          {menuCategories.map((item) => <button type="button" key={item.id} className={`menu-category-logo logo-${item.id}`} title={item.label} aria-label={item.label} aria-pressed={category === item.id} aria-controls="menu-product-browser" onClick={() => selectCategory(item.id)}>
-            <FoodIcon kind={item.icon} /><span className="sr-only">{item.label}</span>{category === item.id && <Check className="menu-category-check" size={14} aria-hidden="true" />}
-          </button>)}
-        </div>
-      </div>
       <div className="menu-workspace">
         <aside className={`menu-ronny-guide guide-${category}`} aria-label="Elige tu antojo con Ronny" data-menu-outfit={costume}>
           <div className="menu-guide-art">
@@ -78,13 +71,13 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </aside>
         <div className="menu-browser" id="menu-product-browser">
           <span className="sr-only" role="status">{`${active.name}. Precio inicial: ${getPrice(active)} pesos.`}</span>
-          <div className="menu-choice-heading"><span aria-live="polite">{`${categoryLabel} · ${choices.length} antojos`}</span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
+          <div className="menu-choice-heading"><span aria-live="polite"><strong>{categoryLabel}</strong><small>Fotos y precios · {choices.length} antojos</small></span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
           <>
             <div ref={choicesRef} className="menu-choice-grid" role="group" aria-label="Elegir producto">
               {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
                 <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 600px) 30vw, 170px" style={{ objectFit: "cover", objectPosition: dish.photos[0].position || "center 65%" }} /></span>
                 <span className="menu-choice-name">{dish.name}</span>
-                <small>{dish.options.some(({ price }) => price !== getPrice(dish)) ? "Desde" : "MXN"} <strong>${getPrice(dish)}</strong></small>
+                <small>{dish.options.some(({ price }) => price !== getPrice(dish)) && "Desde "}<strong>${getPrice(dish)}</strong></small>
                 {dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}
               </button>)}
             </div>
