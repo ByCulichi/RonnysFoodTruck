@@ -5,7 +5,7 @@ import Image from "next/image";
 import { halloweenCostumes, type HalloweenCostume } from "@/lib/ronny-costumes";
 
 // Keep the previous outfit visible until its replacement has decoded.
-export function RonnyOutfitStage({ costume }: { costume: HalloweenCostume }) {
+export function RonnyOutfitStage({ costume, sizes = "(max-width: 600px) 150px, 220px" }: { costume: HalloweenCostume; sizes?: string }) {
   const [ready, setReady] = useState<Set<HalloweenCostume>>(() => new Set());
   const [shown, setShown] = useState(costume);
   useEffect(() => { if (ready.has(costume)) setShown(costume); }, [costume, ready]);
@@ -17,7 +17,7 @@ export function RonnyOutfitStage({ costume }: { costume: HalloweenCostume }) {
       alt={id === shown ? halloweenCostumes[id].alt : ""}
       aria-hidden={id !== shown}
       width={1024} height={1536}
-      sizes="(max-width: 600px) 150px, 220px"
+      sizes={sizes}
       className={`ronny-outfit-layer${shown === id ? " is-visible" : ""}`}
       onLoad={() => setReady((previous) => previous.has(id) ? previous : new Set([...previous, id]))}
     />)}

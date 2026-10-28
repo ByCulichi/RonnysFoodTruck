@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, Ghost } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Ghost } from "lucide-react";
 import Image from "next/image";
 import { business } from "@/lib/business";
 import { dishes, menuPhotoUrl, type Dish } from "@/lib/menu";
@@ -24,7 +24,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const costume = getMenuCostume(active);
   const guide = halloweenCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active.name);
-  const pageSize = 6;
+  const pageSize = 4;
   const currentPage = Math.max(0, Math.floor(selectedIndex / pageSize));
   const totalPages = Math.ceil(choices.length / pageSize);
   const pageChoices = choices.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
@@ -54,7 +54,6 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
           <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
           <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
         </div>
-        <div className="menu-heading-actions"><a href="#carta-original"><BookOpen size={18} aria-hidden="true" /> Carta del truck <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </div>
       <div className="menu-workspace">
         <aside className={`menu-ronny-guide guide-${category}`} aria-label="Elige tu antojo con Ronny" data-menu-outfit={costume}>
@@ -75,7 +74,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
           <>
             <div ref={choicesRef} className="menu-choice-grid" role="group" aria-label="Elegir producto">
               {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
-                <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 600px) 30vw, 170px" style={{ objectFit: "cover", objectPosition: dish.photos[0].position || "center 65%" }} /></span>
+                <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 900px) 40vw, 220px" style={{ objectFit: "contain", objectPosition: "center" }} /></span>
                 <span className="menu-choice-name">{dish.name}</span>
                 <small>{dish.options.some(({ price }) => price !== getPrice(dish)) && "Desde "}<strong>${getPrice(dish)}</strong></small>
                 {dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}

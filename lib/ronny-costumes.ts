@@ -36,6 +36,9 @@ export const halloweenCostumes = {
 
 export type HalloweenCostume = keyof typeof halloweenCostumes;
 
+// Keep the book's facing illustration and its companion in the same outfit.
+export const truckSheetCostumes = ["bruja", "zombi", "vampiro"] as const;
+
 export function getMenuCostume(dish: Pick<Dish, "group" | "kind">): HalloweenCostume {
   if (dish.group === "Dulces") return "bruja";
   if (getMenuCategory(dish) === "calientes") return "vampiro";
