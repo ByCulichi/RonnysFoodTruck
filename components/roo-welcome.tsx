@@ -8,9 +8,9 @@ import "./roo-welcome.css";
 export const rooWelcomeMotion = {
   duration: 3100,
   imageTimeout: 850,
-  maxSize: 380,
-  viewportWidth: .72,
-  viewportHeight: .44,
+  maxSize: 520,
+  viewportWidth: .76,
+  viewportHeight: .64,
   centerY: .40,
   entranceLift: 32,
   entranceTilt: -7,
@@ -18,6 +18,18 @@ export const rooWelcomeMotion = {
   flightStart: .49,
   flightCurve: .22,
 } as const;
+
+// The approved full-body PNG stays intact. This source-space head outline
+// excludes the broom/hand while retaining Roo's hat, ears, face and bandana.
+export const rooWelcomeArt = {
+  src: "/images/ronny/halloween/ronny-bruja-natural.png",
+  width: 1024,
+  height: 1536,
+  head: { left: 170, top: 15, size: 854 },
+} as const;
+const headOutline = [[170, 15], [1024, 15], [1024, 650], [800, 700], [760, 735], [730, 800], [710, 870], [600, 870], [590, 790], [610, 760], [455, 735], [445, 695], [400, 665], [385, 635], [295, 620], [285, 445], [170, 430]];
+const headMask = `polygon(${headOutline.map(([x, y]) => `${x / rooWelcomeArt.width * 100}% ${y / rooWelcomeArt.height * 100}%`).join(",")})`;
+const fullMask = `polygon(${headOutline.map((_, index) => index === 0 ? "0% 0%" : index === 1 ? "100% 0%" : index < 8 ? "100% 100%" : "0% 100%").join(",")})`;
 
 // A new document (including refresh) gets a new module. Hash links and client
 // remounts never replay the welcome. No cookies or sessionStorage are needed.
@@ -30,13 +42,19 @@ function measureWelcome(anchor: HTMLElement, scene: HTMLElement) {
   const height = viewport?.height ?? window.innerHeight;
   const x = (viewport?.offsetLeft ?? 0) + width / 2;
   const y = (viewport?.offsetTop ?? 0) + height * rooWelcomeMotion.centerY;
-  const size = Math.min(rooWelcomeMotion.maxSize, width * rooWelcomeMotion.viewportWidth, height * rooWelcomeMotion.viewportHeight);
+  const size = Math.min(rooWelcomeMotion.maxSize, width * rooWelcomeMotion.viewportWidth * rooWelcomeArt.height / rooWelcomeArt.width, height * rooWelcomeMotion.viewportHeight);
+  const sourceScale = size / rooWelcomeArt.height;
+  const headSize = rooWelcomeArt.head.size * sourceScale;
+  const headX = x + (rooWelcomeArt.head.left + rooWelcomeArt.head.size / 2 - rooWelcomeArt.width / 2) * sourceScale;
+  const headY = y + (rooWelcomeArt.head.top + rooWelcomeArt.head.size / 2 - rooWelcomeArt.height / 2) * sourceScale;
   scene.style.setProperty("--roo-center-x", `${x}px`);
   scene.style.setProperty("--roo-center-y", `${y}px`);
   scene.style.setProperty("--roo-size", `${size}px`);
   scene.style.setProperty("--roo-copy-top", `${y + size / 2 + 18}px`);
+  scene.style.setProperty("--roo-bark-x", `${Math.min(width - 102, headX + headSize * .39)}px`);
+  scene.style.setProperty("--roo-bark-y", `${headY - headSize * .04}px`);
   const destination = { x: target.left + target.width / 2, y: target.top + target.height / 2, width: target.width };
-  return { x: x - destination.x, y: y - destination.y, scale: size / target.width, destination };
+  return { x: headX - destination.x, y: headY - destination.y, scale: headSize / target.width, destination };
 }
 
 const pose = (x: number, y: number, scale: number, tilt = 0) => `translate3d(${x}px, ${y}px, 0) rotate(${tilt}deg) scale(${scale})`;
@@ -75,13 +93,15 @@ function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyf
 export function RooWelcome() {
   const anchorRef = useRef<HTMLSpanElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
+  const figureRef = useRef<HTMLSpanElement>(null);
   const sceneRef = useRef<HTMLSpanElement>(null);
   const copyRef = useRef<HTMLSpanElement>(null);
   const glowRef = useRef<HTMLSpanElement>(null);
+  const barkRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    const anchor = anchorRef.current, image = imageRef.current, scene = sceneRef.current;
-    if (!anchor || !image || !scene) return;
+    const anchor = anchorRef.current, image = imageRef.current, figure = figureRef.current, scene = sceneRef.current;
+    if (!anchor || !image || !figure || !scene) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const preparationStarted = performance.now();
     const animations: Animation[] = [];
@@ -146,7 +166,13 @@ export function RooWelcome() {
         animations.push(animation);
         return animation;
       };
-      character = animate(image!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
+      character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
+      animate(image!, [
+        { offset: 0, clipPath: fullMask },
+        { offset: .55, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .90, clipPath: headMask },
+        { offset: 1, clipPath: headMask },
+      ], { duration, fill: "both" });
       animate(scene!, [
         { offset: 0, opacity: 1 },
         { offset: .54, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
@@ -167,6 +193,15 @@ export function RooWelcome() {
         { offset: .54, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
+      if (barkRef.current) animate(barkRef.current, [
+        { offset: 0, opacity: 0, transform: "translateY(7px) scale(.85)" },
+        { offset: .29, opacity: 0, transform: "translateY(7px) scale(.85)", easing: "ease-out" },
+        { offset: .34, opacity: 1, transform: "translateY(0) scale(1.05)", easing: "ease-in-out" },
+        { offset: .39, opacity: 1, transform: "translateY(0) scale(1)" },
+        { offset: .44, opacity: 1, transform: "translateY(-2px) scale(1.02)", easing: "ease-in" },
+        { offset: .49, opacity: 0, transform: "translateY(-8px) scale(.96)" },
+        { offset: 1, opacity: 0, transform: "translateY(-8px) scale(.96)" },
+      ], { duration, fill: "both" });
 
       const remeasure = () => {
         if (stopped) return;
@@ -176,7 +211,7 @@ export function RooWelcome() {
           const elapsed = elapsedBeforeResize + Number(character!.currentTime ?? 0);
           const remaining = duration - elapsed;
           if (remaining < 80) { finish(); return; }
-          const matrix = new DOMMatrixReadOnly(getComputedStyle(image!).transform);
+          const matrix = new DOMMatrixReadOnly(getComputedStyle(figure!).transform);
           // Rebase the CURRENT visible pose to the new reserved navbar box.
           // Orientation changes keep Roo's screen position, size and angle,
           // then continue toward the newly measured destination without a jump.
@@ -186,7 +221,7 @@ export function RooWelcome() {
             scale: Math.hypot(matrix.a, matrix.b) * geometry.destination.width / next.destination.width,
           };
           const tilt = Math.atan2(matrix.b, matrix.a) * 180 / Math.PI;
-          const frames: Keyframe[] = [{ offset: 0, transform: pose(current.x, current.y, current.scale, tilt), opacity: getComputedStyle(image!).opacity }];
+          const frames: Keyframe[] = [{ offset: 0, transform: pose(current.x, current.y, current.scale, tilt), opacity: getComputedStyle(figure!).opacity }];
           const hold = Math.max(0, (duration * rooWelcomeMotion.flightStart - elapsed) / remaining);
           if (hold > .06) {
             frames[0].easing = "cubic-bezier(.16, 1, .3, 1)";
@@ -217,14 +252,19 @@ export function RooWelcome() {
   }, []);
 
   const safetyStyle = { "--roo-welcome-failsafe": `${rooWelcomeMotion.duration + rooWelcomeMotion.imageTimeout + 500}ms` } as CSSProperties;
+  const figureStyle = { "--roo-head-mask": headMask } as CSSProperties;
+  const imageStyle = { width: `${rooWelcomeArt.width / rooWelcomeArt.head.size * 100}%`, height: `${rooWelcomeArt.height / rooWelcomeArt.head.size * 100}%`, left: `${-rooWelcomeArt.head.left / rooWelcomeArt.head.size * 100}%`, top: `${-rooWelcomeArt.head.top / rooWelcomeArt.head.size * 100}%` };
   return <>
     <span ref={anchorRef} className="roo-welcome-anchor" data-welcome-state="pending" style={safetyStyle}>
-      <Image ref={imageRef} className="roo-welcome-character" src="/images/brand/ronny-wizard-head.png" alt="Ronny con sombrero de hechicero de Halloween" width={1254} height={1254} sizes={`(max-width: ${Math.ceil(rooWelcomeMotion.maxSize / rooWelcomeMotion.viewportWidth)}px) ${rooWelcomeMotion.viewportWidth * 100}vw, ${rooWelcomeMotion.maxSize}px`} priority />
+      <span ref={figureRef} className="roo-welcome-figure" style={figureStyle}>
+        <Image ref={imageRef} className="roo-welcome-character" src={rooWelcomeArt.src} alt="Roo con sombrero de hechicero de Halloween" width={rooWelcomeArt.width} height={rooWelcomeArt.height} sizes={`(max-width: ${Math.ceil(rooWelcomeMotion.maxSize * rooWelcomeArt.width / rooWelcomeArt.height / rooWelcomeMotion.viewportWidth)}px) ${rooWelcomeMotion.viewportWidth * 100}vw, ${Math.ceil(rooWelcomeMotion.maxSize * rooWelcomeArt.width / rooWelcomeArt.height)}px`} style={imageStyle} priority />
+      </span>
     </span>
     <span ref={sceneRef} className="roo-welcome-scene" data-state="pending" style={safetyStyle} aria-hidden="true">
       <span ref={glowRef} className="roo-welcome-glow"><span /><span /><i>✦</i><i>✦</i><i>✧</i></span>
       <span ref={copyRef} className="roo-welcome-copy"><span>¡Bienvenido a</span><strong>Ronny’s!</strong></span>
+      <span ref={barkRef} className="roo-welcome-bark">¡Guau!</span>
     </span>
-    <noscript><style>{`.roo-welcome-scene{display:none!important}.brand .roo-welcome-anchor .roo-welcome-character{opacity:1!important;animation:none!important}.site-header:has(.roo-welcome-scene){backdrop-filter:blur(18px)!important}`}</style></noscript>
+    <noscript><style>{`.roo-welcome-scene{display:none!important}.brand .roo-welcome-anchor .roo-welcome-figure{opacity:1!important;animation:none!important}.site-header:has(.roo-welcome-scene){backdrop-filter:blur(18px)!important}`}</style></noscript>
   </>;
 }

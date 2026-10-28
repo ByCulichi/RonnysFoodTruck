@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Ghost } from "lucide-react";
-import Image from "next/image";
 import { business } from "@/lib/business";
-import { dishes, menuPhotoUrl, type Dish } from "@/lib/menu";
+import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
+import { MenuPhoto } from "@/components/menu-photo";
 import { getMenuCostume, halloweenCostumes } from "@/lib/ronny-costumes";
 import { menuCategories, getMenuCategory, type MenuCategory } from "@/lib/menu-categories";
 import { RonnyOutfitStage } from "@/components/ronny-outfit-stage";
@@ -74,7 +74,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
           <>
             <div ref={choicesRef} className="menu-choice-grid" role="group" aria-label="Elegir producto">
               {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
-                <span className="menu-choice-photo"><Image src={menuPhotoUrl(dish.photos[0])} alt="" fill sizes="(max-width: 900px) 40vw, 220px" style={{ objectFit: "contain", objectPosition: "center" }} /></span>
+                <span className="menu-choice-photo"><MenuPhoto photo={dish.photos[0]} alt="" sizes="(max-width: 900px) 40vw, 220px" /></span>
                 <span className="menu-choice-name">{dish.name}</span>
                 <small>{dish.options.some(({ price }) => price !== getPrice(dish)) && "Desde "}<strong>${getPrice(dish)}</strong></small>
                 {dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}

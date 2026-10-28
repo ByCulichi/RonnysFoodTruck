@@ -64,15 +64,15 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` anima la misma imagen original del encabezado (`ronny-wizard-head.png`): entrada grande, pequeño gesto de cabeza, saludo y viaje curvo hasta su caja real. Usa FLIP con Web Animations API nativa, sin GSAP, Framer Motion, clones ni intercambio de imágenes. La caja del logo conserva sus 76 px (60 px en móvil), por lo que la bienvenida no cambia el diseño. El navegador compone transformaciones y opacidad sin trabajo JavaScript por fotograma. `app/page.tsx` integra este componente solo en la marca del encabezado; la carta, filtros, temporadas y promociones no cambian.
+`components/roo-welcome.tsx` utiliza el Roo hechicero completo aprobado (`ronny-bruja-natural.png`), sin editar el archivo. La misma imagen entra de cuerpo completo, saluda con un pequeño «¡Guau!» visual y viaja hasta la cabecera mientras una máscara recoge el cuerpo hasta dejar la cabeza, sombrero, orejas y pañuelo. Esa misma imagen queda en la navegación: no hay clones ni intercambio de personajes. Usa FLIP con Web Animations API nativa, sin GSAP ni Framer Motion. La caja del logo conserva sus 76 px (60 px en móvil), por lo que la bienvenida no cambia el diseño. El navegador anima transformaciones, opacidad y la máscara sin trabajo JavaScript por fotograma. `app/page.tsx` integra este componente solo en la marca del encabezado; la carta, filtros, temporadas y promociones no cambian.
 
 La configuración `rooWelcomeMotion`, al principio del componente, permite ajustar:
 
 | Valor | Efecto | Inicial |
 | --- | --- | --- |
 | `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3100` |
-| `maxSize` | Tamaño máximo de Roo, en píxeles; la descarga optimizada se adapta también | `380` |
-| `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.72` / `.44` |
+| `maxSize` | Alto máximo del cuerpo completo, en píxeles; la descarga optimizada se adapta también | `520` |
+| `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.76` / `.64` |
 | `centerY` | Altura inicial de su centro como fracción de pantalla | `.40` |
 | `entranceLift` / `entranceTilt` | Desplazamiento vertical inicial y giro, en píxeles/grados | `32` / `-7` |
 | `flightTilt` / `flightCurve` | Inclinación máxima y curvatura del viaje | `-8` / `.22` |
@@ -104,7 +104,7 @@ Las imágenes están ordenadas en `public/images/`: `brand/` para logos, `hero/`
 
 Los Ronnys de apoyo se reparten entre menú, promoción, domicilio, historia y ubicación; el del menú cambia con su categoría. La historia familiar y los momentos cotidianos se reúnen en una sola sección. El unicornio con su ama sigue en el footer. Los iconos tipo emoji de portada abren el producto correspondiente y conservan sus nombres accesibles.
 
-`business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. En celular una barra inferior ofrece acceso a menú y domicilio, respeta el área segura y deja espacio al final para no tapar contenido.
+`business.deliveryWhatsappUrl` prepara una consulta sobre cobertura, costo y disponibilidad. La página no promete zonas, tiempos ni tarifas y no envía el mensaje automáticamente. Por petición del propietario, en celular se retira la barra inferior fija de menú/domicilio y su espacio reservado. Los accesos superiores y las opciones de la página se conservan.
 
 El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358. Se usa `https://wa.me/525653901358` (sin el antiguo prefijo móvil 1) y `tel:+525653901358` en todos los accesos. La captura contiene horarios distintos; se conserva el horario confirmado expresamente por el propietario hasta una nueva confirmación.
 
@@ -112,7 +112,7 @@ El teléfono actual procede de la captura de WhatsApp Business: +52 56 5390 1358
 
 `#temporadas`, después de menú y domicilio, presenta Halloween actual, Día de Muertos en noviembre y Navidad en diciembre como adelantos. Las tres ilustraciones independientes `public/images/seasons/ronny-{halloween,muertos,christmas}-foreground.png` acercan al truck rojo y a Roo para distinguirlos en tarjetas pequeñas. Halloween usa noche oscura, noviembre naranja/cempasúchil y diciembre azul con nieve. Los encabezados 4:3 y el color de cada tarjeta refuerzan esa separación; se conserva el carrusel táctil móvil sin apilar las tres temporadas.
 
-Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
+El panel de Navidad usa rojo tinto, acentos crema/dorados y conserva intactos el truck, Roo, nieve, escena azul y pantalla de película de su ilustración. Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
 
 ## Menú compacto e interacción de Ronny
 
@@ -258,4 +258,4 @@ Por elección del propietario, la última mejora del catálogo es visual: una so
 
 Se retiró `@react-email/render`, que no se utiliza: el código de correo existente entrega HTML directamente a Resend. Esto elimina la cadena de dependencias `html-to-text`/`deepmerge` sin cambiar el contacto ni activar envíos.
 
-Último ajuste de fotos y carta: cuatro productos por página, miniaturas mayores con `object-fit: contain` y foto activa más alta, también completa. Se retiran «Ampliar foto» y el acceso superior «Carta del truck». La carta sigue abriéndose directamente desde su portada. El Roo acompañante usa la misma tabla de disfraces que las hojas: bruja/Dulces, zombi/Snacks y vampiro/Bebidas, con transición sin parpadeos y movimiento reducido. El catálogo de fotos mantiene su navegación independiente del libro.
+Último ajuste de fotos y carta: cuatro productos por página, miniaturas mayores y foto activa más alta. `MenuPhoto` llena cada recuadro con proporciones originales y encuadre centrado, sin franjas vacías. Seis capturas JPG traen barras negras integradas: `frame` en `lib/menu.ts` registra su área fotográfica 720×960 desde y=320 dentro del original 720×1600; una ventana CSS muestra solo esa área sin modificar los archivos. Fotos y ficha comparten la misma presentación. Se retiran «Ampliar foto» y el acceso superior «Carta del truck». La carta sigue abriéndose directamente desde su portada. El Roo acompañante usa la misma tabla de disfraces que las hojas: bruja/Dulces, zombi/Snacks y vampiro/Bebidas, con transición sin parpadeos y movimiento reducido. El catálogo de fotos mantiene su navegación independiente del libro.
