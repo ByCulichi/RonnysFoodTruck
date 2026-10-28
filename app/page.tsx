@@ -31,6 +31,7 @@ import { FridayPromo } from "@/components/friday-promo";
 import { MenuNightScenery } from "@/components/menu-night-scenery";
 import { TruckCinema } from "@/components/truck-cinema";
 import { truckArtwork } from "@/lib/truck-cinema";
+import { RooWelcome } from "@/components/roo-welcome";
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
@@ -115,7 +116,7 @@ export default function Home() {
       <header className="site-header" onKeyDown={keepMobileFocus}>
         <div className="shell header-inner">
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
-            <Image src="/images/brand/ronny-wizard-head.png" alt="Ronny con sombrero de hechicero de Halloween" width={1254} height={1254} sizes="(max-width: 600px) 60px, 76px" />
+            <RooWelcome />
             <span>
               RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
             </span>
@@ -239,7 +240,6 @@ export default function Home() {
 
       </main>
       <SiteFooter />
-      <nav className="mobile-order-bar" aria-label="Accesos rápidos para pedir"><a href="#menu"><UtensilsCrossed size={19} /> Ver menú</a><a href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><Bike size={20} /> A domicilio <ArrowUpRight size={16} /></a></nav>
     </div>
   );
 }

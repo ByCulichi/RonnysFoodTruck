@@ -11,11 +11,11 @@
 .halloween-market .seasons-grid .season-halloween { --season-border: #9371bf5c; background: linear-gradient(145deg, #171325, #0c0b17); border-color: var(--season-border); }
 .halloween-market .seasons-grid .season-muertos { --season-border: #f8a24680; background: linear-gradient(145deg, #452218, #24131b); border-color: var(--season-border); }
 .halloween-market .seasons-grid .season-muertos h3, .halloween-market .season-muertos .season-copy > svg { color: #ffc071; }
-.halloween-market .seasons-grid .season-christmas { --season-border: #8fcded70; background: linear-gradient(145deg, #122a46, #101c30); border-color: var(--season-border); }
-.halloween-market .seasons-grid .season-christmas h3, .halloween-market .season-christmas .season-copy > svg { color: #d9f1ff; }
-.halloween-market .season-christmas .season-copy a { color: #b9e5ff; }
-.halloween-market .season-christmas .season-copy p { color: #d4e1ee; }
-.season-christmas .season-banner > .season-state { color: #e1f5ff; border-color: #9cc9e970; background: #0d2039ed; }
+.halloween-market .seasons-grid .season-christmas { --season-border: #d79b8a70; background: linear-gradient(145deg, #501f2d, #291019); border-color: var(--season-border); }
+.halloween-market .seasons-grid .season-christmas h3, .halloween-market .season-christmas .season-copy > svg { color: #ffe1b6; }
+.halloween-market .season-christmas .season-copy a { color: #ffd18e; }
+.halloween-market .season-christmas .season-copy p { color: #efd7d4; }
+.season-christmas .season-banner > .season-state { color: #ffe7c2; border-color: #d79b8a70; background: #381520ed; }
 .season-muertos .season-banner > .season-state { color: #ffe2ae; border-color: #f8a24680; background: #351a12ed; }
 /* Just six compositor-animated flakes; paused outside the card or hidden tab. */
 .season-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }

@@ -6,6 +6,7 @@ export type MenuPhoto = {
   position?: string;
   extension?: "jpg" | "png";
   generated?: boolean;
+  frame?: { sourceWidth: number; sourceHeight: number; left: number; top: number; width: number; height: number };
 };
 export type Dish = {
   name: string;
@@ -19,6 +20,10 @@ export type Dish = {
 
 export const menuPhotoUrl = (photo: MenuPhoto) => `/images/menu/${photo.src}.${photo.extension || "jpg"}`;
 
+// Some original phone captures include black bars above/below the photograph.
+// This is presentation metadata only: retain the original JPG bytes untouched.
+const portraitCaptureFrame = { sourceWidth: 720, sourceHeight: 1600, left: 0, top: 320, width: 720, height: 960 };
+
 // Products and prices come from the owner’s three original menu cards.
 // Generated supporting images are explicitly marked; original photos stay unchanged.
 export const dishes: Dish[] = [
@@ -28,7 +33,7 @@ export const dishes: Dish[] = [
     photos: [
       { src: "crepas/crepa-helado", alt: "Crepa de Ronny’s con fresas, chocolate y helado" },
       { src: "crepas/crepa-nutella", alt: "Crepa de Ronny’s con chocolate y helado" },
-      { src: "crepas/crepa-platano", alt: "Crepa de Ronny’s con plátano y lechera" },
+      { src: "crepas/crepa-platano", alt: "Crepa de Ronny’s con plátano y lechera", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Sencilla", price: 45 }, { name: "Con fruta", price: 55 }, { name: "Con fruta y helado", price: 65 }],
   },
@@ -36,7 +41,7 @@ export const dishes: Dish[] = [
     name: "Waffles", category: "CRUJIENTES Y CONSENTIDOS", group: "Dulces", kind: "Waffles",
     description: "Cajeta, Nutella, fresa, maple o lechera.",
     photos: [
-      { src: "waffles/waffle-fresas", alt: "Waffle de Ronny’s cubierto con fresas" },
+      { src: "waffles/waffle-fresas", alt: "Waffle de Ronny’s cubierto con fresas", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Sencillo", price: 55 }, { name: "Con fruta", price: 65 }, { name: "Con fruta y helado", price: 75 }],
   },
@@ -52,7 +57,7 @@ export const dishes: Dish[] = [
     name: "Plátanos con crema", category: "LA CUCHARADA MÁS FELIZ", group: "Dulces", kind: "Postres",
     description: "Plátanos con crema de la carta del truck.",
     photos: [
-      { src: "postres/platanos-crema", alt: "Plátanos con crema de Ronny’s" },
+      { src: "postres/platanos-crema", alt: "Plátanos con crema de Ronny’s", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Plátanos con crema", price: 50 }],
   },
@@ -60,7 +65,7 @@ export const dishes: Dish[] = [
     name: "Duraznos con crema", category: "LA CUCHARADA MÁS FELIZ", group: "Dulces", kind: "Postres",
     description: "Duraznos con crema de la carta del truck.",
     photos: [
-      { src: "postres/duraznos-crema", alt: "Duraznos con crema de Ronny’s" },
+      { src: "postres/duraznos-crema", alt: "Duraznos con crema de Ronny’s", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Duraznos con crema", price: 50 }],
   },
@@ -93,7 +98,7 @@ export const dishes: Dish[] = [
     description: "Sencilla, hawaiana, con salsa de tocino o doble. Elige tu favorita.",
     photos: [
       { src: "hamburguesas/hamburguesa-tocino", alt: "Hamburguesa de Ronny’s con queso y salsa de tocino" },
-      { src: "hamburguesas/hamburguesa-hawaiana", alt: "Hamburguesa de Ronny’s con jamón y queso" },
+      { src: "hamburguesas/hamburguesa-hawaiana", alt: "Hamburguesa de Ronny’s con jamón y queso", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Sencilla", price: 75 }, { name: "Hawaiana", price: 85 }, { name: "Con salsa de tocino", price: 85 }, { name: "Doble (res, arrachera, sirloin o pollo)", price: 105 }],
   },
@@ -133,7 +138,7 @@ export const dishes: Dish[] = [
     name: "Salchipulpos", category: "PARA EL TEAM SALADO", group: "Salados", kind: "Snacks",
     description: "El antojo de salchipulpos de Ronny’s.",
     photos: [
-      { src: "snacks/salchipulpos", alt: "Salchipulpos de Ronny’s con salsas" },
+      { src: "snacks/salchipulpos", alt: "Salchipulpos de Ronny’s con salsas", frame: portraitCaptureFrame },
     ],
     options: [{ name: "Salchipulpos", price: 60 }],
   },

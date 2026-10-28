@@ -2809,7 +2809,6 @@ h2 em {
 .visit-companion strong { color: var(--gold); font-weight: 500; }
 .visit-companion .visit-nose { flex-shrink: 0; width: 125px; height: 155px; }
 .visit-copy > p { font-size: 16px; }
-.mobile-order-bar { display: none; }
 @media (max-width: 900px) {
   .friday-banner { grid-template-columns: 150px minmax(0, 1fr); gap: 18px; }
   .friday-banner .ronny-cutout.promo-ronny { grid-row: span 2; width: 150px; height: 155px; }
@@ -2819,7 +2818,6 @@ h2 em {
   .story-layout { grid-template-columns: 230px minmax(0, 1fr); gap: 30px; }
 }
 @media (max-width: 600px) {
-  .ronny-site { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
   .hero-food-emojis { gap: 12px; }
   .hero-food-emojis a { width: 47px; height: 47px; }
   .hero-food-emojis a > span { font-size: 27px; }
@@ -2843,16 +2841,9 @@ h2 em {
   .story-stamp { display: none; }
   .story-character-note { font-size: 13px; margin-top: 8px; }
   .visit-companion .visit-nose { width: 110px; height: 135px; }
-  .mobile-order-bar { display: grid; grid-template-columns: .85fr 1.15fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 11px 16px calc(11px + env(safe-area-inset-bottom, 0px)); background: #170f19f5; backdrop-filter: blur(14px); border-top: 1px solid #ffc15c55; box-shadow: 0 -8px 25px #0004; }
-  .mobile-order-bar a { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 0; min-height: 48px; border-radius: 12px; font-size: 15px; font-weight: 700; background: #ffe9c7; color: #3b2117; }
-  .mobile-order-bar a:last-child { background: #ffc56b; }
-  .mobile-order-bar svg { flex-shrink: 0; }
-  .ronny-site:has(.menu-search input:focus) .mobile-order-bar { display: none; }
   .food-photo-dialog { max-height: calc(100dvh - 32px); }
 }
 @media (max-width: 360px) {
-  .mobile-order-bar { padding-inline: 12px; gap: 8px; }
-  .mobile-order-bar a { font-size: 13px; gap: 5px; }
   .friday-banner { grid-template-columns: 85px minmax(0, 1fr); gap: 12px; padding: 16px; }
   .friday-banner .ronny-cutout.promo-ronny { width: 85px; }
   .friday-banner h3 { font-size: 18px; }
@@ -2976,7 +2967,6 @@ h2 em {
 }
 
 /* The small-screen layout keeps every action without stacking empty space. */
-.ronny-site[data-navigation-open="true"] .mobile-order-bar { display: none; }
 .ronny-site[data-navigation-open="true"] .header-cta { visibility: hidden; }
 @media (max-width: 600px) {
   .night-hero { min-height: 0; }

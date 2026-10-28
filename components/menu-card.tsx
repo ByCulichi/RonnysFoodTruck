@@ -1,9 +1,9 @@
 "use client";
 
 import { Star } from "lucide-react";
-import Image from "next/image";
 import { FoodIcon } from "@/components/food-icon";
-import { menuPhotoUrl, type Dish } from "@/lib/menu";
+import { MenuPhoto } from "@/components/menu-photo";
+import { type Dish } from "@/lib/menu";
 
 export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
   const photo = dish.photos[0];
@@ -15,7 +15,7 @@ export function MenuCard({ dish, index }: { dish: Dish; index: number }) {
   return <article className={`dish-card menu-product ${dish.name === "Malteadas" ? "dish-card-featured" : ""}`} data-group={dish.group}>
     <div className={`dish-image ${photo ? "real-food-photo" : "illustrated-food"}`}>
       {photo ? <>
-        <Image src={menuPhotoUrl(photo)} alt={photo.alt} fill sizes="(max-width: 600px) 90vw, (max-width: 1100px) 40vw, 460px" style={{ objectFit: "contain", objectPosition: "center" }} />
+        <MenuPhoto photo={photo} sizes="(max-width: 600px) 90vw, (max-width: 1100px) 40vw, 460px" />
       </> : <>
         <FoodIcon kind={dish.kind} />
         <span className="food-art-label">DEL MENÚ DEL TRUCK</span>
