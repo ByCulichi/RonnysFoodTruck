@@ -1,0 +1,152 @@
+[
+  {
+    "Archivo": "02_Portadas_y_food_truck/Navidad/ronny-christmas-posada.png",
+    "Carpeta": "02_Portadas_y_food_truck/Navidad",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2794529,
+    "SHA256": "a2583404aa05b744d3b0cec5cd0fd78c5102da1113a164aae806e53583372495",
+    "Origen": "public/images/hero/ronny-christmas-posada.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Navidad/ronny-christmas-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Navidad",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2223171,
+    "SHA256": "b552251ac6d61e20fd0576c6615feeb77123f785fc19b2a8695c2fe0e7a447b6",
+    "Origen": "public/images/hero/ronny-christmas-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Dia_de_Muertos/ronny-dia-de-muertos-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Dia_de_Muertos",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2506194,
+    "SHA256": "54856964363c2f754871b1a5ab215e0cd2126ff749a2af8c071099ca65995dee",
+    "Origen": "public/images/hero/ronny-dia-de-muertos-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Iniciales_y_familia/ronny-family-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Iniciales_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2661710,
+    "SHA256": "4c48fb6cdaa6499e9a97d8062c72bbe5f1ed28e9135d7d814dddef28e51c1cf1",
+    "Origen": "public/images/hero/ronny-family-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Halloween/ronny-halloween-fair.png",
+    "Carpeta": "02_Portadas_y_food_truck/Halloween",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2711323,
+    "SHA256": "97a8010785c44c377ae682a97758e49235936ccafcf3c4b5dc83bbb66e672fa0",
+    "Origen": "public/images/hero/ronny-halloween-fair.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Halloween/ronny-halloween-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Halloween",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2008947,
+    "SHA256": "17424ffcda5364be6b594d3e75a5c787383ef86bb44ce3bda34afd43dfb949a0",
+    "Origen": "public/images/hero/ronny-halloween-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Dia_de_Muertos/ronny-muertos-ofrenda.png",
+    "Carpeta": "02_Portadas_y_food_truck/Dia_de_Muertos",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2938394,
+    "SHA256": "fa82090391c14eef21642d2258711cbad7c350227085eceb102b059505e7a949",
+    "Origen": "public/images/hero/ronny-muertos-ofrenda.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Iniciales_y_familia/ronny-night-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Iniciales_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1918257,
+    "SHA256": "7e8471c63758c676ac6ca1552d809f0b64c28b187ca4a4e3dde411fd4fbc905c",
+    "Origen": "public/images/hero/ronny-night-truck.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Navidad/ronny-christmas-foreground.png",
+    "Carpeta": "03_Temporadas/Navidad",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2453481,
+    "SHA256": "c37fd2938d7f2af220217b997e05a1bd07c4122e61f632bf97b6089ad9f00df3",
+    "Origen": "public/images/seasons/ronny-christmas-foreground.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Navidad/ronny-christmas.png",
+    "Carpeta": "03_Temporadas/Navidad",
+    "Ancho": 1161,
+    "Alto": 1354,
+    "Transparencia": "Sí",
+    "Bytes": 1379180,
+    "SHA256": "64b194f862ce674fd7732bb7aa23414e929179bb829d521b91d14cf45e4c451d",
+    "Origen": "public/images/seasons/ronny-christmas.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Dia_de_Muertos/ronny-dia-de-muertos.png",
+    "Carpeta": "03_Temporadas/Dia_de_Muertos",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1841741,
+    "SHA256": "2df0bc77a2936e79fd7c2569543683486a1a0a294e7b131108743b55b97ed6ac",
+    "Origen": "public/images/seasons/ronny-dia-de-muertos.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Halloween/ronny-halloween-foreground.png",
+    "Carpeta": "03_Temporadas/Halloween",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2391141,
+    "SHA256": "db56ef0bfb33665627c1c3350e288b9598cd2a56695023014aad332d770bb368",
+    "Origen": "public/images/seasons/ronny-halloween-foreground.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Dia_de_Muertos/ronny-muertos-foreground.png",
+    "Carpeta": "03_Temporadas/Dia_de_Muertos",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2472035,
+    "SHA256": "bef8da1bd28ae76f520495411eee9616c9265d7a4da757105e7043623649088a",
+    "Origen": "public/images/seasons/ronny-muertos-foreground.png"
+  },
+  {
+    "Archivo": "08_Fondos_sin_personajes/halloween-night-mobile.png",
+    "Carpeta": "08_Fondos_sin_personajes",
+    "Ancho": 841,
+    "Alto": 1870,
+    "Transparencia": "No",
+    "Bytes": 1612515,
+    "SHA256": "ed6d66013669389e7b5b4f182bae03d4c2d3feb10b8d44db62707150aa42e4b7",
+    "Origen": "public/images/scenes/halloween-night-mobile.png"
+  },
+  {
+    "Archivo": "08_Fondos_sin_personajes/halloween-night.png",
+    "Carpeta": "08_Fondos_sin_personajes",
+    "Ancho": 1774,
+    "Alto": 887,
+    "Transparencia": "No",
+    "Bytes": 1723018,
+    "SHA256": "1c689af8440c3a3305e533396dc863bf6100ddde858c1d22293850bf79811f33",
+    "Origen": "public/images/scenes/halloween-night.png"
+  }
+]

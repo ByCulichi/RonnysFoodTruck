@@ -1,0 +1,7 @@
+IMÁGENES DE ROO — Portadas, temporadas y fondos
+
+15 imágenes en sus bytes, resolución y transparencia originales.
+Descomprime el ZIP completo y abre las carpetas incluidas.
+INVENTARIO.csv y JSON contienen nombres, resolución, transparencia y SHA256.
+Este paquete forma parte de la biblioteca completa de 66 imágenes, actualizada el 28 de octubre de 2026.
+No modifica ni despliega ronnys.online.
