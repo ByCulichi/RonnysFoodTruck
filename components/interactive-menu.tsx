@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Ghost } from "lucide-react";
+import { useRef, useState, type CSSProperties } from "react";
+import { ArrowUpRight, Check, Ghost, X } from "lucide-react";
 import { business } from "@/lib/business";
 import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
@@ -16,7 +16,8 @@ import "./ronny-menu-orbit.css";
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 
 export function InteractiveMenu({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
-  const choicesRef = useRef<HTMLDivElement>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const selectedButtonRef = useRef<HTMLButtonElement>(null);
   const active = dishes.find(({ name }) => name === selection) || dishes[1];
   const category = getMenuCategory(active);
   const choices = dishes.filter((dish) => getMenuCategory(dish) === category);
@@ -24,27 +25,25 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const costume = getMenuCostume(active);
   const guide = halloweenCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active.name);
-  const pageSize = 4;
-  const currentPage = Math.max(0, Math.floor(selectedIndex / pageSize));
-  const totalPages = Math.ceil(choices.length / pageSize);
-  const pageChoices = choices.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
-
-  useEffect(() => {
-    const rail = choicesRef.current;
-    const button = rail?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');
-    if (!rail || !button || rail.scrollWidth <= rail.clientWidth) return;
-    const item = button.getBoundingClientRect(), frame = rail.getBoundingClientRect();
-    if (item.left < frame.left || item.right > frame.right) {
-      rail.scrollTo({ left: rail.scrollLeft + item.left - frame.left - 4, behavior: "instant" });
-    }
-  }, [selection]);
+  // Reserve a full-width detail row immediately below the selected product row.
+  // CSS chooses the matching row for its column count; every thumbnail keeps
+  // the same DOM node and native focus, without resize observers or scrolling.
+  const detailRows = {
+    "--menu-detail-row-wide": Math.floor(selectedIndex / 4) + 2,
+    "--menu-detail-row-medium": Math.floor(selectedIndex / 3) + 2,
+    "--menu-detail-row-small": Math.floor(selectedIndex / 2) + 2,
+  } as CSSProperties;
 
   function selectCategory(next: MenuCategory) {
-    if (next !== category) onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
+    if (next !== category) {
+      setDetailOpen(false);
+      onSelect(dishes.find((dish) => getMenuCategory(dish) === next)!.name);
+    }
   }
 
-  function selectNext(direction: number) {
-    onSelect(choices[(selectedIndex + direction + choices.length) % choices.length].name);
+  function closeDetails() {
+    setDetailOpen(false);
+    selectedButtonRef.current?.focus({ preventScroll: true });
   }
 
   return (
@@ -70,28 +69,22 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
         </aside>
         <div className="menu-browser" id="menu-product-browser">
           <span className="sr-only" role="status">{`${active.name}. Precio inicial: ${getPrice(active)} pesos.`}</span>
-          <div className="menu-choice-heading"><span aria-live="polite"><strong>{categoryLabel}</strong><small>Fotos y precios · {choices.length} antojos</small></span>{totalPages > 1 && <div className="menu-page-controls"><button type="button" aria-label="Página anterior de productos" disabled={currentPage === 0} onClick={() => onSelect(choices[(currentPage - 1) * pageSize].name)}><ArrowLeft size={17} /></button><span>{currentPage + 1} / {totalPages}</span><button type="button" aria-label="Página siguiente de productos" disabled={currentPage === totalPages - 1} onClick={() => onSelect(choices[(currentPage + 1) * pageSize].name)}><ArrowRight size={17} /></button></div>}</div>
-          <>
-            <div ref={choicesRef} className="menu-choice-grid" role="group" aria-label="Elegir producto">
-              {pageChoices.map((dish) => <button type="button" key={dish.name} aria-label={`Ver ${dish.name}`} aria-pressed={dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => onSelect(dish.name)}>
-                <span className="menu-choice-photo"><MenuPhoto photo={dish.photos[0]} alt="" sizes="(max-width: 900px) 40vw, 220px" /></span>
-                <span className="menu-choice-name">{dish.name}</span>
-                <small>{dish.options.some(({ price }) => price !== getPrice(dish)) && "Desde "}<strong>${getPrice(dish)}</strong></small>
-                {dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}
-              </button>)}
-            </div>
-            <div id="selected-menu-dish" className="selected-menu-dish" role="region" aria-label={`Detalles de ${active.name}`}>
+          <div className="menu-choice-heading"><span aria-live="polite"><strong>{categoryLabel}</strong><small>Fotos y precios · {choices.length} antojos</small></span></div>
+          <div className="menu-choice-grid" role="group" aria-label="Elegir producto" style={detailRows}>
+            {choices.map((dish) => <button type="button" key={dish.name} ref={dish.name === active.name ? selectedButtonRef : undefined} aria-label={`Ver ${dish.name}`} aria-pressed={detailOpen && dish.name === active.name} aria-expanded={detailOpen && dish.name === active.name} aria-controls="selected-menu-dish" onClick={() => { onSelect(dish.name); setDetailOpen(true); }}>
+              <span className="menu-choice-photo"><MenuPhoto photo={dish.photos[0]} alt="" sizes="(max-width: 600px) 45vw, (max-width: 900px) 30vw, 220px" /></span>
+              <span className="menu-choice-name">{dish.name}</span>
+              <small>{dish.options.some(({ price }) => price !== getPrice(dish)) && "Desde "}<strong>${getPrice(dish)}</strong></small>
+              {detailOpen && dish.name === active.name && <Check size={14} className="menu-choice-check" aria-hidden="true" />}
+            </button>)}
+            <div id="selected-menu-dish" className="selected-menu-dish" role="region" aria-label={`Detalles de ${active.name}`} hidden={!detailOpen}>
               <MenuCard dish={active} index={dishes.indexOf(active)} key={active.name} />
               <div className="menu-detail-actions">
-                <div className="menu-stepper" aria-label="Recorrer productos">
-                  <button type="button" aria-label="Producto anterior" disabled={choices.length < 2} onClick={() => selectNext(-1)}><ArrowLeft size={18} /></button>
-                  <span>{selectedIndex + 1} de {choices.length}</span>
-                  <button type="button" aria-label="Producto siguiente" disabled={choices.length < 2} onClick={() => selectNext(1)}><ArrowRight size={18} /></button>
-                </div>
+                <button type="button" className="menu-detail-close" aria-label={`Cerrar detalles de ${active.name}`} onClick={closeDetails}><X size={16} aria-hidden="true" /> Cerrar</button>
                 <a href={`${business.whatsappUrl}?text=${encodeURIComponent(`Hola, Ronny’s. Me gustaría consultar disponibilidad de ${active.name.toLowerCase()}.`)}`} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a>
               </div>
             </div>
-          </>
+          </div>
         </div>
       </div>
     </div>
