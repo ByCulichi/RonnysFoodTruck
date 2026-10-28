@@ -1,0 +1,38 @@
+BIBLIOTECA DE IMÁGENES DE ROO — RONNY’S FOOD TRUCK
+Copia completa organizada · 28 de octubre de 2026
+
+66 imágenes únicas en su resolución y calidad originales.
+No se han redimensionado, recomprimido, retocado ni cambiado sus fondos.
+Los PNG transparentes conservan su canal alfa; otras ilustraciones incluyen su escenario.
+
+CARPETAS
+01_Logos_y_marca: cabezas, logos, diseños de marca y sello del menú.
+02_Portadas_y_food_truck: escenas de inicio, lobby, truck y familia, incluidas anteriores.
+03_Temporadas: Halloween, Día de Muertos y Navidad; escenas y personajes individuales.
+04_Disfraces_y_vestimentas: bruja, diablito, fantasma, vampiro, zombi y versiones del menú.
+05_Roo_y_familia: Roo deportivo, gesto de nariz, anfitrión, malteadas y dúo con su dueña.
+06_Bienvenida_y_animacion: Roo de cuatro patas, boca abierta, cara de antojo y código de referencia.
+07_Versiones_anteriores: conjuntos y variantes archivadas.
+08_Fondos_sin_personajes: escenarios de Halloween como recursos adicionales.
+09_Originales_generados_y_variantes: originales previos adicionales conservados sin cambios.
+
+CÓMO VERLAS
+Descomprime TODO el ZIP en una carpeta y abre INDICE_VISUAL.html en tu navegador.
+El índice funciona sin Internet; cada miniatura abre el archivo original.
+INVENTARIO.csv abre en Excel y contiene ruta, tamaño, resolución, transparencia y SHA256.
+
+VERSIONES
+Se incluyen tanto los recursos actuales como versiones antiguas: algunas tienen colores,
+vestuario o estilos previos. Están conservadas como archivo, no como cambio de marca actual.
+Los nombres de los recursos del proyecto se preservan; los originales adicionales tienen
+nombres descriptivos y su identificador original se registra en el inventario.
+Se revisó el historial de imágenes del repositorio para incluir todas las versiones disponibles.
+La portada actual de Halloween está en 03_Temporadas/Halloween/ronny-halloween-foreground.png.
+
+ANIMACIÓN
+roo-four-paws.png, roo-bark.png y roo-craving.png son tres imágenes estáticas registradas.
+La bienvenida las articula mediante código; por eso se incluye una copia de esos archivos
+como referencia en 06_Bienvenida_y_animacion/Codigo_de_referencia.
+
+No se incluyen capturas de pantalla de pruebas, fotos reales del menú/truck ni ilustraciones
+que solo contienen comida. No hay claves, configuración privada ni credenciales.

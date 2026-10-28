@@ -1,0 +1,662 @@
+[
+  {
+    "Archivo": "01_Logos_y_marca/ronny-devil-head-caracter.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1065761,
+    "SHA256": "6e54a67524347dfbe8efff45002b3f36f16b3dfc0a6fbbe01ae5a213fcc92682",
+    "Origen": "public/images/brand/ronny-devil-head-caracter.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-devil-head.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1056984,
+    "SHA256": "492250851d2143cbff6b0bebfe8c2b4a18bc944d9d5e9fd80a4de15a6318976b",
+    "Origen": "public/images/brand/ronny-devil-head.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-flat-logo.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1002494,
+    "SHA256": "1cb404f4ca27ed78ff54062d25b2ee9cfd1e9bfea06108915b47d0c7438509d1",
+    "Origen": "public/images/brand/ronny-flat-logo.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-logo.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1199,
+    "Alto": 908,
+    "Transparencia": "Sí",
+    "Bytes": 964824,
+    "SHA256": "a0abb24c813d712eebf07c9b8d8aa616a2a897e50cab2b69df543bc27b8e371d",
+    "Origen": "public/images/brand/ronny-logo.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronny-wizard-head.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1089677,
+    "SHA256": "6c84f02d5f1bc1242db810cfe56df69848c8a7edc9b855366be8af5c213e1117",
+    "Origen": "public/images/brand/ronny-wizard-head.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronnys-logo-design.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1199,
+    "Alto": 389,
+    "Transparencia": "Sí",
+    "Bytes": 282321,
+    "SHA256": "56fbeb42eae65a103567c9c8c65ca9ea511cc8ca8ef6454b385bd1b96b48477b",
+    "Origen": "public/images/brand/ronnys-logo-design.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/ronnys-logo-text.jpg",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1237,
+    "Alto": 414,
+    "Transparencia": "No",
+    "Bytes": 32050,
+    "SHA256": "7daeda3d304d4d48ce9a1929b06e0265f2b7b1e821e2e8dc8e50bba74ee1e16a",
+    "Origen": "public/images/brand/ronnys-logo-text.jpg"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Navidad/ronny-christmas-posada.png",
+    "Carpeta": "02_Portadas_y_food_truck/Navidad",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2794529,
+    "SHA256": "a2583404aa05b744d3b0cec5cd0fd78c5102da1113a164aae806e53583372495",
+    "Origen": "public/images/hero/ronny-christmas-posada.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Navidad/ronny-christmas-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Navidad",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2223171,
+    "SHA256": "b552251ac6d61e20fd0576c6615feeb77123f785fc19b2a8695c2fe0e7a447b6",
+    "Origen": "public/images/hero/ronny-christmas-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Dia_de_Muertos/ronny-dia-de-muertos-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Dia_de_Muertos",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2506194,
+    "SHA256": "54856964363c2f754871b1a5ab215e0cd2126ff749a2af8c071099ca65995dee",
+    "Origen": "public/images/hero/ronny-dia-de-muertos-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Iniciales_y_familia/ronny-family-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Iniciales_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2661710,
+    "SHA256": "4c48fb6cdaa6499e9a97d8062c72bbe5f1ed28e9135d7d814dddef28e51c1cf1",
+    "Origen": "public/images/hero/ronny-family-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Halloween/ronny-halloween-fair.png",
+    "Carpeta": "02_Portadas_y_food_truck/Halloween",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2711323,
+    "SHA256": "97a8010785c44c377ae682a97758e49235936ccafcf3c4b5dc83bbb66e672fa0",
+    "Origen": "public/images/hero/ronny-halloween-fair.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Halloween/ronny-halloween-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Halloween",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2008947,
+    "SHA256": "17424ffcda5364be6b594d3e75a5c787383ef86bb44ce3bda34afd43dfb949a0",
+    "Origen": "public/images/hero/ronny-halloween-truck.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Dia_de_Muertos/ronny-muertos-ofrenda.png",
+    "Carpeta": "02_Portadas_y_food_truck/Dia_de_Muertos",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2938394,
+    "SHA256": "fa82090391c14eef21642d2258711cbad7c350227085eceb102b059505e7a949",
+    "Origen": "public/images/hero/ronny-muertos-ofrenda.png"
+  },
+  {
+    "Archivo": "02_Portadas_y_food_truck/Iniciales_y_familia/ronny-night-truck.png",
+    "Carpeta": "02_Portadas_y_food_truck/Iniciales_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1918257,
+    "SHA256": "7e8471c63758c676ac6ca1552d809f0b64c28b187ca4a4e3dde411fd4fbc905c",
+    "Origen": "public/images/hero/ronny-night-truck.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Navidad/ronny-christmas-foreground.png",
+    "Carpeta": "03_Temporadas/Navidad",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2453481,
+    "SHA256": "c37fd2938d7f2af220217b997e05a1bd07c4122e61f632bf97b6089ad9f00df3",
+    "Origen": "public/images/seasons/ronny-christmas-foreground.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Navidad/ronny-christmas.png",
+    "Carpeta": "03_Temporadas/Navidad",
+    "Ancho": 1161,
+    "Alto": 1354,
+    "Transparencia": "Sí",
+    "Bytes": 1379180,
+    "SHA256": "64b194f862ce674fd7732bb7aa23414e929179bb829d521b91d14cf45e4c451d",
+    "Origen": "public/images/seasons/ronny-christmas.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Dia_de_Muertos/ronny-dia-de-muertos.png",
+    "Carpeta": "03_Temporadas/Dia_de_Muertos",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1841741,
+    "SHA256": "2df0bc77a2936e79fd7c2569543683486a1a0a294e7b131108743b55b97ed6ac",
+    "Origen": "public/images/seasons/ronny-dia-de-muertos.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Halloween/ronny-halloween-foreground.png",
+    "Carpeta": "03_Temporadas/Halloween",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2391141,
+    "SHA256": "db56ef0bfb33665627c1c3350e288b9598cd2a56695023014aad332d770bb368",
+    "Origen": "public/images/seasons/ronny-halloween-foreground.png"
+  },
+  {
+    "Archivo": "03_Temporadas/Dia_de_Muertos/ronny-muertos-foreground.png",
+    "Carpeta": "03_Temporadas/Dia_de_Muertos",
+    "Ancho": 1448,
+    "Alto": 1086,
+    "Transparencia": "No",
+    "Bytes": 2472035,
+    "SHA256": "bef8da1bd28ae76f520495411eee9616c9265d7a4da757105e7043623649088a",
+    "Origen": "public/images/seasons/ronny-muertos-foreground.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1817884,
+    "SHA256": "aa3aba4673dc0e8215233ce0f6cd20afa17b6de53b6b5537aff57ebac69b9994",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-flying.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1772437,
+    "SHA256": "383a9e24a9d1cb6fcaeb22b47386726d618d88e9dd75b88a36379e4d74572c75",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-flying.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1885826,
+    "SHA256": "17489e378751054232514e131963fc4827e54dbf70ac8bc9a0a837da05567d53",
+    "Origen": "public/images/ronny/halloween/ronny-bruja-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Bruja/ronny-bruja.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Bruja",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1976978,
+    "SHA256": "744c5422bca1a671a1da07dd4a3dd44cf1613fbddc5c291ce9786c90949961a5",
+    "Origen": "public/images/ronny/halloween/ronny-bruja.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1709939,
+    "SHA256": "435ec9cbdc045a00320c1c64811b351f34b0410fe2951d12b3a6376e213812d4",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1702809,
+    "SHA256": "8e67b81542909f8d1a972b5f83f92f9886f792556faeb50e8b93457ad1c5e947",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito-serving.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1680386,
+    "SHA256": "d8973ef4cd3403299e03f5770aa3464e7f3a73de495f71625056b5039ce6fdd3",
+    "Origen": "public/images/ronny/halloween/ronny-diablito-serving.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Diablito/ronny-diablito.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Diablito",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1740669,
+    "SHA256": "aa5822399281f29596b297d8a9d66bab0e1d831683f490e8b49da192caf33e13",
+    "Origen": "public/images/ronny/halloween/ronny-diablito.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1762757,
+    "SHA256": "db9f95896e3bf34c31d504170adf0427d42c48dcafd3b7bbbaa2e94542b11609",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1701762,
+    "SHA256": "1ac886a1c21fa63c9e779d89415f0cbe7cc406213a2ef0ab245a2357750670d8",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Fantasma/ronny-fantasma.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Fantasma",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1753741,
+    "SHA256": "525c91813872132c4719da993f85b51e8c66935d0f16eb44ebceea8d21c9b7e7",
+    "Origen": "public/images/ronny/halloween/ronny-fantasma.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-barista.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1744774,
+    "SHA256": "2a4fee4998d72d91f4aea9f96b3a27f4f7ec975aa56f2fcc3b889f8b2ca12599",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-barista.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1750630,
+    "SHA256": "f0fb0dd98ab9fa37e06f562182f35330fb66616353a93fdee18f1e6f7626bbae",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Vampiro/ronny-vampiro-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Vampiro",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1722354,
+    "SHA256": "0e51164a4b09276cac10a8065291b239d4440466b23ee34cd54ed4ac98454240",
+    "Origen": "public/images/ronny/halloween/ronny-vampiro-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi-caracter.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1724326,
+    "SHA256": "cc568a1ad83592fcf6f1928e00874d9e4b5ca55b3cb14a4610775f8155bcb5d2",
+    "Origen": "public/images/ronny/halloween/ronny-zombi-caracter.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi-natural.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1684457,
+    "SHA256": "4b33f6f90adfe835d58c907cad1ff98907ae170468d3d3fcf50c436ef8a1eb84",
+    "Origen": "public/images/ronny/halloween/ronny-zombi-natural.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Halloween/Zombi/ronny-zombi.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Halloween/Zombi",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1712689,
+    "SHA256": "20840e67f1448fecdb89bc7ad326db26678e2d29dec0c39377703c9c80d6c4ee",
+    "Origen": "public/images/ronny/halloween/ronny-zombi.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-bebidas.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1576701,
+    "SHA256": "eb8693fef02bf77985375badce500d48fde888be17429ff706de76a81da9d60e",
+    "Origen": "public/images/ronny/menu/ronny-bebidas.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-dulces.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1751943,
+    "SHA256": "3b2d4e5d36de19ce8a14d25cd75832a035d27847f52fec3ce906d8ffd078d290",
+    "Origen": "public/images/ronny/menu/ronny-dulces.png"
+  },
+  {
+    "Archivo": "04_Disfraces_y_vestimentas/Menu_anterior/ronny-salados.png",
+    "Carpeta": "04_Disfraces_y_vestimentas/Menu_anterior",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1663372,
+    "SHA256": "112bfaf53350eb8a43633d7e740eae9d6df952afd6eaf0e765bcc6e2e84262e5",
+    "Origen": "public/images/ronny/menu/ronny-salados.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-halloween-milkshake.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1554720,
+    "SHA256": "f0ae1b578bacf870d4af2a18a7d6609d2e08a397a862f44c17eb882076e3966a",
+    "Origen": "public/images/ronny/ronny-halloween-milkshake.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-host-cutout.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1647771,
+    "SHA256": "ea00a3b8661577e9d72ac1462c29a1c21ee91a4363b16ab08b0f881b105316b5",
+    "Origen": "public/images/ronny/ronny-host-cutout.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-nose-lick.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1230,
+    "Alto": 1278,
+    "Transparencia": "Sí",
+    "Bytes": 1088798,
+    "SHA256": "b5ec8de74d69d423bcc22ee58e716367c93f47d692d95bbca976f02b57baaa9f",
+    "Origen": "public/images/ronny/ronny-nose-lick.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-red-sports.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1544837,
+    "SHA256": "0a71b9122725f2c570f25cf5d60ebd81cd01dd8ac47eff22f319893890ccaf92",
+    "Origen": "public/images/ronny/ronny-red-sports.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-story-cutout.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1547403,
+    "SHA256": "4bf82e31dab4b59d024901bd5cbda2d0caaa59effb9d5a60772a59e994f2ac99",
+    "Origen": "public/images/ronny/ronny-story-cutout.png"
+  },
+  {
+    "Archivo": "05_Roo_y_familia/ronny-unicorn-owner-bunny.png",
+    "Carpeta": "05_Roo_y_familia",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1672287,
+    "SHA256": "e0ef50e8c15de77fb6629f98ad92ebbb0013cca561a51f596c9ef1bfcce71f15",
+    "Origen": "public/images/ronny/ronny-unicorn-owner-bunny.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-bark.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1297467,
+    "SHA256": "a79b92473e4f766a747d30a8b00dd6e3b98788085ef2c16c16f0ce31cfe625f2",
+    "Origen": "public/images/ronny/welcome/roo-bark.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-craving.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1291409,
+    "SHA256": "2912349d03d9318b0ac887614d8c566f491a6a75a62e5f6254bf354b0d6df440",
+    "Origen": "public/images/ronny/welcome/roo-craving.png"
+  },
+  {
+    "Archivo": "06_Bienvenida_y_animacion/Imagenes/roo-four-paws.png",
+    "Carpeta": "06_Bienvenida_y_animacion/Imagenes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1284051,
+    "SHA256": "18038d8372517dd05c98da0b66d6a2e19355c7051393b175c3e497a1cebbb8b3",
+    "Origen": "public/images/ronny/welcome/roo-four-paws.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-flat-outfits.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1535373,
+    "SHA256": "d05113a8c1bab791472931ec13c1bd47d1d7128168a10f3aeffb943fb4d713b4",
+    "Origen": "public/images/archive/ronny/ronny-flat-outfits.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-outfits.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2417307,
+    "SHA256": "36d5f09bce9de7f3b4f8851b3a1dae33a14ffec8e8be4e0c93663ee6e312c55a",
+    "Origen": "public/images/archive/ronny/ronny-outfits.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-personalities.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1592243,
+    "SHA256": "abe819d6f47ec4a783e9a3d38c3aaeb004421faab810eed799325e762e5455ec",
+    "Origen": "public/images/archive/ronny/ronny-personalities.png"
+  },
+  {
+    "Archivo": "07_Versiones_anteriores/ronny-promo-cutout.png",
+    "Carpeta": "07_Versiones_anteriores",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1698605,
+    "SHA256": "e339ffb93b5b1eeb36de867a076a29ae6cf7a062f279277857c3216c38db7adf",
+    "Origen": "public/images/archive/ronny/ronny-promo-cutout.png"
+  },
+  {
+    "Archivo": "08_Fondos_sin_personajes/halloween-night-mobile.png",
+    "Carpeta": "08_Fondos_sin_personajes",
+    "Ancho": 841,
+    "Alto": 1870,
+    "Transparencia": "No",
+    "Bytes": 1612515,
+    "SHA256": "ed6d66013669389e7b5b4f182bae03d4c2d3feb10b8d44db62707150aa42e4b7",
+    "Origen": "public/images/scenes/halloween-night-mobile.png"
+  },
+  {
+    "Archivo": "08_Fondos_sin_personajes/halloween-night.png",
+    "Carpeta": "08_Fondos_sin_personajes",
+    "Ancho": 1774,
+    "Alto": 887,
+    "Transparencia": "No",
+    "Bytes": 1723018,
+    "SHA256": "1c689af8440c3a3305e533396dc863bf6100ddde858c1d22293850bf79811f33",
+    "Origen": "public/images/scenes/halloween-night.png"
+  },
+  {
+    "Archivo": "01_Logos_y_marca/sello-ronny.png",
+    "Carpeta": "01_Logos_y_marca",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1747450,
+    "SHA256": "3ae5b6e846a3010958ef77b05779abdacef96b1e36255c717899ed9970a5deda",
+    "Origen": "public/images/menu/illustrations/sello-ronny.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/roo-antiguo-preparando-malteada.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "Sí",
+    "Bytes": 1561486,
+    "SHA256": "354d17085d9238c39f67ffed0fa9d503b7e8a11bcc2a330dec7b2c0404374057",
+    "Origen": "Original generado: exec-1f125b59-8e64-4a4a-b6f9-b40aeb2dbda5.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/portada-halloween-roo-caramelo-original.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1977103,
+    "SHA256": "2e2ebbb0a62500eef91d9e94be6c4dd343decbe7e49b378470e7d8035370dfc4",
+    "Origen": "Original generado: exec-6ca9f07c-473e-478f-b007-2d49676dffa0.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/roo-antiguo-dos-malteadas.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1725526,
+    "SHA256": "97f0e3526f332d05d4308d0c81fdbebfffb80aa59d2d8cb24e20eb0b3013a875",
+    "Origen": "Original generado: exec-79118307-68a9-485b-9d8a-3afefdd525c9.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/roo-antiguo-con-snack.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1567900,
+    "SHA256": "2e9060a1441865cc3458f7e1f564e3d80cc7b0711913f327a279c73d2db1c899",
+    "Origen": "Original generado: exec-7c776580-5329-4f99-b42a-7172156874d8.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/portada-inicial-roo-truck-familia.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2528042,
+    "SHA256": "4e59546269b5c9b767d783aae2618757a6a9ea857f87304286e9512c22c84c7c",
+    "Origen": "Original generado: exec-917ef0bd-5c2a-4090-a5bb-afa7b9f3297f.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/roo-cabeza-original-crema.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1254,
+    "Alto": 1254,
+    "Transparencia": "Sí",
+    "Bytes": 1005558,
+    "SHA256": "60059b4d59876135c95c74a3d4c48fc42918395d72cbe50725863c1c0f0ac9c9",
+    "Origen": "Original generado: exec-cb08661d-5d8d-4121-b78b-cdf4e93b0a40.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/roo-antiguo-hechicero-chamarra-roja.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1672329,
+    "SHA256": "e98c9b55ac213f03250e9dd706f3a408043454a8158372b043086d2d42c974e2",
+    "Origen": "Original generado: exec-ebd7fe4b-d22b-4008-9ca8-74c68e7517c8.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/portada-halloween-roo-crema-original.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 1969501,
+    "SHA256": "e1938f5f285d8c75877dc5c5dd0ef1def841809e976e65f7cfb37fe7ace21d1b",
+    "Origen": "Original generado: exec-ee2125da-a722-4ce4-a4f8-86c165635d35.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/duena-conejito-roo-unicornio-original.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1024,
+    "Alto": 1536,
+    "Transparencia": "Sí",
+    "Bytes": 1662252,
+    "SHA256": "60ea67808b45bd816bb45fba9ea4ec018d4864736e726438913eb24552448cf8",
+    "Origen": "Original generado: exec-f22fd638-103e-4546-b527-97eaeedf22a8.png"
+  },
+  {
+    "Archivo": "09_Originales_generados_y_variantes/navidad-santa-y-truck-original.png",
+    "Carpeta": "09_Originales_generados_y_variantes",
+    "Ancho": 1536,
+    "Alto": 1024,
+    "Transparencia": "No",
+    "Bytes": 2404146,
+    "SHA256": "aa5514b9cab5266594aafb3f744e945928e6ec067a0c554649abf9a3955ed0c6",
+    "Origen": "Original generado: exec-2ab2b416-c350-48dc-a31b-25c3f4b70ae4.png"
+  }
+]
