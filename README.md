@@ -62,6 +62,27 @@ Su color de marca es café/caramelo por la última corrección del propietario, 
 
 El encabezado usa tipografía de Halloween, Ronny visible, navegación con sección activa y acceso destacado al menú. El footer repite su cara y reúne todos los canales en un solo bloque, sin perfiles ni cifras inventados.
 
+### Bienvenida cinematográfica de Roo
+
+`components/roo-welcome.tsx` anima la misma imagen original del encabezado (`ronny-wizard-head.png`): entrada grande, pequeño gesto de cabeza, saludo y viaje curvo hasta su caja real. Usa FLIP con Web Animations API nativa, sin GSAP, Framer Motion, clones ni intercambio de imágenes. La caja del logo conserva sus 76 px (60 px en móvil), por lo que la bienvenida no cambia el diseño. El navegador compone transformaciones y opacidad sin trabajo JavaScript por fotograma. `app/page.tsx` integra este componente solo en la marca del encabezado; la carta, filtros, temporadas y promociones no cambian.
+
+La configuración `rooWelcomeMotion`, al principio del componente, permite ajustar:
+
+| Valor | Efecto | Inicial |
+| --- | --- | --- |
+| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3100` |
+| `maxSize` | Tamaño máximo de Roo, en píxeles; la descarga optimizada se adapta también | `380` |
+| `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.72` / `.44` |
+| `centerY` | Altura inicial de su centro como fracción de pantalla | `.40` |
+| `entranceLift` / `entranceTilt` | Desplazamiento vertical inicial y giro, en píxeles/grados | `32` / `-7` |
+| `flightTilt` / `flightCurve` | Inclinación máxima y curvatura del viaje | `-8` / `.22` |
+| `flightStart` | Fracción de la secuencia en que empieza el viaje; mantener entre `.40` y `.65` | `.49` |
+| `imageTimeout` | Tiempo máximo de espera del recurso antes de omitir la bienvenida | `850` |
+
+`components/roo-welcome.css` define exclusivamente el fondo violeta/dorado, los aros, destellos y texto del saludo. Las coordenadas finales no se configuran: se obtienen de `getBoundingClientRect()` de la caja real del logo. Al redimensionar o girar el dispositivo se conserva la pose visible y se recalcula el trayecto restante, sin reiniciar la bienvenida ni saltar a una nueva pose. En una carga fría se acorta ligeramente la secuencia para compensar la espera de la imagen.
+
+La bienvenida se ejecuta en cada documento nuevo o refresh; no vuelve al cambiar de sección ni al remontar la página mediante navegación cliente. Respeta `prefers-reduced-motion` desde CSS y JavaScript. No bloquea el cuerpo ni cambia el foco: tocar, usar teclado o empezar a desplazarse permite entrar inmediatamente. Al ocultar la pestaña, fallar la animación o tardar demasiado el recurso, se revela la página. Sin JavaScript, el contenido aparece directamente; hay además una salida CSS acotada por si la hidratación no llega a ejecutarse. Todos los listeners, observadores y efectos de la bienvenida se liberan al terminar.
+
 
 ## Carta y fotografías
 
