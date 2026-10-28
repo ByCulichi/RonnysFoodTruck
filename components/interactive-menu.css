@@ -246,3 +246,14 @@
 @media (max-width: 600px) and (prefers-reduced-motion: reduce) {
   .menu-heading-actions { padding-top: 0; align-self: center; }
 }
+
+/* One set of category controls around Roo, followed by clear photo/price labels. */
+.menu-choice-heading > span { display: grid; gap: 3px; }
+.menu-choice-heading > span > strong { color: #ffe0a6; font: 400 24px/1.15 "Ronny Display", Arial, sans-serif; }
+.menu-choice-heading > span > small { font-size: 12px; color: #cdb5c9; }
+.menu-choice-grid small strong { font-size: 15px; }
+@media (max-width: 600px) {
+  .menu-choice-heading > span > strong { font-size: 22px; }
+  .menu-choice-heading > span > small { font-size: 11px; }
+  .menu-choice-grid small strong { font-size: 14px; }
+}

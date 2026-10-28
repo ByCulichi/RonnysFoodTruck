@@ -6,7 +6,7 @@ La prioridad de la página es el food truck, la comida y Ronny. El menú aparece
 
 ## Halloween activo
 
-La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food truck rojo decorado con calabazas, telarañas y murciélagos. Es la imagen principal al cargar la página (`public/images/hero/ronny-halloween-truck.png`); no requiere abrir el selector. No hay selector de looks: los personajes aparecen directamente en menú, promoción, historia, ubicación y contacto. Se conserva el acceso directo al menú ; los productos y precios se transcriben de las fotos de la carta del propietario. La fuente local Creepster incluye su licencia en `public/fonts/`.
+La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food truck rojo decorado con calabazas, telarañas y murciélagos. Es la imagen principal al cargar la página (`public/images/seasons/ronny-halloween-foreground.png`); no requiere abrir el selector. No hay selector de looks: los personajes aparecen directamente en menú, promoción, historia, ubicación y contacto. Se conserva el acceso directo al menú ; los productos y precios se transcriben de las fotos de la carta del propietario. La fuente local Creepster incluye su licencia en `public/fonts/`.
 
 ## Identidad nocturna
 
@@ -228,3 +228,11 @@ El encabezado omite «Precios en MXN» y se retira el botón de pausa. Los filtr
 `MenuBook` distingue la portada, las tres aperturas de categoría y la contraportada cerrada (`back`). La última cubierta gira con su tabla derecha sobre el lomo y centra el libro cerrado hacia el lado izquierdo; al volver, descubre directamente Bebidas. La tabla y el contenido derechos se ocultan en reposo para no dejar una hoja vacía ni desbordamiento. La carta vive por completo en la página: portada, hojas y contraportada conservan su estado; zoom y «Texto grande» son opciones inline. No hay lector modal ni bloqueo de desplazamiento. Se retira el enlace «Sus snacks favoritos».
 
 La carta inline es un poco más grande en escritorio, con más altura disponible y una columna de apoyo más estrecha. En móvil aprovecha 20 px adicionales dentro del ancho de pantalla, manteniendo ambas caras, el gesto vertical nativo y las hojas completas al 100%.
+
+La portada principal usa ahora la misma escena de Halloween con Roo y el truck en primer plano (`truckArtwork.halloween.src`). Se retiran los cuatro accesos de comida del encabezado; los filtros permanecen en el menú. `TruckCinema` también aparece en los tres camiones de temporadas, con coordenadas propias de sus ilustraciones 1448×1086 y encuadre calculado según `object-fit: cover/contain`. Cada pantalla mantiene su viñeta SVG de película correspondiente, automática, local y suspendida fuera de vista/pestaña oculta/movimiento reducido.
+
+El panel de promoción prioriza el lado izquierdo: más ancho, Roo deportivo mayor y precio destacado. El acceso de WhatsApp y la consulta de cobertura/costo/disponibilidad del domicilio permanecen disponibles.
+
+Por elección del propietario, la última mejora del catálogo es visual: una sola selección de categorías alrededor de Roo y un encabezado más claro para «Fotos y precios». Roo conserva sus cambios automáticos de disfraz. El catálogo y las hojas del libro mantienen sus navegaciones independientes.
+
+Se retiró `@react-email/render`, que no se utiliza: el código de correo existente entrega HTML directamente a Resend. Esto elimina la cadena de dependencias `html-to-text`/`deepmerge` sin cambiar el contacto ni activar envíos.
