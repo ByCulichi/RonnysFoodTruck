@@ -1,9 +1,9 @@
 .halloween-market .seasons-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.halloween-market .season-chapter { display: flex; flex-direction: column; min-height: 0; border-radius: 20px; }
-.season-banner { position: relative; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--season-border, #df9b555c); }
+.halloween-market .season-chapter { display: flex; flex-direction: column; align-items: stretch; min-height: 0; border-radius: 20px; }
+.season-banner { position: relative; width: 100%; min-width: 0; flex: 0 0 auto; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--season-border, #df9b555c); }
 .season-banner > img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .season-banner > .season-state { position: absolute; top: 12px; left: 12px; max-width: calc(100% - 24px); margin: 0; padding: 7px 10px; border: 1px solid #e9b67d70; color: #ffe6b4; background: #24102ef0; font-size: 8px; letter-spacing: .6px; line-height: 1.5; }
-.halloween-market .season-copy { display: flex; flex-direction: column; align-items: start; flex: 1; width: 100%; padding: 20px; }
+.halloween-market .season-chapter > .season-copy { display: flex; flex-direction: column; align-items: start; flex: 1; width: 100%; min-width: 0; padding: 20px; }
 .halloween-market .season-copy > svg { margin-bottom: 8px; color: #ffb8d9; }
 .halloween-market .season-copy h3 { margin: 0; font: 400 32px/1.12 "Ronny Halloween", sans-serif; color: #ffcb84; }
 .halloween-market .season-copy p { font-size: 14px; line-height: 1.6; margin-block: 12px; color: #e4cec1; }
@@ -41,17 +41,12 @@
 .season-snow > span:nth-child(6) { left: 91%; animation-delay: -5s; }
 @keyframes season-snowfall { 0% { transform: translate3d(0, 0, 0); opacity: 0; } 8% { opacity: .8; } 90% { opacity: .65; } 100% { transform: translate3d(12px, 430px, 0); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .season-snow { display: none; } }
-@media (min-width: 601px) and (max-width: 1000px) {
-  .halloween-market .seasons-grid { grid-template-columns: minmax(0, 1fr); gap: 15px; }
-  .halloween-market .season-chapter { display: grid; grid-template-columns: .95fr 1.05fr; align-items: center; }
-  .season-banner { width: 100%; }
-}
 @media (max-width: 600px) {
   .halloween-market .seasons-section { padding-block: 24px 28px; }
   .halloween-market .seasons-heading { margin-bottom: 18px; }
   .halloween-market .seasons-heading h2 { font-size: 30px; margin-top: 12px; }
   .halloween-market .seasons-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .halloween-market .season-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px 12px; padding: 15px; align-items: center; }
+  .halloween-market .season-chapter > .season-copy { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px 12px; padding: 15px; align-items: center; }
   .halloween-market .season-copy > svg { display: none; }
   .halloween-market .season-copy h3 { font-size: 28px; }
   .halloween-market .season-copy p { grid-column: 1 / -1; grid-row: 2; margin: 0; font-size: 13px; line-height: 1.5; }
@@ -66,7 +61,7 @@
   .halloween-market .seasons-heading { margin-bottom: 24px; }
   .halloween-market .seasons-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: calc(50% - 8px); gap: 14px; align-items: stretch; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 2px 12px; }
   .halloween-market .season-chapter { display: flex; flex-direction: column; scroll-snap-align: start; }
-  .halloween-market .season-copy { padding: 16px; }
+  .halloween-market .season-chapter > .season-copy { padding: 16px; }
   .halloween-market .season-copy h3 { font-size: 28px; }
   .halloween-market .season-copy p { font-size: 13px; }
   .season-navigation { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
@@ -77,6 +72,6 @@
 @media (max-width: 600px) {
   .halloween-market .market-fairground .seasons-section { padding-block: 24px 28px; }
   .halloween-market .seasons-grid { grid-auto-columns: calc(100% - 18px); gap: 12px; }
-  .halloween-market .season-copy { display: grid; padding: 14px; }
+  .halloween-market .season-chapter > .season-copy { display: grid; padding: 14px; }
   .halloween-market .season-copy h3 { font-size: 26px; }
 }

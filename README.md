@@ -142,6 +142,8 @@ La pantalla de enero usa una mini celebración SVG local con reloj, fuegos artif
 
 La pantalla de febrero muestra otra viñeta SVG local original de dos malteadas y corazones, sin película, video ni recursos externos. Sus coordenadas se miden sobre la ilustración 1448×1086 y sigue las mismas pausas y preferencia de movimiento reducido. La imagen completa se sirve mediante Next Image con carga diferida y tamaños adaptables; no añade ofertas ni cambia la promoción vigente.
 
+Todas las tarjetas usan un encabezado 4:3 a todo su ancho, sin encoger dentro de la columna, y el texto conserva el mismo ancho y espaciado. La alineación explícita evita que el diseño antiguo de Navidad estreche su imagen o deje un hueco grande debajo de la descripción; el espacio se reserva también antes de cargar cada imagen.
+
 El panel de Navidad usa rojo tinto, acentos crema/dorados y conserva intactos el truck, Roo, nieve, escena azul y pantalla de película de su ilustración. Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
 
 ## Menú compacto e interacción de Ronny
