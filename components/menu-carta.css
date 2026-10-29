@@ -2,7 +2,8 @@
 .carta-heading { margin-bottom: 16px; }
 .carta-heading h3 { font: 400 clamp(32px, 3vw, 44px)/1.15 "Ronny Halloween", sans-serif; color: #ffcb83; margin: 10px 0 0; }
 .carta-layout { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 24px; align-items: center; }
-.carta-digital-preview { --carta-stage-height: clamp(300px, calc(100svh - 220px), 640px); width: 100%; min-width: 0; margin-inline: auto; }
+/* A little more room for the physical spread; keep the existing turn clearance. */
+.carta-digital-preview { --carta-stage-height: clamp(300px, calc(100svh - 180px), 720px); width: 100%; min-width: 0; margin-inline: auto; }
 .carta-inline-canvas { height: var(--carta-stage-height); min-width: 0; }
 .carta-inline-canvas > .menu-book-viewport { height: 100%; }
 .carta-inline-canvas[data-mode="text"] { overflow: auto; overscroll-behavior: contain; border: 1px solid #b18a53; border-radius: 12px; background: #f4ebd2; }

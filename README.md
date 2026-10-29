@@ -144,11 +144,15 @@ La pantalla de febrero muestra otra viñeta SVG local original de dos malteadas 
 
 Todas las tarjetas usan un encabezado 4:3 a todo su ancho, sin encoger dentro de la columna, y el texto conserva el mismo ancho y espaciado. La alineación explícita evita que el diseño antiguo de Navidad estreche su imagen o deje un hueco grande debajo de la descripción; el espacio se reserva también antes de cargar cada imagen.
 
+Cada imagen identifica su temporada directamente en el rótulo superior (Halloween, Día de Muertos, Navidad, Año Nuevo o Amor y amistad), con su estado/mes en una segunda línea. No depende de que el título debajo de la imagen esté a la vista.
+
 El panel de Navidad usa rojo tinto, acentos crema/dorados y conserva intactos el truck, Roo, nieve, escena azul y pantalla de película de su ilustración. Navidad añade solo seis copos CSS con transform/opacity, sin video ni temporizadores. Un observador detiene la animación fuera de vista; también se detiene al ocultar la pestaña y desaparece con movimiento reducido. Las imágenes se sirven optimizadas mediante Next Image. Los originales y la portada principal permanecen intactos; no hay cambio automático de campaña, fechas de lanzamiento ni ofertas nuevas.
 
 ## Menú compacto e interacción de Ronny
 
 `components/interactive-menu.tsx` reúne la navegación por categoría mediante logos y la ficha de producto. `components/interactive-menu.css` contiene sus estilos. Solo se monta una `MenuCard`; no se recortan precios ni se eliminan productos de `lib/menu.ts`. Las fotos de producto tienen un encuadre mayor y sin franjas, sin botón de ampliación ni visor emergente. Las originales se conservan intactas. Las consultas de WhatsApp son borradores que el cliente envía por su cuenta.
+
+Los estilos de miniaturas se limitan a los botones hijos directos de la cuadrícula: los controles de Cerrar y WhatsApp conservan su altura compacta de al menos 44 px, sin heredar el alto, fondo ni disposición de una miniatura. La foto de la ficha parte de 280 px en escritorio y puede crecer si las variantes lo requieren; en móvil mantiene su altura adaptable. El libro inline aprovecha hasta 720 px de alto en escritorio (antes 640), conserva la holgura de giro y mantiene el ajuste móvil sin desbordamiento. La disponibilidad y los destinos de contacto siguen sujetos a los indicadores de privacidad.
 
 Ronny usa cuatro disfraces completos en `public/images/ronny/halloween/`, registrados en `lib/ronny-costumes.ts`: bruja con túnica, capa, botas y escoba para Dulces; fantasma con sábana de cuerpo completo para Bebidas; diablito con traje rojo, alas y cola para Salados; zombi con ropa de parches y botas para los snacks salados. Se conserva su cara café/caramelo reconocible. En escritorio acompaña el menú a un lado; en celular se integra antes de los productos sin tapar controles. El mismo diablito acompaña domicilio y el zombi cuida sus gusgerías en la historia. No hay rotación por tiempo ni selector manual de disfraces. La composición se inspira en la captura de culichi.lat proporcionada por el propietario; el entorno bloqueó su apertura con `Tunnel connection failed: 403 Forbidden`.
 

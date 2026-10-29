@@ -2,7 +2,12 @@
 .halloween-market .season-chapter { display: flex; flex-direction: column; align-items: stretch; min-height: 0; border-radius: 20px; }
 .season-banner { position: relative; width: 100%; min-width: 0; flex: 0 0 auto; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--season-border, #df9b555c); }
 .season-banner > img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.season-banner > .season-state { position: absolute; top: 12px; left: 12px; max-width: calc(100% - 24px); margin: 0; padding: 7px 10px; border: 1px solid #e9b67d70; color: #ffe6b4; background: #24102ef0; font-size: 8px; letter-spacing: .6px; line-height: 1.5; }
+.season-banner > .season-state { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; align-items: start; gap: 4px; max-width: calc(100% - 24px); margin: 0; padding: 9px 12px; border: 1px solid #e9b67d70; border-radius: 12px; color: #ffe6b4; background: #24102ef0; font-size: 8px; letter-spacing: .6px; line-height: 1.5; }
+.season-banner > .season-state-current::before { display: none; }
+.season-image-name { display: flex; align-items: center; gap: 6px; }
+.season-image-name > svg { flex-shrink: 0; }
+.season-image-name > strong { font: 400 21px/1.1 "Ronny Display", sans-serif; letter-spacing: .3px; }
+.season-state > small { font: inherit; }
 .halloween-market .season-chapter > .season-copy { display: flex; flex-direction: column; align-items: start; flex: 1; width: 100%; min-width: 0; padding: 20px; }
 .halloween-market .season-copy > svg { margin-bottom: 8px; color: #ffb8d9; }
 .halloween-market .season-copy h3 { margin: 0; font: 400 32px/1.12 "Ronny Halloween", sans-serif; color: #ffcb84; }
@@ -51,7 +56,8 @@
   .halloween-market .season-copy h3 { font-size: 28px; }
   .halloween-market .season-copy p { grid-column: 1 / -1; grid-row: 2; margin: 0; font-size: 13px; line-height: 1.5; }
   .halloween-market .season-copy a { font-size: 11px; line-height: 1.4; max-width: 130px; margin: 0; text-align: right; }
-  .season-banner > .season-state { top: 10px; left: 10px; font-size: 7px; padding: 6px 8px; }
+  .season-banner > .season-state { top: 10px; left: 10px; font-size: 7px; padding: 7px 9px; gap: 3px; }
+  .season-image-name > strong { font-size: 18px; }
 }
 
 /* All complete cards share a native swipe rail on smaller screens. */

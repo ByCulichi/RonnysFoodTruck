@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Flower2, Ghost, Heart, PartyPopper, Snowflake, Sparkles } from "lucide-react";
 import { TruckCinema } from "@/components/truck-cinema";
-import { truckArtwork } from "@/lib/truck-cinema";
+import { truckArtwork, truckCinema } from "@/lib/truck-cinema";
 import "./ronny-seasons.css";
 
 const seasons = [
@@ -66,7 +66,7 @@ export function RonnySeasons() {
     <div className="seasons-heading"><div><div className="eyebrow"><Sparkles size={17} aria-hidden="true" /> RONNY’S POR TEMPORADAS</div><h2 id="seasons-title">Cambian los disfraces.<br /><em>El antojo se queda.</em></h2></div></div>
     <div ref={railRef} className="seasons-grid" id="season-cards" onScroll={updateCurrent} role="group" aria-label="Temporadas de Ronny’s">
       {seasons.map(({ id, title, state, image, alt, description, action, Icon }, index) => <article key={id} className={`season-chapter season-${id}`} aria-labelledby={`${id}-title`}>
-        <div className="season-banner"><Image src={image} alt={alt} width={truckArtwork[id].width} height={truckArtwork[id].height} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 50vw, 640px" /><TruckCinema season={id} />{id === "christmas" && <div ref={snowRef} className="season-snow" aria-hidden="true" data-playing="false">{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</div>}<span className={`season-state ${index===0?"season-state-current":"season-state-next"}`}>{index>0 && <Icon size={13} aria-hidden="true" />}{state}</span></div>
+        <div className="season-banner"><Image src={image} alt={alt} width={truckArtwork[id].width} height={truckArtwork[id].height} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 50vw, 640px" /><TruckCinema season={id} />{id === "christmas" && <div ref={snowRef} className="season-snow" aria-hidden="true" data-playing="false">{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</div>}<span className={`season-state ${index===0?"season-state-current":"season-state-next"}`}><span className="season-image-name"><Icon size={15} aria-hidden="true" /><strong>{truckCinema[id].season}</strong></span><small>{state}</small></span></div>
         <div className="season-copy"><Icon size={21} aria-hidden="true" /><h3 id={`${id}-title`}>{title}</h3><p>{description}</p><a href="#menu">{action} <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </article>)}
     </div>
