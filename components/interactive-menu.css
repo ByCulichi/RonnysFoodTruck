@@ -29,13 +29,13 @@
 .menu-choice-heading { display: flex; justify-content: space-between; gap: 15px; color: #e9c68e; font-size: 12px; line-height: 1.7; margin-bottom: 12px; }
 .menu-choice-heading > span:last-child { color: #bca18d; }
 .menu-choice-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin-bottom: 18px; }
-.menu-choice-grid button { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; gap: 6px; min-width: 0; min-height: 108px; padding: 12px 5px 10px; border: 1px solid #dec19638; border-radius: 14px; background: #291914; color: #ecd4b5; text-align: center; }
-.menu-choice-grid button > .food-icon { width: 31px; height: 31px; flex-shrink: 0; }
-.menu-choice-grid button > span { font-size: 13px; line-height: 1.3; font-weight: 600; }
-.menu-choice-grid button > small { color: #d1b48d; font-size: 10px; margin-top: auto; }
-.menu-choice-grid small strong { font-size: 12px; color: #ffe2b0; }
-.menu-choice-grid button[aria-pressed="true"] { background: #792e27; border-color: #ffc878; color: #fff1d6; box-shadow: 0 0 0 1px #ffc87835; }
-.menu-choice-grid button:hover { border-color: #ffc878; }
+.menu-choice-grid > button { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; gap: 6px; min-width: 0; min-height: 108px; padding: 12px 5px 10px; border: 1px solid #dec19638; border-radius: 14px; background: #291914; color: #ecd4b5; text-align: center; }
+.menu-choice-grid > button > .food-icon { width: 31px; height: 31px; flex-shrink: 0; }
+.menu-choice-grid > button > span { font-size: 13px; line-height: 1.3; font-weight: 600; }
+.menu-choice-grid > button > small { color: #d1b48d; font-size: 10px; margin-top: auto; }
+.menu-choice-grid > button > small strong { font-size: 12px; color: #ffe2b0; }
+.menu-choice-grid > button[aria-pressed="true"] { background: #792e27; border-color: #ffc878; color: #fff1d6; box-shadow: 0 0 0 1px #ffc87835; }
+.menu-choice-grid > button:hover { border-color: #ffc878; }
 .menu-choice-check { position: absolute; top: 6px; right: 6px; color: #ffe0a2; }
 .selected-menu-dish { width: 100%; max-width: 740px; margin-inline: auto; border-radius: 18px; overflow: hidden; border: 1px solid #e6c398; background: #fff0d5; }
 .interactive-menu .selected-menu-dish .menu-product { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); background: #fff0d5; border: 0; border-radius: 0; box-shadow: none; overflow: hidden; }
@@ -66,9 +66,9 @@
   .menu-guide-message strong { font-size: 18px; }
   .menu-guide-message p { font-size: 12px; }
   .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .menu-choice-grid button { flex-direction: row; flex-wrap: wrap; min-height: 82px; padding: 10px 7px; gap: 5px; }
-  .menu-choice-grid button > small { width: 100%; margin-top: 0; }
-  .menu-choice-grid button > .food-icon { width: 26px; height: 26px; }
+  .menu-choice-grid > button { flex-direction: row; flex-wrap: wrap; min-height: 82px; padding: 10px 7px; gap: 5px; }
+  .menu-choice-grid > button > small { width: 100%; margin-top: 0; }
+  .menu-choice-grid > button > .food-icon { width: 26px; height: 26px; }
   .compact-menu-controls { top: auto; }
 }
 @media (max-width: 900px) {
@@ -79,8 +79,8 @@
   .menu-guide-message { margin: 0; max-width: 420px; }
   .menu-guide-message p { font-size: 13px; margin-top: 6px; }
   .menu-choice-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .menu-choice-grid button { flex-direction: column; flex-wrap: nowrap; min-height: 105px; }
-  .menu-choice-grid button > small { margin-top: auto; }
+  .menu-choice-grid > button { flex-direction: column; flex-wrap: nowrap; min-height: 105px; }
+  .menu-choice-grid > button > small { margin-top: auto; }
   .compact-menu-controls { grid-template-columns: minmax(0, 1fr); gap: 9px; }
 }
 @media (max-width: 600px) {
@@ -99,8 +99,8 @@
   .menu-guide-message p { font-size: 12px; line-height: 1.6; }
   .menu-choice-heading { font-size: 11px; margin-bottom: 8px; }
   .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-bottom: 14px; }
-  .menu-choice-grid button { min-height: 95px; padding-block: 9px; }
-  .menu-choice-grid button > span { font-size: 12px; }
+  .menu-choice-grid > button { min-height: 95px; padding-block: 9px; }
+  .menu-choice-grid > button > span { font-size: 12px; }
   .interactive-menu .selected-menu-dish .menu-product { grid-template-columns: minmax(0, 1fr); }
   .interactive-menu .selected-menu-dish .dish-image { height: 145px; min-height: 0; }
   .interactive-menu .selected-menu-dish .dish-info { padding: 15px; }
@@ -143,12 +143,12 @@
 .menu-guide-message p { color: #ccb8d5; }
 .menu-choice-heading { min-height: 44px; align-items: center; color: #eac6fa; }
 .menu-choice-grid { gap: 9px; }
-.menu-choice-grid button { display: flex; flex-direction: column; flex-wrap: nowrap; min-height: 153px; padding: 0 0 10px; gap: 7px; overflow: hidden; background: #281a36; border-color: #b681bc45; color: #f6e4ff; }
-.menu-choice-grid button[aria-pressed="true"] { background: #713445; border-color: #ffbf6a; box-shadow: 0 0 0 1px #ffbd6c4a, 0 3px 18px #db6b3025; }
-.menu-choice-grid button > .menu-choice-photo { position: relative; display: block; width: 100%; height: 83px; flex-shrink: 0; background: #1a1025; }
-.menu-choice-grid button > .menu-choice-name { font: 400 15px/1.15 "Ronny Display", sans-serif; padding-inline: 5px; }
-.menu-choice-grid button > small { font-size: 10px; color: #d9b6ca; padding-inline: 5px; }
-.menu-choice-grid small strong { font: 800 14px Arial, sans-serif; color: #ffddaa; }
+.menu-choice-grid > button { display: flex; flex-direction: column; flex-wrap: nowrap; min-height: 153px; padding: 0 0 10px; gap: 7px; overflow: hidden; background: #281a36; border-color: #b681bc45; color: #f6e4ff; }
+.menu-choice-grid > button[aria-pressed="true"] { background: #713445; border-color: #ffbf6a; box-shadow: 0 0 0 1px #ffbd6c4a, 0 3px 18px #db6b3025; }
+.menu-choice-grid > button > .menu-choice-photo { position: relative; display: block; width: 100%; height: 83px; flex-shrink: 0; background: #1a1025; }
+.menu-choice-grid > button > .menu-choice-name { font: 400 15px/1.15 "Ronny Display", sans-serif; padding-inline: 5px; }
+.menu-choice-grid > button > small { font-size: 10px; color: #d9b6ca; padding-inline: 5px; }
+.menu-choice-grid > button > small strong { font: 800 14px Arial, sans-serif; color: #ffddaa; }
 .menu-choice-check { top: 6px; right: 6px; width: 21px; height: 21px; padding: 3px; border-radius: 50%; background: #b24530; color: #fff0cc; box-shadow: 0 1px 5px #0009; }
 .selected-menu-dish { border-color: #f3b673; box-shadow: 0 12px 30px #09041255; }
 .interactive-menu .selected-menu-dish .dish-title h3 { font-family: "Ronny Display", sans-serif; font-weight: 400; letter-spacing: 0; }
@@ -161,8 +161,8 @@
 @keyframes halloween-bat-drift { 0%, 100% { translate: 0 0; } 50% { translate: 8px -9px; } }
 @media (max-width: 1100px) {
   .menu-choice-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .menu-choice-grid button { min-height: 142px; }
-  .menu-choice-grid button > .menu-choice-photo { height: 75px; }
+  .menu-choice-grid > button { min-height: 142px; }
+  .menu-choice-grid > button > .menu-choice-photo { height: 75px; }
 }
 @media (max-width: 900px) {
   .compact-menu-heading { align-items: end; }
@@ -185,31 +185,31 @@
   .menu-guide-art { width: 74px; height: 88px; }
   .menu-workspace { gap: 12px; }
   .menu-choice-heading { gap: 10px; }
-  .menu-choice-grid button { min-height: 136px; gap: 6px; }
-  .menu-choice-grid button > .menu-choice-photo { height: 68px; }
-  .menu-choice-grid button > .menu-choice-name { font-size: 13px; }
-  .menu-choice-grid small strong { font-size: 13px; }
+  .menu-choice-grid > button { min-height: 136px; gap: 6px; }
+  .menu-choice-grid > button > .menu-choice-photo { height: 68px; }
+  .menu-choice-grid > button > .menu-choice-name { font-size: 13px; }
+  .menu-choice-grid > button > small strong { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .menu-bat { animation: none; } }
 
-.interactive-menu .selected-menu-dish .dish-title:only-child { margin-bottom: 0; }
+.interactive-menu .selected-menu-dish .dish-title:last-child { margin-bottom: 0; }
 @media (max-width: 600px) {
   .compact-menu-heading h2 { font-size: 36px; margin-top: 12px; }
   .menu-workspace { gap: 14px; }
   .menu-guide-message { margin-bottom: 0; }
   .menu-choice-grid { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(100px, 29vw, 120px); overflow-x: auto; scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 3px 10px; gap: 8px; margin-bottom: 12px; }
-  .menu-choice-grid button { scroll-snap-align: start; min-height: 128px; }
-  .menu-choice-grid button > .menu-choice-photo { height: 64px; }
-  .menu-choice-grid button:focus-visible { outline-offset: -3px; }
+  .menu-choice-grid > button { scroll-snap-align: start; min-height: 128px; }
+  .menu-choice-grid > button > .menu-choice-photo { height: 64px; }
+  .menu-choice-grid > button:focus-visible { outline-offset: -3px; }
   .menu-detail-actions { padding: 6px 10px; }
 }
 
 /* Keep the desktop product controls and photos in a single compact touch rail. */
 @media (max-width: 900px) {
   .menu-choice-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: clamp(100px, 29vw, 120px); overflow-x: auto; scroll-snap-type: x proximity; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #bd875e #21142b; padding: 3px 3px 10px; gap: 8px; margin-bottom: 12px; }
-  .menu-choice-grid button { scroll-snap-align: start; min-height: 128px; }
-  .menu-choice-grid button > .menu-choice-photo { height: 64px; }
-  .menu-choice-grid button:focus-visible { outline-offset: -3px; }
+  .menu-choice-grid > button { scroll-snap-align: start; min-height: 128px; }
+  .menu-choice-grid > button > .menu-choice-photo { height: 64px; }
+  .menu-choice-grid > button:focus-visible { outline-offset: -3px; }
 }
 @media (max-width: 600px) {
   .compact-menu-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -238,27 +238,27 @@
 .menu-choice-heading > span { display: grid; gap: 3px; }
 .menu-choice-heading > span > strong { color: #ffe0a6; font: 400 24px/1.15 "Ronny Display", Arial, sans-serif; }
 .menu-choice-heading > span > small { font-size: 12px; color: #cdb5c9; }
-.menu-choice-grid small strong { font-size: 15px; }
+.menu-choice-grid > button > small strong { font-size: 15px; }
 @media (max-width: 600px) {
   .menu-choice-heading > span > strong { font-size: 22px; }
   .menu-choice-heading > span > small { font-size: 11px; }
-  .menu-choice-grid small strong { font-size: 14px; }
+  .menu-choice-grid > button > small strong { font-size: 14px; }
 }
 
 /* Generous photos fill their frame; original capture bars stay outside the view. */
 .compact-menu-heading { display: block; }
 .menu-choice-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.menu-choice-grid button { min-height: 286px; }
-.menu-choice-grid button > .menu-choice-photo { height: 220px; background: #1c1427; }
+.menu-choice-grid > button { min-height: 286px; }
+.menu-choice-grid > button > .menu-choice-photo { height: 220px; background: #1c1427; }
 .selected-menu-dish { max-width: 840px; }
-.interactive-menu .selected-menu-dish .dish-image { min-height: 340px; padding: 0; background: #201629; }
+.interactive-menu .selected-menu-dish .dish-image { min-height: 280px; padding: 0; background: #201629; }
 @media (max-width: 900px) {
   .menu-choice-grid { grid-template-columns: none; grid-auto-columns: clamp(128px, 36vw, 156px); }
-  .menu-choice-grid button { min-height: 240px; }
-  .menu-choice-grid button > .menu-choice-photo { height: 176px; }
+  .menu-choice-grid > button { min-height: 240px; }
+  .menu-choice-grid > button > .menu-choice-photo { height: 176px; }
 }
 @media (max-width: 600px) {
-  .menu-choice-grid button { min-height: 236px; }
+  .menu-choice-grid > button { min-height: 236px; }
   .interactive-menu .selected-menu-dish .dish-image { height: clamp(210px, 64vw, 260px); min-height: 0; }
 }
 
