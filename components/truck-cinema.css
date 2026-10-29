@@ -10,10 +10,12 @@
 .cinema-petals, .cinema-snow { animation: cinema-drift 7s linear infinite paused; }
 .cinema-ghost { animation: cinema-ghost 5s ease-in-out infinite alternate paused; }
 .cinema-fireworks { transform-origin: 50% 30%; animation: cinema-fireworks 3s ease-out infinite paused; }
-.truck-cinema[data-playing="true"] :is(.cinema-camera, .cinema-mist, .cinema-petals, .cinema-snow, .cinema-ghost, .cinema-fireworks) { animation-play-state: running; }
+.cinema-hearts { animation: cinema-hearts 5s ease-in-out infinite alternate paused; }
+.truck-cinema[data-playing="true"] :is(.cinema-camera, .cinema-mist, .cinema-petals, .cinema-snow, .cinema-ghost, .cinema-fireworks, .cinema-hearts) { animation-play-state: running; }
 @keyframes cinema-camera { from { transform: scale(1.02) translateX(0); } to { transform: scale(1.11) translateX(-8px); } }
 @keyframes cinema-mist { from { transform: translateX(-14px); opacity: .2; } to { transform: translateX(18px); opacity: .45; } }
 @keyframes cinema-drift { from { transform: translate(0,-10px); opacity: .2; } 20%, 80% { opacity: .9; } to { transform: translate(-12px,23px); opacity: .2; } }
 @keyframes cinema-ghost { from { transform: translateY(2px); opacity: .65; } to { transform: translateY(-12px); opacity: 1; } }
 @keyframes cinema-fireworks { 0% { transform: scale(.65); opacity: .15; } 24%, 48% { transform: scale(1); opacity: 1; } 85%, 100% { transform: scale(1.1); opacity: .1; } }
+@keyframes cinema-hearts { from { transform: translateY(3px); opacity: .6; } to { transform: translateY(-9px); opacity: .95; } }
 @media (prefers-reduced-motion: reduce) { .truck-cinema * { animation: none !important; } }

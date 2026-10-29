@@ -7,8 +7,8 @@ export function MoviePreviewArt({ season }: { season: CinemaSeason }) {
   const night = `${id}-night`, glow = `${id}-glow`, water = `${id}-water`;
   return <svg className="truck-movie-art" viewBox="0 0 640 360" aria-hidden="true">
     <defs>
-      <linearGradient id={night} x2="0" y2="1"><stop stopColor={season === "muertos" ? "#24104d" : "#071b36"} /><stop offset="1" stopColor={season === "muertos" ? "#9b3165" : "#25618a"} /></linearGradient>
-      <radialGradient id={glow}><stop stopColor="#ffeeb0" /><stop offset="1" stopColor="#ffb52e" stopOpacity="0" /></radialGradient>
+      <linearGradient id={night} x2="0" y2="1"><stop stopColor={season === "valentines" ? "#351025" : season === "muertos" ? "#24104d" : "#071b36"} /><stop offset="1" stopColor={season === "valentines" ? "#8f355d" : season === "muertos" ? "#9b3165" : "#25618a"} /></linearGradient>
+      <radialGradient id={glow}><stop stopColor={season === "valentines" ? "#ffd5df" : "#ffeeb0"} /><stop offset="1" stopColor={season === "valentines" ? "#f294b9" : "#ffb52e"} stopOpacity="0" /></radialGradient>
       <linearGradient id={water} x2="0" y2="1"><stop stopColor="#1d577b" /><stop offset="1" stopColor="#071829" /></linearGradient>
     </defs>
     <g className="cinema-camera">
@@ -31,6 +31,33 @@ export function MoviePreviewArt({ season }: { season: CinemaSeason }) {
         <g className="cinema-guitar" transform="translate(413 72) rotate(16)"><path d="M34 121q-47-23-60 19-6 24 14 43-41 17-35 57 6 49 60 50 56 2 65-43 7-39-31-62 20-18 15-40-7-30-28-24Z" fill="#f8eccd" stroke="#cf9652" strokeWidth="6" /><path d="M7 135V31h25v104" fill="#b77b43" stroke="#ffdda1" strokeWidth="5" /><path d="M1 15h35v36H1Z" fill="#f8eccd" stroke="#cf9652" strokeWidth="3" /><circle cx="17" cy="183" r="21" fill="#74305b" /><circle cx="17" cy="183" r="13" fill="#241b38" /><path d="M-6 242h47" stroke="#74305b" strokeWidth="10" /><path d="M10 30v218m6-218v218m6-218v218m6-218v218" stroke="#d4b98a" strokeWidth="1.5" /><path d="M-14 221q30 20 64 0m-48-75q15-12 31 0" fill="none" stroke="#b94967" strokeWidth="4" /></g>
         <g className="cinema-petals" fill="#ffc852">{[[80,130],[150,110],[270,190],[355,96],[590,182],[230,48],[540,280],[100,260]].map(([x,y])=><path key={x} d={`M${x} ${y}q12-19 18-3-7 18-18 3Z`} />)}</g>
         <g transform="translate(115 197)"><path d="M-28 29v-25q0-37 38-37t38 37v25l-15 6v21h-45V35Z" fill="#fff0d0" /><circle cx="-2" cy="7" r="12" fill="#9f3e86" /><circle cx="25" cy="7" r="12" fill="#9f3e86" /><path d="m8 25 5-9 5 9M-5 40h35" stroke="#a63465" strokeWidth="4" fill="none" /></g>
+      </> : season === "valentines" ? <>
+        <circle cx="320" cy="175" r="190" fill={`url(#${glow})`} opacity=".38" />
+        <path d="M0 292q165-35 320-4t320 0v72H0Z" fill="#43182e" />
+        <ellipse cx="320" cy="300" rx="225" ry="23" fill="#260e20" opacity=".5" />
+        <g className="cinema-hearts" fill="#f5a4c4">
+          {[[74,120,.8],[137,52,.55],[315,70,1],[507,60,.65],[565,150,.8],[323,220,.6]].map(([x,y,scale]) => <path key={`${x}-${y}`} transform={`translate(${x} ${y}) scale(${scale})`} d="M0 12C-8 3-31-8-31-25c0-24 24-29 31-12 7-17 31-12 31 12C31-8 8 3 0 12Z" />)}
+        </g>
+        <g transform="translate(157 114)">
+          <path d="m69 30-9-79h26" fill="none" stroke="#ffe4b1" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M12 47h116l-18 139q-38 25-80 0Z" fill="#f4a3b7" stroke="#ffe5d9" strokeWidth="5" />
+          <path d="m34 67 11 109m20-109 2 113m25-113-7 109m24-109-13 108" stroke="#ffd2d8" strokeWidth="6" opacity=".85" />
+          <ellipse cx="70" cy="47" rx="58" ry="13" fill="#ffe1e4" />
+          <path d="M16 38q-12-23 11-32-8-24 18-26 1-24 28-15 25-12 31 13 28 1 23 24 23 13 4 36Z" fill="#fff2da" stroke="#eac5be" strokeWidth="3" />
+          <path d="M39 10q29 11 59 0M51-9q22 8 41 1" fill="none" stroke="#d16b8d" strokeWidth="6" strokeLinecap="round" />
+          <circle cx="75" cy="-30" r="12" fill="#b92f55" /><path d="M77-39q2-15 14-19" fill="none" stroke="#88a06d" strokeWidth="4" strokeLinecap="round" />
+          <path d="M58 193h24v20h27v11H31v-11h27Z" fill="#f7d6cf" />
+        </g>
+        <g transform="translate(347 114)">
+          <path d="m79 27 14-78h26" fill="none" stroke="#f6b7ce" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M12 47h116l-18 139q-38 25-80 0Z" fill="#ecd0a8" stroke="#ffe9ce" strokeWidth="5" />
+          <path d="m34 67 11 109m20-109 2 113m25-113-7 109m24-109-13 108" stroke="#fff0da" strokeWidth="6" opacity=".85" />
+          <ellipse cx="70" cy="47" rx="58" ry="13" fill="#f9e8cb" />
+          <path d="M16 38q-12-23 11-32-8-24 18-26 1-24 28-15 25-12 31 13 28 1 23 24 23 13 4 36Z" fill="#fff2da" stroke="#dfc1a1" strokeWidth="3" />
+          <path d="M38 10q29 11 61 0M51-9q22 8 41 1" fill="none" stroke="#a47154" strokeWidth="6" strokeLinecap="round" />
+          <circle cx="74" cy="-30" r="12" fill="#b92f55" /><path d="M76-39q2-15 14-19" fill="none" stroke="#88a06d" strokeWidth="4" strokeLinecap="round" />
+          <path d="M58 193h24v20h27v11H31v-11h27Z" fill="#f7d6cf" />
+        </g>
       </> : season === "newyear" ? <>
         <path d="M-30-20h700v400H-30Z" fill="#201428" />
         <circle cx="325" cy="155" r="185" fill={`url(#${glow})`} opacity=".3" />
