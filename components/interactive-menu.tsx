@@ -2,7 +2,7 @@
 
 import { useRef, useState, type CSSProperties } from "react";
 import { ArrowUpRight, Check, Ghost, X } from "lucide-react";
-import { business, contactDetailsVisible } from "@/lib/business";
+import { business, contactDetailsVisible, contactPresentationVisible } from "@/lib/business";
 import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
@@ -14,6 +14,7 @@ import "./interactive-menu.css";
 import "./ronny-menu-orbit.css";
 
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
+const whatsappAvailable = contactDetailsVisible && /^https:\/\/wa\.me\/\d{8,15}(?:\?[^#\s]*)?$/.test(business.whatsappUrl);
 
 export function InteractiveMenu({ selection, onSelect }: { selection: string; onSelect: (name: string) => void }) {
   const [detailOpen, setDetailOpen] = useState(false);
@@ -81,7 +82,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
               <MenuCard dish={active} index={dishes.indexOf(active)} key={active.name} />
               <div className="menu-detail-actions">
                 <button type="button" className="menu-detail-close" aria-label={`Cerrar detalles de ${active.name}`} onClick={closeDetails}><X size={16} aria-hidden="true" /> Cerrar</button>
-                {contactDetailsVisible && <a href={`${business.whatsappUrl}?text=${encodeURIComponent(`Hola, Ronny’s. Me gustaría consultar disponibilidad de ${active.name.toLowerCase()}.`)}`} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a>}
+                {whatsappAvailable ? <a href={`${business.whatsappUrl}?text=${encodeURIComponent(`Hola, Ronny’s. Me gustaría consultar disponibilidad de ${active.name.toLowerCase()}.`)}`} target="_blank" rel="noopener noreferrer">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></a> : contactPresentationVisible && <button type="button" className="menu-contact-placeholder contact-placeholder-action" disabled aria-label="Consultar por WhatsApp próximamente" title="WhatsApp próximamente">Consultar por WhatsApp <ArrowUpRight size={17} aria-hidden="true" /></button>}
               </div>
             </div>
           </div>

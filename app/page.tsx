@@ -19,7 +19,7 @@ import {
   CalendarDays,
   X,
 } from "lucide-react";
-import { business, contactDetailsVisible } from "@/lib/business";
+import { business, contactDetailsVisible, contactPresentationVisible, contactPlaceholders } from "@/lib/business";
 import { VisitSection } from "@/components/visit-section";
 import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
@@ -44,7 +44,10 @@ const navLinks = [
   ["menu", "Menú"],
   ["temporadas", "Temporadas"],
   ["encuentranos", "Encuéntranos"],
-].filter(([id]) => contactDetailsVisible || id !== "encuentranos");
+].filter(([id]) => contactPresentationVisible || id !== "encuentranos");
+
+const whatsappAvailable = contactDetailsVisible && /^https:\/\/wa\.me\/\d{8,15}(?:\?[^#\s]*)?$/.test(business.whatsappUrl);
+const deliveryAvailable = contactDetailsVisible && /^https:\/\/wa\.me\/\d{8,15}(?:\?[^#\s]*)?$/.test(business.deliveryWhatsappUrl);
 
 const navIcons = { inicio: House, menu: UtensilsCrossed, temporadas: CalendarDays, historia: PawPrint, encuentranos: MapPin, contacto: MessageCircle, domicilio: Bike };
 
@@ -149,11 +152,11 @@ export default function Home() {
             aria-label="Navegación móvil"
           >
             <p className="mobile-nav-heading">Tu próxima parada feliz.</p>
-            {[...navLinks, ...(contactDetailsVisible ? [["domicilio", "A domicilio"], ["contacto", "Contacto"]] : [])].map(([id, label]) => {
+            {[...navLinks, ...(contactPresentationVisible ? [["domicilio", "A domicilio"], ["contacto", "Contacto"]] : [])].map(([id, label]) => {
               const Icon = navIcons[id as keyof typeof navIcons];
               return <a href={`#${id}`} key={id} aria-current={activeSection === id ? "location" : undefined} onClick={() => { setMobileOpen(false); setActiveSection(id); }}><span><Icon size={22} aria-hidden="true" />{label}</span><ArrowUpRight size={18} aria-hidden="true" /></a>;
             })}
-            {contactDetailsVisible && <a className="mobile-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} /></a>}
+            {contactPresentationVisible && (whatsappAvailable ? <a className="mobile-whatsapp" href={business.whatsappUrl} target="_blank" rel="noopener noreferrer"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} /></a> : <button type="button" className="mobile-whatsapp contact-placeholder-action" disabled aria-label="WhatsApp próximamente" title="WhatsApp próximamente"><span><MessageCircle size={22} aria-hidden="true" />Escríbenos por WhatsApp</span><ArrowUpRight size={18} aria-hidden="true" /></button>)}
           </nav>
         )}
       </header>
@@ -191,7 +194,7 @@ export default function Home() {
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
-              {contactDetailsVisible && <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>{business.address}<small>{business.hours}</small></span><ArrowRight size={18} /></a>}
+              {contactPresentationVisible && <a className="night-location" href="#encuentranos"><MapPin size={20} /><span>{contactDetailsVisible && business.address ? business.address : contactPlaceholders.address}<small>{contactDetailsVisible && business.hours ? business.hours : contactPlaceholders.hours}</small></span><ArrowRight size={18} /></a>}
             </div>
           </div>
           <a className="night-scroll" href="#menu" aria-label="Descubrir el menú"><ArrowDown size={17} /></a>
@@ -217,17 +220,17 @@ export default function Home() {
 
           <div className="market-fairground">
             <HalloweenFairground />
-            <section className="promo-delivery shell" id="domicilio" aria-label={contactDetailsVisible ? "Promoción y pedidos a domicilio" : "Promoción y menú"}>
+            <section className="promo-delivery shell" id="domicilio" aria-label={contactPresentationVisible ? "Promoción y pedidos a domicilio" : "Promoción y menú"}>
               <FridayPromo />
               <div className="promo-delivery-service">
                 <div className="promo-delivery-copy">
-                  <div className="eyebrow"><Bike size={18} aria-hidden="true" /> {contactDetailsVisible ? "EL ANTOJO VA CONTIGO" : "EL ANTOJO TE ESPERA"}</div>
-                  <h2 id="delivery-title">{contactDetailsVisible ? <>¿Se te antojó <em>en casa?</em></> : <>¿Cuál se te <em>antoja?</em></>}</h2>
-                  <p>{contactDetailsVisible ? "Elige tu antojo y mándanos tu ubicación por WhatsApp." : "Descubre nuestros dulces, snacks y bebidas."}</p>
+                  <div className="eyebrow"><Bike size={18} aria-hidden="true" /> {contactPresentationVisible ? "EL ANTOJO VA CONTIGO" : "EL ANTOJO TE ESPERA"}</div>
+                  <h2 id="delivery-title">{contactPresentationVisible ? <>¿Se te antojó <em>en casa?</em></> : <>¿Cuál se te <em>antoja?</em></>}</h2>
+                  <p>{deliveryAvailable ? "Elige tu antojo y mándanos tu ubicación por WhatsApp." : contactPresentationVisible ? "Pedidos por WhatsApp próximamente" : "Descubre nuestros dulces, snacks y bebidas."}</p>
                 </div>
                 <Mascot character="host" className="promo-delivery-host" />
-                {contactDetailsVisible ? <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a> : <a className="button button-gold promo-delivery-order" href="#menu"><UtensilsCrossed size={20} aria-hidden="true" /> Ver menú <ArrowUpRight size={18} aria-hidden="true" /></a>}
-                {contactDetailsVisible && <small>Consulta cobertura, costo de envío y disponibilidad.</small>}
+                {deliveryAvailable ? <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a> : contactPresentationVisible ? <button type="button" className="button button-gold promo-delivery-order contact-placeholder-action" disabled aria-label="Pedir a domicilio próximamente" title="Pedidos por WhatsApp próximamente"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></button> : <a className="button button-gold promo-delivery-order" href="#menu"><UtensilsCrossed size={20} aria-hidden="true" /> Ver menú <ArrowUpRight size={18} aria-hidden="true" /></a>}
+                {deliveryAvailable && <small>Consulta cobertura, costo de envío y disponibilidad.</small>}
               </div>
             </section>
 
