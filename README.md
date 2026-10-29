@@ -36,13 +36,15 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 ## Contacto directo
 
-El propietario solicitó una pausa temporal de toda la información de ubicación y contacto. `contactDetailsVisible = false` en `lib/business.ts` oculta visita, horarios, mapa, Google, teléfono, WhatsApp y redes; sus valores también están vacíos para excluirlos del HTML y de los bundles del cliente. Las consultas del catálogo/promoción y el formulario de servidor quedan desactivados. Restaurar requiere autorización y configuración revisada; no basta con volver visible una sección. No se guardan los valores de recuperación en este repositorio público.
+El propietario solicitó recuperar la presentación de información y redes sin publicar datos verdaderos ni dirigir a cuentas reales. `contactPresentationVisible = true` en `lib/business.ts` muestra el panel y los cinco logos; `contactDetailsVisible = false` mantiene inactivos teléfono, mapas/reseñas, WhatsApp y redes. Sus valores reales siguen vacíos para excluirlos del HTML y los bundles del cliente. `contactPlaceholders` aporta horarios/ubicación «próximamente» y teléfono enmascarado; no se inventan datos de otra persona o lugar. Restaurar destinos reales requiere autorización y configuración revisada. No se guardan valores de recuperación en este repositorio público.
+
+El panel conserva su diseño con un mapa SVG abstracto local (`VisitMapPlaceholder`) y una ilustración aprobada del truck; no carga Google ni la foto privada del lugar. Los accesos exteriores son botones nativos desactivados con nombres accesibles. Las anclas internas de navegación siguen funcionando. El formulario de servidor permanece desactivado, aunque existan variables de correo configuradas.
 
 La nueva respuesta incluye `noindex/nofollow/noarchive`, `nosniff`, prohibición de enmarcado y una política de permisos sin cámara, micrófono ni geolocalización. Estas medidas no eliminan datos ya publicados en buscadores, redes, versiones anteriores o historial Git. No implican que la página sea invulnerable ni sustituyen controles de acceso de las cuentas de administración.
 
-La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario. El contacto público usa los enlaces oficiales de WhatsApp y teléfono; no se solicitan credenciales ni se envían correos durante pruebas.
+La sección «¿Platicamos algo rico?» y el formulario se retiraron por indicación del propietario; no se solicitan credenciales ni se envían correos durante pruebas.
 
-El footer de Halloween «Aquí sigue el antojo» usa contenido HTML real: ilustración aprobada de la dueña y Ronny a la izquierda, navegación «Explora» al centro y marca a la derecha. «Síguenos» reúne cinco logos neón centrados: Google, WhatsApp, Instagram, Facebook y TikTok. Abren los destinos confirmados del negocio con clic o Enter, sin previews. Los tres enlaces sociales oficiales proporcionados por el propietario se centralizan en `business.socials`; X se retiró. El dúo aprobado permanece intacto y `#contacto` apunta al footer.
+El footer de Halloween «Aquí sigue el antojo» usa contenido HTML real: ilustración aprobada de la dueña y Ronny a la izquierda, navegación «Explora» al centro y marca a la derecha. «Síguenos» reúne cinco logos neón centrados: Google, WhatsApp, Instagram, Facebook y TikTok. Durante esta pausa se muestran como botones desactivados, sin URL real ni destinos de plataformas genéricas. El dúo aprobado permanece intacto y `#contacto` apunta al footer.
 
 ## Próximos cambios
 
@@ -52,13 +54,13 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 El menú tiene cuatro categorías (Dulces, Salados, Bebidas frías y Bebidas calientes), sin buscador y con una sola ficha activa. Todos los productos de la categoría aparecen juntos en una cuadrícula de cuatro columnas en escritorio, tres en tablet y dos en móvil, sin paginación, flechas de productos ni fila horizontal oculta. Cada tarjeta muestra foto, nombre y precio inicial; la ficha se inserta después de la fila del producto elegido y conserva variantes y todos sus precios. Ronny cambia automáticamente de atuendo al elegir categoría; no hay selector manual de outfits. El catálogo y el libro mantienen navegaciones independientes.
 
-Los datos proporcionados por el propietario están centralizados en `lib/business.ts`: [dirección reservada]; teléfono [teléfono reservado]; viernes, sábado y domingo de 7 p. m. a 12 a. m., cerrado de lunes a jueves. Los enlaces permiten buscar la dirección en Maps, llamar o abrir WhatsApp; no se envían mensajes automáticamente.
+La estructura de los datos de contacto está centralizada en `lib/business.ts`; sus valores permanecen vacíos durante la pausa. Se conserva el catálogo y la promoción de viernes, sin publicar horarios de atención, teléfono ni dirección.
 
 ## Google Maps y opiniones
 
-La ficha oficial proporcionada por el propietario es [enlace de contacto reservado] El mapa integrado usa la dirección confirmada. Las opiniones se consultan directamente mediante enlaces a la ficha de Google.
+Los apartados de mapa y opiniones conservan su presentación con un mapa ilustrado local y botones desactivados. No cargan ni enlazan una ubicación o ficha real de Google.
 
-Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. El footer conserva cinco enlaces directos a los canales confirmados, incluidos los perfiles oficiales de Instagram, Facebook y TikTok del propietario. No se muestran previews, se consultan APIs ni se inventan cifras.
+Por indicación del propietario, no se usan APIs de reseñas/redes, no se hacen consultas automáticas y no se solicitan claves. Se retiró la integración de Places API y su endpoint. El footer conserva cinco logos visibles sin destinos activos; no se inventan perfiles, opiniones ni cifras.
 
 ## Identidad de Ronny
 
