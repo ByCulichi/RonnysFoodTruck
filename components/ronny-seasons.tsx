@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Flower2, Ghost, PartyPopper, Snowflake, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Flower2, Ghost, Heart, PartyPopper, Snowflake, Sparkles } from "lucide-react";
 import { TruckCinema } from "@/components/truck-cinema";
 import { truckArtwork } from "@/lib/truck-cinema";
 import "./ronny-seasons.css";
@@ -12,6 +12,7 @@ const seasons = [
   { id: "muertos", title: "Día de Muertos", state: "NOVIEMBRE · LO QUE SIGUE", image: truckArtwork.muertos.src, alt: "Ronny de catrín con maquillaje de calavera y el truck rojo entre cempasúchil y luz naranja de noviembre", description: "Roo de catrín, cempasúchil y tradición.", action: "Mientras llega, al menú", Icon: Flower2 },
   { id: "christmas", title: "Navidad", state: "DICIEMBRE · MÁS ADELANTE", image: truckArtwork.christmas.src, alt: "Ronny de Santa con chocolate caliente junto al truck rojo, entre nieve y pinos en una noche azul", description: "Roo de Santa. Nieve, luces y algo calientito.", action: "Mientras llega, al menú", Icon: Snowflake },
   { id: "newyear", title: "¡Hola, 2027!", state: "ENERO · AÑO NUEVO", image: truckArtwork.newyear.src, alt: "Roo de gala recibe el 2027 junto al food truck rojo, entre luces doradas y fuegos artificiales", description: "Año nuevo, los mismos antojos. Roo y el truck reciben el 2027.", action: "Empieza por el menú", Icon: PartyPopper },
+  { id: "valentines", title: "Amor y amistad", state: "FEBRERO · AMOR Y AMISTAD", image: truckArtwork.valentines.src, alt: "Roo de cupido con atuendo cereza, alas y una bandeja para compartir junto al truck rojo decorado con corazones", description: "Roo de cupido. El mejor antojo es el que se comparte.", action: "Un antojo para compartir", Icon: Heart },
 ] as const;
 
 export function RonnySeasons() {

@@ -22,6 +22,14 @@
 .halloween-market .season-newyear .season-copy p { color: #edddcd; }
 .halloween-market .season-newyear .season-copy a { color: #ffce77; }
 .season-newyear .season-banner > .season-state { color: #ffe5b4; border-color: #d7b26580; background: #241927ed; }
+.halloween-market .seasons-grid .season-valentines { --season-border: #f2a0b87a; background: linear-gradient(145deg, #422031, #241020); border-color: var(--season-border); }
+.halloween-market .seasons-grid .season-valentines h3, .halloween-market .season-valentines .season-copy > svg { color: #ffd0de; }
+.halloween-market .season-valentines .season-copy p { color: #f0d3dd; }
+.halloween-market .season-valentines .season-copy a { color: #ffd29a; }
+.season-valentines .season-banner > .season-state { color: #ffe0e9; border-color: #f2a0b87a; background: #351324ed; }
+@media (min-width: 1001px) {
+  .halloween-market .seasons-grid .season-chapter:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 9px); }
+}
 /* Just six compositor-animated flakes; paused outside the card or hidden tab. */
 .season-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .season-snow > span { position: absolute; top: -8px; left: 8%; width: 3px; height: 3px; border-radius: 50%; background: #edf9ff; animation: season-snowfall 8s linear infinite; animation-play-state: paused; }
@@ -51,7 +59,7 @@
   .season-banner > .season-state { top: 10px; left: 10px; font-size: 7px; padding: 6px 8px; }
 }
 
-/* The four complete cards become a native swipe rail on smaller screens. */
+/* All complete cards share a native swipe rail on smaller screens. */
 .season-navigation { display: none; }
 @media (max-width: 1000px) {
   .halloween-market .market-fairground .seasons-section { padding-block: 30px 35px; }
