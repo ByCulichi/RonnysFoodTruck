@@ -70,43 +70,45 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` presenta una escena de unos 3.8 segundos: Roo reacciona al ver una hamburguesa con tocino, se acerca con pasos cortos desfasados y frenado suave, la olfatea dos veces, pone cara de antojo y mueve alegremente la cola antes del ladrido y la bienvenida. `components/roo-puppet.tsx` articula patas, cola, cuerpo y cabeza en un único SVG. `components/welcome-truck.tsx` añade un truck rojo vectorial tenue al fondo, sin otro Roo ni descargas de imágenes.
+`components/roo-welcome.tsx` coordina una bienvenida de unos seis segundos. Roo empieza acostado, respira y abre los ojos; primero levanta la cabeza y después apoya sus patas para ponerse de pie. Se acerca a una hamburguesa con tocino, la olfatea dos veces, pone cara de antojo, mueve la cola y da una vuelta completa antes de ladrar mientras aparece «¡Bienvenidos a Ronny’s!». El mismo SVG y la misma cabeza terminan en la caja real de la navegación mediante FLIP, sin clones ni sustitución por otro logo.
 
-Los recursos transparentes `public/images/ronny/welcome/roo-{four-paws,surprise,craving,bark}-caramel.png` usan el mismo lienzo y registro. El hocico es café/caramelo continuo, sin mancha crema, como el logo de referencia del propietario. Las variantes de expresión se muestran únicamente a través de máscaras del hocico y rostro y se cargan al preparar una bienvenida con movimiento permitido. Las articulaciones usan animaciones WAAPI finitas, sin trabajo JavaScript por fotograma. Sin JavaScript o con movimiento reducido se conserva la cabeza estática, con hamburguesa, aroma y expresiones ocultos. Los recursos anteriores permanecen intactos.
+`components/roo-puppet.tsx` articula las cuatro patas, torso, cabeza y cola con curvas WAAPI finitas, calculadas una vez. `components/roo-pose-art.tsx` incorpora dibujos específicos del cuerpo acostado y levantándose, con patas redondeadas y recogidas, bajo la cabeza original. Las vistas lateral derecha, espalda y lateral izquierda hacen visible la vuelta completa, con un pequeño recorrido circular y balanceo; el pivote nunca se aplana como una tarjeta. Una sombra acompaña los apoyos. No hay bucles JavaScript por fotograma ni dependencias de animación nuevas.
 
-`components/welcome-burger.tsx` dibuja la hamburguesa con tiras de tocino en SVG local. Su grupo está registrado en el lienzo fuente y es hijo directo del SVG, fuera del pivote que camina: la comida permanece quieta mientras Roo se acerca. El aroma acompaña los dos movimientos de olfateo. La hamburguesa se desvanece entre `.665` y `.73`, antes del vuelo hacia la navegación.
+Los cels originales `public/images/ronny/welcome/roo-{four-paws,surprise,craving,bark}-caramel.png` permanecen intactos y registrados. La cara conserva su hocico caramelo continuo, sin mancha crema. Las expresiones se muestran solo en máscaras del rostro y hocico. La hamburguesa SVG de `components/welcome-burger.tsx` permanece fuera del pivote caminante y quieta durante el acercamiento.
 
-El propietario autorizó un ladrido real cuando el navegador lo permita. `public/audio/roo-bark.mp3` pesa 3.8 KB y contiene un único ladrido de Chihuahua de unos 0.38 segundos. `public/audio/LICENCIA.txt` documenta la grabación de LittleBigSounds, su licencia individual CC0 y la edición. La carga no bloquea las imágenes ni la animación: solo se intenta reproducir una vez en `.585`, si el audio ya está listo. Autoplay bloqueado, recurso lento o ausente siguen con gestos sin sonido; no hay reintento posterior ni controles nuevos. Salir de la bienvenida detiene y libera el audio.
+Los nuevos dibujos transparentes `roo-rest-body.png`, `roo-rise-body.png`, `roo-turn-profile.png` y `roo-turn-back.png` se conservan por separado en esa carpeta. `lib/roo-pose-art.ts` registra sus dimensiones y las posiciones de capa, sombrero y pañuelo para las cinco temporadas. Se sirven optimizados a 640 px; sus `href` se asignan únicamente después de decodificarlos para una bienvenida elegible y se retiran al terminar. La cabeza original vuelve antes del vuelo y permanece en la navegación.
 
-Ese mismo SVG y su cabeza viajan mediante FLIP hasta la caja real de la navegación. La máscara mantiene el cuerpo completo hasta `.76` y termina de recogerlo en la cabeza en `.96`. La caja conserva 76 px (60 px en móvil), sin cambios de diseño ni sustitución por otro logo. No se añaden GSAP ni Framer Motion. `app/page.tsx` integra la bienvenida en la marca del encabezado.
+`lib/welcome-season.ts` centraliza `activeWelcomeSeason`, la campaña explícita compartida por el atuendo y el escenario. Halloween sigue activo: no cambia por fecha ni por navegar entre secciones. `components/welcome-costume.tsx` conserva el raster de Halloween exacto y aporta capas SVG para catrín/cempasúchil, Santa, gala y cupido. Las capas siguen las mismas articulaciones; solo reconstruyen la pequeña zona de piel que ocultaba el sombrero, sin repintar ojos, hocico ni pañuelo. `components/welcome-truck.tsx` usa fondos derivados de las ilustraciones aprobadas de cada temporada, conservando su camión, cámara y ambiente y retirando únicamente el Roo de fondo. Los cinco originales se guardan en `public/images/scenes/welcome/`; Next Image carga solo la campaña activa, optimizada y con fundido al estar lista. La pantalla SVG local comparte las coordenadas del escenario y solo se monta mientras el fondo está cargado y visible. No usa fotos privadas, otro Roo ni recursos externos.
 
-La configuración `rooWelcomeMotion`, al principio del componente, permite ajustar:
+El ladrido individual de Chihuahua en `public/audio/roo-bark.mp3` (3.8 KB, unos 0.38 s, CC0 individual documentado en `public/audio/LICENCIA.txt`) se intenta una sola vez en `barkStart`, si ya está listo y el navegador permite autoplay. No bloquea la secuencia ni se reintenta más tarde; errores, movimiento reducido, interacción y salida detienen y liberan el sonido.
 
-| Valor | Efecto | Inicial |
+Ajustes de `rooWelcomeMotion` al principio del componente:
+
+| Valor | Efecto | Actual |
 | --- | --- | --- |
-| `duration` | Duración objetivo en milisegundos; subirla ralentiza toda la secuencia | `3800` |
-| `maxSize` | Alto máximo del cuerpo completo, en píxeles | `520` |
-| `viewportWidth` / `viewportHeight` | Límites del tamaño según el ancho y alto disponibles | `.76` / `.64` |
-| `centerY` | Altura inicial de su centro como fracción de pantalla | `.40` |
-| `flightTilt` / `flightCurve` | Inclinación máxima y curvatura del viaje | `-8` / `.22` |
-| `flightStart` | Inicio del viaje, tomado de `rooWelcomeStory` para coordinar las fases | `.74` |
-| `imageTimeout` | Espera máxima de las imágenes antes de omitir la bienvenida | `850` |
+| `duration` | Duración objetivo de la secuencia en ms | `6200` |
+| `maxSize` | Alto máximo del cuerpo completo | `520` |
+| `viewportWidth` / `viewportHeight` | Límites adaptables del tamaño | `.76` / `.64` |
+| `centerY` | Centro vertical como fracción del viewport | `.40` |
+| `flightTilt` / `flightCurve` | Inclinación y curva del viaje al encabezado | `-6` / `.22` |
+| `imageTimeout` | Espera máxima antes de omitir recursos lentos | `1200` |
 
-`lib/roo-welcome-story.ts` coordina las fases normalizadas de la duración total y `walkDistance: 560`, la distancia inicial de caminata en píxeles del lienzo fuente:
+`lib/roo-welcome-story.ts` coordina los beats normalizados:
 
 | Fase | Intervalo |
 | --- | --- |
-| Reacción al ver la hamburguesa | `0–.105` |
-| Caminata hacia la hamburguesa | `.105–.315` |
-| Dos olfateos | `.315–.445` |
-| Cara de antojo y cola alegre | `.445–.565` |
-| Ladrido | Desde `.585` |
-| Bienvenida | Desde `.65` |
-| Viaje al logo | Desde `.74` hasta `1` |
+| Reposo y respiración | `0–.09` |
+| Cabeza alerta y levantarse | `.09–.235` |
+| Caminata | `.24–.425` |
+| Dos olfateos | `.425–.555` |
+| Antojo y cola alegre | `.555–.61` |
+| Vuelta con vistas laterales y espalda | `.61–.745` |
+| Bienvenida y ladrido | Desde `.752` / `.765` |
+| Vuelo hacia la navegación | `.845–1` |
 
-`lib/roo-welcome-art.ts` registra las fuentes, dimensiones y contorno de cabeza usados por el SVG y las máscaras. `animateRooPuppet` en `components/roo-puppet.tsx` define los movimientos coordinados; `components/roo-welcome.css` establece los pivotes de articulación, los estados estáticos y la escena violeta/dorada. Las coordenadas finales se obtienen de `getBoundingClientRect()` de la caja real del logo. Al girar o redimensionar el dispositivo se conserva la pose visible y se recalcula el viaje restante. En una carga fría se acorta ligeramente la secuencia para compensar la espera de las imágenes.
+El cuerpo completo se conserva hasta `.855` y la máscara termina en la cabeza en `.975`. La caja final mantiene 76 px (60 px en móvil); su destino se mide con `getBoundingClientRect()` y se reajusta al cambiar el viewport, conservando la pose visible. `walkDistance: 320` es el máximo del recorrido en píxeles del lienzo; las pantallas pequeñas lo acortan para mantener al personaje completo.
 
-La bienvenida se ejecuta en cada documento nuevo o refresh; no vuelve al cambiar de sección ni al remontar la página mediante navegación cliente. Respeta `prefers-reduced-motion` desde CSS y JavaScript. No bloquea el cuerpo ni cambia el foco: tocar, usar teclado o empezar a desplazarse permite entrar inmediatamente. Al ocultar la pestaña, fallar la animación o tardar demasiado el recurso, se revela la página. Sin JavaScript, el contenido aparece directamente; hay además una salida CSS acotada por si la hidratación no llega a ejecutarse. Todos los listeners, observadores y efectos de la bienvenida se liberan al terminar.
+La bienvenida se ejecuta con cada documento nuevo o refresh; no se repite con anclas ni navegación interna. Respeta movimiento reducido y no bloquea scroll ni foco. Tocar, usar teclado o empezar a desplazarse revela inmediatamente la página. Sin JavaScript, con recursos fallidos/lentos o al ocultar la pestaña queda la cabeza estática y funcional. Los recursos expresivos solo se preparan para una bienvenida elegible; todos los efectos, temporizadores y observadores se liberan al terminar. La espera de imágenes puede acortar ligeramente la duración visual para mantener la entrada ágil.
 
 ## Carta y fotografías
 
