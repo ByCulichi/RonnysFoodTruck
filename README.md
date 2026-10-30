@@ -70,13 +70,15 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` coordina una bienvenida de unos cinco segundos. Roo empieza acostado, respira y abre los ojos; primero levanta la cabeza y después apoya sus patas para ponerse de pie. Se acerca a una hamburguesa con tocino, la olfatea dos veces, pone cara de antojo, mueve la cola y hace una vuelta corta sobre el suelo antes de ladrar mientras aparece «¡Bienvenidos a Ronny’s!». El mismo SVG y la misma cabeza terminan en la caja real de la navegación mediante FLIP, sin clones ni sustitución por otro logo.
+`components/roo-welcome.tsx` coordina una bienvenida de unos seis segundos. Roo empieza acostado, respira y abre los ojos; primero levanta la cabeza y después apoya sus patas para ponerse de pie. Se acerca a una hamburguesa con tocino, la olfatea dos veces, pone cara de antojo, mueve la cola y da una vuelta completa antes de ladrar mientras aparece «¡Bienvenidos a Ronny’s!». El mismo SVG y la misma cabeza terminan en la caja real de la navegación mediante FLIP, sin clones ni sustitución por otro logo.
 
-`components/roo-puppet.tsx` articula las cuatro patas, torso, cabeza y cola con curvas WAAPI finitas, calculadas una vez. Solo el torso se comprime durante el reposo; ojos y sombrero conservan su forma. La vuelta usa un pequeño recorrido circular con pasos y balanceo, sin girar una imagen de canto ni invertir el rostro. Una sombra acompaña los apoyos. No hay bucles JavaScript por fotograma ni dependencias de animación nuevas.
+`components/roo-puppet.tsx` articula las cuatro patas, torso, cabeza y cola con curvas WAAPI finitas, calculadas una vez. `components/roo-pose-art.tsx` incorpora dibujos específicos del cuerpo acostado y levantándose, con patas redondeadas y recogidas, bajo la cabeza original. Las vistas lateral derecha, espalda y lateral izquierda hacen visible la vuelta completa, con un pequeño recorrido circular y balanceo; el pivote nunca se aplana como una tarjeta. Una sombra acompaña los apoyos. No hay bucles JavaScript por fotograma ni dependencias de animación nuevas.
 
 Los cels originales `public/images/ronny/welcome/roo-{four-paws,surprise,craving,bark}-caramel.png` permanecen intactos y registrados. La cara conserva su hocico caramelo continuo, sin mancha crema. Las expresiones se muestran solo en máscaras del rostro y hocico. La hamburguesa SVG de `components/welcome-burger.tsx` permanece fuera del pivote caminante y quieta durante el acercamiento.
 
-`lib/welcome-season.ts` centraliza `activeWelcomeSeason`, la campaña explícita compartida por el atuendo y el escenario. Halloween sigue activo: no cambia por fecha ni por navegar entre secciones. `components/welcome-costume.tsx` conserva el raster de Halloween exacto y aporta capas SVG para catrín/cempasúchil, Santa, gala y cupido. Las capas siguen las mismas articulaciones; solo reconstruyen la pequeña zona de piel que ocultaba el sombrero, sin repintar ojos, hocico ni pañuelo. `components/welcome-truck.tsx` dibuja el truck rojo en tres cuartos con el frente a la izquierda, ventana amarilla, acero, luces, comida y una pantalla local, con decoración según esa misma campaña. No usa fotos privadas, otro Roo ni recursos externos.
+Los nuevos dibujos transparentes `roo-rest-body.png`, `roo-rise-body.png`, `roo-turn-profile.png` y `roo-turn-back.png` se conservan por separado en esa carpeta. `lib/roo-pose-art.ts` registra sus dimensiones y las posiciones de capa, sombrero y pañuelo para las cinco temporadas. Se sirven optimizados a 640 px; sus `href` se asignan únicamente después de decodificarlos para una bienvenida elegible y se retiran al terminar. La cabeza original vuelve antes del vuelo y permanece en la navegación.
+
+`lib/welcome-season.ts` centraliza `activeWelcomeSeason`, la campaña explícita compartida por el atuendo y el escenario. Halloween sigue activo: no cambia por fecha ni por navegar entre secciones. `components/welcome-costume.tsx` conserva el raster de Halloween exacto y aporta capas SVG para catrín/cempasúchil, Santa, gala y cupido. Las capas siguen las mismas articulaciones; solo reconstruyen la pequeña zona de piel que ocultaba el sombrero, sin repintar ojos, hocico ni pañuelo. `components/welcome-truck.tsx` usa fondos derivados de las ilustraciones aprobadas de cada temporada, conservando su camión, cámara y ambiente y retirando únicamente el Roo de fondo. Los cinco originales se guardan en `public/images/scenes/welcome/`; Next Image carga solo la campaña activa, optimizada y con fundido al estar lista. La pantalla SVG local comparte las coordenadas del escenario y solo se monta mientras el fondo está cargado y visible. No usa fotos privadas, otro Roo ni recursos externos.
 
 El ladrido individual de Chihuahua en `public/audio/roo-bark.mp3` (3.8 KB, unos 0.38 s, CC0 individual documentado en `public/audio/LICENCIA.txt`) se intenta una sola vez en `barkStart`, si ya está listo y el navegador permite autoplay. No bloquea la secuencia ni se reintenta más tarde; errores, movimiento reducido, interacción y salida detienen y liberan el sonido.
 
@@ -84,12 +86,12 @@ Ajustes de `rooWelcomeMotion` al principio del componente:
 
 | Valor | Efecto | Actual |
 | --- | --- | --- |
-| `duration` | Duración objetivo de la secuencia en ms | `5000` |
+| `duration` | Duración objetivo de la secuencia en ms | `6200` |
 | `maxSize` | Alto máximo del cuerpo completo | `520` |
 | `viewportWidth` / `viewportHeight` | Límites adaptables del tamaño | `.76` / `.64` |
 | `centerY` | Centro vertical como fracción del viewport | `.40` |
 | `flightTilt` / `flightCurve` | Inclinación y curva del viaje al encabezado | `-6` / `.22` |
-| `imageTimeout` | Espera máxima antes de omitir recursos lentos | `850` |
+| `imageTimeout` | Espera máxima antes de omitir recursos lentos | `1200` |
 
 `lib/roo-welcome-story.ts` coordina los beats normalizados:
 
@@ -100,7 +102,7 @@ Ajustes de `rooWelcomeMotion` al principio del componente:
 | Caminata | `.24–.425` |
 | Dos olfateos | `.425–.555` |
 | Antojo y cola alegre | `.555–.61` |
-| Vuelta corta con pasos | `.61–.745` |
+| Vuelta con vistas laterales y espalda | `.61–.745` |
 | Bienvenida y ladrido | Desde `.752` / `.765` |
 | Vuelo hacia la navegación | `.845–1` |
 

@@ -5,6 +5,7 @@ import { useId, type CSSProperties, type Ref } from "react";
 import { rooHeadOutline, rooWelcomeArt } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { WelcomeBurger } from "@/components/welcome-burger";
+import { RooBodyPose, RooTurnViews } from "@/components/roo-pose-art";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import { WelcomeBodyCostume, WelcomeCostumeDefinitions, WelcomeHeadCostume, WelcomeHeadUnderlay } from "@/components/welcome-costume";
@@ -59,27 +60,19 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
         <ellipse cx="860" cy="640" rx="310" ry="240" fill={`url(#${id}-muzzle-blend)`} />
       </mask>
       <WelcomeCostumeDefinitions id={id} season={season} />
-      <linearGradient id={`${id}-rest-fur`} x2="0" y2="1"><stop stopColor="#f7c675" /><stop offset="1" stopColor="#e5a048" /></linearGradient>
     </defs>
     <ellipse data-roo-part="ground-shadow" cx="568" cy="1230" rx="403" ry="32" fill="#10081b" opacity="0" aria-hidden="true" />
     <g data-roo-part="pivot">
+      <RooBodyPose pose="rest" season={season} />
+      <RooBodyPose pose="rise" season={season} />
+      <g data-roo-part="body-rig">
       {part("rear-far")}{part("front-far")}{part("tail")}
-      {/* Folded paws keep rounded toes while the standing joints gather under
-          the body; the original articulated legs take over as Roo pushes up. */}
-      <g data-roo-part="rest-paws" opacity="0" fill="#e9a649" stroke="#452416" strokeWidth="10" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true">
-        <path d="M230 1095Q470 1057 716 1101L784 1155Q748 1215 624 1218L401 1207Q281 1212 233 1166Z" fill={`url(#${id}-rest-fur)`} />
-        <path d="M360 1162q70 37 148 31l29 9 18-10 21 11 17-13 36 4" fill="none" stroke="#c78b3b" strokeWidth="6" />
-        <path d="M455 1094Q443 1149 396 1172L367 1183Q349 1191 357 1203Q379 1220 432 1205L497 1179 520 1115Z" fill="#d9943d" />
-        <path d="M289 1098Q241 1119 231 1164L205 1193 159 1200Q139 1204 146 1218Q155 1237 200 1230L270 1217Q319 1209 345 1161Z" />
-        <path d="M829 1107Q850 1150 906 1165L977 1174Q1000 1178 1004 1191Q991 1212 950 1207L883 1201Q832 1197 805 1160Z" fill="#d9943d" />
-        <path d="M657 1107Q671 1162 725 1189L804 1200Q835 1194 851 1206Q875 1206 879 1220Q867 1236 817 1231L735 1223Q681 1211 642 1163Z" />
-        <path d="M172 1210q-5 9 1 17m20-20q-3 9 3 18M801 1210q-4 10 2 18m20-18q-3 10 3 18M957 1188q-3 8 1 16" fill="none" strokeWidth="6" />
-      </g>
       <g data-roo-part="torso">
         <g mask={`url(#${id}-costume-body)`}><use href={`#${id}-skin`} mask={`url(#${id}-torso)`} /></g>
         <WelcomeBodyCostume season={season} />
       </g>
       {part("rear-near")}{part("front-near")}
+      </g>
       <g data-roo-part="head">
         <WelcomeHeadUnderlay season={season} />
         <g mask={`url(#${id}-costume-head)`}>
@@ -99,6 +92,7 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
         </g>
         <WelcomeHeadCostume season={season} />
       </g>
+      <RooTurnViews season={season} />
     </g>
     <g data-roo-part="aroma" fill="none" stroke="#ffe2b7" strokeWidth="6" strokeLinecap="round" aria-hidden="true">
       <path d="M1065 802c-38-7-12-38-54-46s-11-28-43-38M1112 791c-45-15-15-41-52-55M1130 815c-39-12-5-34-30-47" />
@@ -115,14 +109,52 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     const joint = puppet.querySelector<SVGElement>(`[data-roo-part="${name}"]`);
     if (!joint) return;
     if (origin) joint.style.transformOrigin = origin;
-    animate(joint, frames.map(frame => ({ ...frame, easing: frame.easing || "cubic-bezier(.37, 0, .32, 1)" })), { duration, fill: "both", easing: "linear" });
+    animate(joint, frames.slice().sort((a, b) => Number(a.offset) - Number(b.offset)).map(frame => ({ ...frame, easing: frame.easing || "cubic-bezier(.37, 0, .32, 1)" })), { duration, fill: "both", easing: "linear" });
   };
   const { restEnd, riseStart, riseEnd, walkStart, walkEnd, sniffEnd, cravingEnd, spinStart, spinEnd, barkStart, flightStart } = rooWelcomeStory;
   const walkDistance = Math.min(rooWelcomeStory.walkDistance, Math.max(0, measuredWalkDistance));
+  move("pose-rest", [
+    { offset: 0, opacity: 1, transform: "none" },
+    { offset: .05, opacity: 1, transform: "translateY(-2px)" },
+    { offset: .145, opacity: 1, transform: "none" },
+    { offset: .153, opacity: 0, transform: "translateY(-8px)" },
+    { offset: 1, opacity: 0, transform: "none" },
+  ]);
+  move("pose-rise", [
+    { offset: 0, opacity: 0 }, { offset: .145, opacity: 0 },
+    { offset: .153, opacity: 1 }, { offset: .217, opacity: 1 },
+    { offset: .225, opacity: 0 }, { offset: 1, opacity: 0 },
+  ]);
+  move("body-rig", [
+    { offset: 0, opacity: 0 }, { offset: .217, opacity: 0 },
+    { offset: .225, opacity: 1 }, { offset: .626, opacity: 1 },
+    { offset: .629, opacity: 0 }, { offset: .739, opacity: 0 },
+    { offset: .742, opacity: 1 }, { offset: 1, opacity: 1 },
+  ]);
+  // Directional cels blend for about one compositor frame, so their distinct
+  // silhouettes read as a turn without long translucent ears or extra paws.
+  move("turn-profile-right", [
+    { offset: 0, opacity: 0, transform: "none" }, { offset: .626, opacity: 0 },
+    { offset: .629, opacity: 1, transform: "translateY(-3px)" },
+    { offset: .654, opacity: 1 }, { offset: .657, opacity: 0, transform: "translateY(0)" },
+    { offset: 1, opacity: 0 },
+  ]);
+  move("turn-rear", [
+    { offset: 0, opacity: 0, transform: "none" }, { offset: .654, opacity: 0 },
+    { offset: .657, opacity: 1, transform: "translateY(-4px)" },
+    { offset: .704, opacity: 1 }, { offset: .707, opacity: 0, transform: "none" },
+    { offset: 1, opacity: 0 },
+  ]);
+  move("turn-profile-left", [
+    { offset: 0, opacity: 0, transform: "none" }, { offset: .704, opacity: 0 },
+    { offset: .707, opacity: 1, transform: "translateY(-3px)" },
+    { offset: .739, opacity: 1 }, { offset: .742, opacity: 0, transform: "none" },
+    { offset: 1, opacity: 0 },
+  ]);
   const smooth = (t: number) => t * t * (3 - 2 * t);
   const spinPoint = (t: number) => {
-    // A little circle on the ground, with real side steps and depth. Roo never
-    // turns into an edge-on card or swaps to a mirrored face.
+    // A little circle on the ground, with registered side and rear drawings.
+    // The pivot keeps its volume instead of rotating an edge-on flat card.
     const angle = t * Math.PI * 2;
     const envelope = Math.sin(t * Math.PI);
     return { x: Math.sin(angle) * 92, y: (Math.cos(angle) - 1) * 17, tilt: Math.sin(angle - .35) * 7.5 * envelope };
@@ -199,11 +231,6 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: .781, transform: "scale(1.004, 1.013)" },
     { offset: .81, transform: "none" }, { offset: 1, transform: "none" },
   ], "590px 1000px");
-  move("rest-paws", [
-    { offset: 0, opacity: 1, transform: "none" }, { offset: .12, opacity: 1, transform: "none" },
-    { offset: .175, opacity: 0, transform: "translateY(-10px) scaleY(.9)" },
-    { offset: 1, opacity: 0, transform: "none" },
-  ], "580px 1180px");
 
   const legs = [
     { name: "rear-near", origin: "310px 960px", phase: Math.PI * 1.5, amplitude: 4.7, rest: "translate(10px, 205px) rotate(-12deg) scaleY(.24)", push: "translate(4px, 72px) rotate(-8deg) scaleY(.66)", release: .221 },
@@ -267,6 +294,9 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: flightStart, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("head", [
+    { offset: 0, opacity: 1 }, { offset: .626, opacity: 1 },
+    { offset: .629, opacity: 0 }, { offset: .739, opacity: 0 },
+    { offset: .742, opacity: 1 }, { offset: 1, opacity: 1 },
     { offset: 0, transform: "translate(-12px, 200px) rotate(5deg)" },
     { offset: .044, transform: "translate(-12px, 197px) rotate(4.7deg)" },
     { offset: restEnd, transform: "translate(-12px, 200px) rotate(5deg)" },
