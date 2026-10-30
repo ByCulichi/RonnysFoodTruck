@@ -4,12 +4,14 @@ import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
 import { rooWelcomeArt, rooHeadMask as headMask, rooFullMask as fullMask } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
+import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
+import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
 export const rooWelcomeMotion = {
-  duration: 3800,
+  duration: 5000,
   imageTimeout: 850,
   maxSize: 520,
   viewportWidth: .76,
@@ -81,7 +83,7 @@ function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyf
   ];
 }
 
-export function RooWelcome() {
+export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSeason }) {
   const anchorRef = useRef<HTMLSpanElement>(null);
   const imageRef = useRef<SVGSVGElement>(null);
   const figureRef = useRef<HTMLSpanElement>(null);
@@ -175,8 +177,9 @@ export function RooWelcome() {
       let elapsedBeforeResize = 0;
       anchor!.dataset.welcomeState = "running";
       scene!.dataset.state = "running";
-      // Keep the complete experience under four seconds on a cold image cache.
-      const duration = Math.max(rooWelcomeMotion.duration * .8, rooWelcomeMotion.duration - Math.max(0, performance.now() - preparationStarted - 100));
+      // Leave room for a grounded rise, the approach and a joyful little circle.
+      // A slow resource never holds the page; eligible loads stay near five seconds.
+      const duration = Math.max(rooWelcomeMotion.duration * .9, rooWelcomeMotion.duration - Math.max(0, performance.now() - preparationStarted - 100));
       const animate = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => {
         const animation = element.animate(frames, options);
         animation.id = `roo-welcome-${element.getAttribute("data-roo-part") || element.getAttribute("class")}`;
@@ -186,29 +189,29 @@ export function RooWelcome() {
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
         { offset: 0, clipPath: fullMask },
-        { offset: .76, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .96, clipPath: headMask },
+        { offset: rooWelcomeMotion.flightStart + .01, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .975, clipPath: headMask },
         { offset: 1, clipPath: headMask },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate, geometry.walkDistance);
       animate(scene!, [
         { offset: 0, opacity: 1 },
-        { offset: .76, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .985, opacity: 0 },
+        { offset: rooWelcomeMotion.flightStart + .01, opacity: 1, easing: "cubic-bezier(.4, 0, .2, 1)" },
+        { offset: .99, opacity: 0 },
         { offset: 1, opacity: 0 },
       ], { duration, fill: "both" });
       if (copyRef.current) animate(copyRef.current, [
         { offset: 0, opacity: 0, transform: "translateY(16px)", easing: "ease-out" },
         { offset: rooWelcomeStory.greetingStart, opacity: 0, transform: "translateY(16px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
-        { offset: .715, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
-        { offset: .80, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
-        { offset: .89, opacity: 0, transform: "translateY(-12px)" },
+        { offset: rooWelcomeStory.greetingStart + .018, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
+        { offset: .895, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
+        { offset: .97, opacity: 0, transform: "translateY(-12px)" },
         { offset: 1, opacity: 0, transform: "translateY(-12px)" },
       ], { duration, fill: "both" });
       if (glowRef.current) animate(glowRef.current, [
         { opacity: 0, transform: "scale(.88) rotate(-8deg)" },
         { offset: .2, opacity: 1, transform: "scale(1) rotate(0deg)" },
-        { offset: .67, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
+        { offset: rooWelcomeStory.spinEnd, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
       // A tiny real bark is optional enhancement, never a visual prerequisite.
@@ -281,22 +284,22 @@ export function RooWelcome() {
     }
     void start().catch(release);
     return () => finish(false);
-  }, []);
+  }, [season]);
 
   const safetyStyle = { "--roo-welcome-failsafe": `${rooWelcomeMotion.duration + rooWelcomeMotion.imageTimeout + 500}ms` } as CSSProperties;
   const figureStyle = { "--roo-head-mask": headMask } as CSSProperties;
   const imageStyle = { width: `${rooWelcomeArt.width / rooWelcomeArt.head.size * 100}%`, height: `${rooWelcomeArt.height / rooWelcomeArt.head.size * 100}%`, left: `${-rooWelcomeArt.head.left / rooWelcomeArt.head.size * 100}%`, top: `${-rooWelcomeArt.head.top / rooWelcomeArt.head.size * 100}%` };
   return <>
     <link rel="preload" as="image" href={rooPuppetSources.closed} />
-    <span ref={anchorRef} className="roo-welcome-anchor" data-welcome-state="pending" style={safetyStyle}>
+    <span ref={anchorRef} className="roo-welcome-anchor" data-welcome-state="pending" data-welcome-season={season} data-welcome-outfit={welcomeSeasonOutfits[season].outfit} style={safetyStyle}>
       <span ref={figureRef} className="roo-welcome-figure" style={figureStyle}>
-        <RooPuppet puppetRef={imageRef} style={imageStyle} />
+        <RooPuppet puppetRef={imageRef} style={imageStyle} season={season} />
       </span>
     </span>
-    <span ref={sceneRef} className="roo-welcome-scene" data-state="pending" style={safetyStyle} aria-hidden="true">
-      <WelcomeTruck />
+    <span ref={sceneRef} className="roo-welcome-scene" data-state="pending" data-season={season} style={safetyStyle} aria-hidden="true">
+      <WelcomeTruck season={season} />
       <span ref={glowRef} className="roo-welcome-glow"><span /><span /><i>✦</i><i>✦</i><i>✧</i></span>
-      <span ref={copyRef} className="roo-welcome-copy"><span>¡Bienvenido a</span><strong>Ronny’s!</strong></span>
+      <span ref={copyRef} className="roo-welcome-copy"><span>¡Bienvenidos a</span><strong>Ronny’s!</strong></span>
     </span>
     <noscript><style>{`.roo-welcome-scene{display:none!important}.brand .roo-welcome-anchor .roo-welcome-figure{opacity:1!important;animation:none!important}.site-header:has(.roo-welcome-scene){backdrop-filter:blur(18px)!important}`}</style></noscript>
   </>;

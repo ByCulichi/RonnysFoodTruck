@@ -36,18 +36,22 @@
     radial-gradient(ellipse at 50% 39%, #63314e99, transparent 51%),
     radial-gradient(ellipse at 14% 82%, #69302555, transparent 48%),
     linear-gradient(145deg, #1c102c, #28132d 53%, #120c20);
-  animation: roo-welcome-failopen var(--roo-welcome-failsafe, 5150ms) step-end forwards;
+  animation: roo-welcome-failopen var(--roo-welcome-failsafe, 6350ms) step-end forwards;
 }
 .brand .roo-welcome-scene[data-state="done"] { display: none; }
+.brand .roo-welcome-scene[data-season="muertos"] { background: radial-gradient(ellipse at 50% 42%, #79401e99, transparent 58%), linear-gradient(145deg, #2e162c, #281420 60%, #170e1c); }
+.brand .roo-welcome-scene[data-season="christmas"] { background: radial-gradient(ellipse at 50% 42%, #6a293599, transparent 58%), linear-gradient(145deg, #311426, #25132d 60%, #160c20); }
+.brand .roo-welcome-scene[data-season="newyear"] { background: radial-gradient(ellipse at 50% 42%, #6b512599, transparent 58%), linear-gradient(145deg, #211329, #281b2c 60%, #120c20); }
+.brand .roo-welcome-scene[data-season="valentines"] { background: radial-gradient(ellipse at 50% 42%, #84345488, transparent 58%), linear-gradient(145deg, #32132b, #2b152b 60%, #160c20); }
 .roo-welcome-truck {
   position: absolute;
   left: 50%;
-  top: calc(var(--roo-center-y, 40vh) + 28px);
-  width: min(96vw, 930px);
+  top: calc(var(--roo-center-y, 40vh) - var(--roo-size, 300px) * .1);
+  width: min(108vw, 1080px);
   height: auto;
   transform: translate(-50%, -45%);
-  opacity: .20;
-  filter: blur(.6px);
+  opacity: .42;
+  filter: drop-shadow(0 12px 25px #08051155);
   pointer-events: none;
 }
 
@@ -105,7 +109,7 @@
   .roo-welcome-anchor:not([data-welcome-state="done"]) .roo-welcome-figure {
     z-index: 2;
     opacity: 0;
-    animation: roo-welcome-showhead var(--roo-welcome-failsafe, 5150ms) step-end forwards;
+    animation: roo-welcome-showhead var(--roo-welcome-failsafe, 6350ms) step-end forwards;
   }
   .roo-welcome-anchor[data-welcome-state="running"] .roo-welcome-figure { will-change: transform, opacity; }
 }
