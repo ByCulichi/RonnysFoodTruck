@@ -8,6 +8,27 @@ export function WelcomeBurger() {
 
   return <g data-roo-part="burger" aria-hidden="true" opacity="0">
     <svg data-burger-art="true" data-burger-kind="tocinera" x="972" y="765" width="314" height="226" viewBox="0 0 320 230" overflow="visible">
+      {/* A real support shares the burger's stationary coordinate system. Its
+          feet land at y=1230 in Roo's canvas, on the same pavement as his paws. */}
+      <g data-welcome-table="true">
+        <ellipse data-table-ground-shadow="true" cx="160" cy="473" rx="142" ry="12" fill="#10091b" opacity=".25" />
+        <g stroke="#291b25" strokeLinejoin="round" strokeLinecap="round">
+          {/* Rear legs and bracing sit behind the wooden tabletop/front legs. */}
+          <path d="m77 237-23 226h18l25-224Zm166 0 23 226h-18l-25-224Z" fill="#42313a" strokeWidth="4" />
+          <path d="m86 277 153 160m-5-160L81 437" fill="none" stroke="#694735" strokeWidth="10" />
+          <path d="M70 393h180" fill="none" stroke="#4d3231" strokeWidth="12" />
+          <path d="m55 242-24 231h20l25-230Zm210 0 24 231h-20l-25-230Z" fill="#392531" strokeWidth="5" />
+          <path d="m47 469 13-151m213 151-13-151" fill="none" stroke="#765145" strokeWidth="3" />
+          <path d="M22 475h36m204 0h36" fill="none" stroke="#231722" strokeWidth="7" />
+          {/* The plate rests on this shallow, solid wood surface. */}
+          <path d="M9 222h302v17c0 26-302 26-302 0Z" fill="#77402e" strokeWidth="5" />
+          <ellipse data-table-surface="true" cx="160" cy="222" rx="151" ry="20" fill="#b87546" strokeWidth="5" />
+          <path d="M22 230q138 28 276 0" fill="none" stroke="#e1a763" strokeWidth="3" />
+          <path d="M40 219q40-10 74-5m91-1q39-3 69 5" fill="none" stroke="#d59558" strokeWidth="2.5" />
+          <circle cx="55" cy="250" r="3.5" fill="#c28b55" stroke="none" />
+          <circle cx="265" cy="250" r="3.5" fill="#c28b55" stroke="none" />
+        </g>
+      </g>
       <ellipse cx="160" cy="211" rx="139" ry="13" fill="#160e1b" opacity=".16" />
       <g stroke="#382019" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round">
         {/* The shallow plate remains visible around the bottom bun. */}

@@ -2,12 +2,12 @@
 
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
-import { rooWelcomeArt, rooHeadMask as headMask, rooFullMask as fullMask } from "@/lib/roo-welcome-art";
+import { rooWelcomeArt, rooHeadMask as headMask } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
-import { rooPoseSources } from "@/components/roo-pose-art";
+import { rooMotionSources } from "@/components/roo-motion-cels";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
@@ -130,7 +130,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       image!.querySelector("[data-roo-mouth-cel]")?.removeAttribute("href");
       image!.querySelector("[data-roo-craving-cel]")?.removeAttribute("href");
       image!.querySelector("[data-roo-surprise-cel]")?.removeAttribute("href");
-      image!.querySelectorAll("[data-roo-pose-cel]").forEach(cel => cel.removeAttribute("href"));
+      image!.querySelectorAll("[data-roo-motion-cel]").forEach(cel => cel.removeAttribute("href"));
       clearTimeout(deadline);
       clearTimeout(watchdog);
       clearTimeout(soundCue);
@@ -162,7 +162,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
     async function start() {
       // Decode the small registered cels before articulating the character.
       // A slow / missing resource skips the sequence, never holds the page.
-      const bitmaps = await Promise.all([...Object.values(rooPuppetSources), ...Object.values(rooPoseSources)].map(async src => {
+      const bitmaps = await Promise.all([...Object.values(rooPuppetSources), ...Object.values(rooMotionSources)].map(async src => {
         const bitmap = new window.Image();
         bitmap.src = src;
         await bitmap.decode();
@@ -173,8 +173,8 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       image!.querySelector("[data-roo-mouth-cel]")?.setAttribute("href", rooPuppetSources.bark);
       image!.querySelector("[data-roo-craving-cel]")?.setAttribute("href", rooPuppetSources.craving);
       image!.querySelector("[data-roo-surprise-cel]")?.setAttribute("href", rooPuppetSources.surprise);
-      image!.querySelectorAll<SVGImageElement>("[data-roo-pose-cel]").forEach(cel => {
-        const source = rooPoseSources[cel.dataset.rooPoseCel as keyof typeof rooPoseSources];
+      image!.querySelectorAll<SVGImageElement>("[data-roo-motion-cel]").forEach(cel => {
+        const source = rooMotionSources[cel.dataset.rooMotionCel as keyof typeof rooMotionSources];
         if (source) cel.setAttribute("href", source);
       });
       clearTimeout(deadline);
@@ -194,10 +194,10 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       };
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
-        { offset: 0, clipPath: fullMask },
-        { offset: rooWelcomeMotion.flightStart + .01, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .975, clipPath: headMask },
-        { offset: 1, clipPath: headMask },
+        // The head already has its exact source outline. Fade the body while
+        // flying instead of repainting a large, changing SVG mask every frame.
+        // Canceling restores the identical navbar mask after the exact landing.
+        { offset: 0, clipPath: "none" }, { offset: 1, clipPath: "none" },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate, geometry.walkDistance);
       animate(scene!, [
@@ -220,6 +220,10 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
         { offset: rooWelcomeStory.spinEnd, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
+      // Every joint and movie shares one timeline origin. This keeps pose and
+      // visibility boundaries aligned during playback as well as paused review.
+      const startedAt = document.timeline.currentTime;
+      if (typeof startedAt === "number") animations.forEach(animation => { animation.startTime = startedAt; });
       // A tiny real bark is optional enhancement, never a visual prerequisite.
       // One scheduled attempt only: blocked / late audio stays silent, and an
       // interaction or hidden page clears the cue instead of replaying later.

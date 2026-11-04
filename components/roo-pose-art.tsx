@@ -41,7 +41,7 @@ function Marigold({ x, y, scale = 1 }: { x: number; y: number; scale?: number })
 }
 
 /** The cape follows the registered back/shoulders, never the paws or face. */
-function PoseCape({ id, season, placement, rear = false }: {
+export function PoseCape({ id, season, placement, rear = false }: {
   id: string;
   season: CinemaSeason;
   placement: { x: number; y: number; width: number; height: number };
@@ -83,7 +83,7 @@ function PoseCape({ id, season, placement, rear = false }: {
 }
 
 /** Hats are drawn for the neutral full-turn art, leaving its face unchanged. */
-function PoseHat({ season, rear, x, y, scale }: { season: CinemaSeason; rear: boolean; x: number; y: number; scale: number }) {
+export function PoseHat({ season, rear, x, y, scale }: { season: CinemaSeason; rear: boolean; x: number; y: number; scale: number }) {
   return <g transform={`translate(${x} ${y}) scale(${scale})`} data-pose-hat={season} stroke="#3d1c18" strokeWidth="10" strokeLinejoin="round" strokeLinecap="round">
     {season === "halloween" ? <>
       <path d="M-210-9Q-207-99-174-168C-220-137-285-143-307-178Q-335-209-319-235Q-313-192-270-199C-228-207-198-250-157-280Q-95-310-35-278Q33-242 98-201Q162-155 195-29Z" fill="#721ce0" />
@@ -121,7 +121,7 @@ function PoseHat({ season, rear, x, y, scale }: { season: CinemaSeason; rear: bo
   </g>;
 }
 
-function PoseBandana({ rear, x, y, scale }: { rear: boolean; x: number; y: number; scale: number }) {
+export function PoseBandana({ rear, x, y, scale }: { rear: boolean; x: number; y: number; scale: number }) {
   return <g transform={`translate(${x} ${y}) scale(${scale})`} fill="#e92e36" stroke="#442019" strokeWidth="8" strokeLinejoin="round" strokeLinecap="round">
     {rear ? <>
       <path d="M-158-18Q-12 30 151-17L170 28Q-3 77-169 25Z" />
