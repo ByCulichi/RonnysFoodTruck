@@ -91,6 +91,7 @@ export const rooTurnFrames: RooMotionFrame[] = turnOrder.map((entry, step) => {
 
 export const rooMotionFrames = { rise: rooRiseFrames, turn: rooTurnFrames };
 
+
 /** Nearest-angle sampling leaves a short hold on the matching facing pose at
  * either end. The live rig supplies that pose, so there is no model handoff. */
 export function motionFrameTime(kind: RooMotionKind, index: number, count: number) {

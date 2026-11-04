@@ -220,6 +220,10 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
         { offset: rooWelcomeStory.spinEnd, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
         { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
+      // Every joint and movie shares one timeline origin. This keeps pose and
+      // visibility boundaries aligned during playback as well as paused review.
+      const startedAt = document.timeline.currentTime;
+      if (typeof startedAt === "number") animations.forEach(animation => { animation.startTime = startedAt; });
       // A tiny real bark is optional enhancement, never a visual prerequisite.
       // One scheduled attempt only: blocked / late audio stays silent, and an
       // interaction or hidden page clears the cue instead of replaying later.

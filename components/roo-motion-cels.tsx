@@ -1,7 +1,7 @@
 "use client";
 
 import { getImageProps } from "next/image";
-import { useId, type CSSProperties } from "react";
+import { useId } from "react";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason } from "@/lib/welcome-season";
 import { celClip, celTransform, motionFrameTime, rooMotionFrames, rooMotionSheets, rooRigRegions, rooRiseFrames, type RooMotionFrame, type RooMotionKind } from "@/lib/roo-motion-cels";
@@ -41,25 +41,38 @@ function bandanaTransform(frame: RooMotionFrame) {
   return `matrix(${frame.mirror ? -.85 : .85}, 0, 0, .85, ${frame.neck.x}, ${frame.neck.y})`;
 }
 
-/** One selected drawing is always fully opaque. A source-space clip and matrix
- * change together in one stepped WAAPI effect; no JS work runs per frame. */
+/** Each drawing is a fixed SVG composition: skin, crop and costume never
+ * animate separately. The complete pose becomes visible on one shared clock. */
 export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: { kind: RooMotionKind; season?: CinemaSeason; sourceId?: string }) {
   const id = `roo-motion-${kind}-${uniqueId(useId())}`;
-  const sheet = rooMotionSheets[kind], frames = rooMotionFrames[kind], first = frames[0];
-  const imageStyle: CSSProperties = { transformOrigin: "0px 0px", transformBox: "fill-box", transform: celTransform(first), clipPath: celClip(first) };
+  const sheet = rooMotionSheets[kind], frames = rooMotionFrames[kind];
+  const useSourceHat = season === "halloween" && !!sourceId;
   return <g data-roo-part={`motion-${kind}`} data-roo-motion-kind={kind} data-roo-motion-frame-count={frames.length} opacity="0" aria-hidden="true">
-    <image data-roo-part={`motion-${kind}-sheet`} data-roo-motion-cel={kind} width={sheet.width} height={sheet.height} preserveAspectRatio="none" style={imageStyle} />
-    {kind === "rise" ? <g data-roo-part="motion-rise-cape" style={{ transform: capeTransform(first), transformOrigin: "0px 0px" }}>
-      <PoseCape id={id} season={season} placement={identityCape} />
-    </g> : <>
-      {([false, true] as const).map(rear => <g key={String(rear)}>
-        <g data-roo-part={`motion-turn-cape-${rear ? "rear" : "front"}`} opacity="0" style={{ transformOrigin: "0px 0px" }}><PoseCape id={`${id}-cape-${rear}`} season={season} placement={identityCape} rear={rear} /></g>
-        <g data-roo-part={`motion-turn-bandana-${rear ? "rear" : "front"}`} opacity="0" style={{ transformOrigin: "0px 0px" }}><PoseBandana x={0} y={0} scale={1} rear={rear} /></g>
-        <g data-roo-part={`motion-turn-hat-${rear ? "rear" : "front"}`} opacity="0" style={{ transformOrigin: "0px 0px" }}>
-          {season === "halloween" && !rear && sourceId ? <WelcomeWizardHat id={`${id}-original-hat`} sourceId={sourceId} /> : <PoseHat x={0} y={0} scale={1} rear={rear} season={season} />}
-        </g>
-      </g>)}
-    </>}
+    <defs>
+      <image id={`${id}-sheet`} data-roo-motion-cel={kind} width={sheet.width} height={sheet.height} preserveAspectRatio="none" />
+      {frames.map((frame, index) => <clipPath key={index} id={`${id}-crop-${index}`}><rect {...frame.crop} /></clipPath>)}
+      <g id={`${id}-cape-front`}><PoseCape id={`${id}-cloth-front`} season={season} placement={identityCape} /></g>
+      {kind === "turn" && <>
+        <g id={`${id}-cape-rear`}><PoseCape id={`${id}-cloth-rear`} season={season} placement={identityCape} rear /></g>
+        <g id={`${id}-bandana-front`}><PoseBandana x={0} y={0} scale={1} rear={false} /></g>
+        <g id={`${id}-bandana-rear`}><PoseBandana x={0} y={0} scale={1} rear /></g>
+        <g id={`${id}-hat-front`}>{useSourceHat ? <WelcomeWizardHat id={`${id}-original-hat`} sourceId={sourceId!} /> : <PoseHat x={0} y={0} scale={1} rear={false} season={season} />}</g>
+        <g id={`${id}-hat-rear`}><PoseHat x={0} y={0} scale={1} rear season={season} /></g>
+      </>}
+    </defs>
+    <g>
+        {frames.map((frame, index) => {
+          const view = frame.rear ? "rear" : "front";
+          return <g key={index} data-roo-part={`motion-${kind}-frame-${index}`} data-roo-motion-frame={index} opacity="0">
+            <g data-roo-frame-art="true" transform={celTransform(frame)}><use data-roo-frame-source="true" href={`#${id}-sheet`} clipPath={`url(#${id}-crop-${index})`} /></g>
+            <use href={`#${id}-cape-${kind === "rise" ? "front" : view}`} transform={capeTransform(frame)} />
+            {kind === "turn" && <>
+              <use href={`#${id}-bandana-${view}`} transform={bandanaTransform(frame)} />
+              <use href={`#${id}-hat-${view}`} transform={!frame.rear && useSourceHat ? wizardHatTransform(frame) : headTransform(frame)} />
+            </>}
+          </g>;
+        })}
+    </g>
   </g>;
 }
 
@@ -97,27 +110,20 @@ export function RooMotionRig({ season = activeWelcomeSeason }: { season?: Cinema
 type RegisterAnimation = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => Animation;
 type MotionSpan = { start: number; end: number };
 
-/** All source, crop and clothing tracks share exactly the same frame boundaries. */
+/** A single opacity selects each complete pose. Fixed source crops and clothes
+ * avoid SVG compositor races, even with mirrored views during real playback. */
 export function animateRooMotionCels(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation, spans: Record<RooMotionKind, MotionSpan>) {
-  const add = (name: string, kind: RooMotionKind, select: (frame: RooMotionFrame) => Keyframe) => {
-    const target = puppet.querySelector<SVGElement>(`[data-roo-part="${name}"]`);
-    if (!target) return;
+  for (const kind of ["rise", "turn"] as const) {
     const { start, end } = spans[kind], frames = rooMotionFrames[kind];
-    const keys = frames.map((frame, index) => {
-      const time = motionFrameTime(kind, index, frames.length);
-      return { ...select(frame), offset: start + (end - start) * time, easing: "steps(1, end)" };
+    const time = (index: number) => start + (end - start) * motionFrameTime(kind, index, frames.length);
+    frames.forEach((_, index) => {
+      const target = puppet.querySelector<SVGElement>(`[data-roo-part="motion-${kind}-frame-${index}"]`);
+      if (!target) return;
+      const keys: Keyframe[] = [{ offset: 0, opacity: index === 0 ? 1 : 0, easing: "steps(1, end)" }];
+      if (index > 0) keys.push({ offset: time(index), opacity: 1, easing: "steps(1, end)" });
+      if (index < frames.length - 1) keys.push({ offset: time(index + 1), opacity: 0, easing: "steps(1, end)" });
+      keys.push({ offset: 1, opacity: index === frames.length - 1 ? 1 : 0 });
+      animate(target, keys, { duration, fill: "both", easing: "linear" });
     });
-    keys.unshift({ ...select(frames[0]), offset: 0, easing: "steps(1, end)" });
-    keys.push({ ...select(frames.at(-1)!), offset: 1, easing: "steps(1, end)" });
-    animate(target, keys, { duration, fill: "both", easing: "linear" });
-  };
-  for (const kind of ["rise", "turn"] as const) add(`motion-${kind}-sheet`, kind, frame => ({ transform: celTransform(frame), clipPath: celClip(frame) }));
-  add("motion-rise-cape", "rise", frame => ({ transform: capeTransform(frame) }));
-  for (const rear of [false, true]) {
-    const suffix = rear ? "rear" : "front";
-    const opacity = (frame: RooMotionFrame) => Number(frame.rear === rear);
-    add(`motion-turn-cape-${suffix}`, "turn", frame => ({ transform: capeTransform(frame), opacity: opacity(frame) }));
-    add(`motion-turn-bandana-${suffix}`, "turn", frame => ({ transform: bandanaTransform(frame), opacity: opacity(frame) }));
-    add(`motion-turn-hat-${suffix}`, "turn", frame => ({ transform: !rear && puppet.dataset.welcomeOutfit === "halloween" ? wizardHatTransform(frame) : headTransform(frame), opacity: opacity(frame) }));
   }
 }
