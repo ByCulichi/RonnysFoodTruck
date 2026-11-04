@@ -7,7 +7,7 @@ import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
-import { rooPoseSources } from "@/components/roo-pose-art";
+import { rooMotionSources } from "@/components/roo-motion-cels";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
@@ -130,7 +130,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       image!.querySelector("[data-roo-mouth-cel]")?.removeAttribute("href");
       image!.querySelector("[data-roo-craving-cel]")?.removeAttribute("href");
       image!.querySelector("[data-roo-surprise-cel]")?.removeAttribute("href");
-      image!.querySelectorAll("[data-roo-pose-cel]").forEach(cel => cel.removeAttribute("href"));
+      image!.querySelectorAll("[data-roo-motion-cel]").forEach(cel => cel.removeAttribute("href"));
       clearTimeout(deadline);
       clearTimeout(watchdog);
       clearTimeout(soundCue);
@@ -162,7 +162,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
     async function start() {
       // Decode the small registered cels before articulating the character.
       // A slow / missing resource skips the sequence, never holds the page.
-      const bitmaps = await Promise.all([...Object.values(rooPuppetSources), ...Object.values(rooPoseSources)].map(async src => {
+      const bitmaps = await Promise.all([...Object.values(rooPuppetSources), ...Object.values(rooMotionSources)].map(async src => {
         const bitmap = new window.Image();
         bitmap.src = src;
         await bitmap.decode();
@@ -173,8 +173,8 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       image!.querySelector("[data-roo-mouth-cel]")?.setAttribute("href", rooPuppetSources.bark);
       image!.querySelector("[data-roo-craving-cel]")?.setAttribute("href", rooPuppetSources.craving);
       image!.querySelector("[data-roo-surprise-cel]")?.setAttribute("href", rooPuppetSources.surprise);
-      image!.querySelectorAll<SVGImageElement>("[data-roo-pose-cel]").forEach(cel => {
-        const source = rooPoseSources[cel.dataset.rooPoseCel as keyof typeof rooPoseSources];
+      image!.querySelectorAll<SVGImageElement>("[data-roo-motion-cel]").forEach(cel => {
+        const source = rooMotionSources[cel.dataset.rooMotionCel as keyof typeof rooMotionSources];
         if (source) cel.setAttribute("href", source);
       });
       clearTimeout(deadline);

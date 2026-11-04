@@ -1,4 +1,5 @@
 import type { CinemaSeason } from "@/lib/truck-cinema";
+import { rooHeadOutline } from "@/lib/roo-welcome-art";
 
 type SeasonProps = { season: CinemaSeason };
 
@@ -9,6 +10,21 @@ const leftEar = "M365 284Q369 232 414 252Q527 297 634 412L596 485Q566 550 536 57
 const rightEar = "M1017 310Q1091 225 1196 181Q1237 158 1234 222Q1255 353 1190 465Q1155 471 1112 412Z";
 const face = "M592 488Q660 412 804 391Q951 365 1039 451Q1106 500 1087 615L1092 705H581L571 628Q573 543 592 488Z";
 const cape = "M137 890Q182 790 294 727Q407 663 536 722L669 850Q449 973 137 890Z";
+
+/** Keep the approved wizard's actual hat during the forward-facing turn. The
+ * same already decoded source supplies its highlights, folds and pumpkin. */
+export function WelcomeWizardHat({ id, sourceId }: { id: string; sourceId: string }) {
+  return <>
+    <defs>
+      <clipPath id={`${id}-outline`}><polygon points={rooHeadOutline.map(point => point.join(",")).join(" ")} /></clipPath>
+      <mask id={`${id}-hat-only`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
+        <rect width="1254" height="700" fill="white" />
+        <path d={leftEar} fill="black" stroke="black" strokeWidth="36" /><path d={rightEar} fill="black" stroke="black" strokeWidth="36" /><path d={face} fill="black" />
+      </mask>
+    </defs>
+    <use href={`#${sourceId}`} clipPath={`url(#${id}-outline)`} mask={`url(#${id}-hat-only)`} />
+  </>;
+}
 
 export function WelcomeCostumeDefinitions({ id, season }: SeasonProps & { id: string }) {
   return <>
