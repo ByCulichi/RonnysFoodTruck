@@ -4,14 +4,15 @@ import { getImageProps } from "next/image";
 import { useId } from "react";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason } from "@/lib/welcome-season";
-import { celClip, celTransform, motionFrameTime, rooMotionFrames, rooMotionSheets, rooRigRegions, rooRiseFrames, type RooMotionFrame, type RooMotionKind } from "@/lib/roo-motion-cels";
+import { celClip, celTransform, motionFrameTime, riseBodyScale, rooMotionFrames, rooMotionSheets, rooRigRegions, rooRiseFrames, type RooMotionFrame, type RooMotionKind } from "@/lib/roo-motion-cels";
 import { PoseBandana, PoseCape, PoseHat } from "@/components/roo-pose-art";
 import { WelcomeWizardHat } from "@/components/welcome-costume";
+import { rooHeadProportion } from "@/lib/roo-welcome-art";
 
 export const rooMotionSources = Object.fromEntries(Object.entries(rooMotionSheets).map(([name, sheet]) => {
   const { props } = getImageProps({ src: sheet.src, width: sheet.optimizedWidth, height: Math.round(sheet.height / sheet.width * sheet.optimizedWidth), quality: 85, alt: "" });
   return [name, props.srcSet?.split(",")[0].trim().split(" ")[0] || props.src];
-})) as Record<RooMotionKind, string>;
+})) as Record<keyof typeof rooMotionSheets, string>;
 
 const uniqueId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "");
 const identityCape = { x: 0, y: 0, width: 1000, height: 400 };
@@ -34,7 +35,22 @@ function wizardHatTransform(frame: RooMotionFrame) {
   const sx = frame.mirror ? -perspective : perspective;
   const x = head.x + (frame.mirror ? -56.4 : 56.4);
   const y = head.y - 51;
-  return `matrix(${sx}, 0, 0, 1, ${x - 850 * sx}, ${y - 315})`;
+  const p = rooHeadProportion;
+  return `matrix(${sx * p.scale}, 0, 0, ${p.scale}, ${x - 850 * sx + (1 - p.scale) * sx * p.x}, ${y - 315 + (1 - p.scale) * p.y})`;
+}
+
+/** Remove the artificial open rim of the headless body drawing only where the
+ * approved jaw and bandana overlap it. Tail, shoulders and paws stay intact. */
+function NeckBlend({ id, frame }: { id: string; frame: RooMotionFrame }) {
+  return <>
+    <linearGradient id={`${id}-fade`} gradientUnits="userSpaceOnUse" x1="0" x2="0" y1={frame.neck.y - 5} y2={frame.neck.y + 38}>
+      <stop stopColor="black" /><stop offset="1" stopColor="white" />
+    </linearGradient>
+    <mask id={id} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
+      <rect width="1254" height="1254" fill="white" />
+      <rect x={frame.neck.x - 115} y={frame.neck.y - 160} width="360" height="198" fill={`url(#${id}-fade)`} />
+    </mask>
+  </>;
 }
 
 function bandanaTransform(frame: RooMotionFrame) {
@@ -45,12 +61,14 @@ function bandanaTransform(frame: RooMotionFrame) {
  * animate separately. The complete pose becomes visible on one shared clock. */
 export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: { kind: RooMotionKind; season?: CinemaSeason; sourceId?: string }) {
   const id = `roo-motion-${kind}-${uniqueId(useId())}`;
-  const sheet = rooMotionSheets[kind], frames = rooMotionFrames[kind];
+  const frames = rooMotionFrames[kind];
+  const sheets = [...new Set(frames.map(frame => frame.sheet || kind))];
   const useSourceHat = season === "halloween" && !!sourceId;
   return <g data-roo-part={`motion-${kind}`} data-roo-motion-kind={kind} data-roo-motion-frame-count={frames.length} opacity="0" aria-hidden="true">
     <defs>
-      <image id={`${id}-sheet`} data-roo-motion-cel={kind} width={sheet.width} height={sheet.height} preserveAspectRatio="none" />
+      {sheets.map(name => { const sheet = rooMotionSheets[name]; return <image key={name} id={`${id}-sheet-${name}`} data-roo-motion-cel={name} width={sheet.width} height={sheet.height} preserveAspectRatio="none" />; })}
       {frames.map((frame, index) => <clipPath key={index} id={`${id}-crop-${index}`}><rect {...frame.crop} /></clipPath>)}
+      {kind === "rise" && frames.map((frame, index) => <NeckBlend key={index} id={`${id}-neck-${index}`} frame={frame} />)}
       <g id={`${id}-cape-front`}><PoseCape id={`${id}-cloth-front`} season={season} placement={identityCape} /></g>
       {kind === "turn" && <>
         <g id={`${id}-cape-rear`}><PoseCape id={`${id}-cloth-rear`} season={season} placement={identityCape} rear /></g>
@@ -63,8 +81,8 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: 
     <g>
         {frames.map((frame, index) => {
           const view = frame.rear ? "rear" : "front";
-          return <g key={index} data-roo-part={`motion-${kind}-frame-${index}`} data-roo-motion-frame={index} opacity="0">
-            <g data-roo-frame-art="true" transform={celTransform(frame)}><use data-roo-frame-source="true" href={`#${id}-sheet`} clipPath={`url(#${id}-crop-${index})`} /></g>
+          return <g key={index} data-roo-part={`motion-${kind}-frame-${index}`} data-roo-motion-frame={index} visibility="hidden">
+            <g mask={kind === "rise" ? `url(#${id}-neck-${index})` : undefined}><g data-roo-frame-art="true" transform={celTransform(frame)}><use data-roo-frame-source="true" href={`#${id}-sheet-${frame.sheet || kind}`} clipPath={`url(#${id}-crop-${index})`} /></g></g>
             <use href={`#${id}-cape-${kind === "rise" ? "front" : view}`} transform={capeTransform(frame)} />
             {kind === "turn" && <>
               <use href={`#${id}-bandana-${view}`} transform={bandanaTransform(frame)} />
@@ -89,6 +107,7 @@ export function RooMotionRig({ season = activeWelcomeSeason }: { season?: Cinema
   const overlapY = last.ty + 710 * last.scale;
   return <g data-roo-motion-rig="true" aria-hidden="true">
     <defs>
+      <NeckBlend id={`${id}-neck`} frame={last} />
       <g id={`${id}-skin`}><image data-roo-motion-cel="rise" data-roo-motion-rig-source="true" width={sheet.width} height={sheet.height} preserveAspectRatio="none" style={{ transformOrigin: "0px 0px", transformBox: "fill-box", transform: celTransform(last), clipPath: celClip(last) }} /></g>
       {Object.entries(rooRigRegions).map(([name, points]) => <clipPath key={name} id={`${id}-${name}`}><polygon points={points} /></clipPath>)}
       <clipPath id={`${id}-below-hips`}><rect x="0" y={overlapY} width="1254" height="1254" /></clipPath>
@@ -101,7 +120,7 @@ export function RooMotionRig({ season = activeWelcomeSeason }: { season?: Cinema
     {legNames.map(part)}
     {part("tail")}
     <g data-roo-part="torso">
-      <use href={`#${id}-skin`} mask={`url(#${id}-torso)`} />
+      <g mask={`url(#${id}-neck)`}><use href={`#${id}-skin`} mask={`url(#${id}-torso)`} /></g>
       <PoseCape id={`${id}-cape`} season={season} placement={last.cape} />
     </g>
   </g>;
@@ -110,20 +129,35 @@ export function RooMotionRig({ season = activeWelcomeSeason }: { season?: Cinema
 type RegisterAnimation = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => Animation;
 type MotionSpan = { start: number; end: number };
 
-/** A single opacity selects each complete pose. Fixed source crops and clothes
- * avoid SVG compositor races, even with mirrored views during real playback. */
+/** Select complete opaque poses without animating dozens of alpha surfaces.
+ * Visibility is the fallback where discrete display animation is unsupported. */
 export function animateRooMotionCels(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation, spans: Record<RooMotionKind, MotionSpan>) {
   for (const kind of ["rise", "turn"] as const) {
     const { start, end } = spans[kind], frames = rooMotionFrames[kind];
     const time = (index: number) => start + (end - start) * motionFrameTime(kind, index, frames.length);
-    frames.forEach((_, index) => {
+    frames.forEach((frame, index) => {
       const target = puppet.querySelector<SVGElement>(`[data-roo-part="motion-${kind}-frame-${index}"]`);
       if (!target) return;
-      const keys: Keyframe[] = [{ offset: 0, opacity: index === 0 ? 1 : 0, easing: "steps(1, end)" }];
-      if (index > 0) keys.push({ offset: time(index), opacity: 1, easing: "steps(1, end)" });
-      if (index < frames.length - 1) keys.push({ offset: time(index + 1), opacity: 0, easing: "steps(1, end)" });
-      keys.push({ offset: 1, opacity: index === frames.length - 1 ? 1 : 0 });
+      const state = (visible: boolean) => ({ visibility: visible ? "visible" : "hidden", display: visible ? "inline" : "none" });
+      const keys: Keyframe[] = [{ offset: 0, ...state(index === 0), easing: "steps(1, end)" }];
+      if (index > 0) keys.push({ offset: time(index), ...state(true), easing: "steps(1, end)" });
+      if (index < frames.length - 1) keys.push({ offset: time(index + 1), ...state(false), easing: "steps(1, end)" });
+      keys.push({ offset: 1, ...state(index === frames.length - 1) });
       animate(target, keys, { duration, fill: "both", easing: "linear" });
+      if (kind === "rise") {
+        // Only the complete pose moves: its crop and clothing stay registered.
+        // Interpolate the same neck anchors as the live head, around the floor.
+        target.style.transformOrigin = "0px 1230px";
+        const bodyScale = (neckY: number) => `scaleY(${riseBodyScale(frame, neckY)})`;
+        const first = rooRiseFrames[0].neck.y;
+        animate(target, [
+          { offset: 0, transform: bodyScale(first) },
+          { offset: start * .49, transform: bodyScale(first - 2) },
+          { offset: start, transform: bodyScale(first) },
+          ...rooRiseFrames.slice(1).map((pose, i) => ({ offset: start + (end - start) * (i + 1) / (rooRiseFrames.length - 1), transform: bodyScale(pose.neck.y) })),
+          { offset: 1, transform: bodyScale(rooRiseFrames.at(-1)!.neck.y) },
+        ], { duration, fill: "both", easing: "linear" });
+      }
     });
   }
 }

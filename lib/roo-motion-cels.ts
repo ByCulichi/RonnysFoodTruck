@@ -1,10 +1,12 @@
 /** Original generated sheets stay intact. Registration selects each drawing in
- * source pixels, with a constant camera scale and a shared floor. */
+ * source pixels; measured muzzle and floor anchors normalize the camera scale. */
 export type RooMotionKind = "rise" | "turn";
 export type CelCrop = { x: number; y: number; width: number; height: number };
 export type CelPlacement = { x: number; y: number; width: number; height: number };
 export type RooMotionFrame = {
   index: number;
+  sheet?: "rise" | "turn" | "turnBetween";
+  turnProgress?: number;
   crop: CelCrop;
   scale: number;
   tx: number;
@@ -19,6 +21,7 @@ export type RooMotionFrame = {
 export const rooMotionSheets = {
   rise: { src: "/images/ronny/welcome/motion/roo-rise-inbetweens.png", width: 1774, height: 887, optimizedWidth: 1920 },
   turn: { src: "/images/ronny/welcome/motion/roo-turn-step-sheet.png", width: 1254, height: 1254, optimizedWidth: 1200 },
+  turnBetween: { src: "/images/ronny/welcome/motion/roo-turn-inbetweens.png", width: 1774, height: 887, optimizedWidth: 1920 },
 } as const;
 
 const floor = 1230;
@@ -68,24 +71,64 @@ const turnDrawings = [
   { crop: { x: 852, y: 836, width: 402, height: 418 }, ground: 385, head: [209, 87], neck: [210, 223], cape: [133, 245, 155, 90] },
 ] as const;
 
-const turnOrder = [1, 2, 3, 4, 5, 6, 7, 8, -7, -6, -5, -4, -3, -2, -1, 0, 1];
-export const rooTurnFrames: RooMotionFrame[] = turnOrder.map((entry, step) => {
-  const index = Math.abs(entry), frame = turnDrawings[index], mirror = entry < 0;
-  const scale = 2.8;
-  const angle = (45 + step * 22.5) * Math.PI / 180;
-  // The neck moves around a fixed body centre during the turn. Mirroring around
-  // the neck itself would throw the tail outside the source canvas.
-  const neckX = 720 + 140 * Math.SQRT2 * Math.sin(angle);
-  const sx = mirror ? -scale : scale;
-  const tx = neckX - (frame.crop.x + frame.neck[0]) * sx;
-  const ty = floor - (frame.crop.y + frame.ground) * scale;
-  const capeX = neckX + (frame.cape[0] - frame.neck[0]) * scale;
+// Muzzle anchors were measured from the original pixels. Invisible rear
+// anchors continue the same muzzle arc, rather than resizing to alpha bounds.
+const turnMuzzles = [[233, 206], [267, 204], [306.5, 209], [404, 180], [391.5, 174.5], [342.5, 176], [310, 177], [265, 177], [210, 177]] as const;
+// The two close rear-quarter drawings use their actual angles. Timing follows
+// angle rather than frame index, so extra drawings never stall the rotation.
+const turnBetweenDrawings = [
+  { view: .5, crop: { x: 0, y: 0, width: 444, height: 444 }, ground: 400, anchor: [296, 186] },
+  { view: 1.5, crop: { x: 444, y: 0, width: 443, height: 444 }, ground: 400, anchor: [340, 184] },
+  { view: 2.5, crop: { x: 887, y: 0, width: 443, height: 444 }, ground: 399, anchor: [371, 181] },
+  { view: 3.5, crop: { x: 1330, y: 0, width: 444, height: 444 }, ground: 399, anchor: [376.5, 183.5] },
+  { view: 4.5, crop: { x: 0, y: 444, width: 444, height: 443 }, ground: 398, anchor: [382.5, 181.5] },
+  { view: 5 + 1 / 3, crop: { x: 444, y: 444, width: 443, height: 443 }, ground: 400, anchor: [371, 179.5] },
+  { view: 5 + 2 / 3, crop: { x: 887, y: 444, width: 443, height: 443 }, ground: 400, anchor: [362.5, 177.5] },
+  { view: 7.5, crop: { x: 1330, y: 444, width: 444, height: 443 }, ground: 400, anchor: [270, 245], rearAnchor: true },
+] as const;
+const halfViews = [...turnDrawings.map((_, view) => view), ...turnBetweenDrawings.map(frame => frame.view)].sort((a, b) => a - b);
+const startView = halfViews.indexOf(1);
+const turnOrder = [
+  ...halfViews.slice(startView).map(view => ({ view, mirror: false, angle: view * 22.5 })),
+  ...halfViews.slice(1, -1).reverse().map(view => ({ view, mirror: true, angle: 360 - view * 22.5 })),
+  ...halfViews.slice(0, startView + 1).map(view => ({ view, mirror: false, angle: 360 + view * 22.5 })),
+];
+const mix = (a: number, b: number, t: number) => a + (b - a) * t;
+export const rooTurnFrames: RooMotionFrame[] = turnOrder.map(({ view, mirror, angle }) => {
+  const low = Math.floor(view), high = Math.ceil(view), t = view - low;
+  const before = turnDrawings[low], after = turnDrawings[high];
+  const between = turnBetweenDrawings.find(frame => frame.view === view);
+  const neckX = 720 + 140 * Math.SQRT2 * Math.sin((angle + 22.5) * Math.PI / 180);
+  const direction = mirror ? -1 : 1;
+  const beforeNeckY = floor + (before.neck[1] - before.ground) * 2.8;
+  const afterNeckY = floor + (after.neck[1] - after.ground) * 2.8;
+  const neckY = mix(beforeNeckY, afterNeckY, t);
+  let scale = 2.8;
+  let crop: CelCrop = before.crop;
+  let tx = neckX - (crop.x + before.neck[0]) * direction * scale;
+  let ty = floor - (crop.y + before.ground) * scale;
+  if (between) {
+    crop = between.crop;
+    const rearAnchor = "rearAnchor" in between;
+    const oldA = rearAnchor ? before.neck : turnMuzzles[low];
+    const oldB = rearAnchor ? after.neck : turnMuzzles[high];
+    const anchorX = neckX + direction * mix((oldA[0] - before.neck[0]) * 2.8, (oldB[0] - after.neck[0]) * 2.8, t);
+    const anchorY = mix(floor + (oldA[1] - before.ground) * 2.8, floor + (oldB[1] - after.ground) * 2.8, t);
+    scale = (floor - anchorY) / (between.ground - between.anchor[1]);
+    tx = anchorX - (crop.x + between.anchor[0]) * direction * scale;
+    ty = floor - (crop.y + between.ground) * scale;
+  }
+  const headX = neckX + direction * mix((before.head[0] - before.neck[0]) * 2.8, (after.head[0] - after.neck[0]) * 2.8, t);
+  const headY = mix(floor + (before.head[1] - before.ground) * 2.8, floor + (after.head[1] - after.ground) * 2.8, t);
   return {
-    index, crop: frame.crop, scale, tx, ty, mirror,
-    neck: { x: neckX, y: floor + (frame.neck[1] - frame.ground) * scale },
-    head: { x: neckX + (frame.head[0] - frame.neck[0]) * sx, y: floor + (frame.head[1] - frame.ground) * scale, scale: 1.15 + .15 * Math.max(0, Math.cos(index * Math.PI / 8)), angle: 12 * Math.max(0, Math.cos(index * Math.PI / 8)) },
-    cape: { x: capeX, y: floor + (frame.cape[1] - frame.ground) * scale, width: frame.cape[2] * scale, height: frame.cape[3] * scale },
-    rear: index >= 5,
+    index: view, sheet: between ? "turnBetween" : "turn", turnProgress: (angle - 22.5) / 360,
+    crop, scale, tx, ty, mirror, neck: { x: neckX, y: neckY },
+    head: { x: headX, y: headY, scale: 1.15 + .15 * Math.max(0, Math.cos(view * Math.PI / 8)), angle: 12 * Math.max(0, Math.cos(view * Math.PI / 8)) },
+    cape: {
+      x: neckX + mix((before.cape[0] - before.neck[0]) * 2.8, (after.cape[0] - after.neck[0]) * 2.8, t),
+      y: mix(floor + (before.cape[1] - before.ground) * 2.8, floor + (after.cape[1] - after.ground) * 2.8, t),
+      width: mix(before.cape[2], after.cape[2], t) * 2.8, height: mix(before.cape[3], after.cape[3], t) * 2.8,
+    }, rear: view >= 5,
   };
 });
 
@@ -95,8 +138,16 @@ export const rooMotionFrames = { rise: rooRiseFrames, turn: rooTurnFrames };
 /** Nearest-angle sampling leaves a short hold on the matching facing pose at
  * either end. The live rig supplies that pose, so there is no model handoff. */
 export function motionFrameTime(kind: RooMotionKind, index: number, count: number) {
-  const progress = kind === "turn" && index > 0 ? (index - .5) / (count - 1) : index / (count - 1);
+  const progress = kind === "turn" && index > 0
+    ? ((rooTurnFrames[index - 1].turnProgress ?? 0) + (rooTurnFrames[index].turnProgress ?? 0)) / 2
+    : Math.max(0, index - .5) / (count - 1);
   return kind === "turn" ? .5 - Math.sin(Math.asin(1 - 2 * progress) / 3) : progress;
+}
+
+/** Keep a rising drawing's neck on the continuous head path while its toes
+ * stay on the floor. Near-angle selection keeps the visible correction small. */
+export function riseBodyScale(frame: RooMotionFrame, neckY: number) {
+  return (floor - neckY) / (floor - frame.neck.y);
 }
 
 const rigMap = ([x, y]: readonly number[]) => ({ x: rooRiseFrames[7].tx + x * riseScale, y: rooRiseFrames[7].ty + y * riseScale });

@@ -9,6 +9,10 @@ export const rooWelcomeArt = {
   head: { left: 244, top: 0, size: 1010 },
 } as const;
 
+/** Keep the approved face intact while balancing it against the torso. The
+ * muzzle is the registration point shared by every sniff and turning view. */
+export const rooHeadProportion = { scale: .86, x: 900, y: 680 } as const;
+
 // Registered in the source canvas. The final avatar retains the same head,
 // hat, ears and bandana as the articulated character, without a second logo.
 export const rooHeadOutline = [[244, 0], [1254, 0], [1254, 790], [1088, 800], [1020, 826], [1004, 920], [973, 971], [928, 942], [906, 1004], [858, 999], [825, 945], [802, 902], [780, 873], [690, 839], [618, 806], [552, 779], [510, 714], [453, 665], [420, 600], [356, 530], [350, 400], [244, 350]];

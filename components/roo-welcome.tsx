@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
-import { rooWelcomeArt, rooHeadMask as headMask, rooFullMask as fullMask } from "@/lib/roo-welcome-art";
+import { rooWelcomeArt, rooHeadMask as headMask } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
@@ -194,10 +194,10 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       };
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
-        { offset: 0, clipPath: fullMask },
-        { offset: rooWelcomeMotion.flightStart + .01, clipPath: fullMask, easing: "cubic-bezier(.4, 0, .2, 1)" },
-        { offset: .975, clipPath: headMask },
-        { offset: 1, clipPath: headMask },
+        // The head already has its exact source outline. Fade the body while
+        // flying instead of repainting a large, changing SVG mask every frame.
+        // Canceling restores the identical navbar mask after the exact landing.
+        { offset: 0, clipPath: "none" }, { offset: 1, clipPath: "none" },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate, geometry.walkDistance);
       animate(scene!, [

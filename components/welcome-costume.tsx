@@ -18,8 +18,14 @@ export function WelcomeWizardHat({ id, sourceId }: { id: string; sourceId: strin
     <defs>
       <clipPath id={`${id}-outline`}><polygon points={rooHeadOutline.map(point => point.join(",")).join(" ")} /></clipPath>
       <mask id={`${id}-hat-only`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
-        <rect width="1254" height="700" fill="white" />
-        <path d={leftEar} fill="black" stroke="black" strokeWidth="36" /><path d={rightEar} fill="black" stroke="black" strokeWidth="36" /><path d={face} fill="black" />
+        <rect width="1254" height="525" fill="white" />
+        {/* Include each ear's outer ink, not just its pink interior. Otherwise
+            a stray outline from the source ear travels across a turning ear. */}
+        <path d="M355 241Q404 198 515 272Q609 324 699 433L602 505L597 614Q526 633 444 580Q350 485 355 241Z" fill="black" stroke="black" strokeWidth="24" />
+        <path d="M1000 319Q1100 228 1191 170Q1249 145 1244 231Q1278 380 1192 491L1090 522Z" fill="black" stroke="black" strokeWidth="24" />
+        <rect x="1000" y="110" width="254" height="270" fill="black" />
+        <path d="M1100 430Q1170 452 1254 420V700H1100Z" fill="black" />
+        <path d={face} fill="black" />
       </mask>
     </defs>
     <use href={`#${sourceId}`} clipPath={`url(#${id}-outline)`} mask={`url(#${id}-hat-only)`} />

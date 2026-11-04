@@ -96,7 +96,8 @@
 .roo-puppet [data-roo-part] { transform-box: view-box; }
 .roo-puppet [data-roo-part="pivot"] { transform-origin: 690px 990px; }
 .roo-puppet [data-roo-part="tail"] { transform-origin: 267px 742px; }
-.roo-puppet [data-roo-part="head"] { transform-origin: 790px 805px; }
+.roo-puppet [data-roo-part="head"] { transform-origin: 900px 795px; }
+.roo-puppet [data-roo-part="head-proportion"] { transform-origin: 0px 0px; }
 .roo-puppet [data-roo-part="mouth"] { transform-origin: 900px 680px; opacity: 0; }
 .roo-puppet [data-roo-part="surprise"],
 .roo-puppet [data-roo-part="craving"],
@@ -107,6 +108,9 @@
   /* backdrop-filter would otherwise make a fixed descendant header-sized. */
   .site-header:has(.roo-welcome-scene:not([data-state="done"])) { backdrop-filter: none; }
   .roo-welcome-anchor:not([data-welcome-state="done"]) { overflow: visible; }
+  /* Roo already has a ground shadow. A filter on the whole articulated SVG
+     would repeatedly rasterize the source sheets; keep it for the static logo. */
+  .brand .roo-welcome-anchor:not([data-welcome-state="done"]) .roo-welcome-character { filter: none; }
   .roo-welcome-anchor:not([data-welcome-state="done"]) .roo-welcome-figure {
     z-index: 2;
     opacity: 0;

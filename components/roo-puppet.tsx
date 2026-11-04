@@ -2,7 +2,7 @@
 
 import { getImageProps } from "next/image";
 import { useId, type CSSProperties, type Ref } from "react";
-import { rooHeadOutline, rooWelcomeArt } from "@/lib/roo-welcome-art";
+import { rooHeadOutline, rooHeadProportion, rooWelcomeArt } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { WelcomeBurger } from "@/components/welcome-burger";
 import { RooMotionCels, RooMotionRig, animateRooMotionCels } from "@/components/roo-motion-cels";
@@ -51,9 +51,9 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
       <g data-roo-part="body-rig">
         <RooMotionRig season={season} />
       </g>
-      <g data-roo-part="head-visibility"><g data-roo-part="head">
+      <g data-roo-part="head-visibility"><g data-roo-part="head"><g data-roo-part="head-proportion">
         <WelcomeHeadUnderlay season={season} />
-        <g mask={`url(#${id}-costume-head)`}>
+        <g mask={season === "halloween" ? undefined : `url(#${id}-costume-head)`}>
           <use href={`#${id}-skin`} clipPath={`url(#${id}-head)`} />
           <g data-roo-part="surprise"><image data-roo-surprise-cel="true" width="1254" height="1254" mask={`url(#${id}-face)`} /></g>
           <g data-roo-part="craving">
@@ -69,7 +69,7 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
           </g>
         </g>
         <WelcomeHeadCostume season={season} />
-      </g></g>
+      </g></g></g>
       <RooMotionCels kind="turn" season={season} sourceId={`${id}-skin`} />
     </g>
     <g data-roo-part="aroma" fill="none" stroke="#ffe2b7" strokeWidth="6" strokeLinecap="round" aria-hidden="true">
@@ -87,7 +87,12 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     const joint = puppet.querySelector<SVGElement>(`[data-roo-part="${name}"]`);
     if (!joint) return;
     if (origin) joint.style.transformOrigin = origin;
-    animate(joint, frames.slice().sort((a, b) => Number(a.offset) - Number(b.offset)).map(frame => ({ ...frame, easing: frame.easing || "cubic-bezier(.37, 0, .32, 1)" })), { duration, fill: "both", easing: "linear" });
+    const cullHidden = ["motion-rise", "body-rig", "motion-turn", "head-visibility", "mouth", "surprise", "craving", "eyelids"].includes(name);
+    animate(joint, frames.slice().sort((a, b) => Number(a.offset) - Number(b.offset)).map(frame => ({
+      ...frame,
+      ...(cullHidden && frame.opacity !== undefined ? { display: Number(frame.opacity) > 0 ? "inline" : "none" } : {}),
+      easing: frame.easing || "cubic-bezier(.37, 0, .32, 1)",
+    })), { duration, fill: "both", easing: "linear" });
   };
   const { restEnd, riseStart, riseEnd, walkStart, walkEnd, sniffEnd, cravingEnd, spinStart, spinEnd, barkStart, flightStart } = rooWelcomeStory;
   const walkDistance = Math.min(rooWelcomeStory.walkDistance, Math.max(0, measuredWalkDistance));
@@ -103,7 +108,9 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: 0, opacity: 0, easing: "steps(1, end)" },
     { offset: riseEnd, opacity: 1, easing: "steps(1, end)" },
     { offset: turnDrawingsStart, opacity: 0, easing: "steps(1, end)" },
-    { offset: turnDrawingsEnd, opacity: 1 }, { offset: 1, opacity: 1 },
+    { offset: turnDrawingsEnd, opacity: 1 },
+    { offset: flightStart + .02, opacity: 1 },
+    { offset: .94, opacity: 0 }, { offset: 1, opacity: 0 },
   ]);
   move("motion-turn", [
     { offset: 0, opacity: 0, easing: "steps(1, end)" },
@@ -245,6 +252,12 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: 0, opacity: 1, easing: "steps(1, end)" },
     { offset: turnDrawingsStart, opacity: 0, easing: "steps(1, end)" },
     { offset: turnDrawingsEnd, opacity: 1 }, { offset: 1, opacity: 1 },
+  ]);
+  const balancedHead = `translate(${rooHeadProportion.x}px, ${rooHeadProportion.y}px) scale(${rooHeadProportion.scale}) translate(${-rooHeadProportion.x}px, ${-rooHeadProportion.y}px)`;
+  move("head-proportion", [
+    { offset: 0, transform: balancedHead },
+    { offset: flightStart + .01, transform: balancedHead },
+    { offset: .975, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("head", [
     { offset: 0, transform: `translate(0, ${riseHeadFrames[0].y}px) rotate(5deg)` },
