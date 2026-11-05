@@ -120,6 +120,9 @@ export function RooMotionRig({ season = activeWelcomeSeason, costumeSourceId }: 
         <rect width="1254" height="1254" fill="white" />
         <polygon points={rooRigRegions.tail} fill="black" />
         <g clipPath={`url(#${id}-below-hips)`}>{legNames.map(name => <polygon key={name} points={rooRigRegions[name]} fill="black" />)}</g>
+        {/* Keep just a tapered sliver of the original shoulder beneath the
+            swinging leg. A full horizontal band would leave a static stump. */}
+        <path d="M796 1024Q818 1025 824 1045Q823 1063 809 1082Q805 1065 800 1054Z" fill="white" />
       </mask>
     </defs>
     {legNames.map(part)}
