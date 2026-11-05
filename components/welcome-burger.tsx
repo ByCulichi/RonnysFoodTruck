@@ -1,5 +1,9 @@
+import { useId } from "react";
+
 /** The bacon burger is a local visual prop, without a price or invented offer. */
 export function WelcomeBurger() {
+  const clothId = `welcome-tablecloth-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const clothDrape = "M11 224Q160 257 309 224L306 263Q301 290 279 291L252 282Q213 312 162 306Q113 314 71 283Q47 299 24 283Q12 276 11 259Z";
   const sesame = [
     [72, 70, -24], [104, 49, 28], [143, 39, -20], [184, 42, 26],
     [224, 59, -24], [254, 83, 20], [121, 78, 16], [164, 62, -27],
@@ -11,6 +15,15 @@ export function WelcomeBurger() {
       {/* A real support shares the burger's stationary coordinate system. Its
           feet land at y=1230 in Roo's canvas, on the same pavement as his paws. */}
       <g data-welcome-table="true">
+        <defs>
+          <linearGradient id={`${clothId}-linen`} x1="0" y1="0" x2="0" y2="1">
+            <stop stopColor="#fff0cb" /><stop offset=".65" stopColor="#f3d8a5" /><stop offset="1" stopColor="#deb77d" />
+          </linearGradient>
+          <pattern id={`${clothId}-checks`} width="24" height="24" patternUnits="userSpaceOnUse">
+            <rect width="12" height="12" fill="#a62d43" /><rect x="12" y="12" width="12" height="12" fill="#a62d43" />
+          </pattern>
+          <clipPath id={`${clothId}-drape`}><path d={clothDrape} /></clipPath>
+        </defs>
         <ellipse data-table-ground-shadow="true" cx="160" cy="473" rx="142" ry="12" fill="#10091b" opacity=".25" />
         <g stroke="#291b25" strokeLinejoin="round" strokeLinecap="round">
           {/* Rear legs and bracing sit behind the wooden tabletop/front legs. */}
@@ -27,6 +40,19 @@ export function WelcomeBurger() {
           <path d="M40 219q40-10 74-5m91-1q39-3 69 5" fill="none" stroke="#d59558" strokeWidth="2.5" />
           <circle cx="55" cy="250" r="3.5" fill="#c28b55" stroke="none" />
           <circle cx="265" cy="250" r="3.5" fill="#c28b55" stroke="none" />
+        </g>
+        {/* The linen follows the round top, then folds over the solid edge.
+            A short checked hem echoes the printed menu without hiding the legs. */}
+        <g data-tablecloth="true" stroke="#6b3b35" strokeLinejoin="round" strokeLinecap="round">
+          <path d={clothDrape} fill={`url(#${clothId}-linen)`} strokeWidth="3.5" />
+          <g clipPath={`url(#${clothId}-drape)`}>
+            <path d="M8 258Q28 286 70 269Q112 300 161 292Q209 301 251 269Q288 288 310 255L316 315H4Z" fill={`url(#${clothId}-checks)`} stroke="none" />
+            <path d="M12 258Q30 278 70 268Q114 295 161 289Q209 296 251 268Q289 280 308 257" fill="none" stroke="#fff0ca" strokeWidth="3" />
+            <path d="M42 237Q44 258 52 275M82 244Q79 260 71 282M124 249Q126 273 118 293M194 249Q187 275 192 296M240 243Q243 264 252 281M282 235Q280 258 272 276" fill="none" stroke="#bd8e59" strokeWidth="4" opacity=".55" />
+            <path d="M57 242Q57 258 62 270M140 251Q145 273 140 291M215 247Q207 269 211 289M294 235Q294 253 286 269" fill="none" stroke="#fff2d0" strokeWidth="5" opacity=".7" />
+          </g>
+          <ellipse cx="160" cy="222" rx="151" ry="20" fill="#fff0cd" strokeWidth="3.5" />
+          <path d="M17 222Q160 251 303 222" fill="none" stroke="#d5ad76" strokeWidth="3" />
         </g>
       </g>
       <ellipse cx="160" cy="211" rx="139" ry="13" fill="#160e1b" opacity=".16" />
