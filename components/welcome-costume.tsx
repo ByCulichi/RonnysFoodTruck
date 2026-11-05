@@ -1,5 +1,6 @@
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { rooHeadOutline } from "@/lib/roo-welcome-art";
+import { PoseHat } from "@/components/roo-pose-art";
 
 type SeasonProps = { season: CinemaSeason };
 
@@ -69,12 +70,12 @@ export function WelcomeHeadUnderlay({ season }: SeasonProps) {
 export function WelcomeHeadCostume({ season }: SeasonProps) {
   if (season === "halloween") return null;
   return <g data-welcome-head-costume={season} stroke="#3b1b16" strokeWidth="9" strokeLinejoin="round" strokeLinecap="round">
-    {season === "christmas" ? <>
+    {season === "christmas" ? <g transform="translate(1700 0) scale(-1 1)">
       <path d="M640 355Q648 172 776 114Q900 70 1014 138Q1093 190 1105 297L1047 323Q1013 220 963 214Q908 208 877 318Z" fill="#be2f42" />
       <path d="M658 333Q847 267 1033 357L1026 432Q845 359 643 415Q611 386 658 333Z" fill="#fff1d8" />
       <path d="M667 349Q839 304 1014 369M674 391Q834 351 1014 410" fill="none" stroke="#e4cda7" strokeWidth="5" />
       <path d="M1071 283Q1080 256 1110 269Q1144 267 1149 301Q1170 328 1145 350Q1133 380 1103 368Q1072 372 1068 343Q1046 319 1071 283Z" fill="#fff2dc" />
-    </> : season === "muertos" ? <>
+    </g> : season === "muertos" ? <>
       <path d="M645 332Q659 224 722 178Q770 144 818 151Q891 154 951 221L995 342Z" fill="#22202a" />
       <path d="M669 300Q826 263 965 316L974 346Q810 297 655 342Z" fill="#78508b" strokeWidth="5" />
       <path d="M489 380Q628 291 824 302Q1020 304 1110 412Q1065 458 984 456Q752 357 555 441Q495 436 489 380Z" fill="#22202a" />
@@ -87,12 +88,7 @@ export function WelcomeHeadCostume({ season }: SeasonProps) {
       <path d="M556 352Q803 273 1049 401L1036 445Q813 355 556 403Z" fill="#25202b" />
       <path d="M575 374Q806 309 1025 420" fill="none" stroke="#d5ab64" strokeWidth="5" />
       <path d="m831 167 10 22 25 3-19 16 5 25-22-13-21 13 5-25-20-16 25-3Z" fill="#f6cd78" strokeWidth="4" />
-    </> : <>
-      <path d="M629 336Q626 220 717 177Q850 112 987 219Q1047 269 1059 354L1009 410Q812 340 629 387Z" fill="#9f2443" />
-      <path d="M644 360Q829 299 1030 378L1018 424Q815 357 637 407Z" fill="#6b1f36" />
-      <path d="M910 248C890 213 840 232 851 267Q861 292 909 315Q955 291 965 265C977 232 929 212 910 248Z" fill="#f3bd70" strokeWidth="5" />
-      <path d="M661 305Q687 228 751 214" fill="none" stroke="#cd546b" strokeWidth="8" />
-    </>}
+    </> : <g transform="translate(850 330) scale(1.15 1)"><PoseHat season="valentines" rear={false} x={0} y={0} scale={1} /></g>}
   </g>;
 }
 
