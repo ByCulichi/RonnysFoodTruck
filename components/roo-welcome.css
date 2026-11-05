@@ -98,6 +98,7 @@
 .roo-puppet [data-roo-part="tail"] { transform-origin: 267px 742px; }
 .roo-puppet [data-roo-part="head"] { transform-origin: 900px 795px; }
 .roo-puppet [data-roo-part="head-proportion"] { transform-origin: 0px 0px; }
+.roo-puppet [data-roo-part="collar-proportion"] { transform-origin: 0px 0px; }
 .roo-puppet [data-roo-part="mouth"] { transform-origin: 900px 680px; opacity: 0; }
 .roo-puppet [data-roo-part="surprise"],
 .roo-puppet [data-roo-part="craving"],

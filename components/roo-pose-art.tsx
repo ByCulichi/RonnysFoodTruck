@@ -84,14 +84,16 @@ export function PoseCape({ id, season, placement, rear = false }: {
 
 /** Hats are drawn for the neutral full-turn art, leaving its face unchanged. */
 export function PoseHat({ season, rear, x, y, scale }: { season: CinemaSeason; rear: boolean; x: number; y: number; scale: number }) {
+  const love = season === "valentines";
   return <g transform={`translate(${x} ${y}) scale(${scale})`} data-pose-hat={season} stroke="#3d1c18" strokeWidth="10" strokeLinejoin="round" strokeLinecap="round">
-    {season === "halloween" ? <>
-      <path d="M-210-9Q-207-99-174-168C-220-137-285-143-307-178Q-335-209-319-235Q-313-192-270-199C-228-207-198-250-157-280Q-95-310-35-278Q33-242 98-201Q162-155 195-29Z" fill="#721ce0" />
-      <path d="M-288-194Q-243-175-193-225Q-135-289-86-277Q-27-250 19-218" fill="none" stroke="#a451fa" strokeWidth="13" />
-      <path d="M-208-41Q-12-106 190-47L206-5Q-6-57-222 8Z" fill="#f18c2f" />
-      <path d="M-302 35Q-229-32-31-35Q164-41 296 52Q211 101 63 65Q-109 21-244 78Q-286 72-302 35Z" fill="#6316c7" />
-      <path d="M-273 38Q-83-27 260 55" fill="none" stroke="#a24cf0" strokeWidth="10" />
-      {!rear && <g transform="translate(89 -38)">
+    {season === "halloween" || love ? <>
+      <path d="M-210-9Q-207-99-174-168C-220-137-285-143-307-178Q-335-209-319-235Q-313-192-270-199C-228-207-198-250-157-280Q-95-310-35-278Q33-242 98-201Q162-155 195-29Z" fill={love ? "#9e2645" : "#721ce0"} />
+      <path d="M-288-194Q-243-175-193-225Q-135-289-86-277Q-27-250 19-218" fill="none" stroke={love ? "#cb526d" : "#a451fa"} strokeWidth="13" />
+      <path d="M-208-41Q-12-106 190-47L206-5Q-6-57-222 8Z" fill={love ? "#e2b15c" : "#f18c2f"} />
+      <path d="M-302 35Q-229-32-31-35Q164-41 296 52Q211 101 63 65Q-109 21-244 78Q-286 72-302 35Z" fill={love ? "#672039" : "#6316c7"} />
+      <path d="M-273 38Q-83-27 260 55" fill="none" stroke={love ? "#bc4d69" : "#a24cf0"} strokeWidth="10" />
+      {!rear && love && <path transform="translate(89 -38)" d="M0 28C-13 19-47 0-47-23c0-30 34-40 47-12 13-28 47-18 47 12C47 0 13 19 0 28Z" fill="#f3bd70" strokeWidth="6" />}
+      {!rear && !love && <g transform="translate(89 -38)">
         <ellipse rx="42" ry="36" fill="#f2a72d" strokeWidth="6" /><path d="M0-36q-1-17 13-17" fill="none" stroke="#5b762a" strokeWidth="8" />
         <path d="m-22-7 13-9 3 13Zm31-9 13 9-16 4ZM-22 10l14 7 9-8 10 8 13-9-6 17-18 4-17-5Z" fill="#382018" stroke="none" />
       </g>}

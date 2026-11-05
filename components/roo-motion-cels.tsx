@@ -8,11 +8,16 @@ import { celClip, celTransform, motionFrameTime, riseBodyScale, rooMotionFrames,
 import { PoseBandana, PoseCape, PoseHat } from "@/components/roo-pose-art";
 import { WelcomeWizardHat } from "@/components/welcome-costume";
 import { rooHeadProportion } from "@/lib/roo-welcome-art";
+import { coherentSources } from "@/components/roo-coherent-cels";
+import { ConnectedClothes } from "@/components/roo-connected-costume";
 
-export const rooMotionSources = Object.fromEntries(Object.entries(rooMotionSheets).map(([name, sheet]) => {
+const legacyMotionSources = Object.fromEntries(Object.entries(rooMotionSheets).map(([name, sheet]) => {
   const { props } = getImageProps({ src: sheet.src, width: sheet.optimizedWidth, height: Math.round(sheet.height / sheet.width * sheet.optimizedWidth), quality: 85, alt: "" });
   return [name, props.srcSet?.split(",")[0].trim().split(" ")[0] || props.src];
 })) as Record<keyof typeof rooMotionSheets, string>;
+
+export const motionSourcesForSeason = (season: CinemaSeason): Record<string, string> => ({ rise: legacyMotionSources.rise, ...coherentSources(season) });
+export const rooMotionSources = motionSourcesForSeason(activeWelcomeSeason);
 
 const uniqueId = (value: string) => value.replace(/[^a-zA-Z0-9_-]/g, "");
 const identityCape = { x: 0, y: 0, width: 1000, height: 400 };
@@ -59,7 +64,7 @@ function bandanaTransform(frame: RooMotionFrame) {
 
 /** Each drawing is a fixed SVG composition: skin, crop and costume never
  * animate separately. The complete pose becomes visible on one shared clock. */
-export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: { kind: RooMotionKind; season?: CinemaSeason; sourceId?: string }) {
+export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId, costumeSourceId }: { kind: RooMotionKind; season?: CinemaSeason; sourceId?: string; costumeSourceId?: string }) {
   const id = `roo-motion-${kind}-${uniqueId(useId())}`;
   const frames = rooMotionFrames[kind];
   const sheets = [...new Set(frames.map(frame => frame.sheet || kind))];
@@ -83,7 +88,7 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: 
           const view = frame.rear ? "rear" : "front";
           return <g key={index} data-roo-part={`motion-${kind}-frame-${index}`} data-roo-motion-frame={index} visibility="hidden">
             <g mask={kind === "rise" ? `url(#${id}-neck-${index})` : undefined}><g data-roo-frame-art="true" transform={celTransform(frame)}><use data-roo-frame-source="true" href={`#${id}-sheet-${frame.sheet || kind}`} clipPath={`url(#${id}-crop-${index})`} /></g></g>
-            <use href={`#${id}-cape-${kind === "rise" ? "front" : view}`} transform={capeTransform(frame)} />
+            {kind === "rise" ? <ConnectedClothes season={season} sourceId={costumeSourceId} offset={{ x: 0, y: frame.neck.y - rooRiseFrames.at(-1)!.neck.y }} /> : <use href={`#${id}-cape-${view}`} transform={capeTransform(frame)} />}
             {kind === "turn" && <>
               <use href={`#${id}-bandana-${view}`} transform={bandanaTransform(frame)} />
               <use href={`#${id}-hat-${view}`} transform={!frame.rear && useSourceHat ? wizardHatTransform(frame) : headTransform(frame)} />
@@ -96,7 +101,7 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId }: 
 
 /** The standing model is the exact final rise drawing. Parts overlap under an
  * opaque torso so a knee or shoulder cannot leave a transparent hinge hole. */
-export function RooMotionRig({ season = activeWelcomeSeason }: { season?: CinemaSeason }) {
+export function RooMotionRig({ season = activeWelcomeSeason, costumeSourceId }: { season?: CinemaSeason; costumeSourceId?: string }) {
   const id = `roo-motion-rig-${uniqueId(useId())}`;
   const last = rooRiseFrames.at(-1)!;
   const sheet = rooMotionSheets.rise;
@@ -121,7 +126,7 @@ export function RooMotionRig({ season = activeWelcomeSeason }: { season?: Cinema
     {part("tail")}
     <g data-roo-part="torso">
       <g mask={`url(#${id}-neck)`}><use href={`#${id}-skin`} mask={`url(#${id}-torso)`} /></g>
-      <PoseCape id={`${id}-cape`} season={season} placement={last.cape} />
+      <ConnectedClothes season={season} sourceId={costumeSourceId} />
     </g>
   </g>;
 }
@@ -131,8 +136,8 @@ type MotionSpan = { start: number; end: number };
 
 /** Select complete opaque poses without animating dozens of alpha surfaces.
  * Visibility is the fallback where discrete display animation is unsupported. */
-export function animateRooMotionCels(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation, spans: Record<RooMotionKind, MotionSpan>) {
-  for (const kind of ["rise", "turn"] as const) {
+export function animateRooMotionCels(puppet: SVGSVGElement, duration: number, animate: RegisterAnimation, spans: Record<RooMotionKind, MotionSpan>, kinds: RooMotionKind[] = ["rise", "turn"]) {
+  for (const kind of kinds) {
     const { start, end } = spans[kind], frames = rooMotionFrames[kind];
     const time = (index: number) => start + (end - start) * motionFrameTime(kind, index, frames.length);
     frames.forEach((frame, index) => {

@@ -7,7 +7,7 @@ import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
-import { rooMotionSources } from "@/components/roo-motion-cels";
+import { motionSourcesForSeason } from "@/components/roo-motion-cels";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
@@ -97,6 +97,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
     if (!anchor || !image || !figure || !scene) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const preparationStarted = performance.now();
+    const rooMotionSources = motionSourcesForSeason(season);
     const animations: Animation[] = [];
     const removeListeners: (() => void)[] = [];
     let stopped = false;

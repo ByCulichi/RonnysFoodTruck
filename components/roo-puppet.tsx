@@ -7,10 +7,13 @@ import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { WelcomeBurger } from "@/components/welcome-burger";
 import { RooMotionCels, RooMotionRig, animateRooMotionCels } from "@/components/roo-motion-cels";
 import { footPose } from "@/lib/roo-gait";
-import { motionFrameTime, riseHeadFrames, rigJoints, rooTurnFrames } from "@/lib/roo-motion-cels";
+import { riseHeadFrames, rigJoints } from "@/lib/roo-motion-cels";
+import { RooCoherentTurn, animateCoherentTurn } from "@/components/roo-coherent-cels";
+import { coherentFrameTime, coherentTurnArtwork, framesForSeason } from "@/lib/roo-coherent-turn";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import { WelcomeCostumeDefinitions, WelcomeHeadCostume, WelcomeHeadUnderlay } from "@/components/welcome-costume";
+import { RooNeckDefinitions, RooNeckSkin } from "@/components/roo-neck";
 
 function optimizedSource(src: string) {
   const { props } = getImageProps({ src, width: 640, height: 640, alt: "Roo", quality: 80 });
@@ -44,16 +47,24 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
         <ellipse cx="860" cy="640" rx="310" ry="240" fill={`url(#${id}-muzzle-blend)`} />
       </mask>
       <WelcomeCostumeDefinitions id={id} season={season} />
+      <RooNeckDefinitions id={id} />
+      <image id={`${id}-connected-clothes`} data-roo-motion-cel="outward" width={coherentTurnArtwork[season].outward.width} height={coherentTurnArtwork[season].outward.height} preserveAspectRatio="none" />
     </defs>
     <ellipse data-roo-part="ground-shadow" cx="710" cy="1230" rx="375" ry="32" fill="#10081b" opacity="0" aria-hidden="true" />
     <g data-roo-part="pivot">
-      <RooMotionCels kind="rise" season={season} />
+      <RooMotionCels kind="rise" season={season} costumeSourceId={`${id}-connected-clothes`} />
+      <RooNeckSkin id={id} />
       <g data-roo-part="body-rig">
-        <RooMotionRig season={season} />
+        <RooMotionRig season={season} costumeSourceId={`${id}-connected-clothes`} />
       </g>
+      <g data-roo-part="collar-visibility"><g data-roo-part="collar"><g data-roo-part="collar-proportion">
+        <g mask={season === "halloween" ? undefined : `url(#${id}-costume-body)`}>
+        <use href={`#${id}-skin`} mask={`url(#${id}-collar-only)`} clipPath={`url(#${id}-head)`} />
+        </g>
+      </g></g></g>
       <g data-roo-part="head-visibility"><g data-roo-part="head"><g data-roo-part="head-proportion">
         <WelcomeHeadUnderlay season={season} />
-        <g mask={season === "halloween" ? undefined : `url(#${id}-costume-head)`}>
+        <g mask={`url(#${id}-face-without-collar)`}><g mask={season === "halloween" ? undefined : `url(#${id}-costume-head)`}>
           <use href={`#${id}-skin`} clipPath={`url(#${id}-head)`} />
           <g data-roo-part="surprise"><image data-roo-surprise-cel="true" width="1254" height="1254" mask={`url(#${id}-face)`} /></g>
           <g data-roo-part="craving">
@@ -67,10 +78,10 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
             <ellipse cx="1007" cy="574" rx="68" ry="83" transform="rotate(-16 1007 574)" fill="#e9a649" />
             <path d="M652 623Q728 669 802 615M953 572Q1007 603 1061 559" fill="none" stroke="#5e2d19" strokeWidth="9" strokeLinecap="round" />
           </g>
-        </g>
+        </g></g>
         <WelcomeHeadCostume season={season} />
       </g></g></g>
-      <RooMotionCels kind="turn" season={season} sourceId={`${id}-skin`} />
+      <RooCoherentTurn season={season} />
     </g>
     <g data-roo-part="aroma" fill="none" stroke="#ffe2b7" strokeWidth="6" strokeLinecap="round" aria-hidden="true">
       <path d="M1065 802c-38-7-12-38-54-46s-11-28-43-38M1112 791c-45-15-15-41-52-55M1130 815c-39-12-5-34-30-47" />
@@ -87,7 +98,7 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     const joint = puppet.querySelector<SVGElement>(`[data-roo-part="${name}"]`);
     if (!joint) return;
     if (origin) joint.style.transformOrigin = origin;
-    const cullHidden = ["motion-rise", "body-rig", "motion-turn", "head-visibility", "mouth", "surprise", "craving", "eyelids"].includes(name);
+    const cullHidden = ["motion-rise", "body-rig", "motion-turn", "head-visibility", "collar-visibility", "neck-skin", "mouth", "surprise", "craving", "eyelids"].includes(name);
     animate(joint, frames.slice().sort((a, b) => Number(a.offset) - Number(b.offset)).map(frame => ({
       ...frame,
       ...(cullHidden && frame.opacity !== undefined ? { display: Number(frame.opacity) > 0 ? "inline" : "none" } : {}),
@@ -96,8 +107,10 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   };
   const { restEnd, riseStart, riseEnd, walkStart, walkEnd, sniffEnd, cravingEnd, spinStart, spinEnd, barkStart, flightStart } = rooWelcomeStory;
   const walkDistance = Math.min(rooWelcomeStory.walkDistance, Math.max(0, measuredWalkDistance));
-  const turnDrawingsStart = spinStart + (spinEnd - spinStart) * motionFrameTime("turn", 1, rooTurnFrames.length);
-  const turnDrawingsEnd = spinStart + (spinEnd - spinStart) * motionFrameTime("turn", rooTurnFrames.length - 1, rooTurnFrames.length);
+  const season = (puppet.dataset.welcomeOutfit || activeWelcomeSeason) as CinemaSeason;
+  const turnFrames = framesForSeason(season);
+  const turnDrawingsStart = spinStart + (spinEnd - spinStart) * coherentFrameTime(1, turnFrames);
+  const turnDrawingsEnd = spinStart + (spinEnd - spinStart) * coherentFrameTime(turnFrames.length - 1, turnFrames);
   // The rise and turn use dense registered cels. Exactly one opaque drawing
   // is visible; the standing rig starts from the exact last rise drawing.
   move("motion-rise", [
@@ -120,7 +133,8 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   animateRooMotionCels(puppet, duration, animate, {
     rise: { start: riseStart, end: riseEnd },
     turn: { start: spinStart, end: spinEnd },
-  });
+  }, ["rise"]);
+  animateCoherentTurn(puppet, season, duration, animate, spinStart, spinEnd);
   const smooth = (t: number) => t * t * (3 - 2 * t);
   const spinPoint = (t: number) => {
     // A little circle on the ground, with registered side and rear drawings.
@@ -253,12 +267,41 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: turnDrawingsStart, opacity: 0, easing: "steps(1, end)" },
     { offset: turnDrawingsEnd, opacity: 1 }, { offset: 1, opacity: 1 },
   ]);
+  move("collar-visibility", [
+    { offset: 0, opacity: 1, easing: "steps(1, end)" },
+    { offset: turnDrawingsStart, opacity: 0, easing: "steps(1, end)" },
+    { offset: turnDrawingsEnd, opacity: 1 }, { offset: 1, opacity: 1 },
+  ]);
+  move("neck-skin", [
+    { offset: 0, opacity: 0, easing: "steps(1, end)" },
+    { offset: riseEnd, opacity: 1, easing: "steps(1, end)" },
+    { offset: turnDrawingsStart, opacity: 0, easing: "steps(1, end)" },
+    { offset: turnDrawingsEnd, opacity: 1 },
+    { offset: flightStart + .02, opacity: 1 }, { offset: .94, opacity: 0 }, { offset: 1, opacity: 0 },
+  ]);
   const balancedHead = `translate(${rooHeadProportion.x}px, ${rooHeadProportion.y}px) scale(${rooHeadProportion.scale}) translate(${-rooHeadProportion.x}px, ${-rooHeadProportion.y}px)`;
   move("head-proportion", [
     { offset: 0, transform: balancedHead },
     { offset: flightStart + .01, transform: balancedHead },
     { offset: .975, transform: "none" }, { offset: 1, transform: "none" },
   ]);
+  move("collar-proportion", [
+    { offset: 0, transform: balancedHead },
+    { offset: flightStart + .01, transform: balancedHead },
+    { offset: .975, transform: "none" }, { offset: 1, transform: "none" },
+  ]);
+  move("collar", [
+    { offset: 0, transform: `translate(0, ${riseHeadFrames[0].y}px) rotate(5deg)` },
+    { offset: riseStart, transform: `translate(0, ${riseHeadFrames[0].y}px) rotate(5deg)` },
+    ...riseHeadFrames.slice(1).map(frame => ({ offset: riseStart + (riseEnd - riseStart) * frame.offset, transform: `translate(${frame.x}px, ${frame.y}px) rotate(${frame.angle}deg)`, easing: "linear" })),
+    { offset: .586, transform: "none" },
+    { offset: spinStart, transform: "translate(35px, 25px)" },
+    { offset: turnDrawingsStart, transform: "translate(35px, 25px)" },
+    { offset: turnDrawingsEnd, transform: "translate(35px, 25px)" },
+    { offset: spinEnd, transform: "translate(35px, 25px)" },
+    { offset: barkStart, transform: "none" },
+    { offset: 1, transform: "none" },
+  ], "900px 795px");
   move("head", [
     { offset: 0, transform: `translate(0, ${riseHeadFrames[0].y}px) rotate(5deg)` },
     { offset: riseStart, transform: `translate(0, ${riseHeadFrames[0].y}px) rotate(5deg)` },
@@ -268,18 +311,18 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: .335, transform: "rotate(-1.6deg)" },
     { offset: .38, transform: "rotate(.9deg)" },
     { offset: walkEnd, transform: "none" },
-    { offset: .457, transform: "translate(9px, 19px) rotate(3.7deg)" },
+    { offset: .457, transform: "translate(2px, 7px) rotate(2.2deg)" },
     { offset: .489, transform: "translate(2px, 4px) rotate(.9deg)" },
-    { offset: .521, transform: "translate(8px, 15px) rotate(3deg)" },
+    { offset: .521, transform: "translate(2px, 6px) rotate(1.8deg)" },
     { offset: sniffEnd, transform: "none" },
     { offset: .586, transform: "translate(-2px, -3px) rotate(-3.3deg)" },
-    { offset: spinStart, transform: "translate(58px, -60px)" },
-    { offset: turnDrawingsStart, transform: "translate(58px, -60px)" },
+    { offset: spinStart, transform: "translate(58px, 25px)" },
+    { offset: turnDrawingsStart, transform: "translate(58px, 25px)" },
     { offset: .647, transform: "translate(3px, -2px) rotate(3.3deg)" },
     { offset: .682, transform: "translate(-3px, -1px) rotate(-4.4deg)" },
     { offset: .72, transform: "rotate(2.5deg)" },
-    { offset: turnDrawingsEnd, transform: "translate(58px, -60px)" },
-    { offset: spinEnd, transform: "translate(58px, -60px)" },
+    { offset: turnDrawingsEnd, transform: "translate(58px, 25px)" },
+    { offset: spinEnd, transform: "translate(58px, 25px)" },
     { offset: barkStart, transform: "none" },
     { offset: .781, transform: "translate(0, -3px) rotate(-2deg)" },
     { offset: .807, transform: "rotate(-.7deg)" },
