@@ -7,7 +7,7 @@ import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
-import { motionSourcesForSeason } from "@/components/roo-motion-cels";
+import { performanceSourcesForSeason } from "@/components/roo-performance-cels";
 import { unifiedRooCanvas, unifiedHeadMask as headMask } from "@/lib/roo-unified-art";
 import "./roo-welcome.css";
 
@@ -77,7 +77,7 @@ function flightFrames({ x, y, scale }: { x: number; y: number; scale: number }, 
 
 function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyframe[] {
   return [
-    // Hold the stage still: Roo's inner joints walk toward a stationary burger.
+    // Hold the stage still: the complete drawings walk toward a stationary burger.
     { offset: 0, transform: pose(x, y, scale), opacity: 0 },
     { offset: .04, transform: pose(x, y, scale), opacity: 1 },
     { offset: rooWelcomeMotion.flightStart, transform: pose(x, y, scale), opacity: 1 },
@@ -99,7 +99,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
     if (!anchor || !image || !figure || !scene) return;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const preparationStarted = performance.now();
-    const rooMotionSources = motionSourcesForSeason(season);
+    const rooMotionSources = performanceSourcesForSeason(season);
     const animations: Animation[] = [];
     const removeListeners: (() => void)[] = [];
     let stopped = false;
@@ -130,9 +130,6 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       anchor!.dataset.welcomeState = "done";
       scene!.dataset.state = "done";
       animations.forEach(animation => animation.cancel());
-      image!.querySelector("[data-roo-mouth-cel]")?.removeAttribute("href");
-      image!.querySelector("[data-roo-craving-cel]")?.removeAttribute("href");
-      image!.querySelector("[data-roo-surprise-cel]")?.removeAttribute("href");
       image!.querySelectorAll("[data-roo-motion-cel]").forEach(cel => cel.removeAttribute("href"));
       clearTimeout(deadline);
       clearTimeout(watchdog);
@@ -163,7 +160,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
     deadline = setTimeout(release, rooWelcomeMotion.imageTimeout);
 
     async function start() {
-      // Decode the small registered cels before articulating the character.
+      // Decode the active whole-pose sheets before showing the character.
       // A slow / missing resource skips the sequence, never holds the page.
       const bitmaps = await Promise.all([...Object.values(rooPuppetSources), ...Object.values(rooMotionSources)].map(async src => {
         const bitmap = new window.Image();
@@ -173,9 +170,6 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       }));
       if (stopped) return;
       if (bitmaps.some(bitmap => !bitmap.naturalWidth) || !anchor!.getBoundingClientRect().width) { finish(); return; }
-      image!.querySelector("[data-roo-mouth-cel]")?.setAttribute("href", rooPuppetSources.bark);
-      image!.querySelector("[data-roo-craving-cel]")?.setAttribute("href", rooPuppetSources.craving);
-      image!.querySelector("[data-roo-surprise-cel]")?.setAttribute("href", rooPuppetSources.surprise);
       image!.querySelectorAll<SVGImageElement>("[data-roo-motion-cel]").forEach(cel => {
         const source = rooMotionSources[cel.dataset.rooMotionCel as keyof typeof rooMotionSources];
         if (source) cel.setAttribute("href", source);
