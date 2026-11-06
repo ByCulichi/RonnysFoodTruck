@@ -1,13 +1,14 @@
 "use client";
 
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
-import { RooPuppet, animateRooPuppet, rooPuppetSources } from "@/components/roo-puppet";
-import { rooWelcomeArt, rooHeadMask as headMask } from "@/lib/roo-welcome-art";
+import { RooPuppet, animateRooPuppet, puppetSourcesForSeason } from "@/components/roo-puppet";
+import { rooWelcomeArt } from "@/lib/roo-welcome-art";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
 import { motionSourcesForSeason } from "@/components/roo-motion-cels";
+import { unifiedRooCanvas, unifiedHeadMask as headMask } from "@/lib/roo-unified-art";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
@@ -34,11 +35,11 @@ function measureWelcome(anchor: HTMLElement, scene: HTMLElement) {
   const height = viewport?.height ?? window.innerHeight;
   const x = (viewport?.offsetLeft ?? 0) + width / 2;
   const y = (viewport?.offsetTop ?? 0) + height * rooWelcomeMotion.centerY;
-  const size = Math.min(rooWelcomeMotion.maxSize, width * rooWelcomeMotion.viewportWidth * rooWelcomeArt.height / rooWelcomeArt.width, height * rooWelcomeMotion.viewportHeight);
-  const sourceScale = size / rooWelcomeArt.height;
-  const headSize = rooWelcomeArt.head.size * sourceScale;
-  const headX = x + (rooWelcomeArt.head.left + rooWelcomeArt.head.size / 2 - rooWelcomeArt.width / 2) * sourceScale;
-  const headY = y + (rooWelcomeArt.head.top + rooWelcomeArt.head.size / 2 - rooWelcomeArt.height / 2) * sourceScale;
+  const size = Math.min(rooWelcomeMotion.maxSize, width * rooWelcomeMotion.viewportWidth * unifiedRooCanvas.height / unifiedRooCanvas.width, height * rooWelcomeMotion.viewportHeight);
+  const sourceScale = size / unifiedRooCanvas.height;
+  const headSize = unifiedRooCanvas.head.size * sourceScale;
+  const headX = x + (unifiedRooCanvas.head.left + unifiedRooCanvas.head.size / 2 - unifiedRooCanvas.width / 2) * sourceScale;
+  const headY = y + (unifiedRooCanvas.head.top + unifiedRooCanvas.head.size / 2 - unifiedRooCanvas.height / 2) * sourceScale;
   scene.style.setProperty("--roo-center-x", `${x}px`);
   scene.style.setProperty("--roo-center-y", `${y}px`);
   scene.style.setProperty("--roo-size", `${size}px`);
@@ -85,6 +86,7 @@ function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyf
 }
 
 export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSeason }) {
+  const rooPuppetSources = puppetSourcesForSeason(season);
   const anchorRef = useRef<HTMLSpanElement>(null);
   const imageRef = useRef<SVGSVGElement>(null);
   const figureRef = useRef<HTMLSpanElement>(null);
@@ -195,9 +197,9 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       };
       character = animate(figure!, welcomeFrames(geometry), { duration, fill: "both", easing: "linear" });
       animate(image!, [
-        // The head already has its exact source outline. Fade the body while
-        // flying instead of repainting a large, changing SVG mask every frame.
-        // Canceling restores the identical navbar mask after the exact landing.
+        // Keep the outer SVG unclipped during the performance. The local mask
+        // reveals the single painted body and then retains its original head.
+        // Canceling restores the measured navbar crop after the exact landing.
         { offset: 0, clipPath: "none" }, { offset: 1, clipPath: "none" },
       ], { duration, fill: "both" });
       animateRooPuppet(image!, duration, animate, geometry.walkDistance);
@@ -299,7 +301,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
 
   const safetyStyle = { "--roo-welcome-failsafe": `${rooWelcomeMotion.duration + rooWelcomeMotion.imageTimeout + 500}ms` } as CSSProperties;
   const figureStyle = { "--roo-head-mask": headMask } as CSSProperties;
-  const imageStyle = { width: `${rooWelcomeArt.width / rooWelcomeArt.head.size * 100}%`, height: `${rooWelcomeArt.height / rooWelcomeArt.head.size * 100}%`, left: `${-rooWelcomeArt.head.left / rooWelcomeArt.head.size * 100}%`, top: `${-rooWelcomeArt.head.top / rooWelcomeArt.head.size * 100}%` };
+  const imageStyle = { width: `${unifiedRooCanvas.width / unifiedRooCanvas.head.size * 100}%`, height: `${unifiedRooCanvas.height / unifiedRooCanvas.head.size * 100}%`, left: `${-unifiedRooCanvas.head.left / unifiedRooCanvas.head.size * 100}%`, top: `${-unifiedRooCanvas.head.top / unifiedRooCanvas.head.size * 100}%` };
   return <>
     <link rel="preload" as="image" href={rooPuppetSources.closed} />
     <span ref={anchorRef} className="roo-welcome-anchor" data-welcome-state="pending" data-welcome-season={season} data-welcome-outfit={welcomeSeasonOutfits[season].outfit} style={safetyStyle}>

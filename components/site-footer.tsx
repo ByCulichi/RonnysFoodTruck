@@ -21,7 +21,7 @@ export function SiteFooter() {
       <HalloweenScenery className="footer-scenery" />
       <div className="shell footer-refresh-inner">
         <div className="footer-refresh-main">
-          <figure className="footer-family"><img src="/images/ronny/ronny-unicorn-owner-bunny.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /><FooterFamilyGround /></figure>
+          <figure className="footer-family"><img src="/images/ronny/ronny-unicorn-owner-bunny-caramel.png" alt="Ronny café de unicornio con su ama pelirroja de conejito rosa" width={1024} height={1536} loading="lazy" /><FooterFamilyGround /></figure>
           <nav className="footer-explore" aria-labelledby="footer-explore-title">
             <h3 id="footer-explore-title">Explora <HalloweenFooterIcon kind="paw" /></h3>
             <ul>{explore.filter(({ href }) => contactPresentationVisible || href !== "#encuentranos").map(({ href, label, icon }) => <li key={href}><a href={href}><HalloweenFooterIcon kind={icon} /><span>{label}</span></a></li>)}</ul>
