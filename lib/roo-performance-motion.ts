@@ -30,8 +30,23 @@ export function performanceFrameTransform(frame: RegisteredPerformanceFrame) {
   return `matrix(${frame.scale}, 0, 0, ${frame.scale}, ${frame.x}, ${frame.y})`;
 }
 
-/** Inverse smoothstep places gait changes at travelled distance, not at a
- * fixed clock rate. Short phone approaches get fewer complete gait cycles. */
+/** The atlas has transparent camera padding. Reserve space for the complete
+ * painted silhouettes, rather than treating that empty padding as the dog.
+ * A conservative margin includes the small whole-pose rise correction. */
+export function performanceBounds(season: CinemaSeason) {
+  const action = performanceFrames(season, "action");
+  const frames = [...performanceFrames(season, "rise"), ...action.slice(0, 16), action[31] ?? action[action.length - 1]];
+  const margin = 32;
+  return {
+    minX: Math.min(...frames.map(frame => frame.x + frame.crop.x * frame.scale)) - margin,
+    maxX: Math.max(...frames.map(frame => frame.x + (frame.crop.x + frame.crop.width) * frame.scale)) + margin,
+    minY: Math.min(...frames.map(frame => frame.y + frame.crop.y * frame.scale)) - margin,
+    maxY: Math.max(...frames.map(frame => frame.y + (frame.crop.y + frame.crop.height) * frame.scale)) + margin,
+  };
+}
+
+/** Inverse smoothstep places gait changes at travelled distance. A full
+ * 320-pixel approach needs one calm four-beat cycle, never repeated sprints. */
 export function performanceTimeAtDistance(progress: number) {
   const p = Math.max(0, Math.min(1, progress));
   return .5 - Math.sin(Math.asin(1 - 2 * p) / 3);
@@ -44,39 +59,32 @@ export function performancePlan(season: CinemaSeason, measuredDistance: number):
   for (let frame = 1; frame < riseCount; frame++) {
     beats.push({ offset: s.riseStart + (s.riseEnd - s.riseStart) * (frame - .5) / (riseCount - 1), kind: "rise", frame });
   }
-  beats.push({ offset: s.riseEnd, kind: "action", frame: 12 });
+  beats.push({ offset: s.riseEnd, kind: "action", frame: 31 });
 
-  const cycles = Math.max(1, Math.min(3, Math.ceil(Math.max(0, measuredDistance) / 120)));
-  const walkFrames = cycles * 12;
+  const distance = Math.min(s.walkDistance, Math.max(0, measuredDistance));
+  const walkFrames = distance > 0 ? Math.max(1, Math.ceil(distance / s.walkDistance * 16)) : 0;
   for (let step = 0; step < walkFrames; step++) {
-    beats.push({ offset: s.walkStart + (s.walkEnd - s.walkStart) * performanceTimeAtDistance(step ? (step - .5) / walkFrames : 0), kind: "action", frame: step % 12 });
+    beats.push({ offset: s.walkStart + (s.walkEnd - s.walkStart) * performanceTimeAtDistance(step ? (step - .5) / walkFrames : 0), kind: "action", frame: step });
   }
-  // Each expression/lean is also a complete body drawing. Never lay a standing
-  // chest or a separate mouth on top of folded/rising legs.
+  // One gradual approach, a held scent with two tiny inhalations, then a
+  // gradual retreat. The muzzle never snaps upright between inhalations.
+  const sniffTime = (progress: number) => s.walkEnd + (s.sniffEnd - s.walkEnd) * progress;
+  const sniffProgress = [0, .075, .15, .225, .30, .38, .46, .55, .65, .75, .85, .94];
+  sniffProgress.forEach((progress, frame) => beats.push({ offset: sniffTime(progress), kind: "action", frame: 16 + frame }));
+  const cravingTime = (progress: number) => s.sniffEnd + (s.spinStart - s.sniffEnd) * progress;
   beats.push(
-    { offset: s.walkEnd, kind: "action", frame: 12 },
-    { offset: .438, kind: "action", frame: 13 },
-    { offset: .455, kind: "action", frame: 14 },
-    { offset: .470, kind: "action", frame: 13 },
-    { offset: .489, kind: "action", frame: 12 },
-    { offset: .504, kind: "action", frame: 13 },
-    { offset: .521, kind: "action", frame: 14 },
-    { offset: .538, kind: "action", frame: 13 },
-    { offset: s.sniffEnd, kind: "action", frame: 15 },
-    { offset: .571, kind: "action", frame: 16 },
-    { offset: .585, kind: "action", frame: 17 },
-    { offset: .597, kind: "action", frame: 16 },
-    { offset: .605, kind: "action", frame: 12 },
+    { offset: s.sniffEnd, kind: "action", frame: 28 },
+    { offset: cravingTime(.32), kind: "action", frame: 29 },
+    { offset: cravingTime(.66), kind: "action", frame: 28 },
+    { offset: cravingTime(.88), kind: "action", frame: 31 },
   );
   const turn = framesForSeason(season);
   beats.push(
     { offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(1, turn), kind: "turn", frame: 0 },
-    { offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(turn.length - 1, turn), kind: "action", frame: 12 },
-    { offset: s.greetingStart, kind: "action", frame: 15 },
-    { offset: s.barkStart, kind: "action", frame: 18 },
-    { offset: .804, kind: "action", frame: 19 },
-    { offset: .818, kind: "action", frame: 15 },
-    { offset: .834, kind: "action", frame: 12 },
+    { offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(turn.length - 1, turn), kind: "action", frame: 31 },
+    { offset: s.greetingStart, kind: "action", frame: 28 },
+    { offset: s.barkStart, kind: "action", frame: 30 },
+    { offset: s.flightStart - .008, kind: "action", frame: 31 },
     // Keep the action sheet's neutral drawing between gestures. The exact
     // permanent head/base is restored only when its measured flight starts.
     { offset: s.flightStart, kind: "base", frame: 0 },

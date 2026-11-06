@@ -79,10 +79,12 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   animateCoherentTurn(puppet, season, duration, animate, spinStart, spinEnd);
   move("body-reveal", [
     { offset: 0, opacity: 1 }, { offset: flightStart + .02, opacity: 1 },
-    { offset: .94, opacity: 0 }, { offset: 1, opacity: 0 },
+    { offset: flightStart + .095, opacity: 0 }, { offset: 1, opacity: 0 },
   ]);
 
   const smooth = (t: number) => t * t * (3 - 2 * t);
+  const sniffTime = (progress: number) => walkEnd + (sniffEnd - walkEnd) * progress;
+  const cravingTime = (progress: number) => sniffEnd + (spinStart - sniffEnd) * progress;
   const spinPoint = (t: number) => {
     // A little circle on the ground, with registered side and rear drawings.
     // The pivot keeps its volume instead of rotating an edge-on flat card.
@@ -94,11 +96,11 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   const shadowWalk: Keyframe[] = [];
   for (let step = 1; step <= 48; step++) {
     const t = step / 48;
-    const weight = Math.sin(t * Math.PI);
-    const stride = Math.sin(t * Math.PI * 5.3);
     const x = -walkDistance * (1 - smooth(t));
+    // A calm four-beat walk advances on the ground. Neither the actor nor its
+    // shadow bounce to manufacture motion between the authored paw poses.
     walkFrames.push({ offset: walkStart + (walkEnd - walkStart) * t, transform: `translateX(${x}px)`, easing: "linear" });
-    shadowWalk.push({ offset: walkStart + (walkEnd - walkStart) * t, transform: `translateX(${x}px) scaleX(${1 - Math.abs(stride) * .025 * weight})`, opacity: .22, easing: "linear" });
+    shadowWalk.push({ offset: walkStart + (walkEnd - walkStart) * t, transform: `translateX(${x}px)`, opacity: .22, easing: "linear" });
   }
   const loopFrames: Keyframe[] = [];
   const shadowLoop: Keyframe[] = [];
@@ -111,20 +113,22 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   move("pivot", [
     { offset: 0, transform: `translate(${-walkDistance}px, 0)` },
     { offset: restEnd, transform: `translate(${-walkDistance}px, 0)` },
-    { offset: .17, transform: `translate(${-walkDistance - 4}px, 3px) rotate(-.5deg)` },
     { offset: riseEnd, transform: `translate(${-walkDistance}px, 0)` },
     { offset: walkStart, transform: `translate(${-walkDistance}px, 0)` },
     ...walkFrames,
-    { offset: .457, transform: "translate(4px, 3px) rotate(1.3deg)" },
-    { offset: .488, transform: "translate(1px, 0)" },
-    { offset: .521, transform: "translate(3px, 2px) rotate(.9deg)" },
+    // The complete drawings supply the lean. Inhalations move the whole dog
+    // less than a source pixel; paws stay on their registered floor.
+    { offset: sniffTime(.30), transform: "translateX(.8px)" },
+    { offset: sniffTime(.43), transform: "translateX(.2px)" },
+    { offset: sniffTime(.51), transform: "translateX(.9px)" },
+    { offset: sniffTime(.60), transform: "translateX(.2px)" },
     { offset: sniffEnd, transform: "none" },
-    { offset: .585, transform: "translate(-2px, -4px) rotate(-.7deg)" },
+    { offset: cravingTime(.5), transform: "translateX(-1px)" },
     { offset: spinStart, transform: "none" },
     ...loopFrames,
     { offset: barkStart, transform: "none" },
-    { offset: .78, transform: "translate(0, -3px) rotate(-.6deg)" },
-    { offset: .811, transform: "none" },
+    { offset: barkStart + .015, transform: "translate(0, -2px) rotate(-.3deg)" },
+    { offset: flightStart - .01, transform: "none" },
     { offset: flightStart, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("ground-shadow", [
@@ -136,22 +140,23 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     ...shadowWalk,
     { offset: spinStart, transform: "none", opacity: .22 },
     ...shadowLoop,
-    { offset: .84, opacity: .22, transform: "none" },
-    { offset: .89, opacity: 0, transform: "scale(.8, .7)" },
+    { offset: flightStart - .005, opacity: .22, transform: "none" },
+    { offset: flightStart + .045, opacity: 0, transform: "scale(.8, .7)" },
     { offset: 1, opacity: 0, transform: "scale(.8, .7)" },
   ], "827px 1230px");
 
   move("burger", [
     { offset: 0, opacity: 0 }, { offset: .035, opacity: 1 },
-    { offset: .82, opacity: 1 }, { offset: .853, opacity: 0 }, { offset: 1, opacity: 0 },
+    { offset: flightStart - .025, opacity: 1 }, { offset: flightStart + .008, opacity: 0 }, { offset: 1, opacity: 0 },
   ]);
   move("aroma", [
     { offset: 0, opacity: 0, transform: "translate(5px, 6px)" },
     { offset: walkEnd, opacity: 0, transform: "translate(5px, 6px)" },
-    { offset: .455, opacity: .75, transform: "translate(0, 0)" },
-    { offset: .49, opacity: .3, transform: "translate(-8px, -5px)" },
-    { offset: .521, opacity: .7, transform: "translate(0, 0)" },
-    { offset: .569, opacity: 0, transform: "translate(-8px, -6px)" },
+    { offset: sniffTime(.30), opacity: .60, transform: "translate(0, 0)" },
+    { offset: sniffTime(.43), opacity: .30, transform: "translate(-4px, -3px)" },
+    { offset: sniffTime(.53), opacity: .60, transform: "translate(0, 0)" },
+    { offset: sniffTime(.73), opacity: .20, transform: "translate(-6px, -4px)" },
+    { offset: sniffEnd, opacity: 0, transform: "translate(-8px, -6px)" },
     { offset: 1, opacity: 0, transform: "translate(-8px, -6px)" },
   ]);
 }

@@ -8,12 +8,13 @@ import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season"
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
 import { performanceSourcesForSeason } from "@/components/roo-performance-cels";
+import { performanceBounds } from "@/lib/roo-performance-motion";
 import { unifiedRooCanvas, unifiedHeadMask as headMask } from "@/lib/roo-unified-art";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
 export const rooWelcomeMotion = {
-  duration: 6200,
+  duration: 7200,
   imageTimeout: 1200,
   maxSize: 520,
   viewportWidth: .76,
@@ -28,7 +29,7 @@ export const rooWelcomeMotion = {
 // remounts never replay the welcome. No cookies or sessionStorage are needed.
 let welcomeAttempted = false;
 
-function measureWelcome(anchor: HTMLElement, scene: HTMLElement) {
+function measureWelcome(anchor: HTMLElement, scene: HTMLElement, season: CinemaSeason) {
   const target = anchor.getBoundingClientRect();
   const viewport = window.visualViewport;
   const width = viewport?.width ?? window.innerWidth;
@@ -45,10 +46,11 @@ function measureWelcome(anchor: HTMLElement, scene: HTMLElement) {
   scene.style.setProperty("--roo-size", `${size}px`);
   scene.style.setProperty("--roo-copy-top", `${y + size / 2 + 18}px`);
   const destination = { x: target.left + target.width / 2, y: target.top + target.height / 2, width: target.width };
-  // Reserve a real viewport margin for the whole source canvas at the first
-  // reaction. Small screens shorten the approach, without shrinking Roo.
+  // Transparent atlas padding is not part of Roo. Measuring complete painted
+  // silhouettes leaves room for a visible, grounded approach on phones too.
   const leftEdge = viewport?.offsetLeft ?? 0;
-  const availableApproach = Math.max(0, (x - size / 2 - leftEdge - 10) / sourceScale);
+  const bounds = performanceBounds(season);
+  const availableApproach = Math.max(0, (x - size / 2 + bounds.minX * sourceScale - leftEdge - 10) / sourceScale);
   const walkDistance = Math.min(rooWelcomeStory.walkDistance, availableApproach);
   return { x: headX - destination.x, y: headY - destination.y, scale: headSize / target.width, walkDistance, destination };
 }
@@ -176,7 +178,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       });
       clearTimeout(deadline);
       welcomeAttempted = true;
-      let geometry = measureWelcome(anchor!, scene!);
+      let geometry = measureWelcome(anchor!, scene!, season);
       let elapsedBeforeResize = 0;
       anchor!.dataset.welcomeState = "running";
       scene!.dataset.state = "running";
@@ -207,8 +209,8 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
         { offset: 0, opacity: 0, transform: "translateY(16px)", easing: "ease-out" },
         { offset: rooWelcomeStory.greetingStart, opacity: 0, transform: "translateY(16px)", easing: "cubic-bezier(.16, 1, .3, 1)" },
         { offset: rooWelcomeStory.greetingStart + .018, opacity: 1, transform: "translateY(0)", easing: "ease-in-out" },
-        { offset: .895, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
-        { offset: .97, opacity: 0, transform: "translateY(-12px)" },
+        { offset: rooWelcomeMotion.flightStart + .035, opacity: 1, transform: "translateY(0)", easing: "ease-in" },
+        { offset: .99, opacity: 0, transform: "translateY(-12px)" },
         { offset: 1, opacity: 0, transform: "translateY(-12px)" },
       ], { duration, fill: "both" });
       if (glowRef.current) animate(glowRef.current, [
@@ -248,7 +250,7 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
       const remeasure = () => {
         if (stopped) return;
         try {
-          const next = measureWelcome(anchor!, scene!);
+          const next = measureWelcome(anchor!, scene!, season);
           if (JSON.stringify(next) === JSON.stringify(geometry)) return;
           const elapsed = elapsedBeforeResize + Number(character!.currentTime ?? 0);
           const remaining = duration - elapsed;
