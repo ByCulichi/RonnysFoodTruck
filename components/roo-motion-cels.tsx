@@ -4,12 +4,12 @@ import { getImageProps } from "next/image";
 import { useId } from "react";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason } from "@/lib/welcome-season";
-import { celClip, celTransform, motionFrameTime, riseBodyScale, rooMotionFrames, rooMotionSheets, rooRigRegions, rooRiseFrames, type RooMotionFrame, type RooMotionKind } from "@/lib/roo-motion-cels";
+import { celTransform, motionFrameTime, riseBodyScale, rooMotionFrames, rooMotionSheets, rooRigRegions, rooRiseFrames, type RooMotionFrame, type RooMotionKind } from "@/lib/roo-motion-cels";
 import { PoseBandana, PoseCape, PoseHat } from "@/components/roo-pose-art";
 import { WelcomeWizardHat } from "@/components/welcome-costume";
 import { rooHeadProportion } from "@/lib/roo-welcome-art";
 import { coherentSources } from "@/components/roo-coherent-cels";
-import { ConnectedClothes } from "@/components/roo-connected-costume";
+import { unifiedTailClip, unifiedTailCutout, unifiedChestUnderlap, unifiedTailHeadExclusion, unifiedTailGarmentExclusion } from "@/lib/roo-unified-art";
 
 const legacyMotionSources = Object.fromEntries(Object.entries(rooMotionSheets).map(([name, sheet]) => {
   const { props } = getImageProps({ src: sheet.src, width: sheet.optimizedWidth, height: Math.round(sheet.height / sheet.width * sheet.optimizedWidth), quality: 85, alt: "" });
@@ -74,8 +74,8 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId, co
       {sheets.map(name => { const sheet = rooMotionSheets[name]; return <image key={name} id={`${id}-sheet-${name}`} data-roo-motion-cel={name} width={sheet.width} height={sheet.height} preserveAspectRatio="none" />; })}
       {frames.map((frame, index) => <clipPath key={index} id={`${id}-crop-${index}`}><rect {...frame.crop} /></clipPath>)}
       {kind === "rise" && frames.map((frame, index) => <NeckBlend key={index} id={`${id}-neck-${index}`} frame={frame} />)}
-      <g id={`${id}-cape-front`}><PoseCape id={`${id}-cloth-front`} season={season} placement={identityCape} /></g>
       {kind === "turn" && <>
+        <g id={`${id}-cape-front`}><PoseCape id={`${id}-cloth-front`} season={season} placement={identityCape} /></g>
         <g id={`${id}-cape-rear`}><PoseCape id={`${id}-cloth-rear`} season={season} placement={identityCape} rear /></g>
         <g id={`${id}-bandana-front`}><PoseBandana x={0} y={0} scale={1} rear={false} /></g>
         <g id={`${id}-bandana-rear`}><PoseBandana x={0} y={0} scale={1} rear /></g>
@@ -88,7 +88,7 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId, co
           const view = frame.rear ? "rear" : "front";
           return <g key={index} data-roo-part={`motion-${kind}-frame-${index}`} data-roo-motion-frame={index} visibility="hidden">
             <g mask={kind === "rise" ? `url(#${id}-neck-${index})` : undefined}><g data-roo-frame-art="true" transform={celTransform(frame)}><use data-roo-frame-source="true" href={`#${id}-sheet-${frame.sheet || kind}`} clipPath={`url(#${id}-crop-${index})`} /></g></g>
-            {kind === "rise" ? <ConnectedClothes season={season} sourceId={costumeSourceId} offset={{ x: 0, y: frame.neck.y - rooRiseFrames.at(-1)!.neck.y }} /> : <use href={`#${id}-cape-${view}`} transform={capeTransform(frame)} />}
+            {kind === "turn" && <use href={`#${id}-cape-${view}`} transform={capeTransform(frame)} />}
             {kind === "turn" && <>
               <use href={`#${id}-bandana-${view}`} transform={bandanaTransform(frame)} />
               <use href={`#${id}-hat-${view}`} transform={!frame.rear && useSourceHat ? wizardHatTransform(frame) : headTransform(frame)} />
@@ -99,38 +99,35 @@ export function RooMotionCels({ kind, season = activeWelcomeSeason, sourceId, co
   </g>;
 }
 
-/** The standing model is the exact final rise drawing. Parts overlap under an
- * opaque torso so a knee or shoulder cannot leave a transparent hinge hole. */
-export function RooMotionRig({ season = activeWelcomeSeason, costumeSourceId }: { season?: CinemaSeason; costumeSourceId?: string }) {
-  const id = `roo-motion-rig-${uniqueId(useId())}`;
+/** All standing parts sample the same new complete painting. Only paws and
+ * the visible tail move separately; no neck or garment is cut into a joint. */
+export function RooUnifiedRigDefinitions({ id, season }: { id: string; season: CinemaSeason }) {
   const last = rooRiseFrames.at(-1)!;
-  const sheet = rooMotionSheets.rise;
   const legNames = ["rear-far", "front-far", "rear-near", "front-near"] as const;
-  const part = (name: keyof typeof rooRigRegions) => <g key={name} data-roo-part={name}><use href={`#${id}-skin`} clipPath={`url(#${id}-${name})`} /></g>;
-  // Below this height the leg cutouts move independently; above it the torso
-  // overlaps their upper ends, preserving a natural shoulder/knee silhouette.
   const overlapY = last.ty + 710 * last.scale;
-  return <g data-roo-motion-rig="true" aria-hidden="true">
-    <defs>
-      <NeckBlend id={`${id}-neck`} frame={last} />
-      <g id={`${id}-skin`}><image data-roo-motion-cel="rise" data-roo-motion-rig-source="true" width={sheet.width} height={sheet.height} preserveAspectRatio="none" style={{ transformOrigin: "0px 0px", transformBox: "fill-box", transform: celTransform(last), clipPath: celClip(last) }} /></g>
-      {Object.entries(rooRigRegions).map(([name, points]) => <clipPath key={name} id={`${id}-${name}`}><polygon points={points} /></clipPath>)}
-      <clipPath id={`${id}-below-hips`}><rect x="0" y={overlapY} width="1254" height="1254" /></clipPath>
-      <mask id={`${id}-torso`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
+  return <>
+      {legNames.map(name => <clipPath key={name} id={`${id}-${name}`}><polygon points={rooRigRegions[name]} /></clipPath>)}
+      <clipPath id={`${id}-tail`}><path d={unifiedTailClip} /></clipPath>
+      <mask id={`${id}-tail-only`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
         <rect width="1254" height="1254" fill="white" />
-        <polygon points={rooRigRegions.tail} fill="black" />
-        <g clipPath={`url(#${id}-below-hips)`}>{legNames.map(name => <polygon key={name} points={rooRigRegions[name]} fill="black" />)}</g>
-        {/* Keep just a tapered sliver of the original shoulder beneath the
-            swinging leg. A full horizontal band would leave a static stump. */}
-        <path d="M796 1024Q818 1025 824 1045Q823 1063 809 1082Q805 1065 800 1054Z" fill="white" />
+        <path d={unifiedTailHeadExclusion} fill="black" />
+        {unifiedTailGarmentExclusion[season] && <path d={unifiedTailGarmentExclusion[season]} fill="black" />}
       </mask>
-    </defs>
-    {legNames.map(part)}
+      <clipPath id={`${id}-below-hips`}><rect x="0" y={overlapY} width="1254" height="1254" /></clipPath>
+      <mask id={`${id}-upper-texture`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
+        <rect width="1254" height="1254" fill="white" />
+        <g mask={`url(#${id}-tail-only)`}><path d={unifiedTailCutout} fill="black" /></g>
+        <g clipPath={`url(#${id}-below-hips)`}>{legNames.map(name => <polygon key={name} points={rooRigRegions[name]} fill="black" />)}</g>
+        <path d={unifiedChestUnderlap} fill="white" />
+      </mask>
+  </>;
+}
+
+export function RooMotionRig({ id, sourceId }: { id: string; sourceId: string }) {
+  const part = (name: keyof typeof rooRigRegions) => <g key={name} data-roo-part={name}><use href={`#${sourceId}`} clipPath={`url(#${id}-${name})`} mask={name === "tail" ? `url(#${id}-tail-only)` : undefined} /></g>;
+  return <g data-roo-motion-rig="true" aria-hidden="true">
+    {(["rear-far", "front-far", "rear-near", "front-near"] as const).map(part)}
     {part("tail")}
-    <g data-roo-part="torso">
-      <g mask={`url(#${id}-neck)`}><use href={`#${id}-skin`} mask={`url(#${id}-torso)`} /></g>
-      <ConnectedClothes season={season} sourceId={costumeSourceId} />
-    </g>
   </g>;
 }
 

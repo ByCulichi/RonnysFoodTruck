@@ -34,10 +34,10 @@ import { truckArtwork } from "@/lib/truck-cinema";
 import { RooWelcome } from "@/components/roo-welcome";
 
 const ronnyCharacters = {
-  sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports.png", width: 1536, height: 1024 },
+  sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports-caramel.png", width: 1536, height: 1024 },
   grumpy: { name: halloweenCostumes.zombi.alt, image: halloweenCostumes.zombi.src, width: 1024, height: 1536 },
   host: { name: halloweenCostumes.diablito.alt, image: halloweenCostumes.diablito.src, width: 1024, height: 1536 },
-  nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick.png", width: 1230, height: 1278 },
+  nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick-caramel.png", width: 1230, height: 1278 },
 };
 const navLinks = [
   ["inicio", "Inicio"],
