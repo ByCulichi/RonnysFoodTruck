@@ -70,15 +70,15 @@ El encabezado usa tipografía de Halloween, Ronny visible, navegación con secci
 
 ### Bienvenida cinematográfica de Roo
 
-`components/roo-welcome.tsx` coordina una bienvenida de unos seis segundos. Roo empieza acostado, respira y abre los ojos; primero levanta la cabeza y después apoya sus patas para ponerse de pie. Se acerca a una hamburguesa con tocino, la olfatea dos veces, pone cara de antojo, mueve la cola y da una vuelta completa antes de ladrar mientras aparece «¡Bienvenidos a Ronny’s!». El mismo SVG y la misma cabeza terminan en la caja real de la navegación mediante FLIP, sin clones ni sustitución por otro logo.
+`components/roo-welcome.tsx` coordina una bienvenida de unos siete segundos. Roo empieza acostado, levanta la cabeza y apoya sus patas para ponerse de pie. Camina despacio hacia una hamburguesa con tocino, se acerca a olerla, hace dos inhalaciones pequeñas durante una pausa y se retira suavemente. Pone cara de antojo, mueve la cola y da una vuelta completa antes de ladrar mientras aparece «¡Bienvenidos a Ronny’s!». El mismo SVG y la misma cabeza terminan en la caja real de la navegación mediante FLIP, sin clones ni sustitución por otro logo.
 
 `lib/roo-unified-art.ts` registra cinco bases completas en `public/images/ronny/welcome/unified/`: Halloween, Muertos, Navidad, Año Nuevo y Amor y Amistad. En cada PNG, cara, cuello, pañuelo, capa y pecho están pintados juntos, con hocico caramelo continuo. La subida, la caminata y las expresiones también usan dibujos del personaje entero: no se superpone el pecho de pie sobre las patas acostadas ni se separa la cabeza del cuerpo. Se conservan las imágenes anteriores como recursos de referencia.
 
 El nodo persistente `head` contiene todas las posturas completas y la base exacta que termina en la navegación. Durante la actuación no hay máscaras anatómicas ni piezas independientes de pecho, cuello, ropa o patas. Solo al volar se desvanece el cuerpo de la base y queda su cabeza, que aterriza en la caja medida del encabezado; el recorte estático se restaura al finalizar.
 
-Las bases ya incluyen la proporción de cabeza aprobada; no aplicar una segunda escala `.86`. `lib/roo-performance-art.ts` registra las diez hojas nuevas de `public/images/ronny/welcome/performance/`: dieciséis dibujos completos para levantarse y veinte para caminar, olfatear, emocionarse y ladrar, por cada temporada. Cada recorte abarca una figura entera y pasa por los márgenes transparentes del atlas. Su registro calibra tamaño, hocico y apoyo en el suelo sin deformar partes del personaje. La cámara comparte suelo `1230` y hocico de referencia `(950, 679)` con `unifiedRooPlacement` y el giro. La cabecera usa `unifiedRooCanvas.head` y `unifiedHeadMask`; el destino final se mide en el elemento real del menú.
+Las bases ya incluyen la proporción de cabeza aprobada; no aplicar una segunda escala `.86`. `lib/roo-performance-art.ts` registra las hojas de `public/images/ronny/welcome/performance/`: dieciséis dibujos completos para levantarse y treinta y dos de acción por temporada. Las nuevas `roo-*-grounded-action.png` incluyen dieciséis posturas de paso en cuatro tiempos, doce para acercarse/oler/retirarse y cuatro de emoción/ladrido. Las hojas anteriores se conservan como referencia. Cada recorte abarca una figura entera y pasa por los márgenes transparentes del atlas. Su registro calibra tamaño, hocico y apoyo en el suelo sin deformar partes del personaje. La cámara comparte suelo `1230` y hocico de referencia `(950, 679)` con `unifiedRooPlacement` y el giro. La cabecera usa `unifiedRooCanvas.head` y `unifiedHeadMask`; el destino final se mide en el elemento real del menú.
 
-`components/roo-performance-cels.tsx` selecciona una sola postura completa y opaca por instante. `lib/roo-performance-motion.ts` relaciona los cambios de paso con la distancia recorrida: las pantallas pequeñas necesitan menos ciclos. `components/roo-coherent-cels.tsx` conserva las 34 claves aprobadas del giro, con cabeza, cuello, cuerpo y ropa completos en dos hojas por temporada, sin reflejar adornos ni cola. Solo se preparan cinco imágenes de la temporada activa: base, subida, acción y dos mitades del giro. Las cuatro hojas temporales se liberan al terminar. Los recursos y módulos anteriores se conservan como referencia y no se descargan para esta actuación.
+`components/roo-performance-cels.tsx` selecciona una sola postura completa y opaca por instante. `lib/roo-performance-motion.ts` relaciona los cambios de paso con la distancia recorrida: un ciclo tranquilo de cuatro pasos acompaña unos 320 px del lienzo, sin repetir varias carreras. El recorrido permitido se mide con la silueta completa de las posturas, excluyendo el margen transparente que antes limitaba el avance móvil. `components/roo-coherent-cels.tsx` conserva las 34 claves aprobadas del giro, con cabeza, cuello, cuerpo y ropa completos en dos hojas por temporada, sin reflejar adornos ni cola. Solo se preparan cinco imágenes de la temporada activa: base, subida, acción y dos mitades del giro. Las cuatro hojas temporales se liberan al terminar. Los recursos y módulos anteriores se conservan como referencia y no se descargan para esta actuación.
 
 Los efectos WAAPI son finitos y comparten reloj. Solo se anima la transformación de dibujos enteros y su selección nativa; no se animan recortes ni se funden dos personajes semitransparentes. No se añaden dependencias ni bucles JavaScript por fotograma. La tocinera de `components/welcome-burger.tsx` sigue quieta sobre su mesa de madera con mantel crema y cuadros tinto, fuera del pivote caminante.
 
@@ -92,7 +92,7 @@ Ajustes de `rooWelcomeMotion` al principio del componente:
 
 | Valor | Efecto | Actual |
 | --- | --- | --- |
-| `duration` | Duración objetivo de la secuencia en ms | `6200` |
+| `duration` | Duración objetivo de la secuencia en ms | `7200` |
 | `maxSize` | Alto máximo del cuerpo completo | `520` |
 | `viewportWidth` / `viewportHeight` | Límites adaptables del tamaño | `.76` / `.64` |
 | `centerY` | Centro vertical como fracción del viewport | `.40` |
@@ -103,16 +103,16 @@ Ajustes de `rooWelcomeMotion` al principio del componente:
 
 | Fase | Intervalo |
 | --- | --- |
-| Reposo y respiración | `0–.09` |
-| Cabeza alerta y levantarse | `.09–.235` |
-| Caminata | `.24–.425` |
-| Dos olfateos | `.425–.555` |
-| Antojo y cola alegre | `.555–.61` |
-| Vuelta con vistas laterales y espalda | `.61–.745` |
-| Bienvenida y ladrido | Desde `.752` / `.765` |
-| Vuelo hacia la navegación | `.845–1` |
+| Reposo | `0–.075` |
+| Cabeza alerta y levantarse | `.075–.20` |
+| Caminata en cuatro tiempos | `.205–.435` |
+| Acercamiento, pausa al oler y retirada | `.435–.64` |
+| Antojo y cola alegre | `.64–.695` |
+| Vuelta con vistas laterales y espalda | `.695–.81` |
+| Bienvenida y ladrido | Desde `.815` / `.83` |
+| Vuelo hacia la navegación | `.875–1` |
 
-La postura neutral de la hoja de acción enlaza los gestos; la base permanente se restaura al comenzar el vuelo en `.845`. Su cuerpo se conserva hasta `.865` y se desvanece progresivamente hasta `.94`, sin alterar la proporción de la cabeza. La caja final mantiene 76 px (60 px en móvil); su destino se mide con `getBoundingClientRect()` y se reajusta al cambiar el viewport, conservando la pose visible. `walkDistance: 320` es el máximo del recorrido en píxeles del lienzo; las pantallas pequeñas lo acortan para mantener al personaje completo.
+La postura neutral de la hoja de acción enlaza los gestos; la base permanente se restaura al comenzar el vuelo en `.875`. Su cuerpo se conserva hasta `.895` y se desvanece progresivamente hasta `.97`, sin alterar la proporción de la cabeza. La caja final mantiene 76 px (60 px en móvil); su destino se mide con `getBoundingClientRect()` y se reajusta al cambiar el viewport, conservando la pose visible. `walkDistance: 320` es el máximo del recorrido en píxeles del lienzo; el límite adaptable usa los bordes pintados del personaje completo para mantenerlo dentro de la pantalla y permitir un avance visible también en celular.
 
 La bienvenida se ejecuta con cada documento nuevo o refresh; no se repite con anclas ni navegación interna. Respeta movimiento reducido y no bloquea scroll ni foco. Tocar, usar teclado o empezar a desplazarse revela inmediatamente la página. Sin JavaScript, con recursos fallidos/lentos o al ocultar la pestaña queda la cabeza estática y funcional. Los recursos expresivos solo se preparan para una bienvenida elegible; todos los efectos, temporizadores y observadores se liberan al terminar. La espera de imágenes puede acortar ligeramente la duración visual para mantener la entrada ágil.
 
