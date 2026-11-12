@@ -214,10 +214,10 @@ export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSe
         { offset: 1, opacity: 0, transform: "translateY(-12px)" },
       ], { duration, fill: "both" });
       if (glowRef.current) animate(glowRef.current, [
-        { opacity: 0, transform: "scale(.88) rotate(-8deg)" },
+        { opacity: 0, transform: "rotate(-8deg)" },
         { offset: .2, opacity: 1, transform: "scale(1) rotate(0deg)" },
-        { offset: rooWelcomeStory.spinEnd, opacity: 1, transform: "scale(1.03) rotate(3deg)" },
-        { opacity: 0, transform: "scale(1.1) rotate(5deg)" },
+        { offset: rooWelcomeStory.spinEnd, opacity: 1, transform: "scale(1) rotate(3deg)" },
+        { opacity: 0, transform: "rotate(5deg)" },
       ], { duration, fill: "both", easing: "ease-in-out" });
       // Every joint and movie shares one timeline origin. This keeps pose and
       // visibility boundaries aligned during playback as well as paused review.

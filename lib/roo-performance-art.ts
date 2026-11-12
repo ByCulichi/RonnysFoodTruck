@@ -317,3 +317,12 @@ export const performanceArtwork: Record<CinemaSeason, PerformanceArtwork> = {
   newyear: { rise: newyearRise, action: newyearAction },
   valentines: { rise: valentinesRise, action: valentinesAction },
 };
+
+/** A single standing camera, measured from painted walking silhouettes.
+ * The geometric midpoint balances the smallest/largest authored cel without
+ * giving one extreme pose control over the entire sequence. */
+export function performanceStandingStature(season: CinemaSeason) {
+  const sheet = performanceArtwork[season].action;
+  const heights = sheet.registrations.slice(0, 16).map(frame => (frame.groundY - frame.crop.y - 5) * (frame.scale ?? sheet.scale));
+  return Math.sqrt(Math.min(...heights) * Math.max(...heights));
+}
