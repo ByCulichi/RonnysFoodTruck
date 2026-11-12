@@ -7,6 +7,7 @@ import { WelcomeBurger } from "@/components/welcome-burger";
 import { RooCoherentTurn, animateCoherentTurn } from "@/components/roo-coherent-cels";
 import { RooPerformanceCels, animatePerformanceCels, performanceSelectionKeys } from "@/components/roo-performance-cels";
 import { performancePlan } from "@/lib/roo-performance-motion";
+import { baseHandoffTransform } from "@/lib/roo-pose-handoff";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
 import { unifiedRooArtwork, unifiedHeadLocalOutline, unifiedRooPlacementTransform } from "@/lib/roo-unified-art";
@@ -72,11 +73,23 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
   const plan = performancePlan(season, walkDistance);
   for (const kind of ["rise", "action", "base", "turn"] as const) {
     const part = kind === "base" ? "base-pose" : `motion-${kind}`;
-    const keys = performanceSelectionKeys(plan, beat => beat.kind === kind).map(key => ({ ...key, opacity: key.visibility === "visible" ? 1 : 0 }));
+    // Each complete cel already owns its exact visibility window. A second
+    // discrete gate on its atlas layer can round the same boundary differently
+    // and leave a blank frame at a handoff. Keep prepared atlas layers open;
+    // cancellation restores their original opacity=0 and hidden cel attributes.
+    const keys = kind === "base"
+      ? performanceSelectionKeys(plan, beat => beat.kind === kind).map(key => ({ ...key, opacity: key.visibility === "visible" ? 1 : 0 }))
+      : [{ offset: 0, opacity: 1 }, { offset: 1, opacity: 1 }];
     move(part, keys);
   }
   animatePerformanceCels(puppet, season, duration, animate, plan);
-  animateCoherentTurn(puppet, season, duration, animate, spinStart, spinEnd);
+  animateCoherentTurn(puppet, season, duration, animate, plan);
+  const handoff = baseHandoffTransform(season);
+  move("base-pose", [
+    { offset: 0, transform: handoff },
+    { offset: flightStart, transform: handoff, easing: "cubic-bezier(.4, 0, .2, 1)" },
+    { offset: 1, transform: "matrix(1, 0, 0, 1, 0, 0)" },
+  ], "0px 0px");
   move("body-reveal", [
     { offset: 0, opacity: 1 }, { offset: flightStart + .02, opacity: 1 },
     { offset: flightStart + .095, opacity: 0 }, { offset: 1, opacity: 0 },
@@ -108,7 +121,7 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     const t = step / 36, point = spinPoint(t);
     const lift = Math.abs(Math.sin(t * Math.PI * 5)) * 5 * Math.sin(t * Math.PI);
     loopFrames.push({ offset: spinStart + (spinEnd - spinStart) * t, transform: `translate(${point.x}px, ${point.y - lift}px) rotate(${point.tilt}deg)`, easing: "linear" });
-    shadowLoop.push({ offset: spinStart + (spinEnd - spinStart) * t, transform: `translate(${point.x}px, ${point.y * .2}px) scale(${1 - Math.sin(t * Math.PI) * .08}, ${1 - Math.sin(t * Math.PI) * .12})`, opacity: .22 - lift * .003, easing: "linear" });
+    shadowLoop.push({ offset: spinStart + (spinEnd - spinStart) * t, transform: `translate(${point.x}px, ${point.y * .2}px)`, opacity: .22, easing: "linear" });
   }
   move("pivot", [
     { offset: 0, transform: `translate(${-walkDistance}px, 0)` },
@@ -132,9 +145,9 @@ export function animateRooPuppet(puppet: SVGSVGElement, duration: number, animat
     { offset: flightStart, transform: "none" }, { offset: 1, transform: "none" },
   ]);
   move("ground-shadow", [
-    { offset: 0, transform: `translateX(${-walkDistance}px) scale(1.02, 1.12)`, opacity: 0 },
-    { offset: .025, transform: `translateX(${-walkDistance}px) scale(1.02, 1.12)`, opacity: .25 },
-    { offset: riseStart, transform: `translateX(${-walkDistance}px) scale(1.02, 1.12)`, opacity: .25 },
+    { offset: 0, transform: `translateX(${-walkDistance}px)`, opacity: 0 },
+    { offset: .025, transform: `translateX(${-walkDistance}px)`, opacity: .22 },
+    { offset: riseStart, transform: `translateX(${-walkDistance}px)`, opacity: .22 },
     { offset: riseEnd, transform: `translateX(${-walkDistance}px) scale(1, 1)`, opacity: .22 },
     { offset: walkStart, transform: `translateX(${-walkDistance}px)`, opacity: .22 },
     ...shadowWalk,

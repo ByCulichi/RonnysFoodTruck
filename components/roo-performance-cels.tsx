@@ -7,6 +7,8 @@ import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { performanceArtwork, type PerformanceKind } from "@/lib/roo-performance-art";
 import { performanceFrames, performanceFrameTransform, risePoseCorrection, type PerformanceBeat } from "@/lib/roo-performance-motion";
 import { coherentSources } from "@/components/roo-coherent-cels";
+import { performanceSelectionKeys } from "@/lib/roo-pose-selection";
+export { performanceSelectionKeys } from "@/lib/roo-pose-selection";
 import { activeWelcomeSeason } from "@/lib/welcome-season";
 
 export function performanceSourcesForSeason(season: CinemaSeason): Record<string, string> {
@@ -37,21 +39,6 @@ export function RooPerformanceCels({ season, kind }: { season: CinemaSeason; kin
 }
 
 export type RegisterPerformanceAnimation = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => Animation;
-
-/** Coalesce consecutive states so only real changes are keyframed. Discrete
- * visibility/display has an opacity-free fallback and does not blend poses. */
-export function performanceSelectionKeys(plan: readonly PerformanceBeat[], selected: (beat: PerformanceBeat) => boolean): Keyframe[] {
-  const state = (visible: boolean) => ({ visibility: visible ? "visible" : "hidden", display: visible ? "inline" : "none" });
-  let previous = selected(plan[0]);
-  const keys: Keyframe[] = [{ offset: 0, ...state(previous), easing: "steps(1, end)" }];
-  for (const beat of plan.slice(1)) {
-    const next = selected(beat);
-    if (next !== previous) keys.push({ offset: beat.offset, ...state(next), easing: "steps(1, end)" });
-    previous = next;
-  }
-  if (keys.at(-1)!.offset !== 1) keys.push({ offset: 1, ...state(previous) });
-  return keys;
-}
 
 export function animatePerformanceCels(puppet: SVGSVGElement, season: CinemaSeason, duration: number, animate: RegisterPerformanceAnimation, plan: readonly PerformanceBeat[]) {
   for (const kind of ["rise", "action"] as const) {

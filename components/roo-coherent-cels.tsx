@@ -2,8 +2,10 @@
 
 import { getImageProps } from "next/image";
 import { useId } from "react";
+import { performanceSelectionKeys } from "@/lib/roo-pose-selection";
+import type { PerformanceBeat } from "@/lib/roo-performance-motion";
 import type { CinemaSeason } from "@/lib/truck-cinema";
-import { coherentTurnArtwork, coherentFrameTime, coherentTurnTransform, framesForSeason } from "@/lib/roo-coherent-turn";
+import { coherentTurnArtwork, coherentTurnTransform, framesForSeason } from "@/lib/roo-coherent-turn";
 
 export function coherentSources(season: CinemaSeason) {
   const art = coherentTurnArtwork[season];
@@ -33,17 +35,12 @@ export function RooCoherentTurn({ season }: { season: CinemaSeason }) {
 }
 
 type RegisterAnimation = (element: Element, frames: Keyframe[], options: KeyframeAnimationOptions) => Animation;
-export function animateCoherentTurn(puppet: SVGSVGElement, season: CinemaSeason, duration: number, animate: RegisterAnimation, start: number, end: number) {
+export function animateCoherentTurn(puppet: SVGSVGElement, season: CinemaSeason, duration: number, animate: RegisterAnimation, plan: readonly PerformanceBeat[]) {
   const frames = framesForSeason(season);
-  const state = (visible: boolean) => ({ visibility: visible ? "visible" : "hidden", display: visible ? "inline" : "none" });
   frames.forEach((_, i) => {
     const target = puppet.querySelector<SVGElement>(`[data-roo-part="motion-turn-frame-${i}"]`);
     if (!target) return;
-    const time = (index: number) => start + (end - start) * coherentFrameTime(index, frames);
-    const keys: Keyframe[] = [{ offset: 0, ...state(i === 0), easing: "steps(1, end)" }];
-    if (i) keys.push({ offset: time(i), ...state(true), easing: "steps(1, end)" });
-    if (i < frames.length - 1) keys.push({ offset: time(i + 1), ...state(false), easing: "steps(1, end)" });
-    keys.push({ offset: 1, ...state(i === frames.length - 1) });
+    const keys = performanceSelectionKeys(plan, beat => beat.kind === "turn" && beat.frame === i);
     animate(target, keys, { duration, fill: "both", easing: "linear" });
   });
 }

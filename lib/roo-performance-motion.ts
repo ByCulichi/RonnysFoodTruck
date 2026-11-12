@@ -1,6 +1,7 @@
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
-import { performanceArtwork, performanceCamera, type PerformanceKind, type PerformanceSheet } from "@/lib/roo-performance-art";
+import { performanceArtwork, performanceCamera, performanceStandingStature, type PerformanceKind, type PerformanceSheet } from "@/lib/roo-performance-art";
+export { performanceStandingStature } from "@/lib/roo-performance-art";
 import { coherentFrameTime, framesForSeason } from "@/lib/roo-coherent-turn";
 
 export type PerformancePose = { kind: PerformanceKind | "base" | "turn"; frame: number };
@@ -14,12 +15,27 @@ export type RegisteredPerformanceFrame = {
   muzzle: { x: number; y: number };
 };
 
+/** The transparent five-pixel crop gutter is not part of Roo's stature.
+ * Match painted silhouettes as well as facial landmarks: an eye-only fit can
+ * keep the eyes steady while the hat/body appear to grow between drawings.
+ * Keep the existing facial calibration within five percent. */
+function stableActionScale(season: CinemaSeason, index: number, original: number) {
+  const frame = performanceArtwork[season].action.registrations[index];
+  const progress = index >= 16 && index <= 27 ? (index - 16) / 11 : 0;
+  // Sniffing may lower the silhouette gently. It must not enlarge the camera.
+  const lean = 1 - .035 * Math.sin(progress * Math.PI) ** 2;
+  const target = performanceStandingStature(season) * lean;
+  const paintedHeight = Math.max(1, frame.groundY - frame.crop.y - 5);
+  return original * Math.max(.951, Math.min(1.049, target / (paintedHeight * original)));
+}
+
 export function performanceFrames(season: CinemaSeason, kind: PerformanceKind): RegisteredPerformanceFrame[] {
   const sheet = performanceArtwork[season][kind];
   return sheet.registrations.map((frame, index) => {
     // Authored camera variation is calibrated on the complete character. The
     // same uniform matrix moves every pixel, including clothes and all paws.
-    const scale = frame.scale ?? sheet.scale;
+    const originalScale = frame.scale ?? sheet.scale;
+    const scale = kind === "action" ? stableActionScale(season, index, originalScale) : originalScale;
     const x = sheet.bodyCenterX - frame.footCenterX * scale;
     const y = performanceCamera.floor - frame.groundY * scale;
     return { index, crop: frame.crop, scale, x, y, muzzle: { x: x + frame.muzzle[0] * scale, y: y + frame.muzzle[1] * scale } };
@@ -79,9 +95,11 @@ export function performancePlan(season: CinemaSeason, measuredDistance: number):
     { offset: cravingTime(.88), kind: "action", frame: 31 },
   );
   const turn = framesForSeason(season);
+  // One schedule owns BOTH the visible layer and every turn cel. Independent
+  // layer/cel boundaries could disagree at the first/last rotation frame.
+  turn.forEach((_, frame) => beats.push({ offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(frame, turn), kind: "turn", frame }));
   beats.push(
-    { offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(1, turn), kind: "turn", frame: 0 },
-    { offset: s.spinStart + (s.spinEnd - s.spinStart) * coherentFrameTime(turn.length - 1, turn), kind: "action", frame: 31 },
+    { offset: s.spinEnd, kind: "action", frame: 31 },
     { offset: s.greetingStart, kind: "action", frame: 28 },
     { offset: s.barkStart, kind: "action", frame: 30 },
     { offset: s.flightStart - .008, kind: "action", frame: 31 },
@@ -93,11 +111,8 @@ export function performancePlan(season: CinemaSeason, measuredDistance: number):
   return beats.sort((a, b) => a.offset - b.offset);
 }
 
-/** Correct only the complete visible drawing around its floor. The cap keeps
- * authored proportions intact while smoothing the small cel-to-cel rise. */
+/** Follow the lateral nose arc without a camera zoom. The authored rise
+ * already registers its complete silhouette and its paws to the same floor. */
 export function risePoseCorrection(frame: RegisteredPerformanceFrame, desired: { x: number; y: number }) {
-  const floor = performanceCamera.floor;
-  const gap = Math.max(1, floor - frame.muzzle.y);
-  const scale = Math.max(.98, Math.min(1.02, (floor - desired.y) / gap));
-  return `matrix(${scale}, 0, 0, ${scale}, ${desired.x - frame.muzzle.x * scale}, ${floor * (1 - scale)})`;
+  return `translateX(${desired.x - frame.muzzle.x}px)`;
 }

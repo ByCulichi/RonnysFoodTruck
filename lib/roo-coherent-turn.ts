@@ -1,4 +1,5 @@
 import type { CinemaSeason } from "@/lib/truck-cinema";
+import { performanceArtwork, performanceStandingStature } from "@/lib/roo-performance-art";
 
 /** A complete connected drawing: head, neck, body and outfit share pixels. */
 export type CoherentTurnRegistration = {
@@ -138,14 +139,27 @@ export const coherentTurnArtwork: Record<CinemaSeason, CoherentTurnArtwork> = {
   },
 };
 
-function registeredFrame(sheet: CoherentTurnSheet, source: CoherentTurnFrame["source"], index: number, angle: number): CoherentTurnFrame {
+// Painted top of the reference front-facing cel in each ORIGINAL turn sheet.
+// Measurements exclude transparent padding and thin generation grid pixels.
+const turnReferenceTop: Record<CinemaSeason, readonly [number, number]> = {
+  halloween: [13, 1189], muertos: [11, 1189], christmas: [11, 1197],
+  newyear: [12, 1196], valentines: [12, 1192],
+};
+
+function registeredFrame(season: CinemaSeason, sheet: CoherentTurnSheet, source: CoherentTurnFrame["source"], index: number, angle: number): CoherentTurnFrame {
   const registration = sheet.registrations[index];
-  const tx = coherentTurnCamera.bodyCenterX - registration.footCenterX * sheet.scale;
-  const ty = coherentTurnCamera.floor - registration.groundY * sheet.scale;
+  const action = performanceArtwork[season].action;
+  const stature = performanceStandingStature(season);
+  const reference = sheet.registrations[source === "outward" ? 2 : 16];
+  // One camera per sheet preserves the approved rotation. Its front-facing
+  // endpoint now has the same painted stature/support centre as the walk.
+  const scale = stature / (reference.groundY - turnReferenceTop[season][source === "outward" ? 0 : 1]);
+  const tx = action.bodyCenterX - registration.footCenterX * scale;
+  const ty = coherentTurnCamera.floor - registration.groundY * scale;
   return {
     index, source, angle, turnProgress: (angle - coherentTurnCamera.startAngle) / 360,
-    crop: registration.crop, scale: sheet.scale, tx, ty,
-    ...(registration.muzzle ? { muzzle: { x: tx + registration.muzzle[0] * sheet.scale, y: ty + registration.muzzle[1] * sheet.scale } } : {}),
+    crop: registration.crop, scale, tx, ty,
+    ...(registration.muzzle ? { muzzle: { x: tx + registration.muzzle[0] * scale, y: ty + registration.muzzle[1] * scale } } : {}),
   };
 }
 
@@ -159,9 +173,9 @@ const outwardAngles = [12.5, 25, 37.5, 50, 60, 70, 80, 85, 90, 101.25, 112.5, 12
 export function framesForSeason(season: CinemaSeason): CoherentTurnFrame[] {
   const art = coherentTurnArtwork[season];
   return [
-    ...art.outward.registrations.slice(2).map((_, i) => registeredFrame(art.outward, "outward", i + 2, outwardAngles[i + 2])),
-    ...art.returning.registrations.slice(1).map((_, i) => registeredFrame(art.returning, "returning", i + 1, 180 + (i + 1) * 11.25)),
-    ...art.outward.registrations.slice(0, 3).map((_, i) => registeredFrame(art.outward, "outward", i, 360 + outwardAngles[i])),
+    ...art.outward.registrations.slice(2).map((_, i) => registeredFrame(season, art.outward, "outward", i + 2, outwardAngles[i + 2])),
+    ...art.returning.registrations.slice(1).map((_, i) => registeredFrame(season, art.returning, "returning", i + 1, 180 + (i + 1) * 11.25)),
+    ...art.outward.registrations.slice(0, 3).map((_, i) => registeredFrame(season, art.outward, "outward", i, 360 + outwardAngles[i])),
   ];
 }
 
