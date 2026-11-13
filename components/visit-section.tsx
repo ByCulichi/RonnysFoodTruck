@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { ArrowUpRight, CalendarDays, MapPin, Maximize2, MessageSquare, Phone, Star } from "lucide-react";
 import { business, contactDetailsVisible, contactPlaceholders, contactPresentationVisible } from "@/lib/business";
+import { truckArtwork } from "@/lib/truck-cinema";
+import { activeSeason, activeSeasonDetails } from "@/lib/welcome-season";
 import { VisitNightScenery } from "@/components/visit-night-scenery";
 import { VisitMapPlaceholder } from "@/components/visit-map-placeholder";
 import "./visit-section.css";
@@ -27,7 +29,7 @@ export function VisitSection() {
         </div>
         <div className="visit-live-map">{contactDetailsVisible && business.mapsEmbedUrl ? <iframe title="Ubicación de Ronny’s Food Truck en Google Maps" src={business.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /> : <VisitMapPlaceholder />}</div>
         <div className="visit-actions">
-          {contactDetailsVisible ? <a className="visit-truck-photo" href="/images/hero/food-truck.jpg" target="_blank" rel="noopener noreferrer" aria-label="Ampliar foto real del truck"><Image src="/images/hero/food-truck.jpg" alt="Food truck rojo de Ronny’s con su logo y letrero de crepas" fill sizes="(max-width: 360px) 96px, (max-width: 700px) 112px, (max-width: 1000px) 116px, 156px" style={{ objectFit: "cover", objectPosition: "center 85%" }} /><Maximize2 size={18} aria-hidden="true" /></a> : <div className="visit-truck-photo visit-preview-art"><Image src="/images/seasons/ronny-halloween-foreground-caramel.png" alt="Ilustración del food truck rojo de Ronny’s en Halloween" fill sizes="(max-width: 360px) 96px, (max-width: 700px) 112px, (max-width: 1000px) 116px, 156px" style={{ objectFit: "cover", objectPosition: "38% center" }} /></div>}
+          {contactDetailsVisible ? <a className="visit-truck-photo" href="/images/hero/food-truck.jpg" target="_blank" rel="noopener noreferrer" aria-label="Ampliar foto real del truck"><Image src="/images/hero/food-truck.jpg" alt="Food truck rojo de Ronny’s con su logo y letrero de crepas" fill sizes="(max-width: 360px) 96px, (max-width: 700px) 112px, (max-width: 1000px) 116px, 156px" style={{ objectFit: "cover", objectPosition: "center 85%" }} /><Maximize2 size={18} aria-hidden="true" /></a> : <div className="visit-truck-photo visit-preview-art"><Image src={truckArtwork[activeSeason].src} alt={activeSeasonDetails.heroAlt} fill sizes="(max-width: 360px) 96px, (max-width: 700px) 112px, (max-width: 1000px) 116px, 156px" style={{ objectFit: "cover", objectPosition: "38% center" }} /></div>}
           <div className="visit-google-actions">
             {mapAvailable ? <a className="button button-gold visit-map-button" href={business.mapsUrl} target="_blank" rel="noopener noreferrer">{mapAction}</a> : <button type="button" disabled className="button button-gold visit-map-button" aria-label="Cómo llegar, próximamente">{mapAction}</button>}
             {contactDetailsVisible && business.reviewsUrl ? <a className="visit-review-link" href={business.reviewsUrl} target="_blank" rel="noopener noreferrer" aria-label="Ver reseñas en Google"><MessageSquare size={19} aria-hidden="true" />Ver reseñas</a> : <button type="button" disabled className="visit-review-link" aria-label="Ver reseñas, próximamente"><MessageSquare size={19} aria-hidden="true" />Ver reseñas</button>}

@@ -1,17 +1,20 @@
 "use client";
 
 import { useRef, useState, type CSSProperties } from "react";
-import { ArrowUpRight, Check, Ghost, X } from "lucide-react";
+import { ArrowUpRight, Check, Ghost, Flower2, X } from "lucide-react";
 import { business, contactDetailsVisible, contactPresentationVisible } from "@/lib/business";
 import { dishes, type Dish } from "@/lib/menu";
 import { FoodIcon } from "@/components/food-icon";
 import { MenuCard } from "@/components/menu-card";
 import { MenuPhoto } from "@/components/menu-photo";
-import { getMenuCostume, halloweenCostumes } from "@/lib/ronny-costumes";
+import { getMenuCostume, activeCostumes } from "@/lib/ronny-costumes";
 import { menuCategories, getMenuCategory, type MenuCategory } from "@/lib/menu-categories";
 import { RonnyOutfitStage } from "@/components/ronny-outfit-stage";
 import "./interactive-menu.css";
 import "./ronny-menu-orbit.css";
+
+import { activeSeason, activeSeasonDetails } from "@/lib/welcome-season";
+const SeasonIcon = activeSeason === "muertos" ? Flower2 : Ghost;
 
 const getPrice = (dish: Dish) => Math.min(...dish.options.map(({ price }) => price));
 const whatsappAvailable = contactDetailsVisible && /^https:\/\/wa\.me\/\d{8,15}(?:\?[^#\s]*)?$/.test(business.whatsappUrl);
@@ -24,7 +27,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
   const choices = dishes.filter((dish) => getMenuCategory(dish) === category);
   const categoryLabel = menuCategories.find(({ id }) => id === category)!.label;
   const costume = getMenuCostume(active);
-  const guide = halloweenCostumes[costume];
+  const guide = activeCostumes[costume];
   const selectedIndex = choices.findIndex(({ name }) => name === active.name);
   // Reserve a full-width detail row immediately below the selected product row.
   // CSS chooses the matching row for its column count; every thumbnail keeps
@@ -51,7 +54,7 @@ export function InteractiveMenu({ selection, onSelect }: { selection: string; on
     <div className="interactive-menu">
       <div className="compact-menu-heading">
         <div>
-          <div className="eyebrow"><Ghost size={18} aria-hidden="true" /> HALLOWEEN EN EL TRUCK</div>
+          <div className="eyebrow"><SeasonIcon size={18} aria-hidden="true" /> {activeSeasonDetails.kicker}</div>
           <h2 id="compact-menu-title">Antojos de <em>otro mundo.</em></h2>
         </div>
       </div>

@@ -11,6 +11,7 @@ import {
   Menu,
   PawPrint,
   Ghost,
+  Flower2,
   UtensilsCrossed,
   Phone,
   MessageCircle,
@@ -24,19 +25,25 @@ import { VisitSection } from "@/components/visit-section";
 import { SiteFooter } from "@/components/site-footer";
 import { RonnySeasons } from "@/components/ronny-seasons";
 import { InteractiveMenu } from "@/components/interactive-menu";
-import { halloweenCostumes } from "@/lib/ronny-costumes";
+import { activeCostumes } from "@/lib/ronny-costumes";
 import { MenuCarta } from "@/components/menu-carta";
 import { HalloweenFairground, HalloweenMarketScene } from "@/components/halloween-market-scene";
 import { FridayPromo } from "@/components/friday-promo";
 import { MenuNightScenery } from "@/components/menu-night-scenery";
 import { TruckCinema } from "@/components/truck-cinema";
 import { truckArtwork } from "@/lib/truck-cinema";
+import { activeSeason, activeSeasonDetails } from "@/lib/welcome-season";
+import { MuertosMarketScene } from "@/components/muertos-market-scene";
+import "./season-campaign.css";
 import { RooWelcome } from "@/components/roo-welcome";
+
+const SeasonIcon = activeSeason === "muertos" ? Flower2 : Ghost;
+const heroArtwork = truckArtwork[activeSeason];
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports-caramel.png", width: 1536, height: 1024 },
-  grumpy: { name: halloweenCostumes.zombi.alt, image: halloweenCostumes.zombi.src, width: 1024, height: 1536 },
-  host: { name: halloweenCostumes.diablito.alt, image: halloweenCostumes.diablito.src, width: 1024, height: 1536 },
+  grumpy: { name: activeCostumes.zombi.alt, image: activeCostumes.zombi.src, width: 1024, height: 1536 },
+  host: { name: activeCostumes.diablito.alt, image: activeCostumes.diablito.src, width: 1024, height: 1536 },
   nose: { name: "Ronny con chamarrita roja lamiéndose la nariz", image: "/images/ronny/ronny-nose-lick-caramel.png", width: 1230, height: 1278 },
 };
 const navLinks = [
@@ -111,7 +118,7 @@ export default function Home() {
     setMenuSelection(name);
   }
   return (
-    <div className="ronny-site halloween-season" data-navigation-open={mobileOpen}>
+    <div className={`ronny-site halloween-season campaign-${activeSeason}`} data-active-season={activeSeason} data-navigation-open={mobileOpen}>
       <a className="skip-link" href="#contenido">
         Saltar al contenido
       </a>
@@ -120,7 +127,7 @@ export default function Home() {
           <a href="#inicio" className="brand" aria-label="Ronny’s, inicio">
             <RooWelcome />
             <span>
-              RONNY’S<span className="brand-sub"><Ghost size={12} aria-hidden="true" /> FOOD TRUCK · HALLOWEEN</span>
+              RONNY’S<span className="brand-sub"><SeasonIcon size={12} aria-hidden="true" /> FOOD TRUCK · {activeSeasonDetails.name.toLocaleUpperCase("es-MX")}</span>
             </span>
             <span className="brand-dot">®</span>
           </a>
@@ -165,14 +172,14 @@ export default function Home() {
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
             <Image
-              src={truckArtwork.halloween.src}
-              alt="Roo de hechicero junto al truck rojo iluminado, entre calabazas, niebla y árboles oscuros de Halloween"
-              width={truckArtwork.halloween.width}
-              height={truckArtwork.halloween.height}
+              src={heroArtwork.src}
+              alt={activeSeasonDetails.heroAlt}
+              width={heroArtwork.width}
+              height={heroArtwork.height}
               priority
               sizes="100vw"
             />
-            <TruckCinema season="halloween" />
+            <TruckCinema season={activeSeason} />
           </div>
           <div className="night-lights" aria-hidden="true">
             <svg viewBox="0 0 1440 150" preserveAspectRatio="none">
@@ -183,14 +190,14 @@ export default function Home() {
             </svg>
           </div>
           <div className="night-heading shell">
-            <p className="night-kicker"><span /> HALLOWEEN EN EL TRUCK <span /></p>
+            <p className="night-kicker"><span /> {activeSeasonDetails.kicker} <span /></p>
             <h1 id="night-title">Ronny’s<span className="sr-only"> Food Truck</span></h1>
           </div>
           <div className="night-bottom shell">
             <div className="night-welcome">
-              <span className="night-label"><Ghost size={15} /> RONNY YA SE PUSO EL DISFRAZ</span>
-              <h2>Mucho sabor.<br /><em>Un toque de Halloween.</em></h2>
-              <p>Waffles, malteadas, crepas y snacks. Nuestro carrito rojo te espera con Ronny vestido para Halloween.</p>
+              <span className="night-label"><SeasonIcon size={15} /> ROO YA SE PUSO EL DISFRAZ</span>
+              <h2>Mucho sabor.<br /><em>{activeSeasonDetails.heroLine}</em></h2>
+              <p>{activeSeasonDetails.heroDescription}</p>
             </div>
             <div className="night-invitation">
               <a className="button button-gold" href="#menu">Ver el menú <ArrowUpRight size={21} /></a>
@@ -209,9 +216,9 @@ export default function Home() {
         </div>
 
         <div className="halloween-market">
-          <HalloweenMarketScene />
+          {activeSeason === "muertos" ? <MuertosMarketScene /> : <HalloweenMarketScene />}
           <section className="halloween-menu-scene" id="menu" aria-labelledby="compact-menu-title">
-            <MenuNightScenery />
+            {activeSeason !== "muertos" && <MenuNightScenery />}
             <div className="menu-section compact-menu-section shell section-space">
               <InteractiveMenu selection={menuSelection} onSelect={setMenuSelection} />
               <MenuCarta selection={menuSelection} onSelect={viewCartaDish} />
@@ -219,7 +226,7 @@ export default function Home() {
           </section>
 
           <div className="market-fairground">
-            <HalloweenFairground />
+            {activeSeason !== "muertos" && <HalloweenFairground />}
             <section className="promo-delivery shell" id="domicilio" aria-label={contactPresentationVisible ? "Promoción y pedidos a domicilio" : "Promoción y menú"}>
               <FridayPromo />
               <div className="promo-delivery-service">

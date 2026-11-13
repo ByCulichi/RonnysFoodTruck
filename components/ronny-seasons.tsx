@@ -6,14 +6,18 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Flower2, Ghost, Heart, PartyPopper
 import { TruckCinema } from "@/components/truck-cinema";
 import { truckArtwork, truckCinema } from "@/lib/truck-cinema";
 import "./ronny-seasons.css";
+import { activeSeason } from "@/lib/welcome-season";
 
-const seasons = [
-  { id: "halloween", title: "Halloween", state: "TEMPORADA ACTUAL", image: truckArtwork.halloween.src, alt: "Ronny de hechicero junto al truck rojo iluminado, con calabazas y un bosque oscuro de Halloween", description: "Roo de hechicero. Una noche de miedo en el truck.", action: "Se antoja una visita", Icon: Ghost },
-  { id: "muertos", title: "Día de Muertos", state: "NOVIEMBRE · LO QUE SIGUE", image: truckArtwork.muertos.src, alt: "Ronny de catrín con maquillaje de calavera y el truck rojo entre cempasúchil y luz naranja de noviembre", description: "Roo de catrín, cempasúchil y tradición.", action: "Mientras llega, al menú", Icon: Flower2 },
+const chapters = [
+  { id: "halloween", title: "Halloween", state: "OCTUBRE · TEMPORADA ANTERIOR", image: truckArtwork.halloween.src, alt: "Ronny de hechicero junto al truck rojo iluminado, con calabazas y un bosque oscuro de Halloween", description: "Roo de hechicero. Una noche de miedo en el truck.", action: "Un antojo al menú", Icon: Ghost },
+  { id: "muertos", title: "Día de Muertos", state: "NOVIEMBRE · DÍA DE MUERTOS", image: truckArtwork.muertos.src, alt: "Ronny de catrín con maquillaje de calavera y el truck rojo entre cempasúchil y luz naranja de noviembre", description: "Roo de catrín, cempasúchil y tradición.", action: "Mientras llega, al menú", Icon: Flower2 },
   { id: "christmas", title: "Navidad", state: "DICIEMBRE · MÁS ADELANTE", image: truckArtwork.christmas.src, alt: "Ronny de Santa con chocolate caliente junto al truck rojo, entre nieve y pinos en una noche azul", description: "Roo de Santa. Nieve, luces y algo calientito.", action: "Mientras llega, al menú", Icon: Snowflake },
   { id: "newyear", title: "¡Hola, 2027!", state: "ENERO · AÑO NUEVO", image: truckArtwork.newyear.src, alt: "Roo de gala recibe el 2027 junto al food truck rojo, entre luces doradas y fuegos artificiales", description: "Año nuevo, los mismos antojos. Roo y el truck reciben el 2027.", action: "Empieza por el menú", Icon: PartyPopper },
   { id: "valentines", title: "Amor y amistad", state: "FEBRERO · AMOR Y AMISTAD", image: truckArtwork.valentines.src, alt: "Roo de cupido con atuendo cereza, alas y una bandeja para compartir junto al truck rojo decorado con corazones", description: "Roo de cupido. El mejor antojo es el que se comparte.", action: "Un antojo para compartir", Icon: Heart },
 ] as const;
+// Current campaign first, then upcoming chapters; the earlier archive closes the rail.
+const activeIndex = chapters.findIndex(chapter => chapter.id === activeSeason);
+const seasons = [...chapters.slice(activeIndex), ...chapters.slice(0, activeIndex)];
 
 export function RonnySeasons() {
   const railRef = useRef<HTMLDivElement>(null);
@@ -65,9 +69,9 @@ export function RonnySeasons() {
   return <section className="seasons-section shell section-space" id="temporadas" aria-labelledby="seasons-title">
     <div className="seasons-heading"><div><div className="eyebrow"><Sparkles size={17} aria-hidden="true" /> RONNY’S POR TEMPORADAS</div><h2 id="seasons-title">Cambian los disfraces.<br /><em>El antojo se queda.</em></h2></div></div>
     <div ref={railRef} className="seasons-grid" id="season-cards" onScroll={updateCurrent} role="group" aria-label="Temporadas de Ronny’s">
-      {seasons.map(({ id, title, state, image, alt, description, action, Icon }, index) => <article key={id} className={`season-chapter season-${id}`} aria-labelledby={`${id}-title`}>
-        <div className="season-banner"><Image src={image} alt={alt} width={truckArtwork[id].width} height={truckArtwork[id].height} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 50vw, 640px" /><TruckCinema season={id} />{id === "christmas" && <div ref={snowRef} className="season-snow" aria-hidden="true" data-playing="false">{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</div>}<span className={`season-state ${index===0?"season-state-current":"season-state-next"}`}><span className="season-image-name"><Icon size={15} aria-hidden="true" /><strong>{truckCinema[id].season}</strong></span><small>{state}</small></span></div>
-        <div className="season-copy"><Icon size={21} aria-hidden="true" /><h3 id={`${id}-title`}>{title}</h3><p>{description}</p><a href="#menu">{action} <ArrowUpRight size={16} aria-hidden="true" /></a></div>
+      {seasons.map(({ id, title, state, image, alt, description, action, Icon }) => <article key={id} className={`season-chapter season-${id}`} aria-labelledby={`${id}-title`}>
+        <div className="season-banner"><Image src={image} alt={alt} width={truckArtwork[id].width} height={truckArtwork[id].height} sizes="(max-width: 600px) 90vw, (max-width: 1000px) 50vw, 640px" /><TruckCinema season={id} />{id === "christmas" && <div ref={snowRef} className="season-snow" aria-hidden="true" data-playing="false">{Array.from({ length: 6 }, (_, i) => <span key={i} />)}</div>}<span className={`season-state ${id === activeSeason ? "season-state-current" : "season-state-next"}`}><span className="season-image-name"><Icon size={15} aria-hidden="true" /><strong>{truckCinema[id].season}</strong></span><small>{id === activeSeason ? `TEMPORADA ACTUAL · ${state.split(" · ")[0]}` : state}</small></span></div>
+        <div className="season-copy"><Icon size={21} aria-hidden="true" /><h3 id={`${id}-title`}>{title}</h3><p>{description}</p><a href="#menu">{id === activeSeason ? "Al menú de temporada" : action} <ArrowUpRight size={16} aria-hidden="true" /></a></div>
       </article>)}
     </div>
     <div className="season-navigation" role="group" aria-label="Recorrer temporadas">

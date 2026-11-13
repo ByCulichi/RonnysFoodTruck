@@ -1,0 +1,15 @@
+/* Campaign accents share the existing layout; the approved art stays intact. */
+.campaign-muertos { --gold: #ffc36e; }
+.campaign-muertos .site-header { background: linear-gradient(110deg, #24111cf7, #31151cf7 60%, #21111bf7); border-bottom-color: #ed9f4b55; }
+.campaign-muertos .night-hero { background: #21101c; }
+.campaign-muertos .night-scene::after { background: linear-gradient(180deg, #27101b8c, #27101b10 35%, transparent 48%, #21101c35 65%, #1e101d 100%); }
+.campaign-muertos .night-kicker, .campaign-muertos .night-label { color: #ffd396; }
+.campaign-muertos .night-lights ellipse:nth-child(3n) { fill: #ffb85b; filter: drop-shadow(0 0 8px #ed882a) drop-shadow(0 0 16px #b35229); }
+.campaign-muertos .flavor-strip { background: linear-gradient(180deg, #1e101d, #2c1521); }
+.campaign-muertos .halloween-market { background: radial-gradient(ellipse at 0 15%, #ac512b3d, transparent 38%), radial-gradient(ellipse at 100% 55%, #d7852b26, transparent 35%), linear-gradient(180deg, #2c1521, #1d1120 42%, #2c1523 73%, #1a101d); }
+.campaign-muertos .halloween-market::before { opacity: .25; }
+.campaign-muertos .site-footer { background: radial-gradient(ellipse at 15% 70%, #ad5b2a30, transparent 60%), linear-gradient(180deg, #1a101d, #2d1720 65%, #190f1c); }
+.campaign-muertos .season-state-current { box-shadow: 0 0 0 1px #ffb95c55, 0 4px 18px #391e0d33; }
+@media (max-width: 600px) {
+  .campaign-muertos .night-scene::after { background: linear-gradient(180deg, #2c111c66, transparent 36%, #21101c10 64%, #1e101d 100%); }
+}

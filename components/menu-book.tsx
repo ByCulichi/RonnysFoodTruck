@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEven
 import Image from "next/image";
 import { ArrowUpRight, PawPrint } from "lucide-react";
 import { TruckMenuSheet, TruckStamp, truckSheets } from "@/components/truck-menu-sheet";
-import { halloweenCostumes, truckSheetCostumes } from "@/lib/ronny-costumes";
+import { activeCostumes, truckSheetCostumes } from "@/lib/ronny-costumes";
 
 export type BookPage = "cover" | "back" | number;
 type LeafBack = number;
@@ -27,9 +27,9 @@ function MenuCover({ back = false }: { back?: boolean }) {
 }
 
 const reverseArt = [
-  { costume: halloweenCostumes[truckSheetCostumes[0]], food: "waffle" },
-  { costume: halloweenCostumes[truckSheetCostumes[1]], food: "papas" },
-  { costume: halloweenCostumes[truckSheetCostumes[2]], food: "cafe" },
+  { costume: activeCostumes[truckSheetCostumes[0]], food: "waffle" },
+  { costume: activeCostumes[truckSheetCostumes[1]], food: "papas" },
+  { costume: activeCostumes[truckSheetCostumes[2]], food: "cafe" },
 ] as const;
 
 // The facing illustration belongs to the same category as the readable right page.

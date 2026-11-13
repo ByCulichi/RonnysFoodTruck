@@ -1,4 +1,5 @@
 import type { Dish } from "@/lib/menu";
+import { activeSeason } from "@/lib/welcome-season";
 import { getMenuCategory } from "@/lib/menu-categories";
 
 export const halloweenCostumes = {
@@ -45,3 +46,17 @@ export function getMenuCostume(dish: Pick<Dish, "group" | "kind">): HalloweenCos
   if (dish.group === "Bebidas") return "fantasma";
   return dish.kind === "Snacks" ? "zombi" : "diablito";
 }
+
+// Reuse the owner's approved full-body transparent catrín, keeping category
+// selection and the original Halloween collection available for later campaigns.
+const catrin = {
+  src: "/images/seasons/ronny-dia-de-muertos.png",
+  alt: "Roo de catrín con traje negro y morado, sombrero con cempasúchil, pañuelo rojo y pan de muerto en una bandeja",
+};
+export const activeCostumes: Record<HalloweenCostume, { src: string; alt: string; title: string; message: string }> = activeSeason === "muertos" ? {
+  bruja: { ...catrin, title: "Dulces para recordar.", message: "Crepas, waffles y postres para compartir." },
+  fantasma: { ...catrin, title: "Un sorbito de tradición.", message: "Malteadas, frappés e ICE para acompañar tu antojo." },
+  vampiro: { ...catrin, title: "Un cafecito con cariño.", message: "Americano, capuchino y moka. Algo calientito para esta noche." },
+  diablito: { ...catrin, title: "Un antojo con mucho corazón.", message: "Hot dogs, hamburguesas y banderillas para compartir." },
+  zombi: { ...catrin, title: "Sabores que se recuerdan.", message: "Alitas, papas y snacks para disfrutar juntos." },
+} : halloweenCostumes;
