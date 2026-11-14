@@ -1,7 +1,9 @@
 /* Campaign accents share the existing layout; the approved art stays intact. */
 .campaign-muertos { --gold: #ffc36e; }
 .campaign-muertos .site-header { background: linear-gradient(110deg, #24111cf7, #31151cf7 60%, #21111bf7); border-bottom-color: #ed9f4b55; }
-.campaign-muertos .night-hero { background: #21101c; }
+.campaign-muertos .night-hero { min-height: clamp(650px, calc(100svh - 90px), 780px); background: radial-gradient(ellipse at 50% 40%, #6e321e44, transparent 65%), #21101c; }
+.campaign-muertos .night-scene .night-hero-picture { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.campaign-muertos .night-scene .night-hero-artwork { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; object-fit: contain; object-position: 50% 38%; mask-image: none; }
 .campaign-muertos .night-scene::after { background: linear-gradient(180deg, #27101b8c, #27101b10 35%, transparent 48%, #21101c35 65%, #1e101d 100%); }
 .campaign-muertos .night-kicker, .campaign-muertos .night-label { color: #ffd396; }
 .campaign-muertos .night-lights ellipse:nth-child(3n) { fill: #ffb85b; filter: drop-shadow(0 0 8px #ed882a) drop-shadow(0 0 16px #b35229); }
@@ -10,6 +12,89 @@
 .campaign-muertos .halloween-market::before { opacity: .25; }
 .campaign-muertos .site-footer { background: radial-gradient(ellipse at 15% 70%, #ad5b2a30, transparent 60%), linear-gradient(180deg, #1a101d, #2d1720 65%, #190f1c); }
 .campaign-muertos .season-state-current { box-shadow: 0 0 0 1px #ffb95c55, 0 4px 18px #391e0d33; }
+
+/* The local Shrikhand used by the printed menu brings a festive, rounded
+   November wordmark; other campaigns keep their own display lettering. */
+.campaign-muertos { --campaign-display: "Truck Titles", Georgia, serif; }
+.campaign-muertos .halloween-hero .night-heading h1 {
+  font-family: var(--campaign-display);
+  font-size: clamp(76px, 9vw, 142px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  padding-right: .04em;
+  color: #fff0cc;
+  -webkit-text-stroke: 2px #6b2832;
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 #8b3e27, 0 7px 18px #28101b99;
+}
+.campaign-muertos .brand > span:not(.brand-dot) {
+  font-family: var(--campaign-display);
+  font-size: 28px;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+}
+.campaign-muertos .night-welcome h2 {
+  font-family: var(--campaign-display);
+  font-weight: 400;
+  font-size: clamp(28px, 2.7vw, 40px);
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+.campaign-muertos .night-welcome h2 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffcb75;
+}
+.campaign-muertos :is(.compact-menu-heading h2, .carta-heading h3, .carta-ronny-copy h3, .seasons-heading h2, .season-copy h3, .promo-delivery-copy h2, .friday-promo-copy h3, .visit-heading h2, .footer-message h2, .footer-explore h3, .footer-refresh-social > h3, .footer-brand > span) {
+  font-family: var(--campaign-display);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+  text-shadow: 0 2px 0 #6b2e224d;
+  text-wrap: balance;
+}
+.campaign-muertos .compact-menu-heading h2 { font-size: clamp(32px, 3.6vw, 50px); }
+.campaign-muertos .compact-menu-heading h2 em { font: inherit; letter-spacing: inherit; }
+.campaign-muertos .carta-heading h3 { font-size: clamp(28px, 3vw, 40px); }
+.campaign-muertos .carta-ronny-copy h3 { font-size: 23px; }
+.campaign-muertos .seasons-heading h2 { font-size: clamp(28px, 3vw, 42px); }
+.campaign-muertos .halloween-market .season-copy h3 { font-size: clamp(25px, 2.5vw, 32px); }
+.campaign-muertos .promo-delivery-copy h2 { font-size: clamp(24px, 2.2vw, 30px); }
+.campaign-muertos .friday-promo-copy h3 { font-size: clamp(23px, 2.1vw, 30px); }
+.campaign-muertos .visit-heading h2 { font-size: clamp(30px, 3vw, 42px); }
+.campaign-muertos .footer-message h2 { font-size: clamp(32px, 3.5vw, 50px); }
+.campaign-muertos .footer-message h2 > span { letter-spacing: inherit; }
+.campaign-muertos :is(.footer-explore h3, .footer-refresh-social > h3) { font-size: 27px; }
+.campaign-muertos .footer-brand > span { font-size: 26px; }
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .campaign-muertos .night-hero { min-height: 660px; }
+  .campaign-muertos .night-bottom { padding-top: 260px; padding-bottom: 36px; }
+}
+@media (max-width: 700px) {
+  /* The masthead is already opaque: avoid repainting a blur while scrolling. */
+  .campaign-muertos .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
 @media (max-width: 600px) {
+  .campaign-muertos .header-inner { gap: 6px; }
+  .campaign-muertos .brand { min-width: 0; gap: 6px; }
+  .campaign-muertos .brand > span:not([class]) { min-width: 0; font-size: clamp(18px, 5vw, 22px); }
+  .campaign-muertos .brand .brand-sub { max-width: 110px; white-space: normal; font-size: 6px; letter-spacing: .5px; line-height: 1.3; }
+  .campaign-muertos .night-hero { min-height: 0; }
+  .campaign-muertos .night-scene .night-hero-artwork { top: 92px; bottom: auto; height: auto; object-position: 50% 50%; mask-image: linear-gradient(180deg, transparent, #000 8%, #000 95%, transparent); }
   .campaign-muertos .night-scene::after { background: linear-gradient(180deg, #2c111c66, transparent 36%, #21101c10 64%, #1e101d 100%); }
+  .campaign-muertos .halloween-hero .night-heading h1 { font-size: clamp(54px, 17vw, 96px); -webkit-text-stroke-width: 1px; margin-block: 13px 15px; }
+  .campaign-muertos .halloween-hero .night-welcome h2 { font-size: clamp(27px, 7vw, 34px); }
+  .campaign-muertos .night-welcome h2 em { margin-left: 0; }
+  .campaign-muertos .compact-menu-heading h2 { font-size: clamp(29px, 7.5vw, 38px); }
+  .campaign-muertos .carta-heading h3 { font-size: clamp(25px, 6.6vw, 32px); }
+  .campaign-muertos .carta-ronny-copy h3 { font-size: 19px; }
+  .campaign-muertos .halloween-market .seasons-heading h2 { font-size: clamp(25px, 6.6vw, 32px); }
+  .campaign-muertos .halloween-market .season-copy h3 { font-size: clamp(23px, 6.1vw, 28px); }
+  .campaign-muertos .footer-message h2 { font-size: clamp(31px, 8vw, 46px); }
+  .campaign-muertos .footer-brand > span { font-size: 23px; }
 }

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { truckArtwork, truckCinema, type CinemaSeason } from "@/lib/truck-cinema";
+import { truckArtwork, truckCinema, type CinemaSeason, type TruckArtwork } from "@/lib/truck-cinema";
 import { MoviePreviewArt } from "@/components/movie-preview-art";
 import "./truck-cinema.css";
 
-export function TruckCinema({ season = "halloween" }: { season?: CinemaSeason }) {
+export function TruckCinema({ season = "halloween", artwork }: { season?: CinemaSeason; artwork?: TruckArtwork }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [placement, setPlacement] = useState<CSSProperties>();
   const [playing, setPlaying] = useState(false);
@@ -13,10 +13,15 @@ export function TruckCinema({ season = "halloween" }: { season?: CinemaSeason })
 
   useEffect(() => {
     const scene = rootRef.current?.parentElement;
-    const image = scene?.querySelector<HTMLImageElement>(":scope > img");
+    const image = scene?.querySelector<HTMLImageElement>(":scope > img, :scope > picture > img");
     if (!scene || !image) return;
-    const { width: naturalWidth, height: naturalHeight, screen } = truckArtwork[season];
     function position() {
+      // A picture can switch its source on resize. Register the illustration
+      // actually selected by the browser, rather than assuming a breakpoint.
+      const selected = new URL(image!.currentSrc || image!.src, window.location.href);
+      const source = selected.searchParams.get("url") ?? selected.pathname;
+      const registration = artwork && source === artwork.src ? artwork : truckArtwork[season];
+      const { width: naturalWidth, height: naturalHeight, screen } = registration;
       const box = image!.getBoundingClientRect(), parent = scene!.getBoundingClientRect();
       const style = getComputedStyle(image!);
       // The hero uses cover; the cards keep the entire illustration with contain.
@@ -29,7 +34,7 @@ export function TruckCinema({ season = "halloween" }: { season?: CinemaSeason })
     resize.observe(scene); resize.observe(image);
     image.addEventListener("load", position);
     return () => { resize.disconnect(); image.removeEventListener("load", position); };
-  }, [season]);
+  }, [season, artwork]);
 
   useEffect(() => {
     const root = rootRef.current;

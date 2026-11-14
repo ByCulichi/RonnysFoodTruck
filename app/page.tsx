@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import {
   ArrowDown,
   House,
@@ -31,7 +31,7 @@ import { HalloweenFairground, HalloweenMarketScene } from "@/components/hallowee
 import { FridayPromo } from "@/components/friday-promo";
 import { MenuNightScenery } from "@/components/menu-night-scenery";
 import { TruckCinema } from "@/components/truck-cinema";
-import { truckArtwork } from "@/lib/truck-cinema";
+import { truckArtwork, heroTruckArtwork } from "@/lib/truck-cinema";
 import { activeSeason, activeSeasonDetails } from "@/lib/welcome-season";
 import { MuertosMarketScene } from "@/components/muertos-market-scene";
 import "./season-campaign.css";
@@ -39,6 +39,9 @@ import { RooWelcome } from "@/components/roo-welcome";
 
 const SeasonIcon = activeSeason === "muertos" ? Flower2 : Ghost;
 const heroArtwork = truckArtwork[activeSeason];
+const wideHeroArtwork = heroTruckArtwork[activeSeason];
+const heroImageProps = getImageProps({ src: heroArtwork.src, width: heroArtwork.width, height: heroArtwork.height, alt: activeSeasonDetails.heroAlt, sizes: "100vw" }).props;
+const wideHeroImageProps = wideHeroArtwork ? getImageProps({ src: wideHeroArtwork.src, width: wideHeroArtwork.width, height: wideHeroArtwork.height, alt: activeSeasonDetails.heroAlt, sizes: "100vw" }).props : undefined;
 
 const ronnyCharacters = {
   sport: { name: "Ronny con su playerita roja Adidas descansando sobre su cobija", image: "/images/ronny/ronny-red-sports-caramel.png", width: 1536, height: 1024 },
@@ -171,15 +174,18 @@ export default function Home() {
       <main id="contenido">
         <section className="night-hero halloween-hero" id="inicio" aria-labelledby="night-title">
           <div className="night-scene">
-            <Image
+            {wideHeroArtwork && wideHeroImageProps ? <picture className="night-hero-picture">
+              <source media="(min-width: 601px)" srcSet={wideHeroImageProps.srcSet} sizes="100vw" width={wideHeroArtwork.width} height={wideHeroArtwork.height} />
+              <img {...heroImageProps} className="night-hero-artwork" loading="eager" fetchPriority="high" decoding="async" />
+            </picture> : <Image
               src={heroArtwork.src}
               alt={activeSeasonDetails.heroAlt}
               width={heroArtwork.width}
               height={heroArtwork.height}
               priority
               sizes="100vw"
-            />
-            <TruckCinema season={activeSeason} />
+            />}
+            <TruckCinema season={activeSeason} artwork={wideHeroArtwork} />
           </div>
           <div className="night-lights" aria-hidden="true">
             <svg viewBox="0 0 1440 150" preserveAspectRatio="none">

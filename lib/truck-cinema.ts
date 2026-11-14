@@ -8,6 +8,12 @@ export const truckCinema = {
   valentines: { season: "Amor y amistad", title: "Para compartir" },
 } as const;
 export type CinemaSeason = keyof typeof truckCinema;
+export type TruckArtwork = {
+  src: string;
+  width: number;
+  height: number;
+  screen: { x: number; y: number; width: number; height: number };
+};
 
 // Original artwork pixels, independent of Next Image's optimized raster size.
 // Each TV sits on the back wall inside its own truck's serving window.
@@ -18,3 +24,9 @@ export const truckArtwork = {
   newyear: { src: "/images/seasons/ronny-newyear-2027.png", width: 1448, height: 1086, screen: { x: 653, y: 444, width: 122, height: 68.625 } },
   valentines: { src: "/images/seasons/ronny-amor-amistad.png", width: 1448, height: 1086, screen: { x: 598, y: 368, width: 122, height: 68.625 } },
 } as const;
+
+// The wide masthead steps the camera back instead of enlarging/cropping Roo.
+// Cards and the mobile masthead keep their original approved 4:3 illustration.
+export const heroTruckArtwork: Partial<Record<CinemaSeason, TruckArtwork>> = {
+  muertos: { src: "/images/hero/ronny-muertos-panorama.png", width: 1942, height: 809, screen: { x: 836, y: 303, width: 176, height: 99 } },
+};
