@@ -1,6 +1,7 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { activeSeason } from "@/lib/welcome-season";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        {activeSeason === "muertos" && <link rel="preload" href="/fonts/shrikhand-latin-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />}
+      </head>
       <body className={`font-sans antialiased`}>
         {children}
         <Analytics />

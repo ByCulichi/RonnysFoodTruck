@@ -1,0 +1,44 @@
+.muertos-market-decoration {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+  user-select: none;
+  background:
+    radial-gradient(ellipse at 0 14%, #bd662b29, transparent 35%),
+    radial-gradient(ellipse at 100% 48%, #b24a3b24, transparent 32%),
+    radial-gradient(ellipse at 4% 85%, #ab69292b, transparent 32%);
+}
+.muertos-papel-canopy {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: clamp(110px, 12vw, 190px);
+  opacity: .3;
+}
+.muertos-flower-branch {
+  position: absolute;
+  width: clamp(140px, 15vw, 220px);
+  opacity: .27;
+}
+.muertos-flower-branch > svg { display: block; width: 100%; height: auto; }
+.muertos-flowers-one { left: -55px; top: 7%; rotate: -10deg; }
+.muertos-flowers-two { right: -55px; top: 31%; transform: scaleX(-1); rotate: 8deg; }
+.muertos-flowers-three { left: -65px; top: 56%; rotate: -8deg; }
+.muertos-flowers-four { right: -65px; bottom: 3%; transform: scaleX(-1); rotate: 12deg; }
+.muertos-ofrenda-candles {
+  position: absolute;
+  left: 0;
+  bottom: 1%;
+  width: clamp(100px, 13vw, 190px);
+  height: auto;
+  opacity: .25;
+}
+@media (max-width: 760px) {
+  .muertos-papel-canopy { height: 110px; opacity: .22; }
+  .muertos-flower-branch { width: 120px; opacity: .17; }
+  .muertos-flowers-one, .muertos-flowers-three { left: -65px; }
+  .muertos-flowers-two, .muertos-flowers-four { right: -65px; }
+  .muertos-ofrenda-candles { left: -35px; opacity: .17; }
+}

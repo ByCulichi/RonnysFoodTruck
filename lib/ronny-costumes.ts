@@ -1,4 +1,5 @@
 import type { Dish } from "@/lib/menu";
+import { activeSeason } from "@/lib/welcome-season";
 import { getMenuCategory } from "@/lib/menu-categories";
 
 export const halloweenCostumes = {
@@ -45,3 +46,45 @@ export function getMenuCostume(dish: Pick<Dish, "group" | "kind">): HalloweenCos
   if (dish.group === "Bebidas") return "fantasma";
   return dish.kind === "Snacks" ? "zombi" : "diablito";
 }
+
+// Category outfits share Roo's identity while celebrating different November
+// traditions. All original catrín poses remain available as intact assets.
+const muertosCostumes = {
+  bruja: {
+    src: "/images/ronny/muertos/roo-calaverita-dulces.png",
+    width: 1024, height: 1536,
+    alt: "Roo de calaverita con traje de huesitos y flores, corona de cempasúchil y un waffle con fresas y helado",
+    title: "Dulces para recordar.",
+    message: "Crepas, waffles y postres para compartir.",
+  },
+  fantasma: {
+    src: "/images/ronny/muertos/roo-alebrije-frias.png",
+    width: 1024, height: 1536,
+    alt: "Roo de alebrije con atuendo turquesa y morado, alas decorativas y una malteada de fresa, saludando con una patita",
+    title: "Un sorbito de otro mundo.",
+    message: "Malteadas, frappés e ICE para acompañar tu antojo.",
+  },
+  vampiro: {
+    src: "/images/ronny/muertos/roo-panadero-calientes.png",
+    width: 1024, height: 1536,
+    alt: "Roo de panadero de ofrenda sentado con su delantal crema, gorro de cempasúchil y una taza de café entre sus patitas",
+    title: "Un cafecito con cariño.",
+    message: "Americano, capuchino y moka. Algo calientito para esta noche.",
+  },
+  diablito: {
+    src: "/images/ronny/muertos/roo-catrin-salados.png",
+    width: 1024, height: 1536,
+    alt: "Roo de catrín con una patita en la cintura y una hamburguesa con tocino en una bandeja",
+    title: "Un antojo con mucho corazón.",
+    message: "Hot dogs, hamburguesas y banderillas para compartir.",
+  },
+  zombi: {
+    src: "/images/ronny/muertos/roo-mariachi-snacks.png",
+    width: 1024, height: 1536,
+    alt: "Roo de mariachi con traje vino bordado en dorado y sombrero de cempasúchil, ofreciendo papas y nachos en una charola de cuadros rojos",
+    title: "Sabores que se recuerdan.",
+    message: "Alitas, papas y snacks para disfrutar juntos.",
+  },
+} as const;
+
+export const activeCostumes: Record<HalloweenCostume, { src: string; alt: string; title: string; message: string; width?: number; height?: number }> = activeSeason === "muertos" ? muertosCostumes : halloweenCostumes;

@@ -9,7 +9,7 @@ import type { CinemaSeason } from "@/lib/truck-cinema";
 import { WelcomeTruck } from "@/components/welcome-truck";
 import { performanceSourcesForSeason } from "@/components/roo-performance-cels";
 import { performanceBounds } from "@/lib/roo-performance-motion";
-import { unifiedRooCanvas, unifiedHeadMask as headMask } from "@/lib/roo-unified-art";
+import { unifiedCanvasForSeason, unifiedMaskForSeason } from "@/lib/roo-unified-art";
 import "./roo-welcome.css";
 
 /** Times are milliseconds. Geometry is measured again when the viewport changes. */
@@ -30,6 +30,7 @@ export const rooWelcomeMotion = {
 let welcomeAttempted = false;
 
 function measureWelcome(anchor: HTMLElement, scene: HTMLElement, season: CinemaSeason) {
+  const unifiedRooCanvas = unifiedCanvasForSeason(season);
   const target = anchor.getBoundingClientRect();
   const viewport = window.visualViewport;
   const width = viewport?.width ?? window.innerWidth;
@@ -88,6 +89,8 @@ function welcomeFrames({ x, y, scale }: ReturnType<typeof measureWelcome>): Keyf
 }
 
 export function RooWelcome({ season = activeWelcomeSeason }: { season?: CinemaSeason }) {
+  const unifiedRooCanvas = unifiedCanvasForSeason(season);
+  const headMask = unifiedMaskForSeason(season);
   const rooPuppetSources = puppetSourcesForSeason(season);
   const anchorRef = useRef<HTMLSpanElement>(null);
   const imageRef = useRef<SVGSVGElement>(null);

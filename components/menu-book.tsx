@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEven
 import Image from "next/image";
 import { ArrowUpRight, PawPrint } from "lucide-react";
 import { TruckMenuSheet, TruckStamp, truckSheets } from "@/components/truck-menu-sheet";
-import { halloweenCostumes, truckSheetCostumes } from "@/lib/ronny-costumes";
+import { activeCostumes, truckSheetCostumes } from "@/lib/ronny-costumes";
 
 export type BookPage = "cover" | "back" | number;
 type LeafBack = number;
@@ -27,9 +27,9 @@ function MenuCover({ back = false }: { back?: boolean }) {
 }
 
 const reverseArt = [
-  { costume: halloweenCostumes[truckSheetCostumes[0]], food: "waffle" },
-  { costume: halloweenCostumes[truckSheetCostumes[1]], food: "papas" },
-  { costume: halloweenCostumes[truckSheetCostumes[2]], food: "cafe" },
+  { costume: activeCostumes[truckSheetCostumes[0]], food: "waffle" },
+  { costume: activeCostumes[truckSheetCostumes[1]], food: "papas" },
+  { costume: activeCostumes[truckSheetCostumes[2]], food: "cafe" },
 ] as const;
 
 // The facing illustration belongs to the same category as the readable right page.
@@ -41,7 +41,7 @@ function MenuReverse({ page }: { page: LeafBack }) {
     <div className="menu-reverse-content">
       <span className="menu-reverse-rule"><PawPrint size={22} /> RONNY’S FOOD TRUCK <PawPrint size={22} /></span>
       <h4>{title}</h4>
-      {<div className="menu-reverse-emblem"><Image src={art.costume.src} alt="" width={1024} height={1536} loading="eager" sizes="(max-width: 600px) 180px, 300px" /></div>}
+      {<div className="menu-reverse-emblem"><Image src={art.costume.src} alt="" width={art.costume.width ?? 1024} height={art.costume.height ?? 1536} loading="eager" sizes="(max-width: 600px) 180px, 300px" /></div>}
       <div className="menu-reverse-food" aria-hidden="true">
         <PawPrint size={30} />
         {<Image src={`/images/menu/illustrations/${art.food}.png`} alt="" width={1254} height={1254} loading="eager" sizes="100px" />}
