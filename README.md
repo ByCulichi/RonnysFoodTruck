@@ -10,7 +10,7 @@ La portada actual muestra a Ronny con sombrero de hechicero y capa junto al food
 
 ## Identidad nocturna
 
-La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café/caramelo, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/images/hero/ronny-halloween-truck.png`, el icono `public/images/brand/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. El horario confirmado es viernes, sábado y domingo de 7 p. m. a 12 a. m. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
+La portada toma como referencia el cartel compartido por el propietario: Ronny en caricatura plana de color café/caramelo, ojos grandes, orejas rosas, lengua de lado y pañuelo rojo; carrito rojo, guirnaldas cálidas y letras grandes con contorno crema. Las ilustraciones anteriores se conservan como archivos; la campaña activa usa `public/images/hero/ronny-halloween-truck.png`, el icono `public/images/brand/ronny-flat-logo.png` y personajes individuales transparentes en menú, promoción, historia y contacto. Ronny es enojón, valiente, leal, protector, defensor y divertido; le encantan las gusgerías. Los horarios reales permanecen reservados durante la pausa de contacto. La fuente local Lilita One se distribuye con su licencia SIL OFL en `public/fonts/` y no requiere solicitudes a Google Fonts.
 
 ## Desarrollo y validación
 
@@ -36,7 +36,7 @@ Para desplegar desde este entorno se necesita acceso a `api.vercel.com` y autent
 
 ## Contacto directo
 
-El propietario solicitó recuperar la presentación de información y redes sin publicar datos verdaderos ni dirigir a cuentas reales. `contactPresentationVisible = true` en `lib/business.ts` muestra el panel y los cinco logos; `contactDetailsVisible = false` mantiene inactivos teléfono, mapas/reseñas, WhatsApp y redes. Sus valores reales siguen vacíos para excluirlos del HTML y los bundles del cliente. `contactPlaceholders` aporta horarios/ubicación «próximamente» y teléfono enmascarado; no se inventan datos de otra persona o lugar. Restaurar destinos reales requiere autorización y configuración revisada. No se guardan valores de recuperación en este repositorio público.
+El propietario solicitó recuperar la presentación de información y redes sin publicar datos verdaderos ni dirigir a cuentas reales. `contactPresentationVisible = true` en `lib/business.ts` muestra el panel y los cinco logos; `contactDetailsVisible = false` mantiene inactivos teléfono, mapas/reseñas, WhatsApp y redes. Sus valores reales siguen vacíos para excluirlos del HTML y los bundles del cliente. `contactExamples` aporta el horario de ejemplo, una dirección imaginaria, calles esquemáticas y un teléfono parcial enmascarado autorizados para completar la presentación; `contactPlaceholders` conserva el alias de compatibilidad. Estos ejemplos nunca habilitan destinos y no contienen datos reales del negocio. Restaurar destinos reales requiere autorización y configuración revisada. No se guardan valores de recuperación en este repositorio público.
 
 El panel conserva su diseño con un mapa SVG abstracto local (`VisitMapPlaceholder`) y una ilustración aprobada del truck; no carga Google ni la foto privada del lugar. Los accesos exteriores son botones nativos desactivados con nombres accesibles. Las anclas internas de navegación siguen funcionando. El formulario de servidor permanece desactivado, aunque existan variables de correo configuradas.
 
@@ -54,7 +54,9 @@ Crear una rama desde `main`, implementar y validar el cambio, subirla y abrir un
 
 El menú tiene cuatro categorías (Dulces, Salados, Bebidas frías y Bebidas calientes), sin buscador y con una sola ficha activa. Todos los productos de la categoría aparecen juntos en una cuadrícula de cuatro columnas en escritorio, tres en tablet y dos en móvil, sin paginación, flechas de productos ni fila horizontal oculta. Cada tarjeta muestra foto, nombre y precio inicial; la ficha se inserta después de la fila del producto elegido y conserva variantes y todos sus precios. Ronny cambia automáticamente de atuendo al elegir categoría; no hay selector manual de outfits. El catálogo y el libro mantienen navegaciones independientes.
 
-La estructura de los datos de contacto está centralizada en `lib/business.ts`; sus valores permanecen vacíos durante la pausa. Se conserva el catálogo y la promoción de viernes, sin publicar horarios de atención, teléfono ni dirección.
+La campaña de noviembre usa cinco atuendos completos en `public/images/ronny/muertos/`: calaverita con waffle, catrín con hamburguesa, alebrije con malteada, panadero de ofrenda con café y mariachi con snacks. `lib/ronny-costumes.ts` coordina el catálogo, los reversos del libro y sus acompañantes; las imágenes anteriores se conservan intactas. La bienvenida mantiene el catrín y la animación aprobados.
+
+La estructura de los datos de contacto está centralizada en `lib/business.ts`; sus valores permanecen vacíos durante la pausa. Se conserva el catálogo y la promoción de viernes, sin publicar horarios, teléfono ni dirección reales. Los ejemplos de presentación se configuran aparte y todos los controles de contacto permanecen desactivados.
 
 ## Google Maps y opiniones
 
@@ -232,7 +234,7 @@ La captura de configuración de Vercel del propietario indica estos registros pa
 
 `MenuNightScenery` llena los laterales del menú con puestos de feria, faroles de calabaza, guirnalda cálida, destellos y suelo ilustrativo. Son SVG y CSS locales, sin descargas ni animaciones nuevas. La decoración se atenúa cerca del contenido y en móvil; no intercepta controles ni altera la carta. La atmósfera compartida conserva pausa, suspensión fuera de pantalla y movimiento reducido.
 
-Instagram apunta a `ronnystruck04`, TikTok a `ronnystruck1` y Facebook al enlace compartido por el propietario (`[enlace de contacto reservado]`). Se retiran los parámetros de seguimiento de Instagram y TikTok y se conserva el enlace de Facebook sin inventar otro perfil. X queda fuera por ahora. La fila se adapta a cinco logos sin previews. La pestaña del navegador muestra únicamente «Ronny’s Food Truck».
+Los perfiles oficiales de Instagram, TikTok y Facebook permanecen reservados y sus destinos desactivados. Se retiran los parámetros de seguimiento de Instagram y TikTok y se conserva el enlace de Facebook sin inventar otro perfil. X queda fuera por ahora. La fila se adapta a cinco logos sin previews. La pestaña del navegador muestra únicamente «Ronny’s Food Truck».
 
 Los controles alrededor de Ronny ahora muestran únicamente iconos grandes de comida con neón del color de la categoría y señal de selección. Los nombres siguen disponibles para lectores de pantalla y como tooltip. Se retira por ahora la descripción pequeña bajo la frase de Ronny. La cabecera conserva la misma cabeza del Roo articulado de bienvenida; `public/images/brand/ronny-wizard-head.png`, el logo original, el favicon y los personajes aprobados permanecen como recursos independientes.
 

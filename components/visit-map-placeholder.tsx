@@ -1,8 +1,9 @@
 import { MapPin } from "lucide-react";
+import { contactExamples } from "@/lib/business";
 
 /** Original schematic streets; no real place, coordinates or external map. */
 export function VisitMapPlaceholder() {
-  return <div className="visit-map-placeholder" role="img" aria-label="Mapa ilustrado sin ubicación real; ubicación próximamente">
+  return <div className="visit-map-placeholder" role="img" aria-label={`Mapa ilustrado de ${contactExamples.mapMainStreet} y ${contactExamples.mapCrossStreet}, sin coordenadas reales`}>
     <svg viewBox="0 0 600 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <rect width="600" height="380" fill="#e9e7dc" />
       <g fill="#d7dacf" stroke="#c5cbbc" strokeWidth="2">
@@ -16,12 +17,16 @@ export function VisitMapPlaceholder() {
       <path d="M-35 302 632 55" fill="none" stroke="#d5bb8b" strokeWidth="40" />
       <path d="M-35 302 632 55" fill="none" stroke="#fff5d9" strokeWidth="29" />
       <g fill="none" stroke="#fbfaf4" strokeWidth="19"><path d="M153-10v400M324-10v400M455-10v400M-10 96h620M-10 238h620" /></g>
+      <g fill="#6b6d65" fontFamily="Arial, sans-serif" fontSize="13" fontWeight="600">
+        <text x="75" y="271" transform="rotate(-20.3 75 271)">{contactExamples.mapMainStreet}</text>
+        <text x="446" y="218" transform="rotate(-90 446 218)">{contactExamples.mapCrossStreet}</text>
+      </g>
       <g fill="#b4c8a1" opacity=".85"><circle cx="65" cy="148" r="15" /><circle cx="95" cy="179" r="21" /><circle cx="516" cy="300" r="22" /><circle cx="548" cy="321" r="15" /></g>
       <ellipse cx="302" cy="211" rx="42" ry="13" fill="#5a314431" />
       <path d="M302 214s-41-40-41-68a41 41 0 0 1 82 0c0 28-41 68-41 68Z" fill="#a8313d" stroke="#ffe3a7" strokeWidth="5" />
       <circle cx="302" cy="147" r="24" fill="#fff1cd" />
       <g fill="#b47838"><ellipse cx="302" cy="154" rx="11" ry="8" /><ellipse cx="287" cy="143" rx="4" ry="6" transform="rotate(-22 287 143)" /><ellipse cx="297" cy="136" rx="4" ry="6" /><ellipse cx="308" cy="136" rx="4" ry="6" /><ellipse cx="318" cy="143" rx="4" ry="6" transform="rotate(22 318 143)" /></g>
     </svg>
-    <span className="visit-map-placeholder-label"><MapPin size={18} aria-hidden="true" />Ubicación próximamente</span>
+    <span className="visit-map-placeholder-label"><MapPin size={18} aria-hidden="true" />{contactExamples.mapTitle}</span>
   </div>;
 }

@@ -11,6 +11,7 @@ export function VisitSection() {
   if (!contactPresentationVisible && !contactDetailsVisible) return null;
   const phoneAvailable = contactDetailsVisible && Boolean(business.phoneInternational && business.phone);
   const mapAvailable = contactDetailsVisible && Boolean(business.mapsUrl);
+  const closedDays = contactDetailsVisible && business.closedDays ? business.closedDays : contactPlaceholders.closedDays;
   const mapAction = <><img src="/brands/google.svg" alt="" width={26} height={26} loading="lazy" />Cómo llegar</>;
   return <div className="halloween-visit-scene">
     <VisitNightScenery />
@@ -22,8 +23,8 @@ export function VisitSection() {
             <Image src="/images/ronny/ronny-nose-lick-caramel.png" alt="Ronny con su playerita roja, listo para recibirte" width={78} height={82} sizes="78px" />
           </div>
           <div className="visit-contact-details">
-            <div className="visit-contact-row"><CalendarDays size={20} aria-hidden="true" /><p>{contactDetailsVisible && business.hours ? business.hours : contactPlaceholders.hours}{contactDetailsVisible && business.closedDays && <small>{business.closedDays}</small>}</p></div>
-            {phoneAvailable ? <a className="visit-contact-row visit-call" href={`tel:${business.phoneInternational}`} aria-label={`Llamar al ${business.phone}`}><Phone size={21} aria-hidden="true" /><strong>{business.phone}</strong><ArrowUpRight size={16} aria-hidden="true" /></a> : <div className="visit-contact-row visit-call visit-contact-placeholder"><Phone size={21} aria-hidden="true" /><strong aria-hidden="true">{contactPlaceholders.phone}</strong><span className="sr-only">Teléfono próximamente</span></div>}
+            <div className="visit-contact-row"><CalendarDays size={20} aria-hidden="true" /><p>{contactDetailsVisible && business.hours ? business.hours : contactPlaceholders.hours}{closedDays && <small>{closedDays}</small>}</p></div>
+            {phoneAvailable ? <a className="visit-contact-row visit-call" href={`tel:${business.phoneInternational}`} aria-label={`Llamar al ${business.phone}`}><Phone size={21} aria-hidden="true" /><strong>{business.phone}</strong><ArrowUpRight size={16} aria-hidden="true" /></a> : <div className="visit-contact-row visit-call visit-contact-placeholder"><Phone size={21} aria-hidden="true" /><strong aria-hidden="true">{contactPlaceholders.phone}</strong><span className="sr-only">Número de contacto reservado</span></div>}
             {mapAvailable ? <a className="visit-contact-row" href={business.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={20} aria-hidden="true" /><span>{business.address}</span><ArrowUpRight size={16} aria-hidden="true" /></a> : <div className="visit-contact-row visit-contact-placeholder"><MapPin size={20} aria-hidden="true" /><span>{contactPlaceholders.address}</span></div>}
           </div>
         </div>

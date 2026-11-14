@@ -233,11 +233,11 @@ export default function Home() {
                 <div className="promo-delivery-copy">
                   <div className="eyebrow"><Bike size={18} aria-hidden="true" /> {contactPresentationVisible ? "EL ANTOJO VA CONTIGO" : "EL ANTOJO TE ESPERA"}</div>
                   <h2 id="delivery-title">{contactPresentationVisible ? <>¿Se te antojó <em>en casa?</em></> : <>¿Cuál se te <em>antoja?</em></>}</h2>
-                  <p>{deliveryAvailable ? "Elige tu antojo y mándanos tu ubicación por WhatsApp." : contactPresentationVisible ? "Pedidos por WhatsApp próximamente" : "Descubre nuestros dulces, snacks y bebidas."}</p>
+                  <p>{deliveryAvailable ? "Elige tu antojo y mándanos tu ubicación por WhatsApp." : contactPresentationVisible ? contactPlaceholders.deliveryIntro : "Descubre nuestros dulces, snacks y bebidas."}</p>
                 </div>
                 <Mascot character="host" className="promo-delivery-host" />
                 {deliveryAvailable ? <a className="button button-gold promo-delivery-order" href={business.deliveryWhatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></a> : contactPresentationVisible ? <button type="button" className="button button-gold promo-delivery-order contact-placeholder-action" disabled aria-label="Pedir a domicilio próximamente" title="Pedidos por WhatsApp próximamente"><MessageCircle size={20} aria-hidden="true" /> Pedir a domicilio <ArrowUpRight size={18} aria-hidden="true" /></button> : <a className="button button-gold promo-delivery-order" href="#menu"><UtensilsCrossed size={20} aria-hidden="true" /> Ver menú <ArrowUpRight size={18} aria-hidden="true" /></a>}
-                {deliveryAvailable && <small>Consulta cobertura, costo de envío y disponibilidad.</small>}
+                {(deliveryAvailable || contactPresentationVisible) && <small>Consulta cobertura, costo de envío y disponibilidad.</small>}
               </div>
             </section>
 

@@ -47,27 +47,27 @@ export function getMenuCostume(dish: Pick<Dish, "group" | "kind">): HalloweenCos
   return dish.kind === "Snacks" ? "zombi" : "diablito";
 }
 
-// Each category has its own intact catrín pose. The original approved catrín
-// remains archived; the same ornate sombrero, suit and palette unite this set.
+// Category outfits share Roo's identity while celebrating different November
+// traditions. All original catrín poses remain available as intact assets.
 const muertosCostumes = {
   bruja: {
-    src: "/images/ronny/muertos/roo-catrin-dulces.png",
+    src: "/images/ronny/muertos/roo-calaverita-dulces.png",
     width: 1024, height: 1536,
-    alt: "Roo de catrín con sombrero bordado y cempasúchil, inclinando la cabeza mientras presenta un waffle con fresas y helado",
+    alt: "Roo de calaverita con traje de huesitos y flores, corona de cempasúchil y un waffle con fresas y helado",
     title: "Dulces para recordar.",
     message: "Crepas, waffles y postres para compartir.",
   },
   fantasma: {
-    src: "/images/ronny/muertos/roo-catrin-frias.png",
+    src: "/images/ronny/muertos/roo-alebrije-frias.png",
     width: 1024, height: 1536,
-    alt: "Roo de catrín con el mismo sombrero bordado, saludando con una patita y sosteniendo una malteada de fresa",
-    title: "Un sorbito de tradición.",
+    alt: "Roo de alebrije con atuendo turquesa y morado, alas decorativas y una malteada de fresa, saludando con una patita",
+    title: "Un sorbito de otro mundo.",
     message: "Malteadas, frappés e ICE para acompañar tu antojo.",
   },
   vampiro: {
-    src: "/images/ronny/muertos/roo-catrin-calientes.png",
-    width: 1123, height: 1401,
-    alt: "Roo de catrín sentado de forma relajada, con sombrero de cempasúchil y una taza de café caliente entre sus patitas",
+    src: "/images/ronny/muertos/roo-panadero-calientes.png",
+    width: 1024, height: 1536,
+    alt: "Roo de panadero de ofrenda sentado con su delantal crema, gorro de cempasúchil y una taza de café entre sus patitas",
     title: "Un cafecito con cariño.",
     message: "Americano, capuchino y moka. Algo calientito para esta noche.",
   },
@@ -79,9 +79,9 @@ const muertosCostumes = {
     message: "Hot dogs, hamburguesas y banderillas para compartir.",
   },
   zombi: {
-    src: "/images/ronny/muertos/roo-catrin-snacks.png",
+    src: "/images/ronny/muertos/roo-mariachi-snacks.png",
     width: 1024, height: 1536,
-    alt: "Roo de catrín ofreciendo papas y nachos en una charola de cuadros rojos, con un nacho junto a su sonrisa",
+    alt: "Roo de mariachi con traje vino bordado en dorado y sombrero de cempasúchil, ofreciendo papas y nachos en una charola de cuadros rojos",
     title: "Sabores que se recuerdan.",
     message: "Alitas, papas y snacks para disfrutar juntos.",
   },
