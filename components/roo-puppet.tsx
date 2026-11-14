@@ -5,12 +5,12 @@ import { useId, type CSSProperties, type Ref } from "react";
 import { rooWelcomeStory } from "@/lib/roo-welcome-story";
 import { WelcomeBurger } from "@/components/welcome-burger";
 import { RooCoherentTurn, animateCoherentTurn } from "@/components/roo-coherent-cels";
-import { RooPerformanceCels, animatePerformanceCels, performanceSelectionKeys } from "@/components/roo-performance-cels";
+import { RooPerformanceCels, animatePerformanceCels, performanceSelectionKeys, performanceSourcesForSeason } from "@/components/roo-performance-cels";
 import { performancePlan } from "@/lib/roo-performance-motion";
 import { baseHandoffTransform } from "@/lib/roo-pose-handoff";
 import type { CinemaSeason } from "@/lib/truck-cinema";
 import { activeWelcomeSeason, welcomeSeasonOutfits } from "@/lib/welcome-season";
-import { unifiedRooArtwork, unifiedHeadLocalOutline, unifiedRooPlacementTransform } from "@/lib/roo-unified-art";
+import { unifiedRooArtwork, unifiedLocalHeadOutlineForSeason, unifiedPlacementTransformForSeason, unifiedImageSizeForSeason, unifiedSourceCropForSeason } from "@/lib/roo-unified-art";
 
 function optimizedSource(src: string) {
   const { props } = getImageProps({ src, width: 640, height: 640, alt: "Roo", quality: 80 });
@@ -19,16 +19,19 @@ function optimizedSource(src: string) {
 
 /** The closed base is also the permanent navbar head. Expressions, gait and
  * rise are authored into whole-pose cels rather than layered body fragments. */
-export const puppetSourcesForSeason = (season: CinemaSeason) => ({ closed: optimizedSource(unifiedRooArtwork[season]) });
+export const puppetSourcesForSeason = (season: CinemaSeason) => ({ closed: season === "muertos" ? performanceSourcesForSeason(season).action : optimizedSource(unifiedRooArtwork[season]) });
 export const rooPuppetSources = puppetSourcesForSeason(activeWelcomeSeason);
-const headPoints = unifiedHeadLocalOutline.map(point => point.join(",")).join(" ");
 
 export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { puppetRef: Ref<SVGSVGElement>; style: CSSProperties; season?: CinemaSeason }) {
   const id = `roo-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const sources = puppetSourcesForSeason(season);
+  const imageSize = unifiedImageSizeForSeason(season);
+  const crop = unifiedSourceCropForSeason(season);
+  const headPoints = unifiedLocalHeadOutlineForSeason(season).map(point => point.join(",")).join(" ");
   return <svg ref={puppetRef} className="roo-welcome-character roo-puppet" style={style} viewBox="0 0 1254 1254" role="img" aria-label={`Roo, el chihuahua de ${welcomeSeasonOutfits[season].outfit}, dando la bienvenida`} data-roo-puppet="true" data-welcome-outfit={season}>
     <defs>
-      <image id={`${id}-skin`} href={sources.closed} data-roo-unified-source={season} width="1254" height="1254" />
+      <image id={`${id}-skin`} href={sources.closed} data-roo-unified-source={season} width={imageSize.width} height={imageSize.height} />
+      {crop && <clipPath id={`${id}-base-crop`}><rect {...crop} /></clipPath>}
       {/* Only the final flight changes a full character into its head crop.
           During every body pose, no mask crosses a leg, knee, neck or cape. */}
       <mask id={`${id}-flight-reveal`} maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254" style={{ maskType: "luminance" }}>
@@ -42,7 +45,7 @@ export function RooPuppet({ puppetRef, style, season = activeWelcomeSeason }: { 
           the actual head that travels into the reserved navigation slot. */}
       <g data-roo-part="head"><g data-roo-part="head-proportion">
         <g data-roo-part="base-pose" opacity="1" data-roo-exact-base="true">
-          <g transform={unifiedRooPlacementTransform}><use data-roo-base-pose="true" href={`#${id}-skin`} mask={`url(#${id}-flight-reveal)`} /></g>
+          <g transform={unifiedPlacementTransformForSeason(season)}><use data-roo-base-pose="true" href={`#${id}-skin`} clipPath={crop ? `url(#${id}-base-crop)` : undefined} mask={`url(#${id}-flight-reveal)`} /></g>
         </g>
         <RooPerformanceCels season={season} kind="rise" />
         <RooPerformanceCels season={season} kind="action" />

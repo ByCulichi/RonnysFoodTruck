@@ -47,16 +47,44 @@ export function getMenuCostume(dish: Pick<Dish, "group" | "kind">): HalloweenCos
   return dish.kind === "Snacks" ? "zombi" : "diablito";
 }
 
-// Reuse the owner's approved full-body transparent catrín, keeping category
-// selection and the original Halloween collection available for later campaigns.
-const catrin = {
-  src: "/images/seasons/ronny-dia-de-muertos.png",
-  alt: "Roo de catrín con traje negro y morado, sombrero con cempasúchil, pañuelo rojo y pan de muerto en una bandeja",
-};
-export const activeCostumes: Record<HalloweenCostume, { src: string; alt: string; title: string; message: string }> = activeSeason === "muertos" ? {
-  bruja: { ...catrin, title: "Dulces para recordar.", message: "Crepas, waffles y postres para compartir." },
-  fantasma: { ...catrin, title: "Un sorbito de tradición.", message: "Malteadas, frappés e ICE para acompañar tu antojo." },
-  vampiro: { ...catrin, title: "Un cafecito con cariño.", message: "Americano, capuchino y moka. Algo calientito para esta noche." },
-  diablito: { ...catrin, title: "Un antojo con mucho corazón.", message: "Hot dogs, hamburguesas y banderillas para compartir." },
-  zombi: { ...catrin, title: "Sabores que se recuerdan.", message: "Alitas, papas y snacks para disfrutar juntos." },
-} : halloweenCostumes;
+// Each category has its own intact catrín pose. The original approved catrín
+// remains archived; the same ornate sombrero, suit and palette unite this set.
+const muertosCostumes = {
+  bruja: {
+    src: "/images/ronny/muertos/roo-catrin-dulces.png",
+    width: 1024, height: 1536,
+    alt: "Roo de catrín con sombrero bordado y cempasúchil, inclinando la cabeza mientras presenta un waffle con fresas y helado",
+    title: "Dulces para recordar.",
+    message: "Crepas, waffles y postres para compartir.",
+  },
+  fantasma: {
+    src: "/images/ronny/muertos/roo-catrin-frias.png",
+    width: 1024, height: 1536,
+    alt: "Roo de catrín con el mismo sombrero bordado, saludando con una patita y sosteniendo una malteada de fresa",
+    title: "Un sorbito de tradición.",
+    message: "Malteadas, frappés e ICE para acompañar tu antojo.",
+  },
+  vampiro: {
+    src: "/images/ronny/muertos/roo-catrin-calientes.png",
+    width: 1123, height: 1401,
+    alt: "Roo de catrín sentado de forma relajada, con sombrero de cempasúchil y una taza de café caliente entre sus patitas",
+    title: "Un cafecito con cariño.",
+    message: "Americano, capuchino y moka. Algo calientito para esta noche.",
+  },
+  diablito: {
+    src: "/images/ronny/muertos/roo-catrin-salados.png",
+    width: 1024, height: 1536,
+    alt: "Roo de catrín con una patita en la cintura y una hamburguesa con tocino en una bandeja",
+    title: "Un antojo con mucho corazón.",
+    message: "Hot dogs, hamburguesas y banderillas para compartir.",
+  },
+  zombi: {
+    src: "/images/ronny/muertos/roo-catrin-snacks.png",
+    width: 1024, height: 1536,
+    alt: "Roo de catrín ofreciendo papas y nachos en una charola de cuadros rojos, con un nacho junto a su sonrisa",
+    title: "Sabores que se recuerdan.",
+    message: "Alitas, papas y snacks para disfrutar juntos.",
+  },
+} as const;
+
+export const activeCostumes: Record<HalloweenCostume, { src: string; alt: string; title: string; message: string; width?: number; height?: number }> = activeSeason === "muertos" ? muertosCostumes : halloweenCostumes;

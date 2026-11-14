@@ -16,7 +16,7 @@ export function RonnyOutfitStage({ costume, sizes = "(max-width: 600px) 150px, 2
       src={activeCostumes[id].src}
       alt={id === shown ? activeCostumes[id].alt : ""}
       aria-hidden={id !== shown}
-      width={1024} height={1536}
+      width={activeCostumes[id].width ?? 1024} height={activeCostumes[id].height ?? 1536}
       sizes={sizes}
       className={`ronny-outfit-layer${shown === id ? " is-visible" : ""}`}
       onLoad={() => setReady((previous) => previous.has(id) ? previous : new Set([...previous, id]))}

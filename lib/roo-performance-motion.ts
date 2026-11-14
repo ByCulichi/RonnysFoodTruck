@@ -35,8 +35,8 @@ export function performanceFrames(season: CinemaSeason, kind: PerformanceKind): 
     // Authored camera variation is calibrated on the complete character. The
     // same uniform matrix moves every pixel, including clothes and all paws.
     const originalScale = frame.scale ?? sheet.scale;
-    const scale = kind === "action" ? stableActionScale(season, index, originalScale) : originalScale;
-    const x = sheet.bodyCenterX - frame.footCenterX * scale;
+    const scale = kind === "action" && !sheet.cameraCalibrated ? stableActionScale(season, index, originalScale) : originalScale;
+    const x = sheet.bodyCenterX - frame.footCenterX * scale + (sheet.registrationOffsetX ?? 0);
     const y = performanceCamera.floor - frame.groundY * scale;
     return { index, crop: frame.crop, scale, x, y, muzzle: { x: x + frame.muzzle[0] * scale, y: y + frame.muzzle[1] * scale } };
   });

@@ -41,7 +41,7 @@ function MenuReverse({ page }: { page: LeafBack }) {
     <div className="menu-reverse-content">
       <span className="menu-reverse-rule"><PawPrint size={22} /> RONNY’S FOOD TRUCK <PawPrint size={22} /></span>
       <h4>{title}</h4>
-      {<div className="menu-reverse-emblem"><Image src={art.costume.src} alt="" width={1024} height={1536} loading="eager" sizes="(max-width: 600px) 180px, 300px" /></div>}
+      {<div className="menu-reverse-emblem"><Image src={art.costume.src} alt="" width={art.costume.width ?? 1024} height={art.costume.height ?? 1536} loading="eager" sizes="(max-width: 600px) 180px, 300px" /></div>}
       <div className="menu-reverse-food" aria-hidden="true">
         <PawPrint size={30} />
         {<Image src={`/images/menu/illustrations/${art.food}.png`} alt="" width={1254} height={1254} loading="eager" sizes="100px" />}
